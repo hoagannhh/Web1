@@ -74,6 +74,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+
   height: 20px;
   margin-top: 15px;
   border: 1px;
@@ -84,8 +85,10 @@
   border-right-color: white;
   gap: 2%;
   width: 100%;
+
+  position: relative; /* Để .box bám vào đây */
 }
-.menu button {
+.menu .test {
   font-size: 8px;
   background-color: rgb(255, 255, 255);
   border: none;
@@ -99,20 +102,29 @@
   padding-right: 0px;
   transition: 0.15s;
 }
-.menu button .box {
+.menu .test .box {
   display: none;
   position: absolute;
-  background-color: gray;
-  left: -100vw;
-  width: 200vw;
+  background-color: rgb(255, 255, 255);
+  width: 105vw;
   height: 200px;
   top: 20px;
+  transition: 0.5s;
 }
-.menu button:hover .box {
+.menu .test .men {
+  left: -30vw;
+}
+.menu .test .women {
+  left: -35vw;
+}
+.menu .test .kid {
+  left: -40vw;
+}
+.menu .test:hover .box {
   display: block;
 }
 
-.menu button:hover {
+.menu .test:hover {
   border-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: black;
@@ -120,7 +132,109 @@
   border-left: none;
   border-right: none;
 }
+.dropdown-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  gap: 20%;
+}
 
+.size-grid {
+  display: grid;
+  list-style: none;
+  position: absolute;
+  grid-template-rows: repeat(4, auto); /* 4 hàng */
+  grid-auto-flow: column;
+  /* grid-template-columns: 1fr 1fr; */
+  gap: 15%;
+  max-width: 100px;
+  margin-left: -50px;
+
+  /* justify-content: center; */
+}
+.size-btn {
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 8px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.size-btn:hover {
+  background: #d8d5d5;
+
+  transform: scale(1.1);
+}
+.brands {
+  display: grid;
+  list-style: none;
+  position: absolute;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 15%;
+  margin-left: -60px;
+}
+.company {
+  background-color: white;
+  border: 0.5px;
+  border-style: solid;
+  border-radius: 4px;
+  width: 20px;
+  height: 15px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: transform 0.2s ease;
+}
+.company:hover {
+  background-color: #e9e7e7;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
+.sellers {
+  display: grid;
+  list-style: none;
+  position: absolute;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 15%;
+  margin-left: -60px;
+}
+
+.product-image {
+  width: 70px;
+  height: 45px;
+}
+
+.name-product {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 6px;
+  font-weight: bold;
+}
+.product {
+  padding: 4px 4px 4px 4px;
+  transition: transform 0.2s ease;
+}
+.product:hover {
+  border: rgb(184, 184, 184);
+  border-style: solid;
+  border-width: 0.5px;
+  border-radius: 2px;
+  background-color: #eaeaea;
+  transform: scale(1.1);
+}
 body {
   height: 3000px;
   margin-right: 0px;
