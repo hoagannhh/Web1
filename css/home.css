@@ -2,104 +2,92 @@
   background-color: rgb(255, 255, 255);
   width: 100%;
   position: fixed;
-  /* z-index: 100; */
-  top: 0px;
-  /* padding-top: 10px; */
-  margin-top: 0px;
+  top: 0rem;
+  margin-top: 0rem;
 }
 .Header {
   display: flex;
   flex-direction: row;
-  height: 12px;
+  height: 1.125rem;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0px;
-  padding-top: 10px;
+  margin-top: 0rem;
+  padding-top: 0.9375rem;
 }
 
 .name {
-  flex: 200px;
+  flex: 18.75rem;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 8px;
-  margin-right: 30px;
-  margin-left: 20px;
+  font-size: 0.75rem;
+  margin-right: 2.8125rem;
+  margin-left: 1.875rem;
 }
 .Search-taskbar {
   display: flex;
   flex: 1;
-  max-width: 300px;
+  max-width: 28.125rem;
   position: relative;
 }
 .Search {
-  border: 1px;
-  border-color: rgb(193, 192, 192);
-  border-style: solid;
-  border-radius: 4px;
-  font-size: 8px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-
+  border: 0.09375rem solid rgb(193, 192, 192);
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  padding-top: 0.46875rem;
+  padding-bottom: 0.46875rem;
   width: 100%;
 }
 .Search-icon {
-  height: 8px;
+  height: 0.75rem;
   position: absolute;
-  top: 6px;
-  right: 5px;
+  top: 0.5625rem;
+  right: 0.46875rem;
   cursor: pointer;
 }
 .icon-sign-in {
-  height: 8px;
-  margin-right: 2px;
+  height: 0.75rem;
+  margin-right: 0.1875rem;
   vertical-align: middle;
 }
 
 .sign {
-  flex: 300px;
+  flex: 28.125rem;
   background-color: rgb(254, 253, 252);
-  border-radius: 4px;
+  border-radius: 0.375rem;
   border: none;
-  font-size: 8px;
-
+  font-size: 0.75rem;
   cursor: pointer;
 }
 .login {
-  margin-left: 30px;
-  margin-right: 10px;
+  margin-left: 2.8125rem;
+  margin-right: 0.9375rem;
 }
 
-/* .Name-Shop {
-} */
 .menu {
   display: flex;
   flex-direction: row;
   justify-content: center;
-
-  height: 20px;
-  margin-top: 15px;
-  border: 1px;
-  border-style: solid;
+  height: 1.875rem;
+  margin-top: 1.40625rem;
+  border: 0.09375rem solid;
   border-top-color: rgb(227, 223, 223);
   border-bottom-color: rgb(227, 223, 223);
   border-left-color: white;
   border-right-color: white;
   gap: 2%;
   width: 100%;
-
-  position: relative; /* Để .box bám vào đây */
+  position: relative;
 }
 .menu .test {
-  font-size: 8px;
+  font-size: 0.75rem;
   background-color: rgb(255, 255, 255);
   border: none;
-  /* border-radius: 3px; */
-  margin-left: 2px;
+  margin-left: 0.1875rem;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   position: relative;
   cursor: pointer;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 0rem;
+  padding-right: 0rem;
   transition: 0.15s;
 }
 .menu .test .box {
@@ -107,31 +95,36 @@
   position: absolute;
   background-color: rgb(255, 255, 255);
   width: 105vw;
-  height: 200px;
-  top: 20px;
+  height: 18.75rem;
+  top: 1.875rem;
   transition: 0.5s;
 }
 .menu .test .men {
-  left: -30vw;
-}
-.menu .test .women {
   left: -35vw;
 }
-.menu .test .kid {
+.menu .test .women {
   left: -40vw;
 }
+.menu .test .kid {
+  left: -45vw;
+}
+.menu .test .BRANDS {
+  left: -45vw;
+}
+
 .menu .test:hover .box {
   display: block;
 }
 
 .menu .test:hover {
   border-style: solid;
-  border-bottom-width: 2px;
+  border-bottom-width: 0.1875rem;
   border-bottom-color: black;
   border-top: none;
   border-left: none;
   border-right: none;
 }
+
 .dropdown-content {
   display: flex;
   flex-direction: row;
@@ -146,56 +139,86 @@
   display: grid;
   list-style: none;
   position: absolute;
-  grid-template-rows: repeat(4, auto); /* 4 hàng */
+  grid-template-rows: repeat(4, auto);
   grid-auto-flow: column;
-  /* grid-template-columns: 1fr 1fr; */
-  gap: 15%;
-  max-width: 100px;
-  margin-left: -50px;
-
-  /* justify-content: center; */
+  gap: 22.5%;
+  max-width: 9.375rem;
+  margin-left: -4.6875rem;
 }
+
+.size-grid.kid-size {
+  display: flex;
+  gap: 0.2rem;
+  list-style: none;
+  padding: 0;
+  margin-left: -10rem;
+  align-items: flex-start;
+}
+
+.size-column {
+  border-right: 1px solid #ccc; /* gạch phân cách cột */
+  padding: 0 1rem;
+}
+
+.size-grid.kid-size .size {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  list-style: none;
+  gap: 10%;
+  padding: 0 1rem;
+}
+
+.size-grid.kid-size .size:last-child {
+  border-right: none;
+}
+
 .size-btn {
   font-family: Arial, Helvetica, sans-serif;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-top: 0.28125rem;
+  padding-bottom: 0.28125rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
   background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  border: 0.09375rem solid #ccc;
+  border-radius: 0.28125rem;
   cursor: pointer;
-  transition: 0.2s;
-  font-size: 8px;
+  font-size: 0.75rem;
   font-weight: bold;
   transition: 0.2s;
 }
-
 .size-btn:hover {
   background: #d8d5d5;
-
   transform: scale(1.1);
 }
+.size-type {
+  display: block;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 100;
+  color: #dcdcdc;
+}
+
 .brands {
   display: grid;
   list-style: none;
   position: absolute;
   grid-template-columns: 1fr 1fr;
-
-  gap: 15%;
-  margin-left: -60px;
+  gap: 22.5%;
+  margin-left: -5.625rem;
 }
 .company {
   background-color: white;
-  border: 0.5px;
-  border-style: solid;
-  border-radius: 4px;
-  width: 20px;
-  height: 15px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 10px;
-  padding-right: 10px;
+  border: 0.046875rem solid;
+  border-radius: 0.375rem;
+  width: 1.875rem;
+  height: 1.40625rem;
+  padding-top: 0.28125rem;
+  padding-bottom: 0.28125rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
   transition: transform 0.2s ease;
 }
 .company:hover {
@@ -203,41 +226,69 @@
   transform: scale(1.1);
   vertical-align: middle;
 }
+
 .sellers {
   display: grid;
   list-style: none;
   position: absolute;
   grid-template-columns: 1fr 1fr;
-
-  gap: 15%;
-  margin-left: -60px;
+  gap: 22.5%;
+  margin-left: -5.625rem;
 }
 
 .product-image {
-  width: 70px;
-  height: 45px;
+  width: 6.5625rem;
+  height: 4.21875rem;
 }
 
 .name-product {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 6px;
+  font-size: 0.5625rem;
   font-weight: bold;
 }
 .product {
-  padding: 4px 4px 4px 4px;
+  padding: 0.375rem;
   transition: transform 0.2s ease;
 }
 .product:hover {
-  border: rgb(184, 184, 184);
-  border-style: solid;
-  border-width: 0.5px;
-  border-radius: 2px;
+  border: 0.046875rem solid rgb(184, 184, 184);
+  border-radius: 0.1875rem;
   background-color: #eaeaea;
   transform: scale(1.1);
 }
+
+.brands-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  gap: 1%;
+  padding-left: 20rem;
+  padding-right: 25rem;
+
+  list-style: none;
+}
+.company-brands-menu {
+  width: 7rem;
+  height: 5rem;
+  background-color: white;
+  border: 0.046875rem solid;
+  border-radius: 0.375rem;
+  padding-top: 0.28125rem;
+  padding-bottom: 0.28125rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  transition: transform 0.2s ease;
+}
+.company-brands-menu:hover {
+  background-color: #e9e7e7;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
+
 body {
-  height: 3000px;
-  margin-right: 0px;
-  margin-left: 0px;
-  margin-top: 0px;
+  height: 281.25rem;
+  margin: 0rem;
 }
