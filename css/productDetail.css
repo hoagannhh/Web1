@@ -55,7 +55,7 @@ ul{
 .select-size{
     color: gray;
     font-size: 2rem;
-    margin: 10px;
+    margin: 10px 10px 0px 0px;
     display: inline-block;
 }
 .size{
@@ -90,4 +90,15 @@ ul{
 .icon{
     width: 55px;
     height: 25px;
+}
+.des-p{
+    width: 190px;
+}
+.container-other{
+    display: flex;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
 }
