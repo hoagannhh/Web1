@@ -76,6 +76,7 @@
   gap: 2%;
   width: 100%;
   position: relative;
+  z-index: 9999;
 }
 .menu .test {
   font-size: 0.75rem;
@@ -85,6 +86,7 @@
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   position: relative;
+  z-index: 9999;
   cursor: pointer;
   padding-left: 0rem;
   padding-right: 0rem;
@@ -93,6 +95,7 @@
 .menu .test .box {
   display: none;
   position: absolute;
+  z-index: 9999;
   background-color: rgb(255, 255, 255);
   width: 105vw;
   height: 18.75rem;
@@ -109,7 +112,7 @@
   left: -45vw;
 }
 .menu .test .BRANDS {
-  left: -45vw;
+  left: -50vw;
 }
 
 .menu .test:hover .box {
@@ -127,7 +130,8 @@
 
 .dropdown-content {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  /* flex-direction: row; */
   justify-content: center;
   font-weight: 100;
   font-family: Arial, Helvetica, sans-serif;
@@ -139,6 +143,7 @@
   display: grid;
   list-style: none;
   position: absolute;
+  /* z-index: 2000; */
   grid-template-rows: repeat(4, auto);
   grid-auto-flow: column;
   gap: 22.5%;
@@ -205,6 +210,7 @@
   display: grid;
   list-style: none;
   position: absolute;
+  /* z-index: 2000; */
   grid-template-columns: 1fr 1fr;
   gap: 22.5%;
   margin-left: -5.625rem;
@@ -231,6 +237,7 @@
   display: grid;
   list-style: none;
   position: absolute;
+  /* z-index: 2000; */
   grid-template-columns: 1fr 1fr;
   gap: 22.5%;
   margin-left: -5.625rem;
@@ -257,6 +264,13 @@
   transform: scale(1.1);
 }
 
+.title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
 .brands-menu {
   display: flex;
   flex-wrap: wrap;
@@ -264,10 +278,10 @@
   font-weight: 100;
   font-family: Arial, Helvetica, sans-serif;
   font-style: italic;
-  gap: 1%;
+  gap: 3%;
   padding-left: 20rem;
   padding-right: 25rem;
-
+  margin-top: -2rem;
   list-style: none;
 }
 .company-brands-menu {
@@ -286,6 +300,159 @@
   background-color: #e9e7e7;
   transform: scale(1.1);
   vertical-align: middle;
+}
+.image-demo {
+  margin-left: 0rem;
+  margin-right: 0rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
+  margin-top: 6rem;
+  width: 95rem;
+  text-align: center;
+  /* position: relative; */
+
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* opacity: 1; */
+}
+.image-demo-d {
+  width: 95rem;
+}
+.image-demo-d:hover {
+  width: 92rem;
+  border-radius: 4rem;
+}
+
+/* .image-demo .overlay-btn {
+  display: none;
+  position: absolute;
+ 
+  top: 80%;
+  left: 45%;
+  z-index: 1;
+  padding: 0.5rem 2.2rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  color: rgb(0, 0, 0);
+  border-style: solid;
+  border-color: #000000;
+  border-width: 0.1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0rem 0.2rem 0.3rem rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: transform 0.2s ease;
+} */
+
+/* .image-demo:hover .overlay-btn {
+  display: block;
+  z-index: 1;
+} */
+/* .image-demo:hover .image-demo-d {
+  width: 92rem;
+  border-radius: 4rem;
+}
+.overlay-btn:hover {
+  transform: scale(1.1);
+} */
+
+.introduct {
+  height: 5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+}
+.introduction {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.product-grid {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  grid-template-columns: repeat(4, 1fr); /* 3 cột bằng nhau */
+  gap: 0rem; /* Khoảng cách giữa các item */
+  justify-items: center;
+}
+
+.prod-demo {
+  width: 18rem;
+  height: 28rem;
+  margin-left: 0rem;
+  margin-top: 0rem;
+  align-items: center;
+
+  transition: transform 0.2s ease;
+}
+.prod {
+  width: 16rem;
+  height: 16rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  background-color: gray;
+  /* position: relative;
+  z-index: 1; */
+}
+.img-prod {
+  width: 16rem;
+  height: 16rem;
+  text-align: center;
+}
+.info-prod {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 16rem;
+  height: 12rem;
+  margin-left: 1rem;
+}
+.name-prod {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.atribute-prod {
+  font-size: 1rem;
+  width: 3rem;
+  color: rgb(206, 184, 184);
+}
+.price {
+  font-size: 1.2rem;
+}
+.prod-demo:hover {
+  background-color: #e9e7e7;
+  transform: scale(1.1);
+  vertical-align: middle;
+  border-radius: 1rem;
+  z-index: 1;
+}
+/* .new-text {
+  height: 1rem;
+  width: 2rem;
+  padding: 0.1rem;
+  position: absolute;
+  background-color: #000000;
+  color: white;
+  top: -0.5rem;
+  left: 0.5rem;
+} */
+
+.image-demo-d3,
+.image-demo-d4 {
+  width: 50rem;
+  height: 50rem;
+  margin-top: 0rem;
+}
+
+.image-demo-d3:hover,
+.image-demo-d4:hover {
+  width: 92rem;
+  border-radius: 4rem;
+}
+.in-3-4 {
+  margin-top: 0rem;
+  margin-bottom: 6rem;
 }
 
 body {
