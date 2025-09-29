@@ -99,7 +99,7 @@
   z-index: 9999;
   background-color: rgb(255, 255, 255);
   width: 105vw;
-  height: 18.75rem;
+  height: 20rem;
   top: 1.875rem;
   transition: 0.5s;
 }
@@ -129,6 +129,27 @@
   border-right: none;
 }
 
+.bag {
+  width: 1.5rem;
+  position: absolute;
+  margin-top: 0.2rem;
+  right: 2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.bag-icon {
+  width: 1.5rem;
+}
+.bag:hover {
+  border-style: solid;
+  border-bottom-width: 0.1875rem;
+  border-bottom-color: black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transform: scale(1.1);
+}
 .dropdown-content {
   display: flex;
   flex-wrap: wrap;
