@@ -1,6 +1,7 @@
 .task-bar {
   background-color: rgb(255, 255, 255);
   width: 100%;
+
   position: fixed;
   /* z-index: 100; */
   top: 0px;
@@ -240,4 +241,8 @@ body {
   margin-right: 0px;
   margin-left: 0px;
   margin-top: 0px;
+}
+.banner {
+  width: 100%;
+  margin-top: 59px;
 }
