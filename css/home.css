@@ -187,7 +187,8 @@
 }
 
 .size-column {
-  border-right: 1px solid #ccc; /* gạch phân cách cột */
+  border-right: 1px solid #9a9999; /* gạch phân cách cột */
+  height: 10rem;
   width: 12rem;
   padding: 0 0rem;
   margin-left: 0rem;
