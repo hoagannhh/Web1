@@ -1,0 +1,250 @@
+* {
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  height: 2000px;
+  margin: 0;
+}
+.just-do-it {
+  width: 100%;
+  margin-top: 87.835px;
+}
+.sticky {
+  position: sticky;
+  top: 0;
+}
+.sidebar {
+  box-sizing: border-box;
+  height: 100vh;
+  width: 250px;
+  padding-left: 48px;
+  border-right: 1px solid;
+  background-color: white;
+
+  top: 0;
+  align-self: start;
+  overflow: hidden;
+  text-wrap: nowrap;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 10px;
+}
+
+.dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sub-menu {
+  list-style: none;
+  max-height: 0; /* ẩn mặc định */
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.sub-menu.show {
+  max-height: 500px; /* đủ lớn để hiển thị */
+}
+
+.icon {
+  transition: transform 0.3s ease;
+}
+
+.rotate .icon {
+  transform: rotate(180deg); /* xoay mũi tên khi mở */
+}
+.sidebar-size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cột đều nhau */
+  gap: 8px; /* khoảng cách giữa các nút */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.color-grid {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 2rem); /* 3 cột đều nhau */
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+}
+
+.sidebar-size-btn {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 50px;
+  height: 30px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+/* hover */
+.size-btn:hover {
+  border-color: #000;
+}
+
+/* trạng thái active/selected */
+.size-btn.active {
+  border: 2px solid #000;
+}
+:root {
+  --box-size: 24px; /* kích thước ô */
+  --gap: 7px;
+}
+
+/* Ẩn checkbox gốc nhưng vẫn truy cập được */
+.color-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* label chứa ô hiển thị */
+.color-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+/* ô vuông hiển thị (before) */
+.color-label::before {
+  content: "";
+  width: var(--box-size);
+  height: var(--box-size);
+  border-radius: 20px;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.12s ease;
+  flex-shrink: 0;
+}
+
+/* dấu tick (after) - tạo bằng border để có dạng tick */
+.color-label::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 7px;
+  left: 6px; /* adjust to center tick inside box */
+  top: 4px;
+  transform: rotate(15deg) scale(0);
+  transform-origin: center;
+  border: solid #000; /* màu tick: đen */
+  border-width: 2px 2px 0 0;
+  transition: transform 0.12s ease;
+  pointer-events: none;
+}
+.color-label[data-color="black"]::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 7px;
+  left: 6px; /* adjust to center tick inside box */
+  top: 4px;
+  transform: rotate(15deg) scale(0);
+  transform-origin: center;
+  border: solid #ffffff; /* màu tick: đen */
+  border-width: 2px 2px 0 0;
+  transition: transform 0.12s ease;
+  pointer-events: none;
+}
+
+/* Khi input được checked -> hiện tick */
+.color-input:checked + .color-label::after {
+  transform: rotate(135deg) scale(1);
+}
+
+/* Thay đổi ô theo màu (data-color) */
+.color-label[data-color="red"]::before {
+  background: #e7352b;
+}
+.color-label[data-color="blue"]::before {
+  background: #1790c8;
+}
+.color-label[data-color="green"]::before {
+  background: #7bba3c;
+}
+.color-label[data-color="black"]::before {
+  background: black;
+}
+.color-label[data-color="white"]::before {
+  background: white;
+  border: 1px solid #ddd;
+}
+.color-label[data-color="yellow"]::before {
+  background: #fed533;
+  border: 1px solid #ddd;
+}
+.color-label[data-color="grey"]::before {
+  background: #808080;
+  border: 1px solid #ddd;
+}
+.color-label[data-color="brown"]::before {
+  background: #825d41;
+  border: 1px solid #ddd;
+}
+.color-label[data-color="pink"]::before {
+  background: #f0728f;
+  border: 1px solid #ddd;
+}
+/* trạng thái hover/focus */
+.color-input:focus + .color-label::before,
+.color-label:hover::before {
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+.icon {
+  height: 20px;
+}
+.dropdown-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+
+  font: inherit;
+  cursor: pointer;
+}
+
+.filter {
+  border-top: solid 1px rgb(219, 219, 219);
+  margin-right: 10px;
+}
+.black-check {
+  accent-color: black;
+}
+.product-head {
+  display: flex;
+  justify-content: space-between;
+}

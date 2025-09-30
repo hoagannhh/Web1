@@ -4,437 +4,453 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      * {
-        padding: 0;
-        font-family: Arial, Helvetica, sans-serif;
-      }
-      body {
-        height: 2000px;
-        margin: 0;
-      }
-      .banner {
-        width: 100%;
-      }
-      .sidebar {
-        box-sizing: border-box;
-        height: 100vh;
-        width: 250px;
-        padding-left: 48px;
-        border-right: 1px solid;
-        background-color: white;
-        position: sticky;
-        top: 0;
-        align-self: start;
-        overflow: hidden;
-        text-wrap: nowrap;
-      }
-
-      .menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .menu li {
-        margin-bottom: 10px;
-      }
-
-      .dropdown-btn {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        text-decoration: none;
-        color: inherit;
-        padding: 10px;
-        background: none;
-        border: none;
-        cursor: pointer;
-      }
-
-      .sub-menu {
-        list-style: none;
-        max-height: 0; /* ẩn mặc định */
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-      }
-
-      .sub-menu.show {
-        max-height: 500px; /* đủ lớn để hiển thị */
-      }
-
-      .icon {
-        transition: transform 0.3s ease;
-      }
-
-      .rotate .icon {
-        transform: rotate(180deg); /* xoay mũi tên khi mở */
-      }
-      .size-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3 cột đều nhau */
-        gap: 8px; /* khoảng cách giữa các nút */
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .color-grid {
-        display: grid;
-        justify-content: center;
-        grid-template-columns: repeat(3, 2rem); /* 3 cột đều nhau */
-        gap: 12px;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .size-btn {
-        font-family: Arial, Helvetica, sans-serif;
-        padding: 6px 12px;
-        background: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        text-align: center;
-        transition: all 0.2s ease;
-      }
-
-      /* hover */
-      .size-btn:hover {
-        border-color: #000;
-      }
-
-      /* trạng thái active/selected */
-      .size-btn.active {
-        border: 2px solid #000;
-      }
-      :root {
-        --box-size: 24px; /* kích thước ô */
-        --gap: 7px;
-      }
-
-      /* Ẩn checkbox gốc nhưng vẫn truy cập được */
-      .color-input {
-        position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0;
-        pointer-events: none;
-      }
-
-      /* label chứa ô hiển thị */
-      .color-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        user-select: none;
-        position: relative;
-      }
-
-      /* ô vuông hiển thị (before) */
-      .color-label::before {
-        content: "";
-        width: var(--box-size);
-        height: var(--box-size);
-        border-radius: 20px;
-        display: inline-block;
-        box-sizing: border-box;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        transition: transform 0.15s ease, box-shadow 0.12s ease;
-        flex-shrink: 0;
-      }
-
-      /* dấu tick (after) - tạo bằng border để có dạng tick */
-      .color-label::after {
-        content: "";
-        position: absolute;
-        width: 12px;
-        height: 7px;
-        left: 6px; /* adjust to center tick inside box */
-        top: 4px;
-        transform: rotate(15deg) scale(0);
-        transform-origin: center;
-        border: solid #000; /* màu tick: đen */
-        border-width: 2px 2px 0 0;
-        transition: transform 0.12s ease;
-        pointer-events: none;
-      }
-      .color-label[data-color="black"]::after {
-        content: "";
-        position: absolute;
-        width: 12px;
-        height: 7px;
-        left: 6px; /* adjust to center tick inside box */
-        top: 4px;
-        transform: rotate(15deg) scale(0);
-        transform-origin: center;
-        border: solid #ffffff; /* màu tick: đen */
-        border-width: 2px 2px 0 0;
-        transition: transform 0.12s ease;
-        pointer-events: none;
-      }
-
-      /* Khi input được checked -> hiện tick */
-      .color-input:checked + .color-label::after {
-        transform: rotate(135deg) scale(1);
-      }
-
-      /* Thay đổi ô theo màu (data-color) */
-      .color-label[data-color="red"]::before {
-        background: #e7352b;
-      }
-      .color-label[data-color="blue"]::before {
-        background: #1790c8;
-      }
-      .color-label[data-color="green"]::before {
-        background: #7bba3c;
-      }
-      .color-label[data-color="black"]::before {
-        background: black;
-      }
-      .color-label[data-color="white"]::before {
-        background: white;
-        border: 1px solid #ddd;
-      }
-      .color-label[data-color="yellow"]::before {
-        background: #fed533;
-        border: 1px solid #ddd;
-      }
-      .color-label[data-color="grey"]::before {
-        background: #808080;
-        border: 1px solid #ddd;
-      }
-      .color-label[data-color="brown"]::before {
-        background: #825d41;
-        border: 1px solid #ddd;
-      }
-      .color-label[data-color="pink"]::before {
-        background: #f0728f;
-        border: 1px solid #ddd;
-      }
-      /* trạng thái hover/focus */
-      .color-input:focus + .color-label::before,
-      .color-label:hover::before {
-        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.06);
-        transform: translateY(-1px);
-      }
-      .icon {
-        height: 20px;
-      }
-      .dropdown-btn {
-        width: 100%;
-        text-align: left;
-        background: none;
-        border: none;
-
-        font: inherit;
-        cursor: pointer;
-      }
-
-      .filter {
-        border-top: solid 1px rgb(219, 219, 219);
-        margin-right: 10px;
-      }
-    </style>
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/home.css" />
   </head>
   <body>
-    <img src="../img/Group 22.png" alt="" class="banner" />
-    <div>
-      <div><h2>Men's shoes</h2></div>
-    </div>
-    <nav class="sidebar">
-      <ul class="menu">
-        <li class="filter">
-          <button class="dropdown-btn">
-            <span>Gender</span
-            ><img
-              src="../icon/drop-down-minor-svgrepo-com.svg"
-              alt=""
-              class="icon"
-            />
+    <div class="task-bar">
+      <div class="Header">
+        <div class="Name-Shop">
+          <p class="name">ĐẾ VƯƠNG</p>
+        </div>
+        <div class="Search-taskbar">
+          <input class="Search" type="text" placeholder="Search" />
+          <img class="Search-icon" src="../icon/Search.png" />
+        </div>
+        <div class="login">
+          <button class="sign in">
+            <img class="icon-sign-in" src="../icon/Sign-in.png" />Sign In
           </button>
-          <ul class="sub-menu">
-            <div>
-              <li>
-                <input type="checkbox" id="men" /> <label for="men">Men</label>
-              </li>
+          <span>&#124;</span>
+          <button class="sign up">Sign Up</button>
+        </div>
+      </div>
 
-              <li>
-                <input type="checkbox" id="Women" />
-                <label for="Women">Women</label>
-              </li>
-
-              <li>
-                <input type="checkbox" id="Unisex" />
-                <label for="Unisex">Unisex</label>
-              </li>
+      <div class="menu">
+        <button class="test">
+          Men's
+          <div class="box men">
+            <div class="dropdown-content">
+              <div class="column">
+                <h4>SHOP BY SIZE</h4>
+                <ul class="size-grid">
+                  <li class="size-btn">38</li>
+                  <li class="size-btn">39</li>
+                  <li class="size-btn">40</li>
+                  <li class="size-btn">38</li>
+                  <li class="size-btn">39</li>
+                  <li class="size-btn">40</li>
+                  <li class="size-btn">38</li>
+                  <li class="size-btn">39</li>
+                  <li class="size-btn">40</li>
+                </ul>
+              </div>
+              <div class="column">
+                <h4>BRANDS</h4>
+                <ul class="brands">
+                  <li><img class="company" src="../icon/nike.png" /></li>
+                  <li><img class="company" src="../icon/vans.png" /></li>
+                  <li><img class="company" src="../icon/nb.png" /></li>
+                  <li><img class="company" src="../icon/converse.png" /></li>
+                  <li><img class="company" src="../icon/adidas.png" /></li>
+                  <li><img class="company" src="../icon/onitsuka.png" /></li>
+                  <li><img class="company" src="../icon/skechers.png" /></li>
+                  <li><img class="company" src="../icon/puma.png" /></li>
+                </ul>
+              </div>
+              <div class="column">
+                <h4>BEST SELLERS</h4>
+                <div class="sellers">
+                  <div class="product">
+                    <img
+                      class="product-image"
+                      src="../img/nike-air-force.png"
+                    />
+                    <p class="name-product">NIKE AIR FORCE</p>
+                  </div>
+                  <div class="product">
+                    <img
+                      class="product-image"
+                      src="../img/ADIDAS-ULTRABOOST.png"
+                    />
+                    <p class="name-product">ADIDAS ULTRABOOST</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </ul>
-        </li>
-        <li class="filter">
-          <button class="dropdown-btn">
-            <span>Price</span
-            ><img
-              src="../icon/drop-down-minor-svgrepo-com.svg"
-              alt=""
-              class="icon"
-            />
-          </button>
-          <div class="sub-menu"><input type="number" /></div>
-        </li>
-        <li class="filter">
-          <button class="dropdown-btn">
-            <span>Sale & Orders</span
-            ><img
-              src="../icon/drop-down-minor-svgrepo-com.svg"
-              alt=""
-              class="icon"
-            />
-          </button>
-          <div class="sub-menu">
-            <input type="checkbox" id="Sale" /> <label for="Sale">Sale</label>
           </div>
-        </li>
-        <li class="filter">
-          <button class="dropdown-btn">
-            <span>Size</span
-            ><img
-              src="../icon/drop-down-minor-svgrepo-com.svg"
-              alt=""
-              class="icon"
-            />
-          </button>
-          <ul class="sub-menu">
-            <div class="size-grid">
-              <li><button class="size-btn">35.5</button></li>
-              <li><button class="size-btn">36</button></li>
-              <li><button class="size-btn">36.5</button></li>
-              <li><button class="size-btn">37.5</button></li>
-              <li><button class="size-btn">38</button></li>
-              <li><button class="size-btn">38.5</button></li>
-              <li><button class="size-btn">39</button></li>
-              <li><button class="size-btn">40</button></li>
-              <li><button class="size-btn">40.5</button></li>
+        </button>
+        <button class="test">
+          Women's
+          <div class="box women">
+            <div class="dropdown-content">
+              <div class="column">
+                <h4>SHOP BY SIZE</h4>
+                <ul class="size-grid">
+                  <li class="size-btn">38</li>
+                  <li class="size-btn">39</li>
+                  <li class="size-btn">40</li>
+                  <li class="size-btn">38</li>
+                  <li class="size-btn">39</li>
+                  <li class="size-btn">40</li>
+                  <li class="size-btn">38</li>
+                  <li class="size-btn">39</li>
+                  <li class="size-btn">40</li>
+                </ul>
+              </div>
+              <div class="column">
+                <h4>BRANDS</h4>
+                <ul class="brands">
+                  <li><img class="company" src="../icon/nike.png" /></li>
+                  <li><img class="company" src="../icon/vans.png" /></li>
+                  <li><img class="company" src="../icon/nb.png" /></li>
+                  <li><img class="company" src="../icon/converse.png" /></li>
+                  <li><img class="company" src="../icon/adidas.png" /></li>
+                  <li><img class="company" src="../icon/onitsuka.png" /></li>
+                  <li><img class="company" src="../icon/skechers.png" /></li>
+                  <li><img class="company" src="../icon/puma.png" /></li>
+                </ul>
+              </div>
+              <div class="column">
+                <h4>BEST SELLERS</h4>
+                <div class="sellers">
+                  <div class="product">
+                    <img
+                      class="product-image"
+                      src="../img/nike-air-force.png"
+                    />
+                    <p class="name-product">NIKE AIR FORCE</p>
+                  </div>
+                  <div class="product">
+                    <img
+                      class="product-image"
+                      src="../img/ADIDAS-ULTRABOOST.png"
+                    />
+                    <p class="name-product">ADIDAS ULTRABOOST</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </ul>
-        </li>
-        <li class="filter">
-          <button class="dropdown-btn">
-            <span>Color</span
-            ><img
-              src="../icon/drop-down-minor-svgrepo-com.svg"
-              alt=""
-              class="icon"
-            />
-          </button>
-          <ul class="sub-menu">
-            <div class="color-grid">
-              <!-- checkbox màu đỏ -->
-              <input
-                id="c-red"
-                class="color-input"
-                type="checkbox"
-                value="red"
-              />
-              <label for="c-red" class="color-label" data-color="red"> </label>
-
-              <!-- checkbox màu xanh -->
-              <input
-                id="c-blue"
-                class="color-input"
-                type="checkbox"
-                value="blue"
-              />
-              <label for="c-blue" class="color-label" data-color="blue">
-              </label>
-
-              <!-- checkbox màu xanh lá -->
-              <input
-                id="c-green"
-                class="color-input"
-                type="checkbox"
-                value="green"
-              />
-              <label for="c-green" class="color-label" data-color="green">
-              </label>
-
-              <!-- checkbox đen -->
-              <input
-                id="c-black"
-                class="color-input"
-                type="checkbox"
-                value="black"
-              />
-              <label for="c-black" class="color-label" data-color="black">
-              </label>
-
-              <!-- checkbox trắng -->
-              <input
-                id="c-white"
-                class="color-input"
-                type="checkbox"
-                value="white"
-              />
-              <label for="c-white" class="color-label" data-color="white">
-              </label>
-
-              <!-- checkbox vàng -->
-              <input
-                id="c-yellow"
-                class="color-input"
-                type="checkbox"
-                value="yellow"
-              />
-              <label for="c-yellow" class="color-label" data-color="yellow">
-              </label>
-              <!-- checkbox xám -->
-              <input
-                id="c-grey"
-                class="color-input"
-                type="checkbox"
-                value="grey"
-              />
-              <label for="c-grey" class="color-label" data-color="grey">
-              </label>
-              <!-- checkbox nâu -->
-              <input
-                id="c-brown"
-                class="color-input"
-                type="checkbox"
-                value="brown"
-              />
-              <label for="c-brown" class="color-label" data-color="brown">
-              </label>
-              <!-- checkbox hồng -->
-              <input
-                id="c-pink"
-                class="color-input"
-                type="checkbox"
-                value="pink"
-              />
-              <label for="c-pink" class="color-label" data-color="pink">
-              </label>
+          </div>
+        </button>
+        <button class="test">
+          Kid's
+          <div class="box kid">
+            <div class="dropdown-content">
+              <div class="column">
+                <h4>SHOP BY SIZE</h4>
+                <ul class="size-grid kid-size">
+                  <div class="size-column">
+                    <p class="size-type">0-12 months</p>
+                    <ul class="size-menu">
+                      <li class="size-btn">38</li>
+                      <li class="size-btn">39</li>
+                      <li class="size-btn">40</li>
+                      <li class="size-btn">38</li>
+                      <li class="size-btn">39</li>
+                      <li class="size-btn">40</li>
+                      <li class="size-btn">38</li>
+                      <li class="size-btn">39</li>
+                    </ul>
+                  </div>
+                  <div class="size-column">
+                    <p class="size-type">1-5 year old</p>
+                    <ul class="size-menu">
+                      <li class="size-btn">40</li>
+                      <li class="size-btn">38</li>
+                      <li class="size-btn">39</li>
+                      <li class="size-btn">40</li>
+                      <li class="size-btn">38</li>
+                      <li class="size-btn">39</li>
+                      <li class="size-btn">40</li>
+                      <li class="size-btn">40</li>
+                    </ul>
+                  </div>
+                  <div class="size-column">
+                    <p class="size-type">5-10 year old</p>
+                    <ul class="size-menu">
+                      <li class="size-btn">40</li>
+                      <li class="size-btn">38</li>
+                      <li class="size-btn">39</li>
+                      <li class="size-btn">40</li>
+                      <li class="size-btn">38</li>
+                      <li class="size-btn">39</li>
+                    </ul>
+                  </div>
+                </ul>
+              </div>
+              <div class="column">
+                <h4>BRANDS</h4>
+                <ul class="brands">
+                  <li><img class="company" src="../icon/nike.png" /></li>
+                  <li><img class="company" src="../icon/vans.png" /></li>
+                  <li><img class="company" src="../icon/nb.png" /></li>
+                  <li><img class="company" src="../icon/converse.png" /></li>
+                  <li><img class="company" src="../icon/adidas.png" /></li>
+                  <li><img class="company" src="../icon/onitsuka.png" /></li>
+                  <li><img class="company" src="../icon/skechers.png" /></li>
+                  <li><img class="company" src="../icon/puma.png" /></li>
+                </ul>
+              </div>
+              <div class="column">
+                <h4>BEST SELLERS</h4>
+                <div class="sellers">
+                  <div class="product">
+                    <img class="product-image" src="../img/NIKE-VOMERO.png" />
+                    <p class="name-product">NIKE VOMERO</p>
+                  </div>
+                  <div class="product">
+                    <img
+                      class="product-image"
+                      src="../img/ADIDAS-ULTRABOOST.png"
+                    />
+                    <p class="name-product">ADIDAS ULTRABOOST</p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </button>
+        <span>&#124;</span>
+        <button class="test">
+          Brands
+          <div class="box BRANDS">
+            <h4 class="title">BRANDS</h4>
+            <ul class="brands-menu">
+              <li>
+                <img class="company-brands-menu" src="../icon/nike.png" />
+              </li>
+              <li>
+                <img class="company-brands-menu" src="../icon/vans.png" />
+              </li>
+              <li><img class="company-brands-menu" src="../icon/nb.png" /></li>
+              <li>
+                <img class="company-brands-menu" src="../icon/converse.png" />
+              </li>
+              <li>
+                <img class="company-brands-menu" src="../icon/adidas.png" />
+              </li>
+              <li>
+                <img class="company-brands-menu" src="../icon/onitsuka.png" />
+              </li>
+              <li>
+                <img class="company-brands-menu" src="../icon/skechers.png" />
+              </li>
+              <li>
+                <img class="company-brands-menu" src="../icon/puma.png" />
+              </li>
+              <li>
+                <img class="company-brands-menu" src="../icon/puma.png" />
+              </li>
+              <li>
+                <img class="company-brands-menu" src="../icon/puma.png" />
+              </li>
+            </ul>
+          </div>
+        </button>
+
+        <button class="test">Sale</button>
+        <button class="test">New Arrivals</button>
+        <span>&#124;</span>
+        <button class="test">36 SNEAKERS</button>
+        <div class="bag"><img class="bag-icon" src="../icon/bag.png" /></div>
+      </div>
+    </div>
+    <div><img src="../img/Group 22.png" alt="" class="just-do-it" /></div>
+
+    <div class="sticky">
+      <div class="product-head">
+        <div><h2>Men's shoes</h2></div>
+        <div class="">
+          <div>Hide Filter</div>
+          <div>Sort By</div>
+        </div>
+      </div>
+      <div class="sidebar">
+        <nav>
+          <ul class="sidebar-menu">
+            <li class="filter">
+              <button class="dropdown-btn">
+                <span>Gender</span
+                ><img
+                  src="../icon/drop-down-minor-svgrepo-com.svg"
+                  alt=""
+                  class="icon"
+                />
+              </button>
+              <ul class="sub-menu">
+                <div>
+                  <li>
+                    <input type="checkbox" id="men" class="black-check" />
+                    <label for="men">Men</label>
+                  </li>
+
+                  <li>
+                    <input type="checkbox" id="Women" class="black-check" />
+                    <label for="Women">Women</label>
+                  </li>
+
+                  <li>
+                    <input type="checkbox" id="Unisex" class="black-check" />
+                    <label for="Unisex">Unisex</label>
+                  </li>
+                </div>
+              </ul>
+            </li>
+            <li class="filter">
+              <button class="dropdown-btn">
+                <span>Price</span
+                ><img
+                  src="../icon/drop-down-minor-svgrepo-com.svg"
+                  alt=""
+                  class="icon"
+                />
+              </button>
+              <div class="sub-menu"><input type="number" /></div>
+            </li>
+            <li class="filter">
+              <button class="dropdown-btn">
+                <span>Sale & Orders</span
+                ><img
+                  src="../icon/drop-down-minor-svgrepo-com.svg"
+                  alt=""
+                  class="icon"
+                />
+              </button>
+              <div class="sub-menu">
+                <input type="checkbox" id="Sale" class="black-check" />
+                <label for="Sale">Sale</label>
+              </div>
+            </li>
+            <li class="filter">
+              <button class="dropdown-btn">
+                <span>Size</span
+                ><img
+                  src="../icon/drop-down-minor-svgrepo-com.svg"
+                  alt=""
+                  class="icon"
+                />
+              </button>
+              <ul class="sub-menu">
+                <div class="sidebar-size-grid">
+                  <li><button class="sidebar-size-btn">35.5</button></li>
+                  <li><button class="sidebar-size-btn">36</button></li>
+                  <li><button class="sidebar-size-btn">36.5</button></li>
+                  <li><button class="sidebar-size-btn">37.5</button></li>
+                  <li><button class="sidebar-size-btn">38</button></li>
+                  <li><button class="sidebar-size-btn">38.5</button></li>
+                  <li><button class="sidebar-size-btn">39</button></li>
+                  <li><button class="sidebar-size-btn">40</button></li>
+                  <li><button class="sidebar-size-btn">40.5</button></li>
+                </div>
+              </ul>
+            </li>
+            <li class="filter">
+              <button class="dropdown-btn">
+                <span>Color</span
+                ><img
+                  src="../icon/drop-down-minor-svgrepo-com.svg"
+                  alt=""
+                  class="icon"
+                />
+              </button>
+              <ul class="sub-menu">
+                <div class="color-grid">
+                  <!-- checkbox màu đỏ -->
+                  <input
+                    id="c-red"
+                    class="color-input"
+                    type="checkbox"
+                    value="red"
+                  />
+                  <label for="c-red" class="color-label" data-color="red">
+                  </label>
+
+                  <!-- checkbox màu xanh -->
+                  <input
+                    id="c-blue"
+                    class="color-input"
+                    type="checkbox"
+                    value="blue"
+                  />
+                  <label for="c-blue" class="color-label" data-color="blue">
+                  </label>
+
+                  <!-- checkbox màu xanh lá -->
+                  <input
+                    id="c-green"
+                    class="color-input"
+                    type="checkbox"
+                    value="green"
+                  />
+                  <label for="c-green" class="color-label" data-color="green">
+                  </label>
+
+                  <!-- checkbox đen -->
+                  <input
+                    id="c-black"
+                    class="color-input"
+                    type="checkbox"
+                    value="black"
+                  />
+                  <label for="c-black" class="color-label" data-color="black">
+                  </label>
+
+                  <!-- checkbox trắng -->
+                  <input
+                    id="c-white"
+                    class="color-input"
+                    type="checkbox"
+                    value="white"
+                  />
+                  <label for="c-white" class="color-label" data-color="white">
+                  </label>
+
+                  <!-- checkbox vàng -->
+                  <input
+                    id="c-yellow"
+                    class="color-input"
+                    type="checkbox"
+                    value="yellow"
+                  />
+                  <label for="c-yellow" class="color-label" data-color="yellow">
+                  </label>
+                  <!-- checkbox xám -->
+                  <input
+                    id="c-grey"
+                    class="color-input"
+                    type="checkbox"
+                    value="grey"
+                  />
+                  <label for="c-grey" class="color-label" data-color="grey">
+                  </label>
+                  <!-- checkbox nâu -->
+                  <input
+                    id="c-brown"
+                    class="color-input"
+                    type="checkbox"
+                    value="brown"
+                  />
+                  <label for="c-brown" class="color-label" data-color="brown">
+                  </label>
+                  <!-- checkbox hồng -->
+                  <input
+                    id="c-pink"
+                    class="color-input"
+                    type="checkbox"
+                    value="pink"
+                  />
+                  <label for="c-pink" class="color-label" data-color="pink">
+                  </label>
+                </div>
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
-    </nav>
-    <script>
-      const dropdownBtns = document.querySelectorAll(".dropdown-btn");
-
-      dropdownBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const submenu = btn.nextElementSibling;
-
-          submenu.classList.toggle("show");
-          btn.classList.toggle("rotate");
-        });
-      });
-    </script>
+        </nav>
+      </div>
+      <div></div>
+    </div>
+    <script type="module" src="../script/sidebar.js"></script>
+    <script type="module" src="../script/headerScrool.js"></script>
   </body>
 </html>

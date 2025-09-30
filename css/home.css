@@ -15,6 +15,11 @@
   justify-content: space-between;
   margin-top: 0rem;
   padding-top: 0.9375rem;
+  transition: 0.15s;
+}
+.hide {
+  top: -90px;
+  transition: 0.5s;
 }
 
 .name {
@@ -176,28 +181,35 @@
 
 .size-grid.kid-size {
   display: flex;
-  gap: 0.2rem;
+  flex-direction: 1fr 1fr 1fr;
+  gap: 0rem;
+
   list-style: none;
   padding: 0;
+
   margin-left: -10rem;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
 .size-column {
-  border-right: 1px solid #ccc; /* gạch phân cách cột */
-  padding: 0 1rem;
+  border-right: 1px solid #9a9999; /* gạch phân cách cột */
+  height: 10rem;
+  width: 12rem;
+  padding: 0 0rem;
+  margin-left: 0rem;
+  margin-right: 0rem;
 }
 
-.size-grid.kid-size .size {
+.size-grid.kid-size .size-menu {
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-auto-flow: column;
   list-style: none;
-  gap: 10%;
+  gap: 5%;
   padding: 0 1rem;
 }
 
-.size-grid.kid-size .size:last-child {
+.size-grid.kid-size .size-column:last-child {
   border-right: none;
 }
 
@@ -295,13 +307,16 @@
 }
 
 .brands-menu {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: 8rem 8rem 8rem 8rem 8rem;
   justify-content: center;
   font-weight: 100;
   font-family: Arial, Helvetica, sans-serif;
   font-style: italic;
-  gap: 3%;
+  row-gap: 2%;
+  column-gap: 5%;
   padding-left: 20rem;
   padding-right: 25rem;
   margin-top: -2rem;
@@ -310,6 +325,7 @@
 .company-brands-menu {
   width: 7rem;
   height: 5rem;
+
   background-color: white;
   border: 0.046875rem solid;
   border-radius: 0.375rem;
