@@ -15,6 +15,11 @@
   justify-content: space-between;
   margin-top: 0rem;
   padding-top: 0.9375rem;
+  transition: 0.15s;
+}
+.hide {
+  top: -90px;
+  transition: 0.5s;
 }
 
 .name {
