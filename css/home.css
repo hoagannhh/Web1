@@ -143,6 +143,10 @@
   transition: transform 0.2s ease;
 }
 
+.split-menu {
+  margin-top: 4px;
+}
+
 .bag-icon {
   width: 24px;
 }
