@@ -91,7 +91,7 @@
 }
 .horizontal-bar{
     height: 1px;
-    width: 28vw;
+    width: 98%;
     background-color: black;
 }
 .total-cost-product-p, .total-cost-product, .cost-ship-p, .cost-ship
