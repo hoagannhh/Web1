@@ -134,6 +134,10 @@
   border-right: none;
 }
 
+.split-menu {
+  margin-top: 4px;
+}
+
 .bag {
   width: 24px;
   position: absolute;
