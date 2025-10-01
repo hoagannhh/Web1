@@ -1,4 +1,5 @@
 const header = document.querySelector(".task-bar");
+
 let lastScroll = 0;
 window.addEventListener("scroll", () => {
   let currentScroll = window.pageYOffset;
