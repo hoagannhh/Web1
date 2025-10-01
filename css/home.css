@@ -1,20 +1,19 @@
 .task-bar {
   background-color: rgb(255, 255, 255);
   width: 100%;
-
   position: fixed;
-  top: 0rem;
-  margin-top: 0rem;
+  top: 0px;
+  margin-top: 0px;
   z-index: 10000;
 }
 .Header {
   display: flex;
   flex-direction: row;
-  height: 1.125rem;
+  height: 18px;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0rem;
-  padding-top: 0.9375rem;
+  margin-top: 0px;
+  padding-top: 15px;
   transition: 0.15s;
 }
 .hide {
@@ -23,59 +22,59 @@
 }
 
 .name {
-  flex: 18.75rem;
+  flex: 300px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.75rem;
-  margin-right: 2.8125rem;
-  margin-left: 1.875rem;
+  margin-right: 45px;
+  margin-left: 30px;
 }
 .Search-taskbar {
   display: flex;
   flex: 1;
-  max-width: 28.125rem;
+  max-width: 450px;
   position: relative;
 }
 .Search {
-  border: 0.09375rem solid rgb(193, 192, 192);
-  border-radius: 0.375rem;
+  border: 1.5px solid rgb(193, 192, 192);
+  border-radius: 6px;
   font-size: 0.75rem;
-  padding-top: 0.46875rem;
-  padding-bottom: 0.46875rem;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
   width: 100%;
 }
 .Search-icon {
-  height: 0.75rem;
+  height: 12px;
   position: absolute;
-  top: 0.5625rem;
-  right: 0.46875rem;
+  top: 9px;
+  right: 7.5px;
   cursor: pointer;
 }
 .icon-sign-in {
-  height: 0.75rem;
-  margin-right: 0.1875rem;
+  height: 12px;
+  margin-right: 3px;
   vertical-align: middle;
 }
 
 .sign {
-  flex: 28.125rem;
+  flex: 450px;
   background-color: rgb(254, 253, 252);
-  border-radius: 0.375rem;
+  border-radius: 6px;
   border: none;
   font-size: 0.75rem;
   cursor: pointer;
 }
 .login {
-  margin-left: 2.8125rem;
-  margin-right: 0.9375rem;
+  margin-left: 45px;
+  margin-right: 15px;
 }
 
 .menu {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 1.875rem;
-  margin-top: 1.40625rem;
-  border: 0.09375rem solid;
+  height: 30px;
+  margin-top: 22.5px;
+  border: 1.5px solid;
   border-top-color: rgb(227, 223, 223);
   border-bottom-color: rgb(227, 223, 223);
   border-left-color: white;
@@ -89,14 +88,14 @@
   font-size: 0.75rem;
   background-color: rgb(255, 255, 255);
   border: none;
-  margin-left: 0.1875rem;
+  margin-left: 3px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   position: relative;
   z-index: 9999;
   cursor: pointer;
-  padding-left: 0rem;
-  padding-right: 0rem;
+  padding-left: 0px;
+  padding-right: 0px;
   transition: 0.15s;
 }
 .menu .test .box {
@@ -104,22 +103,22 @@
   position: absolute;
   z-index: 9999;
   background-color: rgb(255, 255, 255);
-  width: 105vw;
-  height: 20rem;
-  top: 1.875rem;
+  width: 1680px;
+  height: 320px;
+  top: 30px;
   transition: 0.5s;
 }
 .menu .test .men {
-  left: -35vw;
+  left: -560px;
 }
 .menu .test .women {
-  left: -40vw;
+  left: -640px;
 }
 .menu .test .kid {
-  left: -45vw;
+  left: -720px;
 }
 .menu .test .BRANDS {
-  left: -50vw;
+  left: -800px;
 }
 
 .menu .test:hover .box {
@@ -128,7 +127,7 @@
 
 .menu .test:hover {
   border-style: solid;
-  border-bottom-width: 0.1875rem;
+  border-bottom-width: 3px;
   border-bottom-color: black;
   border-top: none;
   border-left: none;
@@ -136,20 +135,20 @@
 }
 
 .bag {
-  width: 1.5rem;
+  width: 24px;
   position: absolute;
-  margin-top: 0.2rem;
-  right: 2rem;
+  margin-top: 3.2px;
+  right: 32px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .bag-icon {
-  width: 1.5rem;
+  width: 24px;
 }
 .bag:hover {
   border-style: solid;
-  border-bottom-width: 0.1875rem;
+  border-bottom-width: 3px;
   border-bottom-color: black;
   border-top: none;
   border-left: none;
@@ -159,7 +158,6 @@
 .dropdown-content {
   display: flex;
   flex-wrap: wrap;
-  /* flex-direction: row; */
   justify-content: center;
   font-weight: 100;
   font-family: Arial, Helvetica, sans-serif;
@@ -171,33 +169,30 @@
   display: grid;
   list-style: none;
   position: absolute;
-  /* z-index: 2000; */
   grid-template-rows: repeat(4, auto);
   grid-auto-flow: column;
   gap: 22.5%;
-  max-width: 9.375rem;
-  margin-left: -4.6875rem;
+  max-width: 150px;
+  margin-left: -75px;
 }
 
 .size-grid.kid-size {
   display: flex;
   flex-direction: 1fr 1fr 1fr;
-  gap: 0rem;
-
+  gap: 0px;
   list-style: none;
   padding: 0;
-
-  margin-left: -10rem;
+  margin-left: -160px;
   align-items: flex-end;
 }
 
 .size-column {
-  border-right: 1px solid #9a9999; /* gạch phân cách cột */
-  height: 10rem;
-  width: 12rem;
-  padding: 0 0rem;
-  margin-left: 0rem;
-  margin-right: 0rem;
+  border-right: 1px solid #9a9999;
+  height: 160px;
+  width: 192px;
+  padding: 0 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .size-grid.kid-size .size-menu {
@@ -206,7 +201,7 @@
   grid-auto-flow: column;
   list-style: none;
   gap: 5%;
-  padding: 0 1rem;
+  padding: 0 16px;
 }
 
 .size-grid.kid-size .size-column:last-child {
@@ -215,13 +210,13 @@
 
 .size-btn {
   font-family: Arial, Helvetica, sans-serif;
-  padding-top: 0.28125rem;
-  padding-bottom: 0.28125rem;
-  padding-left: 0.9375rem;
-  padding-right: 0.9375rem;
+  padding-top: 4.5px;
+  padding-bottom: 4.5px;
+  padding-left: 15px;
+  padding-right: 15px;
   background: #fff;
-  border: 0.09375rem solid #ccc;
-  border-radius: 0.28125rem;
+  border: 1.5px solid #ccc;
+  border-radius: 4.5px;
   cursor: pointer;
   font-size: 0.75rem;
   font-weight: bold;
@@ -234,7 +229,7 @@
 .size-type {
   display: block;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.5625rem;
   font-weight: 100;
@@ -245,21 +240,20 @@
   display: grid;
   list-style: none;
   position: absolute;
-  /* z-index: 2000; */
   grid-template-columns: 1fr 1fr;
   gap: 22.5%;
-  margin-left: -5.625rem;
+  margin-left: -90px;
 }
 .company {
   background-color: white;
-  border: 0.046875rem solid;
-  border-radius: 0.375rem;
-  width: 1.875rem;
-  height: 1.40625rem;
-  padding-top: 0.28125rem;
-  padding-bottom: 0.28125rem;
-  padding-left: 0.9375rem;
-  padding-right: 0.9375rem;
+  border: 0.75px solid;
+  border-radius: 6px;
+  width: 30px;
+  height: 22.5px;
+  padding-top: 4.5px;
+  padding-bottom: 4.5px;
+  padding-left: 15px;
+  padding-right: 15px;
   transition: transform 0.2s ease;
 }
 .company:hover {
@@ -272,15 +266,14 @@
   display: grid;
   list-style: none;
   position: absolute;
-  /* z-index: 2000; */
   grid-template-columns: 1fr 1fr;
   gap: 22.5%;
-  margin-left: -5.625rem;
+  margin-left: -90px;
 }
 
 .product-image {
-  width: 6.5625rem;
-  height: 4.21875rem;
+  width: 105px;
+  height: 67.5px;
 }
 
 .name-product {
@@ -289,12 +282,12 @@
   font-weight: bold;
 }
 .product {
-  padding: 0.375rem;
+  padding: 6px;
   transition: transform 0.2s ease;
 }
 .product:hover {
-  border: 0.046875rem solid rgb(184, 184, 184);
-  border-radius: 0.1875rem;
+  border: 0.75px solid rgb(184, 184, 184);
+  border-radius: 3px;
   background-color: #eaeaea;
   transform: scale(1.1);
 }
@@ -307,32 +300,29 @@
 }
 
 .brands-menu {
-  /* display: flex;
-  flex-wrap: wrap; */
   display: grid;
-  grid-template-columns: 8rem 8rem 8rem 8rem 8rem;
+  grid-template-columns: 128px 128px 128px 128px 128px;
   justify-content: center;
   font-weight: 100;
   font-family: Arial, Helvetica, sans-serif;
   font-style: italic;
   row-gap: 2%;
   column-gap: 5%;
-  padding-left: 20rem;
-  padding-right: 25rem;
-  margin-top: -2rem;
+  padding-left: 320px;
+  padding-right: 400px;
+  margin-top: -32px;
   list-style: none;
 }
 .company-brands-menu {
-  width: 7rem;
-  height: 5rem;
-
+  width: 112px;
+  height: 80px;
   background-color: white;
-  border: 0.046875rem solid;
-  border-radius: 0.375rem;
-  padding-top: 0.28125rem;
-  padding-bottom: 0.28125rem;
-  padding-left: 0.9375rem;
-  padding-right: 0.9375rem;
+  border: 0.75px solid;
+  border-radius: 6px;
+  padding-top: 4.5px;
+  padding-bottom: 4.5px;
+  padding-left: 15px;
+  padding-right: 15px;
   transition: transform 0.2s ease;
 }
 .company-brands-menu:hover {
@@ -341,44 +331,37 @@
   vertical-align: middle;
 }
 .image-demo {
-  margin-left: 0rem;
-  margin-right: 0rem;
-  padding-left: 0rem;
-  padding-right: 0rem;
-  margin-top: 6rem;
-  width: 95rem;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 96px;
+  width: 1520px;
   text-align: center;
   position: relative;
-
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* opacity: 1; */
 }
 .image-demo-d {
-  width: 95rem;
+  width: 1520px;
 }
-/* .image-demo-d:hover {
-  width: 92rem;
-  border-radius: 4rem;
-} */
 
 .image-demo .overlay-btn {
   display: none;
   position: absolute;
-
   top: 80%;
   left: 45%;
   z-index: 1;
-  padding: 0.5rem 2.2rem;
+  padding: 8px 35.2px;
   background-color: rgba(255, 255, 255, 0.6);
   color: rgb(0, 0, 0);
   border-style: solid;
   border-color: #000000;
-  border-width: 0.1rem;
-  border-radius: 0.2rem;
-  box-shadow: 0rem 0.2rem 0.3rem rgba(0, 0, 0, 0.6);
+  border-width: 1.6px;
+  border-radius: 3.2px;
+  box-shadow: 0px 3.2px 4.8px rgba(0, 0, 0, 0.6);
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
@@ -390,19 +373,15 @@
   display: block;
   z-index: 1;
 }
-/* .image-demo:hover .image-demo-d {
-  width: 92rem;
-  border-radius: 4rem;
-} */
 .overlay-btn:hover {
   transform: scale(1.1);
 }
 
 .introduct {
-  height: 5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  margin-left: 1rem;
+  height: 80px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: 16px;
 }
 .introduction {
   font-family: Arial, Helvetica, sans-serif;
@@ -413,42 +392,39 @@
 .product-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  /* grid-template-columns: repeat(4, 1fr); */
-
-  gap: 0rem; /* Khoảng cách giữa các item */
-  margin-left: 7rem;
-  margin-right: 7rem;
+  gap: 0px;
+  margin-left: 112px;
+  margin-right: 112px;
   justify-items: center;
 }
 
 .prod-demo {
-  width: 18rem;
-  height: 28rem;
-  margin-left: 0rem;
-  margin-top: 0rem;
+  width: 288px;
+  height: 448px;
+  margin-left: 0px;
+  margin-top: 0px;
   align-items: center;
-
   transition: transform 0.2s ease;
 }
 .prod {
-  width: 16rem;
-  height: 16rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
+  width: 256px;
+  height: 256px;
+  margin-top: 16px;
+  margin-left: 16px;
   background-color: gray;
   position: relative;
   z-index: 1;
 }
 .img-prod {
-  width: 16rem;
-  height: 16rem;
+  width: 256px;
+  height: 256px;
   text-align: center;
 }
 .info-prod {
   font-family: Arial, Helvetica, sans-serif;
-  width: 16rem;
-  height: 12rem;
-  margin-left: 1rem;
+  width: 256px;
+  height: 192px;
+  margin-left: 16px;
 }
 .name-prod {
   font-size: 1.3rem;
@@ -456,7 +432,7 @@
 }
 .atribute-prod {
   font-size: 1rem;
-  width: 3rem;
+  width: 48px;
   color: rgb(206, 184, 184);
 }
 .price {
@@ -466,63 +442,48 @@
   background-color: #e9e7e7;
   transform: scale(1.1);
   vertical-align: middle;
-  border-radius: 1rem;
+  border-radius: 16px;
   z-index: 1;
 }
 .new-text {
-  height: 1rem;
-  width: 2rem;
-  padding: 0.1rem;
+  height: 16px;
+  width: 32px;
+  padding: 1.6px;
   position: absolute;
   background-color: #000000;
   color: white;
-  top: -0.5rem;
-  left: 0.5rem;
+  top: -8px;
+  left: 8px;
 }
 .sale-text {
-  height: 1rem;
-  width: 2rem;
-  padding: 0.1rem;
+  height: 16px;
+  width: 32px;
+  padding: 1.6px;
   position: absolute;
   background-color: #fc0303;
   color: white;
-  top: -0.5rem;
-  left: 0.5rem;
+  top: -8px;
+  left: 8px;
 }
 
 .image-demo-d3,
 .image-demo-d4 {
-  width: 50rem;
-  height: 50rem;
-  margin-top: 0rem;
+  width: 800px;
+  height: 800px;
+  margin-top: 0px;
 }
 
-/* .image-demo-d3:hover,
-.image-demo-d4:hover {
-  width: 92rem;
-  border-radius: 4rem;
-} */
 .in-3-4,
 .in-3,
 .in-4 {
-  margin-top: 0rem;
-  margin-bottom: 3rem;
+  margin-top: 0px;
+  margin-bottom: 48px;
 }
 .image-demo-d3,
 .image-demo-d4 {
-  width: 48rem;
+  width: 768px;
   object-fit: cover;
 }
-/* .image-demo-d3:hover,
-.image-demo-d4:hover {
-  width: 47rem;
-  border-radius: 4rem;
-}
-.image-demo .in-3:hover .image-demo-d3,
-.image-demo .in-4:hover .image-demo-d4 {
-  width: 47rem;
-  border-radius: 4rem;
-} */
 
 .in-3-4 .btn-in-3 {
   background-color: #31c3e0;
@@ -534,8 +495,8 @@
 }
 
 body {
-  height: 281.25rem;
-  margin: 0rem;
+  height: 4500px;
+  margin: 0px;
 }
 .banner {
   width: 100%;
