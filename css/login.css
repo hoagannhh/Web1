@@ -10,12 +10,13 @@ p{
         /* margin: 0px; */
 }
 .login{
-    position: relative;
+    position: absolute;
     height: 50vh;
     width: 40vw;
     background-color: aquamarine;
-    top: 25vh;
-    left: 20vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* dịch chuyển lại để tâm khớp */
     min-width: 300px;
     min-height: 500px;
     max-height: 700px;
@@ -31,7 +32,7 @@ p{
 .form-log{
     height: 40%;
 }
-.login button{
+.login button, .login input{
     display: flex;
     background-color: white;
     border-color: gray;
@@ -69,18 +70,15 @@ p{
     padding: 7px;
     color: gray;
 }
-.btn.sign-in{
-    border: none;
+.form-log .btn.sign-in{
     background-color: transparent;
-    width: 0px;
-    height: 10px;
+    border: none;
+    position: static;
     margin: 0px;
-    margin-left: 100%;
-    /* position: relative; */
-    /* right: -35%; */
-    /* bottom: 16%; */
-    display: none;
-    z-index: 1;
+    padding: 0px;
+    width: 5rem;
+    height: 2rem;
+    right: -9vw;
 }
 .form-log .btn.continue{
     display: flex;
