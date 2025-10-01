@@ -359,10 +359,10 @@
 .image-demo-d {
   width: 95rem;
 }
-.image-demo-d:hover {
+/* .image-demo-d:hover {
   width: 92rem;
   border-radius: 4rem;
-}
+} */
 
 .image-demo .overlay-btn {
   display: none;
@@ -390,10 +390,10 @@
   display: block;
   z-index: 1;
 }
-.image-demo:hover .image-demo-d {
+/* .image-demo:hover .image-demo-d {
   width: 92rem;
   border-radius: 4rem;
-}
+} */
 .overlay-btn:hover {
   transform: scale(1.1);
 }
@@ -412,9 +412,12 @@
 
 .product-grid {
   display: grid;
-  /* grid-template-columns: 1fr 1fr 1fr; */
-  grid-template-columns: repeat(4, 1fr); /* 3 cột bằng nhau */
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: repeat(4, 1fr); */
+
   gap: 0rem; /* Khoảng cách giữa các item */
+  margin-left: 7rem;
+  margin-right: 7rem;
   justify-items: center;
 }
 
@@ -494,11 +497,11 @@
   margin-top: 0rem;
 }
 
-.image-demo-d3:hover,
+/* .image-demo-d3:hover,
 .image-demo-d4:hover {
   width: 92rem;
   border-radius: 4rem;
-}
+} */
 .in-3-4,
 .in-3,
 .in-4 {
@@ -510,7 +513,7 @@
   width: 48rem;
   object-fit: cover;
 }
-.image-demo-d3:hover,
+/* .image-demo-d3:hover,
 .image-demo-d4:hover {
   width: 47rem;
   border-radius: 4rem;
@@ -519,7 +522,7 @@
 .image-demo .in-4:hover .image-demo-d4 {
   width: 47rem;
   border-radius: 4rem;
-}
+} */
 
 .in-3-4 .btn-in-3 {
   background-color: #31c3e0;
