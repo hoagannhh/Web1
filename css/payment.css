@@ -79,22 +79,24 @@ hr {
   gap: 20px;
   margin-top: 30px;
 }
+.date-invoice {
+  font-size: 1rem;
+  font-weight: bold;
+}
 .invoice-product {
   display: flex;
   justify-content: space-between;
   margin-top: 0px;
 }
-.date-invoice {
-  font-size: 1rem;
-  font-weight: bold;
-}
+
 .img-invoice-product {
-  width: 300px;
+  width: 60%;
 }
 .img-invoice-product-img {
-  width: 250px;
+  width: 200px;
 }
 .infor-invoice {
+  width: 40%;
   margin-top: 30px;
 }
 .name-invoice-product {
