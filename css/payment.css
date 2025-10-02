@@ -1,0 +1,115 @@
+.payment {
+  display: flex;
+  width: 100vw;
+  margin-top: 50px;
+}
+.left-payment,
+.right-payment {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.left-payment {
+  background-color: lightblue;
+}
+
+.right-payment {
+  display: flex;
+  flex-direction: column;
+  /* background-color: lightcoral; */
+  padding-left: 150px;
+  padding-right: 150px;
+  gap: 7px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.bill {
+  display: flex;
+  justify-content: space-between;
+}
+.feature {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: gray;
+}
+.free-ship {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.progress {
+  width: 400px;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 70%;
+  height: 100%;
+  background-color: green;
+  border-radius: 10px 10px 10px 10px;
+}
+.total-bill {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.price-bill {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: gray;
+}
+hr {
+  border: none;
+  border-top: 1px solid black;
+  width: 100%;
+}
+.invoice {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+.invoice-product {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0px;
+}
+.date-invoice {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.img-invoice-product {
+  width: 300px;
+}
+.img-invoice-product-img {
+  width: 250px;
+}
+.infor-invoice {
+  margin-top: 30px;
+}
+.name-invoice-product {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.qty-invoice-product,
+.size-invoice-product,
+.price-invoice-product {
+  font-size: 1rem;
+  font-weight: bold;
+  color: gray;
+}
+.line-invoice {
+  border: none;
+  border-top: 1px solid rgb(165, 165, 165);
+  width: 100%;
+}
