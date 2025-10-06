@@ -2,36 +2,35 @@
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-
 body {
   height: 2000px;
   margin: 0;
 }
 .just-do-it {
   width: 100%;
-  margin-top: 87.835px;
 }
-.sticky {
-  /* position: sticky; */
-  top: 0;
+
+.task-bar {
+  position: relative;
 }
+
 .sidebar {
+  position: sticky;
+  padding-top: 80px;
+  top: 0;
   box-sizing: border-box;
   height: 100vh;
   width: 250px;
   padding-left: 48px;
-  border-right: 1px solid;
+
   background-color: white;
-  position: sticky;
+
   top: 0;
   align-self: start;
   overflow: hidden;
   text-wrap: nowrap;
 }
-.push {
-  top: 87.1px;
-  transition: 0.15s;
-}
+
 .sidebar-menu {
   list-style: none;
   padding: 0;
@@ -249,7 +248,10 @@ body {
   accent-color: black;
 }
 .product-head {
+  background-color: #fff;
   display: flex;
   justify-content: space-between;
-  position: sticky;
+  top: 0;
+  margin-top: 80px;
+  position: absolute;
 }
