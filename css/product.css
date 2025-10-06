@@ -1,53 +1,78 @@
-      .product-list {
-        display: flex;
+.product-grid {
+  display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
         width: 80%;
-        
-        padding: 8px;
-      }
-      
-      .product-card {
-        background: white;
-        border: none;
-        border-radius: 8px;
-        width: 29%;
-        min-height: 400px;
-        height: fit-content;
-        padding: 10px;
-        text-align: left;
-        position: relative;
-        transition: border 0.3s ease;
-        
-        
-      }.product-card-info {
-        padding: 8px 0 0 0;
-      }
-      .product-card img {
-        padding: 50px;
-        width: 80%;
-        border-radius: 8px;
-      }
-      .product-card .label {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        background: red;
-        color: white;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-      }
-      
-      .product-card .name {
-        font-weight: bold;
-        margin: 10px 0 5px 0;
-      }
-      .product-card .price {
-        color: #333;
-        font-size: 16px;
-        margin-bottom: 5px;
-      }
-      .product-card:hover {
-        cursor: pointer;
-      }
+        gap: 30px;
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 200px;
+}
+
+.prod-demo {
+  width: 30%;
+  height: 448px;
+  margin-left: 0px;
+  margin-top: 0px;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+.prod {
+  width: 90%;
+  height: 256px;
+  margin-top: 16px;
+  margin-left: 16px;
+  background-color: gray;
+  position: relative;
+  z-index: 1;
+}
+.img-prod {
+  width: 100%;
+  
+  text-align: center;
+}
+.info-prod {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 256px;
+  height: 192px;
+  margin-left: 16px;
+}
+.name-prod {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.atribute-prod {
+  font-size: 1rem;
+  width: 48px;
+  color: rgb(206, 184, 184);
+}
+.price {
+  font-size: 1.2rem;
+}
+.prod-demo:hover {
+  background-color: #e9e7e7;
+  transform: scale(1.05);
+  vertical-align: middle;
+  border-radius: 16px;
+  z-index: 1;
+}
+.new-text {
+  height: 16px;
+  width: 32px;
+  padding: 1.6px;
+  position: absolute;
+  background-color: #000000;
+  color: white;
+  top: -8px;
+  left: 8px;
+}
+.sale-text {
+  height: 16px;
+  width: 32px;
+  padding: 1.6px;
+  position: absolute;
+  background-color: #fc0303;
+  color: white;
+  top: -8px;
+  left: 8px;
+}
