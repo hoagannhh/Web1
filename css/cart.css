@@ -1,0 +1,126 @@
+.img-just-do-it{
+    margin-top: 100px;
+    width: 98vw;
+}
+.cart{
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-around;
+}
+.product-bought{
+    display: flex;
+    flex-direction: row;
+    /* padding: 0px 250px 0px 0px; */
+    width: 60vw;
+    margin-bottom: 20px;
+}
+.product-bought .detail-product{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+.represent{
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+}
+.infor-cart{
+    margin-top: 40px;
+    width: 30vw;
+    max-height: 300px;
+    max-width: 400px;
+    padding: 10px;
+}
+.represent img{
+    width: 150px;
+}
+.navigator{
+    display: flex;
+    margin-top: 10px;
+}
+.navigator .quantity{
+    width: 25px;
+    text-align: center;
+    border: 1px solid black;
+    border-left: none;
+    border-right: none;
+    background-color: white;
+    padding: 0px;
+    /* border: 0px bold rgb(254, 254, 254); */
+}
+.navigator .add{
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    background-color: white;
+    border: 1px solid black;
+    border-left: none;
+}
+.navigator .subtract{
+    background-color: white;
+    border: 1px solid black;
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+    border-right: none;
+}
+.infor-product-bought{
+    margin: 0px 0px 0px 20px;
+}
+.infor-product-bought .name{
+    margin: 0px;
+}
+.infor-product-bought .kind-of-shoes,
+.infor-product-bought .brand,
+.infor-product-bought .color,
+.infor-product-bought .size{
+    color: gray;
+    margin: 5px 0px;
+}
+.product-bought .price{
+    margin: 0px;
+}
+.infor-cart{
+    border: 1px solid gray;
+}
+.infor-cart .order-sumary{
+    font-size: 25px;
+    margin: 10px 10px
+}
+.infor-cart .id-cart{
+    font-size: 15px;
+    margin: 10px 10px;
+}
+.horizontal-bar{
+    height: 1px;
+    width: 98%;
+    background-color: black;
+}
+.total-cost-product-p, .total-cost-product, .cost-ship-p, .cost-ship
+, .total-cost-p, .total-cost
+{
+    margin: 10px 10px;
+
+}
+.group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.group-outside{
+    margin: 20px 0px;
+}
+.infor-cart .checkout{
+    display: block;
+    background-color: black;
+    margin: 10px auto;  /* căn giữa */
+    padding: 10px 20px;
+    color: white;
+    width: 20vw;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
