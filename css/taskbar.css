@@ -1,0 +1,340 @@
+.task-bar {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  margin-top: 0px;
+  z-index: 10000;
+}
+.Header {
+  display: flex;
+  flex-direction: row;
+  height: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0px;
+  padding-top: 15px;
+  transition: 0.15s;
+}
+.hide {
+  top: -90px;
+  transition: 0.5s;
+}
+
+.name {
+  flex: 300px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.75rem;
+  margin-right: 45px;
+  margin-left: 30px;
+}
+.Search-taskbar {
+  display: flex;
+  flex: 1;
+  max-width: 450px;
+  position: relative;
+}
+.Search {
+  border: 1.5px solid rgb(193, 192, 192);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
+  width: 100%;
+}
+.Search-icon {
+  height: 12px;
+  position: absolute;
+  top: 9px;
+  right: 7.5px;
+  cursor: pointer;
+}
+.icon-sign-in {
+  height: 12px;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+
+.sign {
+  flex: 450px;
+  background-color: rgb(254, 253, 252);
+  border-radius: 6px;
+  border: none;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.login {
+  margin-left: 45px;
+  margin-right: 15px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 30px;
+  margin-top: 22.5px;
+  border: 1.5px solid;
+  border-top-color: rgb(227, 223, 223);
+  border-bottom-color: rgb(227, 223, 223);
+  border-left-color: white;
+  border-right-color: white;
+  gap: 2%;
+  width: 100%;
+  position: relative;
+  z-index: 9999;
+}
+.menu .test {
+  font-size: 0.75rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  margin-left: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  position: relative;
+  z-index: 9999;
+  cursor: pointer;
+  padding-left: 0px;
+  padding-right: 0px;
+  transition: 0.15s;
+}
+.menu .test .box {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  background-color: rgb(255, 255, 255);
+  width: 1680px;
+  height: 320px;
+  top: 30px;
+  transition: 0.5s;
+}
+.menu .test .men {
+  left: -560px;
+}
+.menu .test .women {
+  left: -640px;
+}
+.menu .test .kid {
+  left: -720px;
+}
+.menu .test .BRANDS {
+  left: -800px;
+}
+
+.menu .test:hover .box {
+  display: block;
+}
+
+.menu .test:hover {
+  border-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.split-menu {
+  margin-top: 4px;
+}
+
+.bag {
+  width: 24px;
+  position: absolute;
+  margin-top: 3.2px;
+  right: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.split-menu {
+  margin-top: 4px;
+}
+
+.bag-icon {
+  width: 24px;
+}
+.bag:hover {
+  border-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transform: scale(1.1);
+}
+.dropdown-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  gap: 20%;
+}
+
+.size-grid {
+  display: grid;
+  list-style: none;
+  position: absolute;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  gap: 22.5%;
+  max-width: 150px;
+  margin-left: -75px;
+}
+
+.size-grid.kid-size {
+  display: flex;
+  flex-direction: 1fr 1fr 1fr;
+  gap: 0px;
+  list-style: none;
+  padding: 0;
+  margin-left: -160px;
+  align-items: flex-end;
+}
+
+.size-column {
+  border-right: 1px solid #9a9999;
+  height: 160px;
+  width: 192px;
+  padding: 0 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.size-grid.kid-size .size-menu {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  list-style: none;
+  gap: 5%;
+  padding: 0 16px;
+}
+
+.size-grid.kid-size .size-column:last-child {
+  border-right: none;
+}
+
+.size-btn {
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 4.5px;
+  padding-bottom: 4.5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: #fff;
+  border: 1.5px solid #ccc;
+  border-radius: 4.5px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.size-btn:hover {
+  background: #d8d5d5;
+  transform: scale(1.1);
+}
+.size-type {
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 100;
+  color: #dcdcdc;
+}
+
+.brands {
+  display: grid;
+  list-style: none;
+  position: absolute;
+  grid-template-columns: 1fr 1fr;
+  gap: 22.5%;
+  margin-left: -90px;
+}
+.company {
+  background-color: white;
+  border: 0.75px solid;
+  border-radius: 6px;
+  width: 30px;
+  height: 22.5px;
+  padding-top: 4.5px;
+  padding-bottom: 4.5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: transform 0.2s ease;
+}
+.company:hover {
+  background-color: #e9e7e7;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
+
+.sellers {
+  display: grid;
+  list-style: none;
+  position: absolute;
+  grid-template-columns: 1fr 1fr;
+  gap: 22.5%;
+  margin-left: -90px;
+}
+
+.product-image {
+  width: 105px;
+  height: 67.5px;
+}
+
+.name-product {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: bold;
+}
+.product {
+  padding: 6px;
+  transition: transform 0.2s ease;
+}
+.product:hover {
+  border: 0.75px solid rgb(184, 184, 184);
+  border-radius: 3px;
+  background-color: #eaeaea;
+  transform: scale(1.1);
+}
+
+.title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.brands-menu {
+  display: grid;
+  grid-template-columns: 128px 128px 128px 128px 128px;
+  justify-content: center;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  row-gap: 2%;
+  column-gap: 5%;
+  padding-left: 320px;
+  padding-right: 400px;
+  margin-top: -32px;
+  list-style: none;
+}
+.company-brands-menu {
+  width: 112px;
+  height: 80px;
+  background-color: white;
+  border: 0.75px solid;
+  border-radius: 6px;
+  padding-top: 4.5px;
+  padding-bottom: 4.5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: transform 0.2s ease;
+}
+.company-brands-menu:hover {
+  background-color: #e9e7e7;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
