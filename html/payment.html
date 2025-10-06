@@ -217,7 +217,7 @@
           <button class="test">
             Brands
             <div class="box BRANDS">
-              <h4 class="title">BRANDS</h4>
+              <h4 class="payment-title">BRANDS</h4>
               <ul class="brands-menu">
                 <li>
                   <img class="company-brands-menu" src="../icon/nike.png" />
@@ -264,16 +264,68 @@
     <div><img src="../img/Group 22.png" alt="" class="just-do-it" /></div>
 
     <div class="payment">
-      <div class="left-payment">aaaaaaaaa</div>
+      <div class="left-payment">
+        <div class="address">
+          <div class="payment-title">YOUR SELECTIONS</div>
+          <!-- Hiển thị địa chỉ -->
+
+          <div id="address-view">
+            <div>
+              <p><strong>ADDRESS:</strong> aaaaa/aaaaaaa/aaaaaaaaaa</p>
+            </div>
+            <hr class="line-invoice" />
+            <div>
+              <button class="button-change" onclick="showForm()">Change</button>
+            </div>
+          </div>
+
+          <!-- Form nhập thông tin -->
+          <div id="form-view" class="hidden">
+            <form>
+              <input
+                class="input-infor-address"
+                type="email"
+                placeholder="Email"
+                required
+              /><br /><br />
+              <input
+                class="input-infor-address"
+                type="tel"
+                placeholder="Number Phone"
+                required
+              /><br /><br />
+              <input
+                class="input-infor-address"
+                type="text"
+                placeholder="First name"
+              /><br /><br />
+              <input
+                class="input-infor-address"
+                type="text"
+                placeholder="Last name"
+              /><br /><br />
+              <input
+                class="input-infor-address"
+                type="text"
+                placeholder="Address"
+                required
+              /><br /><br />
+              <button type="button" class="black-btn" onclick="showAddress()">
+                ←
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
       <div class="right-payment">
-        <div class="title">Order Summary</div>
+        <div class="payment-title">Order Summary</div>
         <div class="bill">
           <div class="feature">Subtotal</div>
-          <div class="price">3,829,000</div>
+          <div class="payment-price">3,829,000</div>
         </div>
         <div class="bill">
           <div class="feature">Delivery/Shipping</div>
-          <div class="price">250,000</div>
+          <div class="payment-price">250,000</div>
         </div>
         <div class="free-ship">Add 1,171,000đ more to earn Free Shipping!</div>
         <div class="progress">
@@ -305,5 +357,16 @@
         </div>
       </div>
     </div>
+    <script>
+      function showForm() {
+        document.getElementById("address-view").classList.add("hidden");
+        document.getElementById("form-view").classList.remove("hidden");
+      }
+
+      function showAddress() {
+        document.getElementById("form-view").classList.add("hidden");
+        document.getElementById("address-view").classList.remove("hidden");
+      }
+    </script>
   </body>
 </html>
