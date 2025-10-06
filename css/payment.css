@@ -10,7 +10,12 @@
 }
 
 .left-payment {
+  display: flex;
+  flex-direction: column;
   background-color: lightblue;
+  padding-left: 150px;
+  padding-right: 150px;
+  gap: 7px;
 }
 
 .right-payment {
@@ -22,11 +27,32 @@
   gap: 7px;
 }
 
-.title {
+.payment-title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 10px;
 }
+.button-change {
+  width: 100px;
+  padding: 10px 10px 10px 10px;
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+}
+.input-infor-address {
+  border-style: solid;
+  border-radius: 4px;
+  width: 400px;
+  height: 30px;
+  padding: 5px 10px 5px 10px;
+  font-size: 0.9rem;
+}
+.hidden {
+  display: none;
+}
+
 .bill {
   display: flex;
   justify-content: space-between;
