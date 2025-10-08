@@ -64,15 +64,24 @@
   position: absolute;
   bottom: 3%;
   right: 4%;
+  transition: 0.2s;
 }
 .buy-now-btn {
+  display: none;
   background-color: white;
   font-size: 1.1rem;
   padding: 6px;
   border: 1px solid rgb(231, 231, 231);
-  box-shadow: 5px 5px 0px rgba(0, 0, 0, 1);
+
   cursor: pointer;
   transition: 0.15s;
+}
+.prod-demo:hover .buy-now {
+  transform: translate(-5px, -5px);
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 1);
+}
+.prod-demo:hover .buy-now-btn {
+  display: block;
 }
 .prod-demo:has(.buy-now:hover) {
   background-color: white;
