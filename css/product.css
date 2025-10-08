@@ -1,8 +1,8 @@
 .product-grid {
   display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
-        width: 80%;
+        justify-content: center;
+        width: 100%;
         gap: 30px;
         padding-left: 20px;
         padding-top: 20px;
@@ -10,16 +10,18 @@
 }
 
 .prod-demo {
-  width: 30%;
-  height: 448px;
-  margin-left: 0px;
-  margin-top: 0px;
-  align-items: center;
-  transition: transform 0.2s ease;
+  flex: 1 1 calc(30%- 20px); /* 3 sản phẩm 1 hàng */
+  max-width: calc(33.333% - 20px);
+  background-color: white;
+  border-radius: 12px;
+  
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 .prod {
-  width: 90%;
-  height: 256px;
+  width: 94%;
+  align-items: center;
+  text-align: center;
+  height: auto;
   margin-top: 16px;
   margin-left: 16px;
   background-color: gray;
@@ -27,9 +29,12 @@
   z-index: 1;
 }
 .img-prod {
-  width: 100%;
-  
+  width: 80%;
+  height: auto;
+  display: inline-block;
   text-align: center;
+  
+  
 }
 .info-prod {
   font-family: Arial, Helvetica, sans-serif;
