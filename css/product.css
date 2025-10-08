@@ -15,6 +15,7 @@
   border-radius: 8px;
   transition: transform 0.2s ease, background-color 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .prod-demo:hover {
@@ -60,7 +61,36 @@
   color: #000000;
   margin-top: 8px;
 }
+.buy-now {
+  position: absolute;
+  bottom: 3%;
+  right: 4%;
+  transition: 0.2s;
+}
+.buy-now-btn {
+  display: none;
+  background-color: white;
+  font-size: 1.1rem;
+  padding: 6px;
+  border: 1px solid rgb(231, 231, 231);
 
+  cursor: pointer;
+  transition: 0.15s;
+}
+.prod-demo:hover .buy-now {
+  transform: translate(-5px, -5px);
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 1);
+}
+.prod-demo:hover .buy-now-btn {
+  display: block;
+}
+.prod-demo:has(.buy-now:hover) {
+  background-color: white;
+}
+.buy-now-btn:active {
+  transform: translate(5px, 5px);
+  box-shadow: none;
+}
 .new-text,
 .sale-text {
   position: absolute;
