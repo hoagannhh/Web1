@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "name": "Nike Air Force 1 '07",
+    "img": "https://static.nike.com/a/images/t_default/air-force-1-07.jpg",
+    "gender": "man",
+    "brand": "Nike",
+    "price": 120,
+    "color": "white",
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": 2,
+    "name": "Adidas Ultraboost 22",
+    "img": "https://assets.adidas.com/images/w_600,f_auto,q_auto/ultraboost-22.jpg",
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 180,
+    "color": "black",
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Converse Chuck Taylor All Star",
+    "img": "https://www.converse.com/images/t_default/chuck-taylor-all-star.jpg",
+    "gender": "women",
+    "brand": "Converse",
+    "price": 70,
+    "color": "white",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": 4,
+    "name": "Vans Old Skool Classic",
+    "img": "https://images.vans.com/is/image/Vans/old-skool-black.jpg",
+    "gender": "man",
+    "brand": "Vans",
+    "price": 85,
+    "color": "black-white",
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": 5,
+    "name": "Puma RS-X Reinvention",
+    "img": "https://images.puma.com/is/image/Puma/rs-x-reinvention.jpg",
+    "gender": "women",
+    "brand": "Puma",
+    "price": 130,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": 6,
+    "name": "New Balance 550 Retro",
+    "img": "https://nb.scene7.com/is/image/NB/550-white-green.jpg",
+    "gender": "man",
+    "brand": "New Balance",
+    "price": 150,
+    "color": "white-green",
+    "size": [40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.9,
+      "votes": 2311
+    }
+  },
+  {
+    "id": 7,
+    "name": "Nike Dunk Low Kids",
+    "img": "https://static.nike.com/a/images/t_default/dunk-low-kids.jpg",
+    "gender": "kid",
+    "brand": "Nike",
+    "price": 85,
+    "color": "blue-white",
+    "size": [30, 31, 32, 33, 34, 35],
+    "rating": {
+      "stars": 4.7,
+      "votes": 640
+    }
+  },
+  {
+    "id": 8,
+    "name": "Adidas Superstar Foundation Kids",
+    "img": "https://assets.adidas.com/images/w_600,f_auto,q_auto/superstar-kids.jpg",
+    "gender": "kid",
+    "brand": "Adidas",
+    "price": 75,
+    "color": "white-black",
+    "size": [28, 29, 30, 31, 32, 33],
+    "rating": {
+      "stars": 4.6,
+      "votes": 512
+    }
+  },
+  {
+    "id": 9,
+    "name": "Nike Air Jordan 1 Retro High",
+    "img": "https://static.nike.com/a/images/t_default/air-jordan-1-retro-high.jpg",
+    "gender": "man",
+    "brand": "Jordan",
+    "price": 200,
+    "color": "red-black",
+    "size": [40, 41, 42, 43, 44, 45],
+    "rating": {
+      "stars": 4.9,
+      "votes": 3245
+    }
+  },
+  {
+    "id": 10,
+    "name": "Converse Run Star Hike Platform",
+    "img": "https://www.converse.com/images/t_default/run-star-hike.jpg",
+    "gender": "women",
+    "brand": "Converse",
+    "price": 120,
+    "color": "cream",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.8,
+      "votes": 1320
+    }
+  }
+]
