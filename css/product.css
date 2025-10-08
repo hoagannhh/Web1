@@ -1,40 +1,41 @@
 .product-grid {
   display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
-        gap: 30px;
-        padding-left: 20px;
-        padding-top: 20px;
-        padding-bottom: 200px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 90%;
+  gap: 30px;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 200px;
 }
 
 .prod-demo {
-  flex: 1 1 calc(30%- 20px); /* 3 sản phẩm 1 hàng */
-  max-width: calc(33.333% - 20px);
+  flex: 1 1 calc(33% - 20px); /* 3 sản phẩm 1 hàng */
+  max-width: calc(33% - 20px);
   background-color: white;
-  border-radius: 12px;
-  
+  border-radius: 0px;
+
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 .prod {
-  width: 94%;
+  width: 480px;
+  height: 480px;
   align-items: center;
   text-align: center;
-  height: auto;
+
   margin-top: 16px;
-  margin-left: 16px;
-  background-color: gray;
+  margin-left: 18px;
+  background: linear-gradient(to bottom, #a7a7a7, #d8d8d8);
   position: relative;
   z-index: 1;
 }
 .img-prod {
-  width: 80%;
-  height: auto;
+  width: 480px;
+  height: 480px;
+  object-fit: cover;
   display: inline-block;
   text-align: center;
-  
-  
+  overflow: hidden;
 }
 .info-prod {
   font-family: Arial, Helvetica, sans-serif;
@@ -47,20 +48,21 @@
   font-weight: bold;
 }
 .atribute-prod {
-  font-size: 1rem;
+  font-size: 1.2rem;
   width: 48px;
-  color: rgb(206, 184, 184);
+  color: rgb(117, 117, 117);
 }
 .price {
   font-size: 1.2rem;
 }
 .prod-demo:hover {
-  background-color: #e9e7e7;
+  background-color: #f8f8f8;
   transform: scale(1.05);
   vertical-align: middle;
-  border-radius: 16px;
+  border-radius: 0px;
   z-index: 1;
 }
+
 .new-text {
   height: 16px;
   width: 32px;
