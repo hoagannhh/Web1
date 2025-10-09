@@ -1,12 +1,13 @@
 [
   {
-    "id": 1,
-    "name": "Nike Air Force 1 '07",
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
     "img": "https://static.nike.com/a/images/t_default/air-force-1-07.jpg",
+
     "gender": "man",
     "brand": "Nike",
-    "price": 120,
-    "color": "white",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
@@ -14,13 +15,13 @@
     }
   },
   {
-    "id": 2,
-    "name": "Adidas Ultraboost 22",
+    "id": "s2",
+    "name": "Handball Spezial",
     "img": "https://assets.adidas.com/images/w_600,f_auto,q_auto/ultraboost-22.jpg",
     "gender": "man",
     "brand": "Adidas",
-    "price": 180,
-    "color": "black",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
@@ -29,12 +30,12 @@
   },
   {
     "id": 3,
-    "name": "Converse Chuck Taylor All Star",
+    "name": "Chuck 70",
     "img": "https://www.converse.com/images/t_default/chuck-taylor-all-star.jpg",
     "gender": "women",
     "brand": "Converse",
-    "price": 70,
-    "color": "white",
+    "price": 2000000,
+    "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
@@ -42,13 +43,13 @@
     }
   },
   {
-    "id": 4,
-    "name": "Vans Old Skool Classic",
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
     "img": "https://images.vans.com/is/image/Vans/old-skool-black.jpg",
     "gender": "man",
     "brand": "Vans",
-    "price": 85,
-    "color": "black-white",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
@@ -56,12 +57,12 @@
     }
   },
   {
-    "id": 5,
-    "name": "Puma RS-X Reinvention",
+    "id": "s5",
+    "name": "Bella UT Femme",
     "img": "https://images.puma.com/is/image/Puma/rs-x-reinvention.jpg",
     "gender": "women",
     "brand": "Puma",
-    "price": 130,
+    "price": 2100000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
