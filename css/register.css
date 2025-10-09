@@ -4,15 +4,17 @@ html{
 }
 body{
     height: 3000px;
-}
+}password
+
 p{ 
     font-size: 1.4rem; 
         /* margin: 0px; */
 }
+
 .register{
     position: absolute;
     width: 35vw;
-    height: 30vw;
+    height: 80vh;
 
     top: 50%;
     left: 50%;
@@ -28,9 +30,22 @@ p{
     text-align: center;
     margin: 0px;
 }
+
 .register input, .btn{
     width: 50%;
-    height: 10%;
+    height: 5%;
+}
+.register .first-and-last-name{
+    display: flex;  
+    justify-content: center;
+    gap: 20px;
+    width: 51%;
+    height: 5%;
+}
+.register .first-and-last-name input{
+    height: 100%;
+    width: 120%;
+
 }
 .have-an-account{
     display: flex;
@@ -54,7 +69,7 @@ p{
 .register .btn.continue{
     background-color: black;
     color: white;
-    font-size: 2.5rem;
+    font-size: 2.2  rem;
     font-weight: bold;
     /* margin-top: -5%; */
 }
