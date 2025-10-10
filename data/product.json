@@ -2,8 +2,10 @@
   {
     "id": "s1",
     "name": "Air Jordan 4 RM",
-    "img": "https://static.nike.com/a/images/t_default/air-force-1-07.jpg",
-
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": ["../product-img/s1/s1-0.png", "../product-img/s1/s1-1.png",
+    "../product-img/s1/s1-2.png", "../product-img/s1/s1-3.png", "../product-img/s1/s1-4.png"],
+    "img-link-color": ["../product-img/s1/s1-black.png", "../product-img/s1/s1-blue.png", "../product-img/s1/s1-yellow.png"],
     "gender": "man",
     "brand": "Nike",
     "price": 4109000,
@@ -17,7 +19,10 @@
   {
     "id": "s2",
     "name": "Handball Spezial",
-    "img": "https://assets.adidas.com/images/w_600,f_auto,q_auto/ultraboost-22.jpg",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": ["../product-img/s2/s2-0.png", "../product-img/s2/s2-1.png",
+    "../product-img/s2/s2-2.png", "../product-img/s2/s2-3.png", "../product-img/s2/s2-4.png"],
+    "img-link-color": ["../product-img/s2/s2-blue.png", "../product-img/s2/s2-red.png"],
     "gender": "man",
     "brand": "Adidas",
     "price": 2500000,
@@ -31,7 +36,10 @@
   {
     "id": 3,
     "name": "Chuck 70",
-    "img": "https://www.converse.com/images/t_default/chuck-taylor-all-star.jpg",
+    "img-represent": "../product-img/s3/ms3-1.png",
+     "img-link-list": ["../product-img/s3/s3-0.png", "../product-img/s3/s3-1.png",
+    "../product-img/s3/s3-2.png", "../product-img/s3/s3-3.png"],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "women",
     "brand": "Converse",
     "price": 2000000,
@@ -45,7 +53,11 @@
   {
     "id": "s4",
     "name": "Classic Slip-On Checkerboard Shoe",
-    "img": "https://images.vans.com/is/image/Vans/old-skool-black.jpg",
+    "img-represent": "../product-img/s4/ms4-1.png",
+     "img-link-list": ["../product-img/s4/s4-0.png", "../product-img/s4/s4-1.png",
+    "../product-img/s4/s4-2.png"],
+    "img-link-color": ["../product-img/s4/s4-pink.png", "../product-img/s4/s4-black.png",
+     "../product-img/s4/s4-brown.png"],
     "gender": "man",
     "brand": "Vans",
     "price": 1580000,
@@ -59,7 +71,10 @@
   {
     "id": "s5",
     "name": "Bella UT Femme",
-    "img": "https://images.puma.com/is/image/Puma/rs-x-reinvention.jpg",
+    "img-represent": "../product-img/s5/ms5-1.png",
+     "img-link-list": ["../product-img/s5/s5-0.png", "../product-img/s5/s5-1.png",
+    "../product-img/s5/s5-2.png"],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "women",
     "brand": "Puma",
     "price": 2100000,
@@ -68,76 +83,6 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
-  },
-  {
-    "id": 6,
-    "name": "New Balance 550 Retro",
-    "img": "https://nb.scene7.com/is/image/NB/550-white-green.jpg",
-    "gender": "man",
-    "brand": "New Balance",
-    "price": 150,
-    "color": "white-green",
-    "size": [40, 41, 42, 43, 44],
-    "rating": {
-      "stars": 4.9,
-      "votes": 2311
-    }
-  },
-  {
-    "id": 7,
-    "name": "Nike Dunk Low Kids",
-    "img": "https://static.nike.com/a/images/t_default/dunk-low-kids.jpg",
-    "gender": "kid",
-    "brand": "Nike",
-    "price": 85,
-    "color": "blue-white",
-    "size": [30, 31, 32, 33, 34, 35],
-    "rating": {
-      "stars": 4.7,
-      "votes": 640
-    }
-  },
-  {
-    "id": 8,
-    "name": "Adidas Superstar Foundation Kids",
-    "img": "https://assets.adidas.com/images/w_600,f_auto,q_auto/superstar-kids.jpg",
-    "gender": "kid",
-    "brand": "Adidas",
-    "price": 75,
-    "color": "white-black",
-    "size": [28, 29, 30, 31, 32, 33],
-    "rating": {
-      "stars": 4.6,
-      "votes": 512
-    }
-  },
-  {
-    "id": 9,
-    "name": "Nike Air Jordan 1 Retro High",
-    "img": "https://static.nike.com/a/images/t_default/air-jordan-1-retro-high.jpg",
-    "gender": "man",
-    "brand": "Jordan",
-    "price": 200,
-    "color": "red-black",
-    "size": [40, 41, 42, 43, 44, 45],
-    "rating": {
-      "stars": 4.9,
-      "votes": 3245
-    }
-  },
-  {
-    "id": 10,
-    "name": "Converse Run Star Hike Platform",
-    "img": "https://www.converse.com/images/t_default/run-star-hike.jpg",
-    "gender": "women",
-    "brand": "Converse",
-    "price": 120,
-    "color": "cream",
-    "size": [36, 37, 38, 39, 40],
-    "rating": {
-      "stars": 4.8,
-      "votes": 1320
     }
   }
 ]
