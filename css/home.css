@@ -1,11 +1,10 @@
-
 .image-demo {
   margin-left: 0px;
   margin-right: 0px;
   padding-left: 0px;
   padding-right: 0px;
   margin-top: 96px;
-  width: 1520px;
+  width: 100%;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -14,7 +13,7 @@
   align-items: center;
 }
 .image-demo-d {
-  width: 1520px;
+  width: 100%;
 }
 
 .image-demo .overlay-btn {

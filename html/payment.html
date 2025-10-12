@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/payment.css" />
-    <link rel="stylesheet" href="../css/taskbar.css">
+    <link rel="stylesheet" href="../css/taskbar.css" />
     <link rel="stylesheet" href="../css/sidebar.css" />
     <title>Document</title>
   </head>
@@ -268,53 +268,119 @@
         <div class="address">
           <div class="payment-title">YOUR SELECTIONS</div>
           <!-- Hiển thị địa chỉ -->
-
-          <div id="address-view">
-            <div>
-              <p><strong>ADDRESS:</strong> aaaaa/aaaaaaa/aaaaaaaaaa</p>
+          <div class="container">
+            <div id="address-view">
+              <div>
+                <p>
+                  <strong>ADDRESS:</strong>
+                  <span id="current-address">aaaaa/aaaaaaa/aaaaaaaaaa</span>
+                </p>
+              </div>
+              <hr class="line-invoice" />
+              <div>
+                <button class="button-change" onclick="showForm()">
+                  Change
+                </button>
+              </div>
             </div>
-            <hr class="line-invoice" />
-            <div>
-              <button class="button-change" onclick="showForm()">Change</button>
+
+            <!-- Form nhập thông tin -->
+            <div id="form-view" class="hidden">
+              <p><strong>NEW ADDRESS:</strong></p>
+              <form id="address-form">
+                <input
+                  class="input-infor-address"
+                  type="tel"
+                  placeholder="Number Phone"
+                  required
+                /><br /><br />
+
+                <input
+                  type="text"
+                  id="new-address"
+                  class="reset-address input-infor-address"
+                  placeholder="Address"
+                  required
+                /><br /><br />
+                <div class="form-input-btn">
+                  <!-- nút xác nhận -->
+                  <button
+                    type="button"
+                    class="confirm-btn"
+                    onclick="confirmAddress()"
+                  >
+                    Confirm
+                  </button>
+                  <!-- nút quay lại -->
+                  <button
+                    type="button"
+                    class="back-btn"
+                    onclick="showAddress()"
+                  >
+                    Back
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-
-          <!-- Form nhập thông tin -->
-          <div id="form-view" class="hidden">
-            <form>
-              <input
-                class="input-infor-address"
-                type="email"
-                placeholder="Email"
-                required
-              /><br /><br />
-              <input
-                class="input-infor-address"
-                type="tel"
-                placeholder="Number Phone"
-                required
-              /><br /><br />
-              <input
-                class="input-infor-address"
-                type="text"
-                placeholder="First name"
-              /><br /><br />
-              <input
-                class="input-infor-address"
-                type="text"
-                placeholder="Last name"
-              /><br /><br />
-              <input
-                class="input-infor-address"
-                type="text"
-                placeholder="Address"
-                required
-              /><br /><br />
-              <button type="button" class="black-btn" onclick="showAddress()">
-                ←
-              </button>
-            </form>
+        </div>
+        <hr />
+        <div class="Ship">
+          <div class="payment-title">SHIPPING</div>
+          <div class="infor-ship">
+            <p>
+              250,000₫ Shipping <br /><br />
+              Shipment One <br /><br />
+              Arrives Mon, Sep 22 - Fri, Sep 26<br /><br />
+              This is an international shipment requiring customs clearance
+            </p>
           </div>
+        </div>
+        <hr />
+        <div class="paymet">
+          <div class="payment-title">Payment</div>
+          <div class="promo">
+            <p class="promo-text">Have a promo code?</p>
+            <div class="apply-promo">
+              <input type="text" class="code-promo" placeholder="Promo" />
+              <button class="apply">Apply</button>
+            </div>
+          </div>
+        </div>
+        <div class="method">
+          <div class="pay">How would you like to pay?</div>
+          <div class="credit-method payment-methood" onclick="">
+            <img src="../icon/card.png" class="icon-card" />
+            <p>Credit or Debit Card</p>
+          </div>
+
+          <div class="hidden infor-card">
+            <hr />
+            <input class="input-card" type="text" placeholder="Card number" />
+            <input class="input-card" type="text" placeholder="Name on card" />
+            <div class="date-card">
+              <input class="input-date-card" type="text" placeholder="MM/YY" />
+              <input class="input-date-card" type="text" placeholder="CVV" />
+            </div>
+            <hr />
+          </div>
+
+          <div class="payment-methood">
+            <img src="../icon/paypal.png" class="icon-paypal" />
+          </div>
+          <div class="payment-methood">
+            <img src="../icon/m-banking.png" class="icon-card" />
+            <p>Credit or Debit Card</p>
+          </div>
+          <div class="payment-methood">
+            <img src="../icon/cash.png" class="icon-card" />
+            <p>Credit or Debit Card</p>
+          </div>
+        </div>
+        <div class="form-input-btn">
+          <button type="button" class="confirm-btn">Confirm</button>
+          <!-- nút quay lại -->
+          <button type="button" class="back-btn">Back</button>
         </div>
       </div>
       <div class="right-payment">
@@ -337,36 +403,46 @@
           <div class="price-bill">4,079,000</div>
         </div>
         <hr />
-        <div class="invoice">
-          <div class="date-invoice">Arrives Fri, Sep 12</div>
-          <div class="invoice-product">
-            <div class="img-invoice-product">
-              <img
-                class="img-invoice-product-img"
-                src="../img/invoice-product.png"
-              />
+        <div class="list-invoice">
+          <div class="invoice">
+            <div class="date-invoice">Arrives Fri, Sep 12</div>
+            <div class="invoice-product">
+              <div class="img-invoice-product">
+                <img
+                  class="img-invoice-product-img"
+                  src="../img/invoice-product.png"
+                />
+              </div>
+              <div class="infor-invoice">
+                <div class="name-invoice-product">Nike Ava Rover</div>
+                <div class="qty-invoice-product">Qty: 1</div>
+                <div class="size-invoice-product">Size: EU 42</div>
+                <div class="price-invoice-product">3,829,000</div>
+              </div>
             </div>
-            <div class="infor-invoice">
-              <div class="name-invoice-product">Nike Ava Rover</div>
-              <div class="qty-invoice-product">Qty: 1</div>
-              <div class="size-invoice-product">Size: EU 42</div>
-              <div class="price-invoice-product">3,829,000</div>
-            </div>
+            <hr class="line-invoice" />
           </div>
-          <hr class="line-invoice" />
+          <div class="invoice">
+            <div class="date-invoice">Arrives Fri, Sep 12</div>
+            <div class="invoice-product">
+              <div class="img-invoice-product">
+                <img
+                  class="img-invoice-product-img"
+                  src="../img/invoice-product.png"
+                />
+              </div>
+              <div class="infor-invoice">
+                <div class="name-invoice-product">Nike Ava Rover</div>
+                <div class="qty-invoice-product">Qty: 1</div>
+                <div class="size-invoice-product">Size: EU 42</div>
+                <div class="price-invoice-product">3,829,000</div>
+              </div>
+            </div>
+            <hr class="line-invoice" />
+          </div>
         </div>
       </div>
     </div>
-    <script>
-      function showForm() {
-        document.getElementById("address-view").classList.add("hidden");
-        document.getElementById("form-view").classList.remove("hidden");
-      }
-
-      function showAddress() {
-        document.getElementById("form-view").classList.add("hidden");
-        document.getElementById("address-view").classList.remove("hidden");
-      }
-    </script>
+    <script src="../script/payment.js"></script>
   </body>
 </html>
