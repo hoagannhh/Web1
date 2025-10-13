@@ -1,5 +1,7 @@
 import { HomeComponent } from "./Pages/HomePage.js";
 import { TaskBar } from "./Pages/Taskbar.js"
+import { ButtonLogin } from './Pages/ButtonLogin.js'
+import { ButtonRegister } from './Pages/ButtonRegister.js'
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html và đường link css ở trong folder script/pages
@@ -14,6 +16,8 @@ import { TaskBar } from "./Pages/Taskbar.js"
 export const pages = {
     taskBar : TaskBar,
     home: HomeComponent,
+    login: ButtonLogin,
+    register: ButtonRegister,
 }
 // div này sẽ chứa code html sau khi load code từ object pages
 const container = document.getElementById("container");
@@ -46,9 +50,17 @@ function LoadHtml(pageName){
         container.innerHTML += element;
     });
 }
-function LoadCss(pageName){
-    const pageComponent = pages[pageName];
+export function LoadCss(pageName){
+    const cssPath = `../css/${pageName}.css`;
+    const existingLink = document.querySelector(`link[href="${cssPath}"]`);
 
+
+    if (existingLink) {
+        console.log(`CSS file "${pageName}.css" đã được tải.`);
+        return; 
+    }
+
+    const pageComponent = pages[pageName];
         if (!pageComponent){
         console.error("ko tìm thấy css của " + pageName + " này trong Object")
     }

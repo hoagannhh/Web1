@@ -1,75 +1,118 @@
-html{
-    font-size: 62.5%;
-      font-family: Arial, Helvetica, sans-serif;
+html {
+    /* Đã xóa font-size: 62.5%; */
+    font-family: Arial, Helvetica, sans-serif;
 }
-body{
+
+body {
     height: 3000px;
-}password
-
-p{ 
-    font-size: 1.4rem; 
-        /* margin: 0px; */
 }
 
-.register{
+p {
+    font-size: 14px; /* Chuyển từ 1.4rem */
+    /* margin: 0px; */
+}
+
+.modal-overlay {
+    /* display: none; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+#register-form{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.register {
     position: absolute;
     width: 35vw;
     height: 80vh;
-
+    position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    background-color: aqua;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
-.register .font-register{
+
+.register .font-register {
     font-size: clamp(14px, 2vw, 24px);
     text-align: center;
     margin: 0px;
 }
 
-.register input, .btn{
+.register input,
+.btn {
     width: 50%;
     height: 5%;
 }
-.register .first-and-last-name{
-    display: flex;  
+
+.register .first-and-last-name {
+    display: flex;
     justify-content: center;
     gap: 20px;
     width: 51%;
     height: 5%;
 }
-.register .first-and-last-name input{
+
+.register .first-and-last-name input {
     height: 100%;
     width: 120%;
-
 }
-.have-an-account{
+
+.have-an-account {
     display: flex;
     justify-content: space-between;
     width: 50%;
 }
-.have-an-account p{
+
+.have-an-account p {
     display: inline-block;
     margin: 0px;
     color: gray;
 }
-.have-an-account button{
+
+.have-an-account button {
     border: none;
     background-color: transparent;
     cursor: pointer;
     color: gray;
 }
-.have-an-account{
+
+.have-an-account {
     margin: -5% 0%;
 }
-.register .btn.continue{
+
+.register .btn.continue {
     background-color: black;
     color: white;
-    font-size: 2.2  rem;
+    font-size: 22px; /* Chuyển từ 2.2rem */
     font-weight: bold;
     /* margin-top: -5%; */
+}
+
+.button-close-register {
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 10% !important;
+    height: 10% !important;
+    max-width: 40px;
+    min-width: 30px;
+    max-height: 40px;
+    min-height: 30px;
+    border-radius: 100%;
+    transform: translate(-50%, -50%);
+    bottom: 93%;
+    left: 99%;
 }

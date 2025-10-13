@@ -4,7 +4,7 @@
   position: fixed;
   top: 0px;
   margin-top: 0px;
-  z-index: 10000;
+  z-index: 10;
 }
 .Header {
   display: flex;
@@ -56,7 +56,7 @@
 }
 
 .sign {
-  flex: 450px;
+  /* flex: 450px; */
   background-color: rgb(254, 253, 252);
   border-radius: 6px;
   border: none;
@@ -64,8 +64,12 @@
   cursor: pointer;
 }
 .login {
-  margin-left: 45px;
+  margin-left: 30px;
   margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .menu {
@@ -120,11 +124,9 @@
 .menu .test .BRANDS {
   left: -800px;
 }
-
 .menu .test:hover .box {
   display: block;
 }
-
 .menu .test:hover {
   border-style: solid;
   border-bottom-width: 3px;
@@ -133,11 +135,9 @@
   border-left: none;
   border-right: none;
 }
-
 .split-menu {
   margin-top: 4px;
 }
-
 .bag {
   width: 24px;
   position: absolute;
@@ -146,11 +146,9 @@
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-
 .split-menu {
   margin-top: 4px;
 }
-
 .bag-icon {
   width: 24px;
 }
@@ -172,7 +170,6 @@
   font-style: italic;
   gap: 20%;
 }
-
 .size-grid {
   display: grid;
   list-style: none;
@@ -183,7 +180,6 @@
   max-width: 150px;
   margin-left: -75px;
 }
-
 .size-grid.kid-size {
   display: flex;
   flex-direction: 1fr 1fr 1fr;
@@ -193,7 +189,6 @@
   margin-left: -160px;
   align-items: flex-end;
 }
-
 .size-column {
   border-right: 1px solid #9a9999;
   height: 160px;
@@ -202,7 +197,6 @@
   margin-left: 0px;
   margin-right: 0px;
 }
-
 .size-grid.kid-size .size-menu {
   display: grid;
   grid-template-rows: repeat(4, auto);
@@ -211,11 +205,9 @@
   gap: 5%;
   padding: 0 16px;
 }
-
 .size-grid.kid-size .size-column:last-child {
   border-right: none;
 }
-
 .size-btn {
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 4.5px;
@@ -243,7 +235,6 @@
   font-weight: 100;
   color: #dcdcdc;
 }
-
 .brands {
   display: grid;
   list-style: none;
@@ -269,7 +260,6 @@
   transform: scale(1.1);
   vertical-align: middle;
 }
-
 .sellers {
   display: grid;
   list-style: none;
@@ -278,12 +268,10 @@
   gap: 22.5%;
   margin-left: -90px;
 }
-
 .product-image {
   width: 105px;
   height: 67.5px;
 }
-
 .name-product {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.5625rem;
@@ -299,14 +287,12 @@
   background-color: #eaeaea;
   transform: scale(1.1);
 }
-
 .title {
   font-family: Arial, Helvetica, sans-serif;
   font-style: italic;
   font-weight: bold;
   font-size: 2rem;
 }
-
 .brands-menu {
   display: grid;
   grid-template-columns: 128px 128px 128px 128px 128px;
@@ -337,4 +323,17 @@
   background-color: #e9e7e7;
   transform: scale(1.1);
   vertical-align: middle;
+}
+.user-authenticated{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  gap: 10px;
+}
+.user-authenticated img{
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+
 }

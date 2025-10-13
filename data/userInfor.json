@@ -1,0 +1,20 @@
+{
+    "users": [
+        {        
+            "firstName": "Nghĩa",
+            "lastName": "Hiếu",
+            "username": "nghialam1509",
+            "password": "asd",
+            "phone": "0703547179",
+            "address": "Bình Phước"
+        },
+        {        
+            "firstName": "Nghĩa",
+            "lastName": "Hiếu",
+            "username": "nghialam1509",
+            "password": "asd",
+            "phone": "0703547179",
+            "address": "Bình Phước"
+        }
+    ]
+}

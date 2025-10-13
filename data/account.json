@@ -1,0 +1,13 @@
+{
+    "accounts": [
+        {
+            "username": "admin123",
+            "password": "admin3636",
+            "role": "admin"
+        },{
+            "username": "user3636",
+            "password": "raumania",
+            "role": "user"
+        }
+    ]
+}

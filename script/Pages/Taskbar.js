@@ -1,3 +1,4 @@
+import { ButtonVerification  } from "./ButtonVerification .js"
 export const TaskBar = {
     html : [`    <div class="task-bar">
       <div class="Header">
@@ -8,13 +9,8 @@ export const TaskBar = {
           <input class="Search" type="text" placeholder="Search" />
           <img class="Search-icon" src="../icon/Search.png" />
         </div>
-        <div class="login">
-          <button class="sign in">
-            <img class="icon-sign-in" src="../icon/Sign-in.png" />Sign In
-          </button>
-          <span>&#124;</span>
-          <button class="sign up">Sign Up</button>
-        </div>
+        ${ButtonVerification }
+        
       </div>
 
       <div class="menu">
