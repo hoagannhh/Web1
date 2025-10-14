@@ -21,6 +21,8 @@ export const pages = {
 }
 // div này sẽ chứa code html sau khi load code từ object pages
 const container = document.getElementById("container");
+    console.log(container);
+
 LoadPageHome()
 
 
@@ -31,15 +33,18 @@ function LoadPageHome(){
 }
 
 export function LoadPage(pageName){
+    
     if (!pages[pageName]){
         console.error("Không tìm thấy page có tên: " + pageName + " quay lại trang home");
         pageName ="home";
     }
+
     LoadHtml(pageName);
     LoadCss(pageName);
 
 }   
 function LoadHtml(pageName){
+    
     const pageComponent = pages[pageName];
 
     if (!pageComponent){

@@ -376,8 +376,8 @@
 .user-authenticated .user-represent {
     width: 36px;
     height: 36px;
-    border-radius: 50%; /* Bo tròn avatar */
-    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    border-radius: 50%; 
+    object-fit: cover; 
 }
 
 .user-authenticated p {
@@ -386,38 +386,32 @@
     color: #333;
 }
 
-/* --- MENU XỔ XUỐNG (.routing) --- */
 .routing {
-    /* Ban đầu: Ẩn menu đi một cách mượt mà */
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px); /* Hiệu ứng trượt nhẹ từ trên xuống */
+    transform: translateY(-10px); 
+
     /* transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; */
 
-    /* Quan trọng: Định vị tuyệt đối so với thẻ cha (.user-authenticated) */
     position: absolute;
-    top: 100%; /* Đặt menu ngay phía dưới thẻ cha, có một khoảng hở nhỏ */
+    top: 100%; 
     right: 0%;
-    transform: translateX(-50%); /* Căn giữa menu theo chiều ngang */
-    
-    /* Style cho menu */
+    transform: translateX(-50%); 
     background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 200px; /* Chiều rộng của menu */
+    width: 200px; 
     z-index: 10;
-    overflow: hidden; /* Bo tròn các góc của mục bên trong */
+    overflow: hidden; 
 }
 
-/* --- PHÉP MÀU: Khi di chuột vào vùng cha, hiện menu con ra --- */
 .user-authenticated:hover .routing {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0); /* Đưa về vị trí ban đầu */
+    transform: translateY(0); 
 }
 
-/* --- CÁC MỤC TRONG MENU (.profile, .sign-out) --- */
 .routing .profile,
 .routing .sign-out {
     padding: 12px 16px;
