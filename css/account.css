@@ -1,261 +1,254 @@
 /* Basic Reset and Font */
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .profile-container {
-    display: flex;
-    
-    width: 70%; /* Adjust width as needed */
-    max-width: 95%;
-    background-color: #ffffff;
-    
+  display: flex;
+
+  width: 70%; /* Adjust width as needed */
+  max-width: 95%;
+  background-color: #ffffff;
 }
 
 /* ---------------- Sidebar Styles ---------------- */
 .sidebar {
-    width: 250px;
-    padding: 20px 0;
-    
-    box-sizing: border-box;
+  width: 250px;
+  padding: 20px 0;
+
+  box-sizing: border-box;
 }
 
 .user-info-mini {
-    display: flex;
-    align-items: center;
-    padding: 0 0 20px 0;
-    margin: 0 20px 0 20px;
-    border-bottom: #a3a3a3 solid 1px;
-    
+  display: flex;
+  align-items: center;
+  padding: 0 0 20px 0;
+  margin: 0 20px 0 20px;
+  border-bottom: #a3a3a3 solid 1px;
 }
 
 .avatar-mini {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: 20px;
-    margin-right: 10px;
-    background-color: #ccc; /* Placeholder color */
-    object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 20px;
+  margin-right: 10px;
+  background-color: #ccc; /* Placeholder color */
+  object-fit: cover;
 }
 
 .username-mini {
-    font-weight: 500;
-    color: #333;
+  font-weight: 500;
+  color: #333;
 }
 
 .nav-menu {
-    padding-top: 20px;
-    margin: 0 5px 0 5px;
-    
+  padding-top: 20px;
+  margin: 0 5px 0 5px;
 }
 
 .nav-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #000000;
-    font-size: 18px;
-    transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000000;
+  font-size: 16px;
+  transition: background-color 0.2s;
 }
 
 .nav-item img {
-    width: 20px; /* Adjust size as needed */
-    height: 20px;
-    margin-right: 10px;
-    
+  width: 20px; /* Adjust size as needed */
+  height: 20px;
+  margin-right: 10px;
 }
 
 .nav-item:hover {
-    color: #a3a3a3;
-    
+  color: #a3a3a3;
 }
 
 .nav-item:active {
-    color: #000;
-    font-weight: 700;
-    background-color: #f8f8f8;
-    
+  color: #000;
+  font-weight: 700;
+  background-color: #f8f8f8;
 }
 
 /* ---------------- Main Content Styles ---------------- */
 .main-content {
-    width: 100%;
-    flex-grow: 1;
-    padding: 20px 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  flex-grow: 1;
+  padding: 20px 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .page-title {
-    font-size: 18px;
-    font-weight: 500;
-    
-    color: #333;
-    padding: 23px 0 16px 0;
-    margin: 0;
-    border-bottom: #a3a3a3 solid 1px;
+  font-size: 18px;
+  font-weight: 500;
+
+  color: #333;
+  padding: 23px 0 16px 0;
+  margin: 0;
+  border-bottom: #a3a3a3 solid 1px;
 }
 
 .title-divider {
-    border: none;
-    height: 1px;
-    background-color: #eee;
-    margin-bottom: 30px;
+  border: none;
+  height: 1px;
+  background-color: #eee;
+  margin-bottom: 30px;
 }
 
 .profile-form-area {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .form-fields {
-    width: 100%; /* Adjust as needed */
-    padding-right: 40px;
-    padding-top: 40px;
+  width: 100%; /* Adjust as needed */
+  padding-right: 40px;
+  padding-top: 40px;
 }
 
 .form-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .form-row label {
-    width: 150px; /* Fixed width for labels */
-    font-size: 14px;
-    color: #666;
-    text-align: right;
+  width: 150px; /* Fixed width for labels */
+  font-size: 14px;
+  color: #666;
+  text-align: right;
 }
-#full-name{
-    margin-left: 20px;
+#full-name {
+  margin-left: 20px;
 }
 .readonly-value {
-    font-size: 14px;
-    color: #333;
-    font-weight: 500;
-    margin-left: 20px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+  margin-left: 20px;
 }
 
 /* Input Styles */
 input[type="text"] {
-    flex-grow: 1;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    max-width: 300px;
+  flex-grow: 1;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 300px;
 }
 
 input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 /* Radio Group Styles */
 .radio-group {
-    display: flex;
-    margin-left: 20px;
+  display: flex;
+  margin-left: 20px;
 }
 input[type="radio"] {
-    margin: 0;
-    cursor: pointer;
-    accent-color: black;
+  margin: 0;
+  cursor: pointer;
+  accent-color: black;
 }
 
-
 .radio-group label {
-    width: auto;
-    cursor: pointer;
-    color: #333;
-    font-size: 14px;
-    font-weight: normal; /* Override form-row label style */
-    margin-right: 10px;
+  width: auto;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  font-weight: normal; /* Override form-row label style */
+  margin-right: 10px;
 }
 
 /* Data Display Styles */
 .data-value {
-    font-size: 14px;
-    color: #333;
-    margin-right: 15px;
-    margin-left: 20px;
+  font-size: 14px;
+  color: #333;
+  margin-right: 15px;
+  margin-left: 20px;
 }
 
 .action-link {
-    font-size: 14px;
-    color: #007bff;
-    text-decoration: none;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
 }
 
 .action-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Save Button */
 .save-button-container {
-    margin-top: 30px;
-    margin-left: 150px; /* Align with input field start */
+  margin-top: 30px;
+  margin-left: 150px; /* Align with input field start */
 }
 
 .save-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14px;
-    cursor: pointer;
-    
-    transition: background-color 0.2s;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+
+  transition: background-color 0.2s;
 }
 
 .save-button:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 /* ---------------- Avatar Upload Styles ---------------- */
 .avatar-upload-section {
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px; /* Vertical alignment approximation */
-    object-fit: cover;
-    padding-left: 10%;
-    border-left: #a3a3a3 solid 1px;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px; /* Vertical alignment approximation */
+  object-fit: cover;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-left: #a3a3a3 solid 1px;
 }
 
 .avatar-large {
-    width: 120px;
-    height: 120px;
-    object-position: center; 
-    border-radius: 50%;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    background-color: #eee; /* Placeholder color */
-    object-fit: cover;
-    cursor: pointer;
+  width: 120px;
+  height: 120px;
+  object-position: center;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  background-color: #eee; /* Placeholder color */
+  object-fit: cover;
+  cursor: pointer;
 }
 
 .upload-button {
-    background-color: #000;
-    width: 100%;
-    color: #fff;
-    border: none;
-    padding: 8px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    
+  background-color: #000;
+  width: 100%;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .upload-button:hover {
-    background-color: #333;
+  background-color: #333;
 }
