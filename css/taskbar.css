@@ -86,7 +86,7 @@
   gap: 2%;
   width: 100%;
   position: relative;
-  z-index: 9999;
+  z-index: 5;
 }
 .menu .test {
   font-size: 0.75rem;
@@ -324,7 +324,8 @@
   transform: scale(1.1);
   vertical-align: middle;
 }
-.user-authenticated{
+/* .user-authenticated{
+  position: relative;
   display: none;
   justify-content: center;
   align-items: center;
@@ -335,5 +336,108 @@
   width: 25px;
   height: 25px;
   border-radius: 100%;
+}
+.user-authenticated:hover .routing{
+  display: flex;
+}
+.routing:hover{
+  display: flex;
+}
+.routing{
+  display: none;
+  position: absolute;
+  top: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+.routing .profile, .routing .sign-out {
+  border: 2px solid rgb(131, 131, 131);
+  width: 150px;
+  background-color: white;
+}  */
+.user-authenticated {
+    position: relative; 
+    
+    display: none; 
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
 
+.user-authenticated:hover {
+    background-color: #f0f0f0;
+}
+
+.user-authenticated .user-represent {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%; /* Bo tròn avatar */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+}
+
+.user-authenticated p {
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+}
+
+/* --- MENU XỔ XUỐNG (.routing) --- */
+.routing {
+    /* Ban đầu: Ẩn menu đi một cách mượt mà */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px); /* Hiệu ứng trượt nhẹ từ trên xuống */
+    /* transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; */
+
+    /* Quan trọng: Định vị tuyệt đối so với thẻ cha (.user-authenticated) */
+    position: absolute;
+    top: 100%; /* Đặt menu ngay phía dưới thẻ cha, có một khoảng hở nhỏ */
+    right: 0%;
+    transform: translateX(-50%); /* Căn giữa menu theo chiều ngang */
+    
+    /* Style cho menu */
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 200px; /* Chiều rộng của menu */
+    z-index: 10;
+    overflow: hidden; /* Bo tròn các góc của mục bên trong */
+}
+
+/* --- PHÉP MÀU: Khi di chuột vào vùng cha, hiện menu con ra --- */
+.user-authenticated:hover .routing {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Đưa về vị trí ban đầu */
+}
+
+/* --- CÁC MỤC TRONG MENU (.profile, .sign-out) --- */
+.routing .profile,
+.routing .sign-out {
+    padding: 12px 16px;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left; /* Căn chữ về bên trái */
+    transition: background-color 0.2s ease;
+    border: none;
+    background-color: white;
+    width: 100%;
+}
+
+/* Thêm đường kẻ ngăn cách */
+.routing .profile {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Thêm hiệu ứng nền khi di chuột qua các mục */
+.routing .profile:hover,
+.routing .sign-out:hover {
+    background-color: #f5f5f5;
 }

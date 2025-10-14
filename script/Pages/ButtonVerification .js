@@ -14,6 +14,10 @@ export const ButtonVerification  = `
         <div class="user-authenticated">
             <img class="user-represent" src="../img/User-represent.png" alt="">
             <p>user3636</p>
+            <div class = "routing">
+                <button class = "profile">Thông tin cá nhân</button>
+                <button class = "sign-out">Đăng xuất</button>
+            </div>
         </div>
         `;
 
@@ -35,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
     HandResgister(register, container);
 });
 
+
+
+// ----------------------------------------------------
+// ----------------- LOGIN - REGISTER------------------
 function HandResgister(register, container){
     register.addEventListener('click', () => {
         container.insertAdjacentHTML('afterbegin', ButtonRegister.html[0]);
@@ -84,6 +92,7 @@ function HandleDataRegister(){
     })
 }
 function HandleLogin(login, container){
+
     login.addEventListener('click', () => {
         container.insertAdjacentHTML('afterbegin', ButtonLogin.html[0]);
         LoadCss("login");
@@ -93,6 +102,7 @@ function HandleLogin(login, container){
 
         // xử lý nút tắt form login
         CloseTab(".button-close", modaloverlay)
+            console.log('Dữ liệu đã lưu trong localStorage:', localStorage.getItem('myUsers'));
 
         HandleDataLogin(modaloverlay);
     })
@@ -111,29 +121,32 @@ function HandleDataLogin(modaloverlay){
     const loginForm = document.getElementById("form-user-pass");
     loginForm.addEventListener("submit",(event) => {
         event.preventDefault();
-        // Vertification(modaloverlay);
-         const userAccount = {
-            username: document.getElementById("username-login").value.trim(),
-            password: document.getElementById("password-login").value.trim(),
-        }
-        const foundUser = accounts.find(account => 
-            account.username.toLowerCase() === userAccount.username.toLowerCase() &&
-            account.password === userAccount.password
-        );
+        if (Vertification(modaloverlay, accounts)){
+            console.log("Đăng nhập bằng tài khoản user ở file account.js");
 
-        if (foundUser){
-            alert("Đăng nhập thành công");
-            localStorage.setItem('loggedInUser', JSON.stringify(foundUser));
-            document.querySelector(".login").style.display = "none";
-            document.querySelector(".user-authenticated").style.display = "flex";
-            modaloverlay.style.display = "none";
-
-        } else {
+        } else{
+            console.log("Đăng nhập bằng tài khoản user ở local")
+            const userIndividual = JSON.parse(localStorage.getItem('myUsers'));
+            const userAccount = {
+                username: document.getElementById("username-login").value.trim(),
+                password: document.getElementById("password-login").value.trim(),
+            }
+            // console.log("------------------------------")
+            // console.log(userIndividual);
+            // console.log(userIndividual.username + " " + userAccount.username);
+            // console.log(userIndividual.password + " " + userAccount.password);
+            // console.log("------------------------------")
+            if (userIndividual.username === userAccount.username && userIndividual.password === userAccount.password){
+                console.log(123);
+                ConfirmSuccessful(modaloverlay);
+                return;
+            }
             alert("Tên đăng nhập hoặc mật khẩu không đúng!");
-        }   
+        }
+
     })
 }
-function Vertification(modaloverlay){
+function Vertification(modaloverlay, accounts){
         const userAccount = {
             username: document.getElementById("username-login").value.trim(),
             password: document.getElementById("password-login").value.trim(),
@@ -144,15 +157,21 @@ function Vertification(modaloverlay){
         );
 
         if (foundUser){
-            alert("Đăng nhập thành công");
-            localStorage.setItem('loggedInUser', JSON.stringify(foundUser));
-            document.querySelector(".login").style.display = "none";
-            document.querySelector(".user-authenticated").style.display = "flex";
-            modaloverlay.style.display = "none";
+            ConfirmSuccessful(modaloverlay);
+            return true;
 
-        } else {
-            alert("Tên đăng nhập hoặc mật khẩu không đúng!");
+        } else { 
+            return false;
         }
+        
+}
+function ConfirmSuccessful(modaloverlay){
+        alert("Đăng nhập thành công");
+        document.querySelector(".login").style.display = "none";
+        document.querySelector(".user-authenticated").style.display = "flex";
+        modaloverlay.style.display = "none";
+    // Đăng nhập thành công sẽ do something
+    
 }
 function CloseTab(nameClassClose, modaloverlay){
     console.log("enter close button");
@@ -161,3 +180,5 @@ function CloseTab(nameClassClose, modaloverlay){
         modaloverlay.style.display = "none";
     })
 }
+
+// ------------------------------------------------------
