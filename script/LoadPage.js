@@ -3,6 +3,7 @@ import { TaskBar } from "./Pages/Taskbar.js";
 import { ButtonLogin } from "./Pages/ButtonLogin.js";
 import { ButtonRegister } from "./Pages/ButtonRegister.js";
 import { accountComponent } from "./Pages/accountPage.js";
+import { ButtonVerification } from "./Pages/ButtonVerification .js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html và đường link css ở trong folder script/pages
@@ -20,6 +21,7 @@ export const pages = {
   login: ButtonLogin,
   register: ButtonRegister,
   account: accountComponent,
+  ButtonVerification: ButtonVerification
 };
 // div này sẽ chứa code html sau khi load code từ object pages
 const container = document.getElementById("container");
@@ -27,6 +29,7 @@ LoadPageHome();
 
 function LoadPageHome() {
   LoadPage("taskBar");
+  // LoadPage('ButtonVerification');
   LoadPage("home");
 }
 export function ChangePage(pageName) {
@@ -35,7 +38,7 @@ export function ChangePage(pageName) {
   LoadPage(pageName);
 }
 function RemovePageCss() {
-  const allCssLinks = document.querySelectorAll('link[rel="stylesheet"]');
+  const allCssLinks = document.querySelectorAll('link');
 
   allCssLinks.forEach((link) => link.remove());
 }
@@ -46,8 +49,15 @@ export function LoadPage(pageName) {
     );
     pageName = "home";
   }
-  LoadHtml(pageName);
-  LoadCss(pageName);
+  // console.log(typeof(pages[pageName].init) === `function`);
+  if (typeof(pages[pageName].init) === `function`){
+    pages[pageName].init();
+  }
+  console.log(pages[pageName].html !== null);
+  if (pages[pageName].html !== null)
+    LoadHtml(pageName);
+  // if (pages[pageName].css !== null)
+  // LoadCss(pageName);
 }
 function LoadHtml(pageName) {
   const pageComponent = pages[pageName];

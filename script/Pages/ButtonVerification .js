@@ -1,48 +1,53 @@
 import { ButtonLogin } from "./ButtonLogin.js";
 import { ButtonRegister } from "./ButtonRegister.js";
 import { ChangePage, LoadCss, LoadPage } from "../LoadPage.js";
-// import { userInfor } from "../../data/userInfor.json";
-export const ButtonVerification = `        
-        <div class="login">
-          <button class="sign in">
-            <img class="icon-sign-in" src="../icon/Sign-in.png" />
-            Sign In
-          </button>
-          <span>&#124;</span>
-          <button class="sign up">Sign Up</button>
-        </div>
-        <div class="user-authenticated">
-            <img class="user-represent" src="../img/User-represent.png" alt="">
-            <p>user3636</p>
-            <div class = "routing">
-                <button class = "profile">Thông tin cá nhân</button>
-                <button class = "sign-out">Đăng xuất</button>
-            </div>
-        </div>
-        `;
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Câu lệnh này giúp cho trình duyệt biết rằng khi nào load hết html thì mới chạy tiếp bên trong
-  // Trình duyệt đảm bảo HTML đã sẵn sàng.
+export const ButtonVerification = {
+        html: [`        
+              <div class="login">
+                <button class="sign in">
+                  <img class="icon-sign-in" src="../icon/Sign-in.png" />
+                  Sign In
+                </button>
+                <span>&#124;</span>
+                <button class="sign up">Sign Up</button>
+              </div>
+              <div class="user-authenticated">
+                  <img class="user-represent" src="../img/User-represent.png" alt="">
+                  <p>user3636</p>
+                  <div class = "routing">
+                      <button class = "profile">Thông tin cá nhân</button>
+                      <button class = "sign-out">Đăng xuất</button>
+                  </div>
+              </div>
+              `],
+        css:['../css/taskbar.css'],
+        init: function(){
+        // Câu lệnh này giúp cho trình duyệt biết rằng khi nào load hết html thì mới chạy tiếp bên trong
+        // Trình duyệt đảm bảo HTML đã sẵn sàng.
 
-  // nút login và register ở taskbar
-  const login = document.querySelector(".login .in");
-  const register = document.querySelector(".login .up");
-  const container = document.getElementById("container");
+        // nút login và register ở taskbar
+        const login = document.querySelector(".login .in");
+        console.log(login.innerHTML);
+        const register = document.querySelector(".login .up");
 
-  if (!login || !register) {
-    console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
-    return;
+        const container = document.getElementById("container");
+
+        if (!login || !register) {
+          console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
+          return;
+        }
+
+        HandleLogin(login, container);
+        HandleRegister(register, container);
+    }
   }
-
-  HandleLogin(login, container);
-  HandleRegister(register, container);
-});
 
 // ----------------------------------------------------
 // ----------------- LOGIN - REGISTER------------------
 function HandleRegister(register, container) {
-  register.addEventListener("click", () => {
+  // console.log(register.innerHtml);
+    register.addEventListener("click", () => {
     container.insertAdjacentHTML("afterbegin", ButtonRegister.html[0]);
     LoadCss("register");
 
@@ -60,7 +65,7 @@ function HandleDataRegister() {
   const registerForm = document.getElementById("register-form");
   registerForm.addEventListener("submit", (event) => {
     // event.preventDefault();
-    console.log(document.getElementById("firstname-input").value.trim());
+    // console.log(document.getElementById("firstname-input").value.trim());
     const userData = {
       firstName: document.getElementById("firstname-input").value.trim(),
       lastName: document.getElementById("lastname-input").value.trim(),
@@ -80,16 +85,18 @@ function HandleDataRegister() {
 
     const jsonData = JSON.stringify(finalUser, null, 2);
     localStorage.setItem("myUsers", jsonData);
-    console.log(
-      "Dữ liệu đã lưu trong localStorage:",
-      localStorage.getItem("myUsers")
-    );
+    // console.log(
+    //   "Dữ liệu đã lưu trong localStorage:",
+    //   localStorage.getItem("myUsers")
+    // );
     alert("Sucessful");
 
     // localStorage.setItem('userInfo', jsonData);
   });
 }
 function HandleLogin(login, container) {
+          console.log(login.innerHTML);
+
   login.addEventListener("click", () => {
     container.insertAdjacentHTML("afterbegin", ButtonLogin.html[0]);
     LoadCss("login");
@@ -99,10 +106,10 @@ function HandleLogin(login, container) {
 
     // xử lý nút tắt form login
     CloseTab(".button-close", modelOverlay);
-    console.log(
-      "Dữ liệu đã lưu trong localStorage:",
-      localStorage.getItem("myUsers")
-    );
+    // console.log(
+    //   "Dữ liệu đã lưu trong localStorage:",
+    //   localStorage.getItem("myUsers")
+    // );
 
     HandleDataLogin(modelOverlay);
   });
@@ -114,7 +121,7 @@ function HandleDataLogin(modelOverlay) {
     .then((response) => response.json())
     .then((data) => {
       accounts = data.accounts;
-      console.log(accounts);
+      // console.log(accounts);
     });
 
   // ------------------Xử lý login -------------------------
@@ -172,9 +179,9 @@ function ConfirmSuccessful(modelOverlay) {
   modelOverlay.style.display = "none";
   // Đăng nhập thành công sẽ do something
   const account = document.querySelector(".profile");
-  account.addEventListener("click", () => {
-    ChangePage("account");
-  });
+  // account.addEventListener("click", () => {
+  //   ChangePage("account");
+  // });
 }
 function CloseTab(nameClassClose, modelOverlay) {
   console.log("enter close button");

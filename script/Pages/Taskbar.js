@@ -9,7 +9,7 @@ export const TaskBar = {
           <input class="Search" type="text" placeholder="Search" />
           <img class="Search-icon" src="../icon/Search.png" />
         </div>
-        ${ButtonVerification }
+        ${ButtonVerification.html }
         
       </div>
 
