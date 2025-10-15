@@ -3,9 +3,18 @@
     "id": "s1",
     "name": "Air Jordan 4 RM",
     "img-represent": "../product-img/s1/ms1-1.png",
-    "img-link-list": ["../product-img/s1/s1-0.png", "../product-img/s1/s1-1.png",
-    "../product-img/s1/s1-2.png", "../product-img/s1/s1-3.png", "../product-img/s1/s1-4.png"],
-    "img-link-color": ["../product-img/s1/s1-black.png", "../product-img/s1/s1-blue.png", "../product-img/s1/s1-yellow.png"],
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
     "gender": "man",
     "brand": "Nike",
     "price": 4109000,
@@ -20,9 +29,17 @@
     "id": "s2",
     "name": "Handball Spezial",
     "img-represent": "../product-img/s2/ms2-1.png",
-    "img-link-list": ["../product-img/s2/s2-0.png", "../product-img/s2/s2-1.png",
-    "../product-img/s2/s2-2.png", "../product-img/s2/s2-3.png", "../product-img/s2/s2-4.png"],
-    "img-link-color": ["../product-img/s2/s2-blue.png", "../product-img/s2/s2-red.png"],
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
     "gender": "man",
     "brand": "Adidas",
     "price": 2500000,
@@ -37,8 +54,12 @@
     "id": 3,
     "name": "Chuck 70",
     "img-represent": "../product-img/s3/ms3-1.png",
-     "img-link-list": ["../product-img/s3/s3-0.png", "../product-img/s3/s3-1.png",
-    "../product-img/s3/s3-2.png", "../product-img/s3/s3-3.png"],
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "women",
     "brand": "Converse",
@@ -54,10 +75,16 @@
     "id": "s4",
     "name": "Classic Slip-On Checkerboard Shoe",
     "img-represent": "../product-img/s4/ms4-1.png",
-     "img-link-list": ["../product-img/s4/s4-0.png", "../product-img/s4/s4-1.png",
-    "../product-img/s4/s4-2.png"],
-    "img-link-color": ["../product-img/s4/s4-pink.png", "../product-img/s4/s4-black.png",
-     "../product-img/s4/s4-brown.png"],
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
     "gender": "man",
     "brand": "Vans",
     "price": 1580000,
@@ -72,8 +99,939 @@
     "id": "s5",
     "name": "Bella UT Femme",
     "img-represent": "../product-img/s5/ms5-1.png",
-     "img-link-list": ["../product-img/s5/s5-0.png", "../product-img/s5/s5-1.png",
-    "../product-img/s5/s5-2.png"],
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
+    "gender": "women",
+    "brand": "Puma",
+    "price": 2100000,
+    "color": "pink",
+    "size": [36, 37, 38, 39, 40],
+    "rating": {
+      "stars": 4.4,
+      "votes": 854
+    }
+  },
+  {
+    "id": "s1",
+    "name": "Air Jordan 4 RM",
+    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-link-list": [
+      "../product-img/s1/s1-0.png",
+      "../product-img/s1/s1-1.png",
+      "../product-img/s1/s1-2.png",
+      "../product-img/s1/s1-3.png",
+      "../product-img/s1/s1-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s1/s1-black.png",
+      "../product-img/s1/s1-blue.png",
+      "../product-img/s1/s1-yellow.png"
+    ],
+    "gender": "man",
+    "brand": "Nike",
+    "price": 4109000,
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
+    "rating": {
+      "stars": 4.8,
+      "votes": 2154
+    }
+  },
+  {
+    "id": "s2",
+    "name": "Handball Spezial",
+    "img-represent": "../product-img/s2/ms2-1.png",
+    "img-link-list": [
+      "../product-img/s2/s2-0.png",
+      "../product-img/s2/s2-1.png",
+      "../product-img/s2/s2-2.png",
+      "../product-img/s2/s2-3.png",
+      "../product-img/s2/s2-4.png"
+    ],
+    "img-link-color": [
+      "../product-img/s2/s2-blue.png",
+      "../product-img/s2/s2-red.png"
+    ],
+    "gender": "man",
+    "brand": "Adidas",
+    "price": 2500000,
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.6,
+      "votes": 1720
+    }
+  },
+  {
+    "id": 3,
+    "name": "Chuck 70",
+    "img-represent": "../product-img/s3/ms3-1.png",
+    "img-link-list": [
+      "../product-img/s3/s3-0.png",
+      "../product-img/s3/s3-1.png",
+      "../product-img/s3/s3-2.png",
+      "../product-img/s3/s3-3.png"
+    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
+    "gender": "women",
+    "brand": "Converse",
+    "price": 2000000,
+    "color": "pink",
+    "size": [35, 36, 37, 38, 39],
+    "rating": {
+      "stars": 4.7,
+      "votes": 965
+    }
+  },
+  {
+    "id": "s4",
+    "name": "Classic Slip-On Checkerboard Shoe",
+    "img-represent": "../product-img/s4/ms4-1.png",
+    "img-link-list": [
+      "../product-img/s4/s4-0.png",
+      "../product-img/s4/s4-1.png",
+      "../product-img/s4/s4-2.png"
+    ],
+    "img-link-color": [
+      "../product-img/s4/s4-pink.png",
+      "../product-img/s4/s4-black.png",
+      "../product-img/s4/s4-brown.png"
+    ],
+    "gender": "man",
+    "brand": "Vans",
+    "price": 1580000,
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
+    "rating": {
+      "stars": 4.5,
+      "votes": 1203
+    }
+  },
+  {
+    "id": "s5",
+    "name": "Bella UT Femme",
+    "img-represent": "../product-img/s5/ms5-1.png",
+    "img-link-list": [
+      "../product-img/s5/s5-0.png",
+      "../product-img/s5/s5-1.png",
+      "../product-img/s5/s5-2.png"
+    ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "women",
     "brand": "Puma",

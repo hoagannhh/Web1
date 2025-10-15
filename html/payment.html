@@ -268,42 +268,58 @@
         <div class="address">
           <div class="payment-title">YOUR SELECTIONS</div>
           <!-- Hiển thị địa chỉ -->
-          <div class="container">
+          <div class="container-address">
+            <!-- View hiện tại -->
             <div id="address-view">
               <div>
                 <p>
                   <strong>ADDRESS:</strong>
                   <span id="current-address">aaaaa/aaaaaaa/aaaaaaaaaa</span>
                 </p>
+                <p>
+                  <strong>PHONE:</strong>
+                  <span id="current-phone">0000000000</span>
+                </p>
               </div>
               <hr class="line-invoice" />
               <div>
-                <button class="button-change" onclick="showForm()">
+                <button class="button-change" onclick="showAddressList()">
                   Change
                 </button>
               </div>
             </div>
 
-            <!-- Form nhập thông tin -->
+            <!-- View danh sách địa chỉ -->
+            <div id="address-list-view" class="hidden">
+              <p><strong>Saved Addresses:</strong></p>
+              <ul id="address-list"></ul>
+              <div class="form-input-btn">
+                <button class="add-new-btn" onclick="showForm()">
+                  Add New Address
+                </button>
+                <button class="back-btn" onclick="showAddress()">Back</button>
+              </div>
+            </div>
+
+            <!-- View thêm địa chỉ mới -->
             <div id="form-view" class="hidden">
               <p><strong>NEW ADDRESS:</strong></p>
               <form id="address-form">
                 <input
+                  id="new-phone"
                   class="input-infor-address"
                   type="tel"
-                  placeholder="Number Phone"
+                  placeholder="Phone Number"
                   required
                 /><br /><br />
-
                 <input
-                  type="text"
                   id="new-address"
                   class="reset-address input-infor-address"
+                  type="text"
                   placeholder="Address"
                   required
                 /><br /><br />
                 <div class="form-input-btn">
-                  <!-- nút xác nhận -->
                   <button
                     type="button"
                     class="confirm-btn"
@@ -311,11 +327,10 @@
                   >
                     Confirm
                   </button>
-                  <!-- nút quay lại -->
                   <button
                     type="button"
                     class="back-btn"
-                    onclick="showAddress()"
+                    onclick="showAddressList()"
                   >
                     Back
                   </button>

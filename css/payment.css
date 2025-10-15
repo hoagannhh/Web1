@@ -42,6 +42,9 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
+.container-address {
+  width: 100%;
+}
 .button-change {
   width: 100px;
   padding: 10px 10px 10px 10px;
@@ -66,6 +69,25 @@
   justify-content: space-between;
   gap: 20px;
 }
+.select-btn {
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 4px;
+  border: none;
+}
+.add-new-btn {
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px;
+  border: none;
+  width: 50%;
+  box-sizing: border-box;
+}
 .back-btn {
   background-color: white;
   color: black;
@@ -87,6 +109,12 @@
   border: none;
   width: 50%;
   box-sizing: border-box;
+}
+.list-address {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 .infor-ship {
   width: 400px;
