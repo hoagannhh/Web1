@@ -1,6 +1,6 @@
 import { ButtonVerification  } from "./ButtonVerification .js"
 export const TaskBar = {
-    html : [`    <div class="task-bar">
+    html : `<div class="task-bar">
       <div class="Header">
         <div class="Name-Shop">
           <p class="name">ĐẾ VƯƠNG</p>
@@ -242,6 +242,10 @@ export const TaskBar = {
         <button class="test">36 SNEAKERS</button>
         <div class="bag"><img class="bag-icon" src="../icon/bag.png" /></div>
       </div>
-    </div>`],
-    css  : [`../css/taskbar.css`]
+    </div>`,
+    css  : `../css/taskbar.css`,
+    canDeleteCss: false,
+    init: function(){
+      ButtonVerification.init();  
+    }
 }

@@ -1,9 +1,9 @@
 import { ButtonLogin } from "./ButtonLogin.js";
 import { ButtonRegister } from "./ButtonRegister.js";
-import { ChangePage, LoadCss, LoadPage } from "../LoadPage.js";
+import {  LoadCss, LoadPage } from "../LoadPage.js";
 
 export const ButtonVerification = {
-        html: [`        
+        html: `        
               <div class="login">
                 <button class="sign in">
                   <img class="icon-sign-in" src="../icon/Sign-in.png" />
@@ -20,43 +20,43 @@ export const ButtonVerification = {
                       <button class = "sign-out">Đăng xuất</button>
                   </div>
               </div>
-              `],
-        css:['../css/taskbar.css'],
+              `,
+        css:'../css/taskbar.css',
         init: function(){
-        // Câu lệnh này giúp cho trình duyệt biết rằng khi nào load hết html thì mới chạy tiếp bên trong
-        // Trình duyệt đảm bảo HTML đã sẵn sàng.
+          document.addEventListener("DOMContentLoaded", function(){
+            const container = document.getElementById("container");
+            // dang nhap
+            const login = document.querySelector(".login .in");
 
-        // nút login và register ở taskbar
-        const login = document.querySelector(".login .in");
-        console.log(login.innerHTML);
-        const register = document.querySelector(".login .up");
+            // dang ky
+            const register = document.querySelector(".login .up");
+            
 
-        const container = document.getElementById("container");
+            if (!login || !register) {
+              console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
+              return;
+            }
 
-        if (!login || !register) {
-          console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
-          return;
-        }
-
-        HandleLogin(login, container);
-        HandleRegister(register, container);
-    }
+            HandleLogin(login, container);
+            HandleRegister(register, container);
+          })
+          
+      }
   }
 
 // ----------------------------------------------------
 // ----------------- LOGIN - REGISTER------------------
 function HandleRegister(register, container) {
-  // console.log(register.innerHtml);
     register.addEventListener("click", () => {
-    container.insertAdjacentHTML("afterbegin", ButtonRegister.html[0]);
-    LoadCss("register");
+      container.insertAdjacentHTML("afterbegin", ButtonRegister.html[0]);
+      LoadCss("register");
 
-    const modelOverlay = document.querySelector(".modal-overlay");
-    modelOverlay.style.display = "block";
+      const modelOverlay = document.querySelector(".modal-overlay");
+      modelOverlay.style.display = "block";
 
-    // xử lý nút tắt form register
-    CloseTab(".button-close-register", modelOverlay);
-    HandleDataRegister(modelOverlay);
+      // xử lý nút tắt form register
+      CloseTab(".button-close-register", modelOverlay);
+      HandleDataRegister(modelOverlay);
   });
 }
 function HandleDataRegister() {
@@ -95,21 +95,13 @@ function HandleDataRegister() {
   });
 }
 function HandleLogin(login, container) {
-          console.log(login.innerHTML);
-
   login.addEventListener("click", () => {
-    container.insertAdjacentHTML("afterbegin", ButtonLogin.html[0]);
+    container.insertAdjacentHTML("afterbegin", ButtonLogin.html);
     LoadCss("login");
-
     const modelOverlay = document.querySelector(".modal-overlay");
     modelOverlay.style.display = "block";
 
-    // xử lý nút tắt form login
     CloseTab(".button-close", modelOverlay);
-    // console.log(
-    //   "Dữ liệu đã lưu trong localStorage:",
-    //   localStorage.getItem("myUsers")
-    // );
 
     HandleDataLogin(modelOverlay);
   });
@@ -131,7 +123,7 @@ function HandleDataLogin(modelOverlay) {
     if (Verification(modelOverlay, accounts)) {
       console.log("Đăng nhập bằng tài khoản user ở file account.js");
     } else {
-      console.log("Đăng nhập bằng tài khoản user ở local");
+      // console.log("Đăng nhập bằng tài khoản user ở local");
       const userIndividual = JSON.parse(localStorage.getItem("myUsers"));
       const userAccount = {
         username: document.getElementById("username-login").value.trim(),
@@ -146,7 +138,7 @@ function HandleDataLogin(modelOverlay) {
         userIndividual.username === userAccount.username &&
         userIndividual.password === userAccount.password
       ) {
-        console.log(123);
+        // console.log(123);
         ConfirmSuccessful(modelOverlay);
         return;
       }
@@ -179,12 +171,12 @@ function ConfirmSuccessful(modelOverlay) {
   modelOverlay.style.display = "none";
   // Đăng nhập thành công sẽ do something
   const account = document.querySelector(".profile");
-  // account.addEventListener("click", () => {
-  //   ChangePage("account");
-  // });
+  account.addEventListener("click", () => {
+    // console.log(123366)
+    LoadPage("account");
+  });
 }
 function CloseTab(nameClassClose, modelOverlay) {
-  console.log("enter close button");
   const closeButton = document.querySelector(nameClassClose);
   closeButton.addEventListener("click", () => {
     modelOverlay.style.display = "none";

@@ -1,33 +1,34 @@
 export const ButtonLogin = {
-html: [`
-        <div class="modal-overlay">
-        <div class="login-form">
-            <button class="button-close">X</button>
-            <div class="header-page">MY 36SNEAKER ACCOUNT</div>
-            <button>
-                <img class="icon" src="../icon/Google.png" alt="">
-                <p>Continue with google</p>
-            </button>
-            <button>
-                <img class="icon" src="../icon/facebook.png" alt="">
-                <p>Continue with facebook</p>
-            </button>
-            <div class="horizontal-bar">
-                <div class="bar"></div>
-                <div class="bar-p">OR</div>
-                <div class="bar"></div>
+    html: `
+            <div class="modal-overlay">
+            <div class="login-form">
+                <button class="button-close">X</button>
+                <div class="header-page">MY 36SNEAKER ACCOUNT</div>
+                <button>
+                    <img class="icon" src="../icon/Google.png" alt="">
+                    <p>Continue with google</p>
+                </button>
+                <button>
+                    <img class="icon" src="../icon/facebook.png" alt="">
+                    <p>Continue with facebook</p>
+                </button>
+                <div class="horizontal-bar">
+                    <div class="bar"></div>
+                    <div class="bar-p">OR</div>
+                    <div class="bar"></div>
+                </div>
+                <div class="header-page">CONTINUE WITH YOUR ACCOUNT</div>
+                <form id="form-user-pass" class="form-log">
+                    <input id="username-login" class="btn user-name" type="text" name="user-name"  placeholder="USERNAME" required>
+                    <input id="password-login" class="btn user-password" type="password" name="password" placeholder="PASSWORD" required>
+                    <button type="button" class="btn sign-in">sign up</button>
+                    <button type="submit" class="btn continue">CONTINUE</button>
+                </form>
             </div>
-            <div class="header-page">CONTINUE WITH YOUR ACCOUNT</div>
-            <form id="form-user-pass" class="form-log">
-                <input id="username-login" class="btn user-name" type="text" name="user-name"  placeholder="USERNAME" required>
-                <input id="password-login" class="btn user-password" type="password" name="password" placeholder="PASSWORD" required>
-                <button type="button" class="btn sign-in">sign up</button>
-                <button type="submit" class="btn continue">CONTINUE</button>
-            </form>
-        </div>
-        </div>
-    `],
-    css: [`../css/login.css`],
+            </div>
+        `,
+    css: `../css/login.css`,
+    canDeleteCss: true,
     init: function(){
         const buttonClose = document.querySelector(".button-close");
         buttonClose.addEventListener("click", () => {

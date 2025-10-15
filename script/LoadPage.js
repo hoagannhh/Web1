@@ -6,7 +6,8 @@ import { accountComponent } from "./Pages/accountPage.js";
 import { ButtonVerification } from "./Pages/ButtonVerification .js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
-// - bước 1: bạn phải tạo 1 file js chứa code html và đường link css ở trong folder script/pages
+// - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
+//  ở trong folder script/pages
 // mẫu như taskbar và HomePage
 // - bước 2: để có thể sử dụng được bạn phải import file đã tạo như trên
 // nói cách khác trong file đó bạn cũng phải export Object chứa code html và css
@@ -21,56 +22,60 @@ export const pages = {
   login: ButtonLogin,
   register: ButtonRegister,
   account: accountComponent,
-  ButtonVerification: ButtonVerification
 };
 // div này sẽ chứa code html sau khi load code từ object pages
 const container = document.getElementById("container");
-LoadPageHome();
+loadPageHome()
 
-function LoadPageHome() {
-  LoadPage("taskBar");
-  // LoadPage('ButtonVerification');
-  LoadPage("home");
-}
-export function ChangePage(pageName) {
-  container.innerHTML = "";
-  RemovePageCss();
-  LoadPage(pageName);
-}
-function RemovePageCss() {
-  const allCssLinks = document.querySelectorAll('link');
-
-  allCssLinks.forEach((link) => link.remove());
+function loadPageHome(){
+    InsertPage("taskBar");
+    InsertPage("home");
 }
 export function LoadPage(pageName) {
-  if (!pages[pageName]) {
-    console.error(
-      "Không tìm thấy page có tên: " + pageName + " quay lại trang home"
-    );
-    pageName = "home";
-  }
-  // console.log(typeof(pages[pageName].init) === `function`);
-  if (typeof(pages[pageName].init) === `function`){
-    pages[pageName].init();
-  }
-  console.log(pages[pageName].html !== null);
-  if (pages[pageName].html !== null)
-    LoadHtml(pageName);
-  // if (pages[pageName].css !== null)
-  // LoadCss(pageName);
+  RemoveData(pageName);
+  InsertPage(pageName);
 }
-function LoadHtml(pageName) {
-  const pageComponent = pages[pageName];
-
-  if (!pageComponent) {
-    console.error("ko tìm thấy html của " + pageName + " này trong Object");
-  }
-
-  pageComponent["html"].forEach((element) => {
-    container.innerHTML += element;
+function RemoveData(){
+  // xóa html
+  container.innerHTML = "";
+  // xóa css
+  const allCssLinks = document.querySelectorAll('link[rel="stylesheet"]')
+  if (!allCssLinks) return;
+  allCssLinks.forEach((css) =>{
+    console.log(typeof(css.dataset.canDeleteCss  ))
+      if (css.dataset.canDeleteCss   === "true"){
+        css.remove();
+      }
   });
 }
+export function InsertPage(pageName){
+    if (!pages[pageName]){
+        console.error("Không tìm thấy page có tên: " + pageName + " quay lại trang home");
+        pageName ="home";
+    }
+    LoadHtml(pageName);
+    LoadCss(pageName);
+    loadLogic(pageName);
+
+}   
+
+function loadLogic(pageName){
+  const pageComponent = pages[pageName];
+  if (!pageComponent)
+    console.error("ko tìm thấy html của " + pageName + " này trong Object");
+  pageComponent.init();
+}
+
+function LoadHtml(pageName){
+    const pageComponent = pages[pageName];
+    if (!pageComponent)
+        console.error("ko tìm thấy html của " + pageName + " này trong Object");
+    container.innerHTML += pageComponent["html"];
+}
+
 export function LoadCss(pageName) {
+  // ----------------------- kiểm tra các điều kiện -----------------------
+  //--------------------------------------------------------------------------
   const cssPath = `../css/${pageName}.css`;
   const existingLink = document.querySelector(`link[href="${cssPath}"]`);
 
@@ -84,13 +89,12 @@ export function LoadCss(pageName) {
     console.error("ko tìm thấy css của " + pageName + " này trong Object");
   }
 
-  pageComponent["css"].forEach((element) => {
-    // tạo biến để chèn các file css liên quan
-    const linkElement = document.createElement("link");
-    linkElement.rel = "stylesheet";
-    linkElement.href = element;
-
-    // làm cho các file css sẽ xuất hiện ở đầu mỗi head
-    document.head.appendChild(linkElement);
-  });
+  // ----------------------- link 1 css mới vào header -----------------------
+  //--------------------------------------------------------------------------
+  const element = pageComponent["css"];
+  const linkElement = document.createElement("link");
+  linkElement.rel = "stylesheet";
+  linkElement.href = element;
+  linkElement.setAttribute('data-can-delete-css', pageComponent.canDeleteCss);
+  document.head.appendChild(linkElement);
 }
