@@ -49,19 +49,19 @@ export const accountComponent = {
 
                     <div class="form-row">
                         <label>Ngày sinh:</label>
-                        <span class="data-value">**/**/**2000</span>
+                        <span class="data-value">Chưa cập nhật</span>
                         <a href="#" class="action-link">Thay đổi</a>
                     </div>
 
                     <div class="form-row">
                         <label>Email:</label>
-                        <span class="data-value">tr**********@gmail.com</span>
+                        <span class="data-value">Chưa cập nhật</span>
                         <a href="#" class="action-link">Thay đổi</a>
                     </div>
 
                     <div class="form-row">
                         <label>Số điện thoại:</label>
-                        <span class="data-value">**********28</span>
+                        <span class="data-value">Chưa cập nhật</span>
                         <a href="#" class="action-link">Thay đổi</a>
                     </div>
 

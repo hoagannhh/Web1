@@ -9,7 +9,14 @@ body {
   padding-top: 50px;
   padding-bottom: 50px;
 }
-
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Adjust width as needed */
+  max-width: 100%;
+  background-color: #ffffff;
+}
 .profile-container {
   display: flex;
 
