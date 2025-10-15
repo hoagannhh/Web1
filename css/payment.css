@@ -57,8 +57,8 @@
 .input-infor-address {
   border-style: solid;
   border-radius: 4px;
-  width: 400px;
-  height: 30px;
+  width: 95%;
+  height: 40px;
   padding: 5px 10px 5px 10px;
   font-size: 0.9rem;
 }
@@ -73,7 +73,7 @@
   background-color: black;
   color: white;
   font-size: 1rem;
-  padding: 5px;
+  padding: 10px;
   border-radius: 4px;
   border: none;
 }
