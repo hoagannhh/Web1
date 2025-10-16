@@ -27,7 +27,7 @@ export const pages = {
 const container = document.getElementById("container");
 loadPageHome()
 
-function loadPageHome(){
+export function loadPageHome(){
     InsertPage("taskBar");
     InsertPage("home");
 }
@@ -70,7 +70,8 @@ function LoadHtml(pageName){
     const pageComponent = pages[pageName];
     if (!pageComponent)
         console.error("ko tìm thấy html của " + pageName + " này trong Object");
-    container.innerHTML += pageComponent["html"];
+    container.insertAdjacentHTML("afterbegin", pageComponent.html);
+    // container.innerHTML += pageComponent["html"];
 }
 
 export function LoadCss(pageName) {

@@ -1,3 +1,6 @@
+import { ButtonRegister } from './ButtonRegister.js'
+import { InsertPage } from '../LoadPage.js';
+
 export const ButtonLogin = {
     html: `
             <div class="modal-overlay">
@@ -30,24 +33,35 @@ export const ButtonLogin = {
     css: `../css/login.css`,
     canDeleteCss: true,
     init: function(){
-        const buttonClose = document.querySelector(".button-close");
-        buttonClose.addEventListener("click", () => {
-            document.querySelector(".modal-overlay").style.display = "none";
-        })
+        console.log("first");
+            document.querySelector(".modal-overlay").style.display = "flex";
+
+        AddEventButtonClose();
         linkSignUp();
     }
 }
 
-
+function AddEventButtonClose(){
+    const buttonClose = document.querySelector(".button-close");
+    buttonClose.addEventListener("click", () => {
+        RemoveForm();
+    })
+}
 function linkSignUp(){
     const signUp = document.querySelector(".btn.sign-in");
-
+    
     if (signUp) {
         console.log(signUp);
         signUp.addEventListener("click", () => {
-            LoadPage("register");
+            RemoveForm();
+            InsertPage("register");
         });
     } else {
         console.error("Không tìm thấy nút 'sign-in'!");
     }
+}
+function RemoveForm(){
+     const modalOverlay = document.querySelector(".modal-overlay");
+        modalOverlay.style.display = "none";
+        modalOverlay.remove();
 }

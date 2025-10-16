@@ -1,7 +1,9 @@
 import { ButtonLogin } from "./ButtonLogin.js";
 import { ButtonRegister } from "./ButtonRegister.js";
-import {  LoadCss, LoadPage } from "../LoadPage.js";
+import { loadPageHome, LoadCss, LoadPage } from "../LoadPage.js";
 
+
+export let IsAuthenticated = false;
 export const ButtonVerification = {
         html: `        
               <div class="login">
@@ -36,9 +38,9 @@ export const ButtonVerification = {
               console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
               return;
             }
-
-            HandleLogin(login, container);
+            
             HandleRegister(register, container);
+            HandleLogin(login, container);
           })
           
       }
@@ -48,7 +50,7 @@ export const ButtonVerification = {
 // ----------------- LOGIN - REGISTER------------------
 function HandleRegister(register, container) {
     register.addEventListener("click", () => {
-      container.insertAdjacentHTML("afterbegin", ButtonRegister.html[0]);
+      container.insertAdjacentHTML("afterbegin", ButtonRegister.html);
       LoadCss("register");
 
       const modelOverlay = document.querySelector(".modal-overlay");
@@ -98,10 +100,10 @@ function HandleLogin(login, container) {
   login.addEventListener("click", () => {
     container.insertAdjacentHTML("afterbegin", ButtonLogin.html);
     LoadCss("login");
+    ButtonLogin.init();
     const modelOverlay = document.querySelector(".modal-overlay");
     modelOverlay.style.display = "block";
 
-    CloseTab(".button-close", modelOverlay);
 
     HandleDataLogin(modelOverlay);
   });
@@ -166,20 +168,44 @@ function Verification(modelOverlay, accounts) {
 }
 function ConfirmSuccessful(modelOverlay) {
   alert("Đăng nhập thành công");
-  document.querySelector(".login").style.display = "none";
-  document.querySelector(".user-authenticated").style.display = "flex";
+  modelOverlay.remove();
+
+  // cờ hiệu kiểm tra đã đăng nhập chưa
+  IsAuthenticated = true;
+
+  const formLogin = document.querySelector(".login");
+  formLogin.style.display = "none";
+
+  const formAuthenticated = document.querySelector(".user-authenticated");
+  formAuthenticated.style.display = "flex";
+
   modelOverlay.style.display = "none";
   // Đăng nhập thành công sẽ do something
+  AddEventButtonProfile();
+  AddEventButtonLogOut(formLogin, formAuthenticated);
+
+}
+function AddEventButtonLogOut(formLogin, formAuthenticated){
+  const logOut = document.querySelector(".sign-out");
+  logOut.addEventListener("click", () => {
+    formLogin.style.display = "flex";
+    formAuthenticated.style.display = "none";
+    IsAuthenticated = false;
+
+  })
+}
+function AddEventButtonProfile(){
   const account = document.querySelector(".profile");
   account.addEventListener("click", () => {
-    // console.log(123366)
     LoadPage("account");
   });
 }
+
 function CloseTab(nameClassClose, modelOverlay) {
   const closeButton = document.querySelector(nameClassClose);
   closeButton.addEventListener("click", () => {
     modelOverlay.style.display = "none";
+    modelOverlay.remove();
   });
 }
 

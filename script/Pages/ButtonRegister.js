@@ -1,7 +1,7 @@
-// Trong file ButtonRegister.js
+import { InsertPage } from "../LoadPage.js";
 
 export const ButtonRegister = {
-  html: [
+  html: 
     `
     <div class="modal-overlay">
         <div class="register">
@@ -21,7 +21,7 @@ export const ButtonRegister = {
                 
                 <div class="have-an-account">
                     <p>Already have an account?</p>
-                    <button type="button">Sign in</button>
+                    <button class="sign-in-button" type="button">Sign in</button>
                 </div>
 
                 <button type="submit" class="btn continue">CONTINUE</button>
@@ -29,6 +29,30 @@ export const ButtonRegister = {
         </div>
     </div>
     `,
-  ],
-  css: [`../css/register.css`],
+  canDeleteCss: true,
+  css: `../css/register.css`,
+  init: function(){
+    console.log("Do something register in here");
+            document.querySelector(".modal-overlay").style.display = "flex";
+    AddEventButtonClose();
+    AddEventButtonSignin();
+  }
 };
+function AddEventButtonSignin(){
+    const buttonSignIn = document.querySelector(".sign-in-button");
+    buttonSignIn.addEventListener("click", () => {
+        RemoveForm();
+        InsertPage("login");
+    })
+}
+function AddEventButtonClose(){
+    const buttonClose = document.querySelector(".button-close-register");
+    buttonClose.addEventListener("click", () => {
+        RemoveForm();
+    })
+}
+function RemoveForm(){
+    const modalOverlay = document.querySelector(".modal-overlay");
+    modalOverlay.style.display = "none";
+    modalOverlay.remove();
+}
