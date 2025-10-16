@@ -138,6 +138,25 @@ body {
 #full-name {
   margin-left: 20px;
 }
+.edit-placeholder {
+}
+.edit-input {
+  margin-left: 20px;
+  flex-grow: 1;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  max-width: 200px;
+}
+.edit-input:focus {
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    to right,
+    rgb(255, 0, 238),
+    rgb(225, 255, 0)
+  );
+  outline: none;
+}
 .readonly-value {
   font-size: 14px;
   color: #333;
@@ -150,13 +169,17 @@ input[type="text"] {
   flex-grow: 1;
   padding: 8px 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
   font-size: 14px;
   max-width: 300px;
 }
 
 input[type="text"]:focus {
-  border-color: #007bff;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    to right,
+    rgb(255, 0, 238),
+    rgb(225, 255, 0)
+  );
   outline: none;
 }
 

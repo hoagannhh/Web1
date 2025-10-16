@@ -72,19 +72,24 @@
             <div class="form-row">
               <label>Ngày sinh:</label>
               <span class="data-value">Chưa cập nhật</span>
-              <a href="#" class="action-link">Thay đổi</a>
+              <a href="#" class="action-link" data-type="date">Thay đổi</a>
             </div>
 
             <div class="form-row">
               <label>Email:</label>
               <span class="data-value">Chưa cập nhật</span>
-              <a href="#" class="action-link">Thay đổi</a>
+              <a href="#" class="action-link" data-type="email">Thay đổi</a>
             </div>
 
             <div class="form-row">
               <label>Số điện thoại:</label>
               <span class="data-value">Chưa cập nhật</span>
-              <a href="#" class="action-link">Thay đổi</a>
+              <a href="#" class="action-link" data-type="tel">Thay đổi</a>
+            </div>
+            <div class="form-row">
+              <label>Địa chỉ:</label>
+              <span class="data-value">Chưa cập nhật</span>
+              <a href="#" class="action-link" data-type="address">Thay đổi</a>
             </div>
 
             <div class="save-button-container">
@@ -103,6 +108,225 @@
         </div>
       </div>
     </div>
-    
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- Bắt đầu phần logic chính ---
+
+        // Gán sự kiện cho tất cả các link "Thay đổi"
+        document.querySelectorAll(".action-link").forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const parentRow = link.parentElement;
+            const dataValueSpan = parentRow.querySelector(".data-value");
+
+            // Không tạo thêm input nếu đã có rồi
+            if (parentRow.querySelector(".edit-input, .email-container")) {
+              return;
+            }
+
+            // Trước khi mở input mới, hãy đóng tất cả các input khác đang mở
+            closeAllOpenInputs(null); // 'null' để không lưu thay đổi
+
+            const inputType = link.dataset.type;
+            let newEditableElement; // Biến chung cho input, textarea, div
+
+            // TRƯỜNG HỢP 1: Email đặc biệt
+            if (inputType === "email") {
+              const emailContainer = document.createElement("div");
+              emailContainer.className = "email-container";
+              emailContainer.innerHTML = `
+                        <input type="text" placeholder="Nhập email" class="edit-input">
+                        <span class="email-suffix">@gmail.com</span>`;
+
+              const emailInput = emailContainer.querySelector("input");
+              const currentEmail = dataValueSpan.textContent;
+              if (currentEmail !== "Chưa cập nhật") {
+                emailInput.value = currentEmail.split("@")[0];
+              }
+              newEditableElement = emailContainer;
+
+              // TRƯỜNG HỢP 2: Địa chỉ (dùng textarea)
+            } else if (inputType === "address") {
+              const newTextarea = document.createElement("textarea");
+              newTextarea.className = "edit-input";
+              newTextarea.rows = 3;
+              if (dataValueSpan.textContent !== "Chưa cập nhật") {
+                newTextarea.value = dataValueSpan.textContent;
+              }
+              newEditableElement = newTextarea;
+
+              // TRƯỜNG HỢP 3: Các loại input thông thường
+            } else {
+              const newInput = document.createElement("input");
+              newInput.type = inputType;
+              newInput.className = "edit-input";
+
+              if (inputType === "tel") {
+                newInput.addEventListener("beforeinput", (e) => {
+                  if (e.data && isNaN(e.data) && e.data !== "+") {
+                    e.preventDefault();
+                  }
+                });
+              }
+              if (dataValueSpan.textContent !== "Chưa cập nhật") {
+                newInput.value = dataValueSpan.textContent;
+              }
+              newEditableElement = newInput;
+            }
+
+            parentRow.insertBefore(newEditableElement, link);
+            (
+              newEditableElement.querySelector("input") || newEditableElement
+            ).focus();
+
+            dataValueSpan.style.display = "none";
+            link.style.display = "none";
+          });
+        });
+
+        /**
+         * Hàm này sẽ tìm và đóng tất cả các ô input đang mở.
+         * @param {HTMLElement|null} elementToExclude - Phần tử không bị đóng (thường là cái vừa được click).
+         */
+        function closeAllOpenInputs(elementToExclude) {
+          document
+            .querySelectorAll(".edit-input, .email-container")
+            .forEach((input) => {
+              const parentOfInput = input.parentElement;
+              // Nếu phần tử đang xét không phải là cái cần loại trừ thì đóng nó
+              if (parentOfInput !== elementToExclude) {
+                const dataValueSpan =
+                  parentOfInput.querySelector(".data-value");
+                const actionLink = parentOfInput.querySelector(".action-link");
+
+                if (dataValueSpan) dataValueSpan.style.display = "";
+                if (actionLink) actionLink.style.display = "";
+                input.remove();
+              }
+            });
+        }
+
+        // ✅ LẮNG NGHE SỰ KIỆN CLICK TOÀN TRANG ĐỂ "HỦY"
+        window.addEventListener("click", function (event) {
+          // Nếu click vào vùng chỉnh sửa (input, link) thì không làm gì cả
+          if (event.target.closest(".form-row")) {
+            return;
+          }
+          // Nếu click ra ngoài, đóng tất cả các ô đang mở mà không lưu gì
+
+          closeAllOpenInputs(null);
+        });
+
+        // ✅ LẮNG NGHE SỰ KIỆN NHẤN PHÍM ĐỂ "LƯU" HOẶC "HỦY"
+        document.addEventListener("keydown", function (event) {
+          const activeInput = document.querySelector(
+            ".edit-input:focus, .email-container input:focus"
+          );
+          if (!activeInput) return; // Nếu không có input nào đang focus thì thôi
+
+          // Nếu nhấn Enter -> Cập nhật giá trị và đóng
+          if (event.key === "Enter") {
+            const parentRow = activeInput.closest(".form-row");
+            const dataValueSpan = parentRow.querySelector(".data-value");
+            const actionLink = parentRow.querySelector(".action-link");
+            const editableContainer = parentRow.querySelector(
+              ".edit-input, .email-container"
+            );
+
+            let newValue = activeInput.value;
+            // Xử lý đặc biệt cho email
+            if (parentRow.querySelector(".email-container")) {
+              newValue += "@gmail.com";
+            }
+
+            dataValueSpan.textContent = newValue || "Chưa cập nhật";
+            dataValueSpan.style.display = "";
+            actionLink.style.display = "";
+            editableContainer.remove();
+          }
+
+          // Nếu nhấn Escape -> Hủy
+          if (event.key === "Escape") {
+            closeAllOpenInputs(null);
+          }
+        });
+
+        // Gán sự kiện cho nút "Lưu"
+        const saveButton = document.querySelector(".save-button");
+        if (saveButton) {
+          saveButton.addEventListener("click", saveProfileData);
+        }
+
+        // Tải dữ liệu từ localStorage khi trang được mở
+        loadProfileData();
+      });
+
+      // --- HÀM LƯU DỮ LIỆU ---
+      function saveProfileData() {
+        const userProfile = {}; // Bắt đầu với đối tượng rỗng
+
+        // Lấy dữ liệu từ các trường cố định
+        userProfile.fullName = document.getElementById("full-name").value;
+        userProfile.gender =
+          document.querySelector('input[name="gender"]:checked')?.value || "";
+
+        // Lấy dữ liệu từ các trường động
+        // Kiểm tra xem có input đang mở không, nếu có thì lấy giá trị từ input, nếu không thì lấy từ span
+        function getFieldValue(dataType) {
+          const row = document.querySelector(
+            `[data-type="${dataType}"]`
+          ).parentElement;
+          const input = row.querySelector(".edit-input");
+          if (input) {
+            return input.value;
+          }
+          return row.querySelector(".data-value").textContent;
+        }
+
+        userProfile.birthDate = getFieldValue("date");
+        userProfile.email = getFieldValue("email");
+        userProfile.phoneNumber = getFieldValue("tel");
+        userProfile.address = getFieldValue("address");
+
+        // Dọn dẹp giá trị "Chưa cập nhật" trước khi lưu
+        for (const key in userProfile) {
+          if (userProfile[key] === "Chưa cập nhật") {
+            userProfile[key] = "";
+          }
+        }
+
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+        alert("Đã lưu thông tin thành công!");
+        location.reload();
+      }
+
+      // --- HÀM TẢI DỮ LIỆU (Giữ nguyên, vẫn tốt) ---
+      function loadProfileData() {
+        const savedData = localStorage.getItem("userProfile");
+        if (savedData) {
+          const userProfile = JSON.parse(savedData);
+
+          document.getElementById("full-name").value =
+            userProfile.fullName || "";
+          if (userProfile.gender) {
+            document.querySelector(
+              `input[name="gender"][value="${userProfile.gender}"]`
+            ).checked = true;
+          }
+          updateSpanContent("date", userProfile.birthDate);
+          updateSpanContent("email", userProfile.email);
+          updateSpanContent("tel", userProfile.phoneNumber);
+          updateSpanContent("address", userProfile.address);
+        }
+      }
+
+      function updateSpanContent(dataType, value) {
+        const link = document.querySelector(`[data-type="${dataType}"]`);
+        if (link && link.previousElementSibling) {
+          // Nếu không có giá trị thì hiển thị "Chưa cập nhật"
+          link.previousElementSibling.textContent = value || "Chưa cập nhật";
+        }
+      }
+    </script>
   </body>
 </html>
