@@ -23,6 +23,7 @@ body {
   width: 70%; /* Adjust width as needed */
   max-width: 95%;
   background-color: #ffffff;
+  margin-top: 80px  ;
 }
 
 /* ---------------- Sidebar Styles ---------------- */

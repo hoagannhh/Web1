@@ -4,13 +4,14 @@ p{
 } /* 16px */
 .banner{
     width: 100vw;
+    margin-top: 100px;
 }
 .name-of-product{
     font-size: 2rem;
 
 
 }
-.container{
+.container-product-detail{
     display: flex;
     justify-content: center;
     margin-top: 1vh;
@@ -60,7 +61,7 @@ ul{
     background-color: white;
     border: 1px solid gray;
     box-sizing: content-box;
-    padding: 10px 10px;
+    padding: 8px 8px;
     text-align: center;
 }
 .add-to-cart{

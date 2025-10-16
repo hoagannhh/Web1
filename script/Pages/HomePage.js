@@ -1,3 +1,5 @@
+import {LoadPage} from '../LoadPage.js'
+
 export const HomeComponent = {
   html: `    <div class="image-demo">
       <img class="image-demo-d" src="../img/demo.png" />
@@ -129,5 +131,15 @@ export const HomeComponent = {
   css : `../css/home.css`,
   init: function(){
     console.log("Do some thing in here");
+    AddEventForOverlayButtonMore();
   }
 };
+function AddEventForOverlayButtonMore(){
+  const btnMore = document.querySelector(".overlay-btn");
+  console.log(btnMore);
+  const container = document.getElementById("container");
+  console.log(container);
+  btnMore.addEventListener("click", () => {
+    LoadPage("product", container)
+  })
+}

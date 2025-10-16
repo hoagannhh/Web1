@@ -110,7 +110,6 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // --- Bắt đầu phần logic chính ---
 
         // Gán sự kiện cho tất cả các link "Thay đổi"
         document.querySelectorAll(".action-link").forEach((link) => {
@@ -300,7 +299,7 @@
         location.reload();
       }
 
-      // --- HÀM TẢI DỮ LIỆU (Giữ nguyên, vẫn tốt) ---
+      // ------------- HÀM TẢI DỮ LIỆU -------------
       function loadProfileData() {
         const savedData = localStorage.getItem("userProfile");
         if (savedData) {
@@ -319,7 +318,6 @@
           updateSpanContent("address", userProfile.address);
         }
       }
-
       function updateSpanContent(dataType, value) {
         const link = document.querySelector(`[data-type="${dataType}"]`);
         if (link && link.previousElementSibling) {

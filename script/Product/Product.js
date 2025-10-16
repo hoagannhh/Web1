@@ -1,30 +1,48 @@
-export let htmlProduct = "";
+// import { LoadPage } from "../LoadPage.js";
+import { LoadCss } from "../LoadPage.js";
+import { SideBar } from "./SideBar.js";
 
-let allProducts = [];
-let currentPage = 1;
-const productsPerPage = 9; // số sản phẩm trên 1 trang
+export const Product ={
+  html: 
+  `
+  <div>
+    <img src="../img/Group 22.png" alt="" class="just-do-it" /></div>
+      ${SideBar.html}
+      <div class="page-product">
+        <div class="product-grid"></div>
+        <div class="pagination"></div>
+      </div>
+    </div>
+  `,
+  css: `../css/product.css`,
+  canDeleteCss: true,
+  init: function(){
+    // load thang filter của trang sản phẫm
+    LoadSideBar();
+    LoadProductPage();
+  }
+}
 
-console.log("first");
+function LoadSideBar(){
+    LoadCss("sideBar");
+    SideBar.init();
+}
+function LoadProductPage(){
+    let htmlProduct = "";
+    let allProducts = [];
+    let currentPage = 1;
+    const productsPerPage = 9; // số sản phẩm trên 1 trang
 
-console.log("first - 12");
-// console.log("first")
-// setTimeout(() => {
-//   document.querySelector(".container").innerHTML = htmlProduct;
-// }, 2000)
-// console.log("first - 12")
-
-fetch("../data/product.json")
-  .then((response) => response.json())
-  .then((data) => {
-    allProducts = data;
-    renderProduct();
-    renderPagination();
-  })
-  .catch((error) => console.error(error));
-
-console.log("first - 22");
-
-function renderProduct() {
+    fetch("../data/product.json")
+      .then((response) => response.json())
+      .then((data) => {
+        allProducts = data;
+        renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
+        renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+      })
+      .catch((error) => console.error(error));
+  }
+function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const currentProducts = allProducts.slice(startIndex, endIndex);
@@ -52,8 +70,7 @@ function renderProduct() {
 
   document.querySelector(".product-grid").innerHTML = htmlProduct;
 }
-
-function renderPagination() {
+function renderPagination(htmlProduct, allProducts, currentPage, productsPerPage) {
   const totalPages = Math.ceil(allProducts.length / productsPerPage);
   let paginationHTML = "";
 
@@ -69,12 +86,11 @@ function renderPagination() {
 
   document.querySelector(".pagination").innerHTML = paginationHTML;
 
-  // Gắn sự kiện click
   document.querySelectorAll(".page-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       currentPage = Number(e.target.dataset.page);
-      renderProduct();
-      renderPagination();
+      renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
+      renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
     });
   });
 }
@@ -82,19 +98,3 @@ function renderPagination() {
 function ConvertINTtoVND(number) {
   return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
 }
-// function ConvertINTtoVND(number) {
-//   let numAfterConvert = "";
-//   let count = 0;
-//   while (number > 0) {
-//     if (count % 3 === 0) numAfterConvert = "," + numAfterConvert;
-//     let remainder = number % 10;
-//     numAfterConvert = remainder + numAfterConvert;
-//     number = Math.floor(number / 10);
-//     count++;
-//   }
-//   console.log(numAfterConvert[numAfterConvert.length - 1]);
-//   if (numAfterConvert[numAfterConvert.length - 1] === ",")
-//     numAfterConvert = numAfterConvert.slice(0, -1) + "₫";
-//   else numAfterConvert += "đ";
-//   return numAfterConvert;
-// }

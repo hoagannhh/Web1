@@ -1,6 +1,6 @@
 import { ButtonLogin } from "./ButtonLogin.js";
 import { ButtonRegister } from "./ButtonRegister.js";
-import { loadPageHome, LoadCss, LoadPage } from "../LoadPage.js";
+import { LoadCss, LoadPage } from "../LoadPage.js";
 
 
 export let IsAuthenticated = false;
@@ -97,6 +97,7 @@ function HandleDataRegister() {
   });
 }
 function HandleLogin(login, container) {
+  // tạo 1 form login
   login.addEventListener("click", () => {
     container.insertAdjacentHTML("afterbegin", ButtonLogin.html);
     LoadCss("login");
@@ -105,10 +106,10 @@ function HandleLogin(login, container) {
     modelOverlay.style.display = "block";
 
 
-    HandleDataLogin(modelOverlay);
+    HandleDataLogin(modelOverlay, container);
   });
 }
-function HandleDataLogin(modelOverlay) {
+function HandleDataLogin(modelOverlay, container) {
   // -------------load data ---------------------
   let accounts;
   fetch("../data/account.json")
@@ -141,14 +142,14 @@ function HandleDataLogin(modelOverlay) {
         userIndividual.password === userAccount.password
       ) {
         // console.log(123);
-        ConfirmSuccessful(modelOverlay);
+        ConfirmSuccessful(modelOverlay, container);
         return;
       }
       alert("Tên đăng nhập hoặc mật khẩu không đúng!");
     }
   });
 }
-function Verification(modelOverlay, accounts) {
+function Verification(modelOverlay, accounts, container) {
   const userAccount = {
     username: document.getElementById("username-login").value.trim(),
     password: document.getElementById("password-login").value.trim(),
@@ -160,13 +161,13 @@ function Verification(modelOverlay, accounts) {
   );
 
   if (foundUser) {
-    ConfirmSuccessful(modelOverlay);
+    ConfirmSuccessful(modelOverlay, container);
     return true;
   } else {
     return false;
   }
 }
-function ConfirmSuccessful(modelOverlay) {
+function ConfirmSuccessful(modelOverlay, container) {
   alert("Đăng nhập thành công");
   modelOverlay.remove();
 
@@ -181,8 +182,8 @@ function ConfirmSuccessful(modelOverlay) {
 
   modelOverlay.style.display = "none";
   // Đăng nhập thành công sẽ do something
-  AddEventButtonProfile();
-  AddEventButtonLogOut(formLogin, formAuthenticated);
+  AddEventButtonProfile(container);
+  AddEventButtonLogOut(formLogin, formAuthenticated, container);
 
 }
 function AddEventButtonLogOut(formLogin, formAuthenticated){
@@ -191,13 +192,13 @@ function AddEventButtonLogOut(formLogin, formAuthenticated){
     formLogin.style.display = "flex";
     formAuthenticated.style.display = "none";
     IsAuthenticated = false;
-
+    LoadPage("home", container);
   })
 }
-function AddEventButtonProfile(){
+function AddEventButtonProfile(container){
   const account = document.querySelector(".profile");
   account.addEventListener("click", () => {
-    LoadPage("account");
+    LoadPage("account", container);
   });
 }
 

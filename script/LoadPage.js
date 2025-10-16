@@ -3,7 +3,9 @@ import { TaskBar } from "./Pages/Taskbar.js";
 import { ButtonLogin } from "./Pages/ButtonLogin.js";
 import { ButtonRegister } from "./Pages/ButtonRegister.js";
 import { accountComponent } from "./Pages/accountPage.js";
-import { ButtonVerification } from "./Pages/ButtonVerification .js";
+import { ProductDetail } from './ProductDetail/ProductDetail.js';
+import { Product } from './Product/Product.js'
+import { SideBar } from "./Product/SideBar.js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
@@ -22,20 +24,24 @@ export const pages = {
   login: ButtonLogin,
   register: ButtonRegister,
   account: accountComponent,
+  productDetail: ProductDetail,
+  product: Product,
+  sideBar: SideBar,
 };
 // div này sẽ chứa code html sau khi load code từ object pages
-const container = document.getElementById("container");
+const ContentContainer = document.getElementById("container");
+const taskBarContainer = document.getElementById("task-bar-container");
 loadPageHome()
 
 export function loadPageHome(){
-    InsertPage("taskBar");
-    InsertPage("home");
+    InsertPage("taskBar", taskBarContainer);
+    InsertPage("home", ContentContainer);
 }
-export function LoadPage(pageName) {
-  RemoveData(pageName);
-  InsertPage(pageName);
+export function LoadPage(pageName, container) {
+  RemoveData(container);
+  InsertPage(pageName, container);
 }
-function RemoveData(){
+function RemoveData(container){
   // xóa html
   container.innerHTML = "";
   // xóa css
@@ -48,12 +54,12 @@ function RemoveData(){
       }
   });
 }
-export function InsertPage(pageName){
+export function InsertPage(pageName, container){
     if (!pages[pageName]){
         console.error("Không tìm thấy page có tên: " + pageName + " quay lại trang home");
         pageName ="home";
     }
-    LoadHtml(pageName);
+    LoadHtml(pageName, container);
     LoadCss(pageName);
     loadLogic(pageName);
 
@@ -66,7 +72,7 @@ function loadLogic(pageName){
   pageComponent.init();
 }
 
-function LoadHtml(pageName){
+function LoadHtml(pageName, container){
     const pageComponent = pages[pageName];
     if (!pageComponent)
         console.error("ko tìm thấy html của " + pageName + " này trong Object");
