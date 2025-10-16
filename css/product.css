@@ -125,3 +125,28 @@
     max-width: 100%;
   }
 }
+.page-product {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.page-btn {
+  margin: 0 5px;
+  padding: 8px 14px;
+  border: none;
+  background-color: #eee;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.page-btn.active {
+  background-color: #000;
+  color: #fff;
+}

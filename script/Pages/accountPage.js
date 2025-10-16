@@ -1,6 +1,5 @@
 export const accountComponent = {
-  html: [
-    `<div class="profile-container">
+  html: `<div class="profile-container">
         <div class="sidebar">
             <div class="user-info-mini">
                 <img src="../img/547992253_823059776934031_1523588798799183290_n.jpg" alt="Ảnh đại diện" class="avatar-mini">
@@ -78,6 +77,9 @@ export const accountComponent = {
 
         </div>
     </div>`,
-  ],
-  css: [`../css/account.css`],
+  canDeleteCss: true,
+  css: `../css/account.css`,
+  init: function(){
+    console.log("Do something in Account");
+  }
 };

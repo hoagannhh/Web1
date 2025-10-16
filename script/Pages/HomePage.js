@@ -1,5 +1,5 @@
 export const HomeComponent = {
-  html: [`    <div class="image-demo">
+  html: `    <div class="image-demo">
       <img class="image-demo-d" src="../img/demo.png" />
       <button class="overlay-btn">More</button>
     </div>
@@ -124,6 +124,10 @@ export const HomeComponent = {
           <p class="price">$205.00</p>
         </div>
       </div>
-    </div>`],
-  css : [`../css/home.css`]
+    </div>`,
+  canDeleteCss: true,
+  css : `../css/home.css`,
+  init: function(){
+    console.log("Do some thing in here");
+  }
 };
