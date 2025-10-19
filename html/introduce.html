@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Danh sách giày Jordan</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .content {
+        flex: 1;
+        padding: 20px;
+      }
+
+      .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .product-card {
+        background: white;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        width: 200px;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        transition: border 0.3s ease;
+      }
+
+      .product-card img {
+        width: 100%;
+        border-radius: 8px;
+      }
+
+      .product-card .label {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: red;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .product-card .name {
+        font-weight: bold;
+        margin: 10px 0 5px 0;
+      }
+
+      .product-card .price {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      .product-card:hover {
+        border-color: #007bff;
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      /* footer */
+      .footer {
+        background: #fff;
+        padding: 30px 20px;
+        border-top: 1px solid #ccc;
+      }
+
+      .footer-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .footer-section {
+        flex: 1 1 180px;
+        margin: 10px;
+      }
+
+      .footer-section h4 {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: #000;
+        font-size: 14px;
+        text-decoration: none;
+        line-height: 1.6;
+      }
+
+      .footer-section a:hover {
+        text-decoration: underline;
+      }
+
+      .icon {
+        width: 16px;
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+
+      .country {
+        text-align: right;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="product-list">
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+
+        <div class="product-card">
+          <span class="label">Hot</span>
+          <img
+            src="https://www.jordan1.vn/wp-content/uploads/2023/09/482559_01.jpg_2e25687fdd9a494491_c2ed0ba7c1c144b89d82dd98f2c1f453.png"
+            alt="Jordan Retro 12"
+          />
+          <div class="name">Jordan Retro 12</div>
+          <div class="price">3.500.000₫</div>
+        </div>
+      </div>
+    </div>
+    <!-- footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h4>MADE BY</h4>
+          <p>
+            Trần Chinh Thành<br />Nguyễn Hiếu Nghĩa<br />Quách Kỳ Minh<br />Nguyễn
+            Hoàng Anh
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4>ABOUT US</h4>
+          <p>Dự án WEB<br />SHOES STORE</p>
+        </div>
+        <div class="footer-section">
+          <h4>FOLLOW</h4>
+          <a href="https://github.com/MynameNghia123" target="_blank">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+              alt="GitHub"
+              class="icon"
+            />
+            MynameNghia123
+          </a>
+        </div>
+        <div class="footer-section country">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/44/44386.png"
+            alt="Globe"
+            class="icon"
+          />
+          VIET NAM
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
