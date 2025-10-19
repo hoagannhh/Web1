@@ -130,15 +130,12 @@ export const HomeComponent = {
   canDeleteCss: true,
   css : `../css/home.css`,
   init: function(){
-    console.log("Do some thing in here");
     AddEventForOverlayButtonMore();
   }
 };
 function AddEventForOverlayButtonMore(){
   const btnMore = document.querySelector(".overlay-btn");
-  console.log(btnMore);
   const container = document.getElementById("container");
-  console.log(container);
   btnMore.addEventListener("click", () => {
     LoadPage("product", container)
   })

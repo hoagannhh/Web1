@@ -1,4 +1,5 @@
 import { ButtonVerification  } from "./ButtonVerification .js"
+import { LoadPage } from "../LoadPage.js";
 export const TaskBar = {
     html : `<div class="task-bar">
       <div class="Header">
@@ -248,7 +249,14 @@ export const TaskBar = {
     init: function(){
       ButtonVerification.init();  
       headerScroll();
+      LoadTrangChu();
     }
+}
+function LoadTrangChu(){
+  const header = document.querySelector(".Header .name");
+  header.addEventListener("click", () => {
+    LoadPage("home", document.getElementById("container"));
+  })
 }
 function headerScroll(){
   const header = document.querySelector(".task-bar");

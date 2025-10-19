@@ -35,8 +35,8 @@ loadPageHome()
 
 export function loadPageHome(){
     InsertPage("taskBar", taskBarContainer);
-    // InsertPage("home", ContentContainer);
-    InsertPage("product", ContentContainer);
+    InsertPage("productDetail", ContentContainer);
+    // InsertPage("product", ContentContainer);
 }
 export function LoadPage(pageName, container) {
   RemoveData(container);
@@ -49,7 +49,6 @@ function RemoveData(container){
   const allCssLinks = document.querySelectorAll('link[rel="stylesheet"]')
   if (!allCssLinks) return;
   allCssLinks.forEach((css) =>{
-    console.log(typeof(css.dataset.canDeleteCss  ))
       if (css.dataset.canDeleteCss   === "true"){
         css.remove();
       }

@@ -1,6 +1,7 @@
 // import { LoadPage } from "../LoadPage.js";
-import { LoadCss } from "../LoadPage.js";
+import { LoadCss, LoadPage } from "../LoadPage.js";
 import { SideBar } from "./SideBar.js";
+import { ProductDetail } from "../ProductDetail/ProductDetail.js";
 
 export const Product ={
   html: 
@@ -27,7 +28,7 @@ function LoadSideBar(){
     LoadCss("sideBar");
     SideBar.init();
 }
-function LoadProductPage(){
+ function LoadProductPage(){
     let htmlProduct = "";
     let allProducts = [];
     let currentPage = 1;
@@ -39,9 +40,34 @@ function LoadProductPage(){
         allProducts = data;
         renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
         renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+        HandleEvent(allProducts);
       })
       .catch((error) => console.error(error));
   }
+export function HandleEvent(allProducts){
+  let products = document.querySelectorAll(".prod-demo");
+  products.forEach((product) => {
+    product.addEventListener("click", () => {
+        LoadPage("productDetail", document.getElementById("container"));
+
+        console.log(allProducts);
+        console.log(allProducts.find(productDeta => productDeta.id === product.dataset.id ));
+
+
+        ProductDetail.HandleEvent(allProducts.find(productDeta => productDeta.id === product.dataset.id ));
+        console.log(" su kien cua prod-demo");
+    })
+  })
+
+
+  let btns = document.querySelectorAll(".buy-now-btn");
+  btns.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+        console.log(" su kien cua btns");
+        event.stopPropagation();
+    })
+  })
+}
 function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
@@ -51,7 +77,7 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
 
   currentProducts.forEach((product) => {
     htmlProduct += `
-        <div class="prod-demo">
+        <div class="prod-demo" data-id="${product.id}">
           <div class="prod">
             <div class="new-in-prod"><p class="new-text">New</p></div>
             <img class="img-prod" src="${product["img-represent"]}" />

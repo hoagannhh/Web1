@@ -1,3 +1,4 @@
+import {HandleEvent} from '../Product/Product.js'
 export const SideBar = {
     html: `
   <div class="container">
@@ -205,7 +206,7 @@ export const SideBar = {
     css: `../css/sidebar.css`,
     canDeleteCss: false,
     init: function (){
-        console.log("Do something in here side bar");
+        // console.log("Do something in here side bar");
         const filterState = {
           gender: [],
           price: null,
@@ -214,7 +215,7 @@ export const SideBar = {
           colors: [],
           sortBy: "Featured" // Giá trị mặc định
         };
-        console.log(filterState.sortBy);
+        // console.log(filterState.sortBy);
         
         sideBar();
         AddEventButtonChooseSize(filterState);
@@ -227,7 +228,7 @@ export const SideBar = {
     }
 }
 function AfterFilter(filterState){
-    console.log(filterState);
+    // console.log(filterState);
     LoadProductPage(filterState);
 }
 function FilterByColor(filterState){
@@ -290,7 +291,7 @@ function AddEventButtonChooseSize(filterState){
   const allButton = document.querySelectorAll(".sidebar-size-btn");
   allButton.forEach(button => {
       button.addEventListener("click", () => {
-          console.log(1);
+          // console.log(1);
           allButton.forEach((btn) => {
               btn.classList.remove("selected");
           })
@@ -339,11 +340,12 @@ function LoadProductPage(filterState){
 
         renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
         renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+        HandleEvent(allProducts)
       })
       .catch((error) => console.error(error));
 }
 function Filter(filterState, data){
-  console.log("-------------------");
+  // console.log("-------------------");
   // console.log(filterState);
   // console.log(data);
   let products = [];
@@ -389,7 +391,7 @@ function Filter(filterState, data){
   }
 
 
-  console.log(products);
+  // console.log(products);
 
   return products;
 }
@@ -403,7 +405,7 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
 
   currentProducts.forEach((product) => {
     htmlProduct += `
-        <div class="prod-demo">
+        <div class="prod-demo" data-id="${product.id}">
           <div class="prod">
             <div class="new-in-prod"><p class="new-text">New</p></div>
             <img class="img-prod" src="${product["img-represent"]}" />
@@ -419,8 +421,8 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
         </div>
                         `;
   });
-
-  document.querySelector(".product-grid").innerHTML = htmlProduct;
+  document.querySelector(".product-grid").innerHTML = "";
+  document.querySelector(".product-grid").insertAdjacentHTML("beforeend",htmlProduct);
 }
 function renderPagination(htmlProduct, allProducts, currentPage, productsPerPage) {
   const totalPages = Math.ceil(allProducts.length / productsPerPage);
