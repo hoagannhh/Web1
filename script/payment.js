@@ -69,17 +69,33 @@ function selectAddress(index) {
   if (selected) {
     document.getElementById("current-phone").textContent = selected.phone;
     document.getElementById("current-address").textContent = selected.address;
+
+    localStorage.setItem("selectedAddress", JSON.stringify(selected));
   }
   showAddress();
 }
 
 // Khi load trang, hiển thị địa chỉ cuối cùng đã dùng (nếu có)
 window.addEventListener("DOMContentLoaded", () => {
-  const stored = JSON.parse(localStorage.getItem("userAddresses")) || [];
-  if (stored.length > 0) {
-    const last = stored[stored.length - 1];
-    document.getElementById("current-phone").textContent = last.phone;
-    document.getElementById("current-address").textContent = last.address;
+  const selectedAddressString = localStorage.getItem("selectedAddress");
+  if (selectedAddressString) {
+    const selected = JSON.parse(selectedAddressString);
+
+    if (selected && selected.phone && selected.address) {
+      document.getElementById("current-phone").textContent = selected.phone;
+      document.getElementById("current-address").textContent = selected.address;
+    }
+  } else {
+    //chưa có địa chỉ nào được chọn, load địa chỉ cuối cùng từ danh sách
+    const stored = JSON.parse(localStorage.getItem("userAddresses")) || [];
+    if (stored.length > 0) {
+      const last = stored[stored.length - 1];
+      document.getElementById("current-phone").textContent = last.phone;
+      document.getElementById("current-address").textContent = last.address;
+
+      // Cần lưu luôn vào selectedAddress để lần sau load lại vẫn lấy được
+      localStorage.setItem("selectedAddress", JSON.stringify(last));
+    }
   }
 });
 
