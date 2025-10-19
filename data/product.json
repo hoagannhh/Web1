@@ -15,7 +15,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -40,7 +40,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -61,7 +61,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -85,7 +85,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -105,7 +105,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -131,7 +131,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -156,7 +156,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -177,7 +177,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -201,7 +201,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -221,7 +221,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -247,7 +247,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -272,7 +272,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -293,7 +293,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -317,7 +317,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -337,7 +337,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -363,7 +363,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -388,7 +388,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -409,7 +409,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -433,7 +433,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -453,7 +453,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -479,7 +479,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -504,7 +504,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -525,7 +525,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -549,7 +549,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -569,7 +569,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -595,7 +595,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -620,7 +620,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -641,7 +641,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -665,7 +665,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -685,7 +685,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -711,7 +711,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -736,7 +736,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -757,7 +757,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -781,7 +781,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -801,7 +801,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -827,7 +827,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -852,7 +852,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -873,7 +873,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -897,7 +897,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -917,7 +917,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",
@@ -943,7 +943,7 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Nike",
     "price": 4109000,
     "color": ["red", "yellow", "black", "blue"],
@@ -968,7 +968,7 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
     "color": ["green", "blue", "red"],
@@ -989,7 +989,7 @@
       "../product-img/s3/s3-3.png"
     ],
     "img-link-color": ["../product-img/s3/s3-pink.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "color": "pink",
@@ -1013,7 +1013,7 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "man",
+    "gender": "men",
     "brand": "Vans",
     "price": 1580000,
     "color": ["blue", "black", "brown", "pink"],
@@ -1033,7 +1033,7 @@
       "../product-img/s5/s5-2.png"
     ],
     "img-link-color": ["../product-img/s5/s5-white.png"],
-    "gender": "women",
+    "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "color": "pink",

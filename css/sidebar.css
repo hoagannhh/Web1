@@ -112,7 +112,20 @@ body {
   text-align: center;
   transition: all 0.2s ease;
 }
+.sidebar-size-btn:hover {
+  background-color: #f0f0f0;
+}
+.dropdown-option.selected{
+    background-color: #000; 
+  color: #fff;             
+  border-color: #000;     
 
+}
+.sidebar-size-btn.selected {
+  background-color: #000; 
+  color: #fff;             
+  border-color: #000;     
+}
 /* hover */
 .size-btn:hover {
   border-color: #000;
