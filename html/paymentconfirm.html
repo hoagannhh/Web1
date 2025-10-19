@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
     <link rel="stylesheet" href="../css/payment.css" />
     <link rel="stylesheet" href="../css/taskbar.css" />
     <link rel="stylesheet" href="../css/sidebar.css" />
-    <title>Document</title>
   </head>
   <body>
     <header>
@@ -268,7 +268,7 @@
         <div class="address">
           <div class="payment-title">YOUR SELECTIONS</div>
           <!-- Hiển thị địa chỉ -->
-          <div class="container-address">
+          <div class="container-address address-confirm">
             <!-- View hiện tại -->
             <div id="address-view">
               <div>
@@ -276,140 +276,20 @@
                   <strong>ADDRESS:</strong>
                   <span id="current-address">aaaaa/aaaaaaa/aaaaaaaaaa</span>
                 </p>
-                <p>
+                <p class="phone-confirm">
                   <strong>PHONE:</strong>
                   <span id="current-phone">0000000000</span>
                 </p>
               </div>
               <hr class="line-invoice" />
-              <div>
-                <button class="button-change" onclick="showAddressList()">
-                  Change
-                </button>
-              </div>
             </div>
+          </div>
+        </div>
 
-            <!-- View danh sách địa chỉ -->
-            <div id="address-list-view" class="hidden">
-              <p><strong>Saved Addresses:</strong></p>
-              <ul id="address-list"></ul>
-              <div class="form-input-btn">
-                <button class="add-new-btn" onclick="showForm()">
-                  Add New Address
-                </button>
-                <button class="back-btn" onclick="showAddress()">Back</button>
-              </div>
-            </div>
+        <div class="review-payment-methood">
+          <div class="selected-method" onclick="">paymaet</div>
+        </div>
 
-            <!-- View thêm địa chỉ mới -->
-            <div id="form-view" class="hidden">
-              <p><strong>NEW ADDRESS:</strong></p>
-              <form id="address-form">
-                <input
-                  id="new-phone"
-                  class="input-infor-address"
-                  type="tel"
-                  placeholder="Phone Number"
-                  required
-                /><br /><br />
-                <input
-                  id="new-address"
-                  class="reset-address input-infor-address"
-                  type="text"
-                  placeholder="Address"
-                  required
-                /><br /><br />
-                <div class="form-input-btn">
-                  <button
-                    type="button"
-                    class="confirm-btn"
-                    onclick="confirmAddress()"
-                  >
-                    Confirm
-                  </button>
-                  <button
-                    type="button"
-                    class="back-btn"
-                    onclick="showAddressList()"
-                  >
-                    Back
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div class="Ship">
-          <div class="payment-title">SHIPPING</div>
-          <div class="infor-ship">
-            <p>
-              250,000₫ Shipping <br /><br />
-              Shipment One <br /><br />
-              Arrives Mon, Sep 22 - Fri, Sep 26<br /><br />
-              This is an international shipment requiring customs clearance
-            </p>
-          </div>
-        </div>
-        <hr />
-        <div class="paymet">
-          <div class="payment-title">Payment</div>
-          <div class="promo">
-            <p class="promo-text">Have a promo code?</p>
-            <div class="apply-promo">
-              <input type="text" class="code-promo" placeholder="Promo" />
-              <button class="apply">Apply</button>
-            </div>
-          </div>
-        </div>
-        <div class="method">
-          <div class="pay">How would you like to pay?</div>
-          <div class="credit-method payment-methood" onclick="">
-            <img src="../icon/card.png" class="icon-card" />
-            <p>Credit or Debit Card</p>
-          </div>
-
-          <div class="hidden infor-card">
-            <hr />
-            <input
-              class="input-card"
-              id="card-number"
-              type="number"
-              placeholder="Card number"
-            />
-            <input
-              class="input-card"
-              id="card-holder"
-              type="text"
-              placeholder="Name on card"
-            />
-            <div class="date-card">
-              <input class="input-date-card" type="date" placeholder="MM/YY" />
-              <input class="input-date-card" type="text" placeholder="CVV" />
-            </div>
-            <hr />
-          </div>
-
-          <div class="paypal-method payment-methood" onclick="">
-            <img src="../icon/paypal.png" class="icon-paypal" />
-          </div>
-          <div class="m-banking-method payment-methood">
-            <img src="../icon/m-banking.png" class="icon-card" />
-            <p>M-Banking</p>
-          </div>
-          <div class="cash-method payment-methood">
-            <img src="../icon/cash.png" class="icon-card" />
-            <p>Cash</p>
-          </div>
-        </div>
-        <div class="form-input-btn" id="confirm-btn-payment">
-          <button type="button" class="confirm-btn">Confirm</button>
-          <!-- nút quay lại -->
-          <button type="button" class="back-btn">Back</button>
-        </div>
-      </div>
-      <div class="right-payment">
-        <div class="payment-title">Order Summary</div>
         <div class="bill">
           <div class="feature">Subtotal</div>
           <div class="payment-price">3,829,000</div>
@@ -418,17 +298,51 @@
           <div class="feature">Delivery/Shipping</div>
           <div class="payment-price">250,000</div>
         </div>
-        <div class="free-ship">Add 1,171,000đ more to earn Free Shipping!</div>
-        <div class="progress">
-          <div class="progress-bar"></div>
-        </div>
-        <hr />
+
         <div class="bill">
           <div class="total-bill">Total</div>
           <div class="price-bill">4,079,000</div>
         </div>
-        <hr />
-        <div class="list-invoice">
+      </div>
+      <div class="right-payment">
+        <div class="payment-title">Order Summary</div>
+        <div class="list-invoice list-invoice-confirm">
+          <div class="invoice">
+            <div class="date-invoice">Arrives Fri, Sep 12</div>
+            <div class="invoice-product">
+              <div class="img-invoice-product">
+                <img
+                  class="img-invoice-product-img"
+                  src="../img/invoice-product.png"
+                />
+              </div>
+              <div class="infor-invoice">
+                <div class="name-invoice-product">Nike Ava Rover</div>
+                <div class="qty-invoice-product">Qty: 1</div>
+                <div class="size-invoice-product">Size: EU 42</div>
+                <div class="price-invoice-product">3,829,000</div>
+              </div>
+            </div>
+            <hr class="line-invoice" />
+          </div>
+          <div class="invoice">
+            <div class="date-invoice">Arrives Fri, Sep 12</div>
+            <div class="invoice-product">
+              <div class="img-invoice-product">
+                <img
+                  class="img-invoice-product-img"
+                  src="../img/invoice-product.png"
+                />
+              </div>
+              <div class="infor-invoice">
+                <div class="name-invoice-product">Nike Ava Rover</div>
+                <div class="qty-invoice-product">Qty: 1</div>
+                <div class="size-invoice-product">Size: EU 42</div>
+                <div class="price-invoice-product">3,829,000</div>
+              </div>
+            </div>
+            <hr class="line-invoice" />
+          </div>
           <div class="invoice">
             <div class="date-invoice">Arrives Fri, Sep 12</div>
             <div class="invoice-product">
@@ -467,6 +381,12 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="form-btn-review-payment">
+      <button class="confirm-btn-review-payment">Confirm</button>
+      <!-- nút quay lại -->
+      <button class="back-btn-review-payment">Back</button>
     </div>
     <script src="../script/payment.js"></script>
   </body>
