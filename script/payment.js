@@ -99,6 +99,8 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// localStorage.removeItem("userAddresses");
+
 // const Credit = document.querySelector(".credit-method");
 // const infoCard = document.querySelector(".infor-card");
 // Credit.addEventListener("click", () => {
@@ -170,11 +172,44 @@ function setupPaymentListeners() {
       const savedDataString = localStorage.getItem("payment-method");
       viewSelectedMethod.innerHTML = `Payment: ${savedDataString}`;
     }
-
+    const backPayment = document.querySelector(".back-btn-review-payment");
+    backPayment.addEventListener("click", () => {
+      window.location.href = "payment.html";
+    });
     return;
   }
 
   //cái đống này trở xuống là ở trang payment
+  // cái đống này là promo
+  const promo = document.querySelector(".apply");
+  promo.addEventListener("click", () => {
+    const codePromo = document.querySelector(".code-promo");
+    if (codePromo.value.trim() === "") {
+      codePromo.focus();
+      codePromo.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      fetch("../data/promo.json")
+        .then((response) => response.json())
+        .then((data) => {
+          listCodePromo = data;
+
+          const foundCode = listCodePromo.find(
+            (item) => item.code === codePromo.value.trim().toUpperCase()
+          );
+
+          console.log(codePromo.value.trim().toUpperCase());
+          if (foundCode) {
+            console.log(`sale: ${foundCode.sale}`);
+          } else {
+            console.log("sai r nhập lại đi");
+          }
+        });
+
+      // console.log(listCodePromo);
+    }
+  });
+
+  //Cái đống này là method
   if (creditMethod) {
     creditMethod.addEventListener("click", () => {
       selectMethod(creditMethod, "credit");
