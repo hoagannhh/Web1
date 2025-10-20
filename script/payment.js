@@ -172,6 +172,15 @@ function setupPaymentListeners() {
       const savedDataString = localStorage.getItem("payment-method");
       viewSelectedMethod.innerHTML = `Payment: ${savedDataString}`;
     }
+    // const saveCodePromo = localStorage.getItem("userCodePromo");
+    console.log(localStorage.getItem("userCodePromo"));
+    // console.log(saveCodePromo);
+    if (localStorage.getItem("userCodePromo") != null) {
+      document.querySelector(".sale-ofcode").innerHTML = `Sale`;
+      document.querySelector(
+        ".precent-sale"
+      ).innerHTML = `${localStorage.getItem("userCodePromo")}`;
+    }
     const backPayment = document.querySelector(".back-btn-review-payment");
     backPayment.addEventListener("click", () => {
       window.location.href = "payment.html";
@@ -182,11 +191,12 @@ function setupPaymentListeners() {
   //cái đống này trở xuống là ở trang payment
   // cái đống này là promo
   const promo = document.querySelector(".apply");
+  const codePromo = document.querySelector(".code-promo");
   promo.addEventListener("click", () => {
-    const codePromo = document.querySelector(".code-promo");
     if (codePromo.value.trim() === "") {
       codePromo.focus();
       codePromo.scrollIntoView({ behavior: "smooth", block: "center" });
+      document.querySelector(".process-promo").innerHTML = `Vui lòng nhập mã`;
     } else {
       fetch("../data/promo.json")
         .then((response) => response.json())
@@ -200,8 +210,16 @@ function setupPaymentListeners() {
           console.log(codePromo.value.trim().toUpperCase());
           if (foundCode) {
             console.log(`sale: ${foundCode.sale}`);
+            localStorage.setItem("userCodePromo", foundCode.sale);
+            console.log(localStorage.getItem("userCodePromo"));
+            document.querySelector(
+              ".process-promo"
+            ).innerHTML = `Sale: ${localStorage.getItem("userCodePromo")}`;
           } else {
             console.log("sai r nhập lại đi");
+            document.querySelector(
+              ".process-promo"
+            ).innerHTML = `sai r nhập lại đi`;
           }
         });
 
@@ -235,7 +253,7 @@ function setupPaymentListeners() {
   }
 
   // đây là thanh toán
-  confirmButton.addEventListener("click", () => {
+  confirmButton.addEventListener("click", async () => {
     if (!selectedMethod) {
       alert("Vui lòng chọn một phương thức thanh toán trước.");
       return;
@@ -280,6 +298,9 @@ function setupPaymentListeners() {
     }
 
     if (checkConfirm) {
+      if (codePromo.value.trim() === "") {
+        localStorage.removeItem("userCodePromo");
+      }
       window.location.href = "paymentconfirm.html";
     }
   });
