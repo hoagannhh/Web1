@@ -1,4 +1,4 @@
-import {HandleEvent} from '../Product/Product.js'
+import {HandleEventProduct} from '../Product/Product.js'
 export const SideBar = {
     html: `
   <div class="container">
@@ -340,7 +340,7 @@ function LoadProductPage(filterState){
 
         renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
         renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
-        HandleEvent(allProducts)
+        HandleEventProduct(allProducts)
       })
       .catch((error) => console.error(error));
 }

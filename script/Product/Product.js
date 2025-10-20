@@ -25,7 +25,7 @@ export const Product ={
 }
 
 function LoadSideBar(){
-    LoadCss("sideBar");
+    LoadCss("sidebar");
     SideBar.init();
 }
  function LoadProductPage(){
@@ -40,11 +40,11 @@ function LoadSideBar(){
         allProducts = data;
         renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
         renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
-        HandleEvent(allProducts);
+        HandleEventProduct(allProducts);
       })
       .catch((error) => console.error(error));
   }
-export function HandleEvent(allProducts){
+export function HandleEventProduct(allProducts){
   let products = document.querySelectorAll(".prod-demo");
   products.forEach((product) => {
     product.addEventListener("click", () => {
@@ -117,6 +117,7 @@ function renderPagination(htmlProduct, allProducts, currentPage, productsPerPage
       currentPage = Number(e.target.dataset.page);
       renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
       renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+      HandleEventProduct(allProducts);
     });
   });
 }

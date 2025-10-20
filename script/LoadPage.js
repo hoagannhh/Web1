@@ -26,7 +26,7 @@ export const pages = {
   account: accountComponent,
   productDetail: ProductDetail,
   product: Product,
-  sideBar: SideBar,
+  sidebar: SideBar,
 };
 // div này sẽ chứa code html sau khi load code từ object pages
 const ContentContainer = document.getElementById("container");
@@ -35,7 +35,8 @@ loadPageHome()
 
 export function loadPageHome(){
     InsertPage("taskBar", taskBarContainer);
-    InsertPage("productDetail", ContentContainer);
+    // InsertPage("productDetail", ContentContainer);
+    InsertPage("home", ContentContainer);
     // InsertPage("product", ContentContainer);
 }
 export function LoadPage(pageName, container) {
@@ -49,6 +50,7 @@ function RemoveData(container){
   const allCssLinks = document.querySelectorAll('link[rel="stylesheet"]')
   if (!allCssLinks) return;
   allCssLinks.forEach((css) =>{
+      // if (css.dataset.)
       if (css.dataset.canDeleteCss   === "true"){
         css.remove();
       }
@@ -84,6 +86,7 @@ export function LoadCss(pageName) {
   // ----------------------- kiểm tra các điều kiện -----------------------
   //--------------------------------------------------------------------------
   const cssPath = `../css/${pageName}.css`;
+  console.log(cssPath);
   const existingLink = document.querySelector(`link[href="${cssPath}"]`);
 
   if (existingLink) {
