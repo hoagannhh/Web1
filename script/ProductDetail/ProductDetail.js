@@ -33,6 +33,7 @@ export const ProductDetail = {
 
         </ul>
         <button class="add-to-cart">Add to cart</button>
+        <button class="buy-now">Buy now</button>
         <div class="horizontal-bar"></div>
         <div class="description-detail">
           <h2>DESCRIPTION</h2>
@@ -106,14 +107,51 @@ export const ProductDetail = {
     canDeleteCss: true,
     init: function(){
         // console.log(this.HandleEvent());
+         AddEventImgColor();
+         AddEventButtonChooseSize();
         AddEventbuttonSubmit();
-
 
     },
     HandleEvent: function(proInfor){
       console.log(proInfor);
       AddImage(proInfor);
+      this.init();
     }
+}
+function AddEventButtonChooseSize(){
+  const btns = document.querySelectorAll(".size");
+  btns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btns.forEach(btneach => {
+        btneach.classList.remove("size-selected");
+      })
+      if (btn.classList.contains("size-selected")){
+        btn.classList.remove("size-selected")
+      }else{
+        btn.classList.add("size-selected")
+      }
+    })
+  })
+}
+function AddEventImgColor(){
+  const imgs = document.querySelectorAll(".color .color-img");
+  console.log(imgs.length);
+  if (imgs.length === 1){
+    imgs[0].classList.add("selected-img");
+  }
+  imgs.forEach(img => {
+    img.addEventListener("click", () =>{
+      imgs.forEach(imgEach => {
+        imgEach.classList.remove("selected-img");
+      })
+      if (img.classList.contains("selected-img")){
+        img.classList.remove("selected-img");
+      }
+      else  {
+        img.classList.add("selected-img");
+      }
+    })
+  })
 }
 function AddEventbuttonSubmit(){
       const btnSubmit = document.querySelector(".add-to-cart");
@@ -122,8 +160,13 @@ function AddEventbuttonSubmit(){
           alert("ban phai dang nhap truoc khi thuc hien")
           return;
         }
-        console.log("cologic in here c")
-      })
+      const isChooseSize = !!document.querySelector(".size.size-selected");
+      const isChooseColor = !!document.querySelector(".color-img.selected-img");
+        console.log(isChooseColor + " " + isChooseSize);
+      if (isChooseColor && isChooseColor){
+        alert("them vao gio hang");
+      }
+  })
 }
 function AddImage(proInfor){
 
@@ -138,9 +181,9 @@ function AddImage(proInfor){
 function AddListImage(proInfor){
   const contain = document.querySelector(".vertical-image-bar");
   let htmlImage = ``;
-  console.log("-----------------------------------------");
-  console.log(contain);
-  console.log(proInfor);
+  // console.log("-----------------------------------------");
+  // console.log(contain);
+  // console.log(proInfor);
     proInfor["img-link-list"].forEach(link => {
     htmlImage += `
                   <img
@@ -182,7 +225,7 @@ function AddImageColor(proInfor){
   const colors = document.querySelector(".container-infor .color");
   let htmlImage = ``;
   proInfor["img-link-color"].forEach((link) => {
-    htmlImage = `
+    htmlImage += `
             <img
               class="color-img"
               src=${link}

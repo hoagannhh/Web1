@@ -1,0 +1,89 @@
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+
+.sidebar{
+    background-color: black;
+    height: 98vh;
+    width: 250px;
+    margin-left: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    font-family: "Maven Pro", sans-serif;
+}
+.shop-name{
+    color: white;
+    
+    padding: 10px 0 20px 0;
+    font-size: 2rem;
+    
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.admin-account-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    text-align: center;
+    
+    font-size: 1.25rem;
+    cursor: pointer;
+    font-family: "Maven Pro", sans-serif;
+}
+
+.admin-avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    
+}
+.admin-name{
+    margin-bottom: 20px;
+}
+.sidebar-list{
+    margin-top: 30px;
+    padding-top: 50px;
+    border-top: 1px solid rgb(255, 255, 255);
+}
+.admin-icon{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 10px;
+    object-fit: cover;
+    padding-left: 10px;
+}
+.sidebar-button{
+    display: flex;
+    align-items: center;
+    width: 249px;
+    height: 59px;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    padding: 15px 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: active 0.3s;
+    font-family: "Maven Pro", sans-serif;
+}
+.sidebar-button:hover{
+    background-color: rgb(50, 50, 50);
+    border-radius: 10px;
+}
+.sidebar-button.active{
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    filter:invert(1)
+}

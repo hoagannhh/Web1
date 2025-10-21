@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin User</title>
+    <link rel="stylesheet" href="../css/adminsidebar.css">
+    <link rel="stylesheet" href="../css/adminUser.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-user-container">
+        <div class="sidebar">
+        <div><p class="shop-name">Đế Vương</p></div>
+        <div class="admin-account">
+            <button class="admin-account-btn">
+                <img src="../img/goku.jpg" alt="" class="admin-avatar">
+                <p class="admin-name">Trần Chính Thành</p>
+            </button>
+        </div>
+        <div class="sidebar-list">
+            <ul>
+                <li><button class="sidebar-button"><img src="../icon/admindashboardwhite.png" alt="" class="admin-icon">Dashboard</button></li>
+                <li><button class="sidebar-button"><img src="../icon/adminuser.png" alt="" class="admin-icon">User/Customer</button></li>
+                <li><button class="sidebar-button"><img src="../icon/admincategory.png" alt="" class="admin-icon">Category</button></li>
+                <li><button class="sidebar-button"><img src="../icon/adminproduct.png" alt="" class="admin-icon">Products</button></li>
+                <li><button class="sidebar-button"><img src="../icon/adminimport.png" alt="" class="admin-icon">Import products</button></li>
+                <li><button class="sidebar-button"><img src="../icon/adminprice.png" alt="" class="admin-icon">Price</button></li>
+                <li><button class="sidebar-button"><img src="../icon/adminorder.png" alt="" class="admin-icon">Order</button></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <div class="left-header">
+                <div><p>User/Customer</p></div>
+            </div>
+            <div class="right-header">
+            
+            <div class="admin-account">
+                <button class="admin-account-btn">
+                    <img src="../img/goku.jpg" alt="" class="admin-avatar"> 
+                    <p style="color: black;">Trần Chính Thành</p></button>
+                </div>
+            </div>
+        
+            
+    </div>
+    </div>
+</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const allButtons = document.querySelectorAll('.sidebar-button');
+            allButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    allButtons.forEach(function(btn) {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
