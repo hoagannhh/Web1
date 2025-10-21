@@ -37,6 +37,8 @@
 .navigator{
     display: flex;
     margin-top: 10px;
+    justify-content: space-around;
+    align-items: center;
 }
 .navigator .quantity{
     width: 25px;
@@ -45,7 +47,7 @@
     border-left: none;
     border-right: none;
     background-color: white;
-    padding: 0px;
+    padding: 1px 10px;
     /* border: 0px bold rgb(254, 254, 254); */
 }
 .navigator .add{
@@ -54,6 +56,7 @@
     background-color: white;
     border: 1px solid black;
     border-left: none;
+    padding: 1px 5px;
 }
 .navigator .subtract{
     background-color: white;
@@ -61,12 +64,16 @@
     border-bottom-left-radius: 50%;
     border-top-left-radius: 50%;
     border-right: none;
+        padding: 1px 5px;
+
 }
 .infor-product-bought{
     margin: 0px 0px 0px 20px;
 }
 .infor-product-bought .name{
     margin: 0px;
+    font-size: 16px;
+    font-weight: bolder;
 }
 .infor-product-bought .kind-of-shoes,
 .infor-product-bought .brand,
@@ -115,6 +122,11 @@
     padding: 10px 20px;
     color: white;
     width: 20vw;
+}
+.is-bought{
+    width: 25px;    
+    margin-right: 10px;
+
 }
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {

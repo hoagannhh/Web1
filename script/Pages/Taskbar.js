@@ -248,9 +248,16 @@ export const TaskBar = {
     canDeleteCss: false,
     init: function(){
       ButtonVerification.init();  
+      Cart();
       headerScroll();
       LoadTrangChu();
     }
+}
+function Cart(){
+  const cartBtn = document.querySelector(".bag");
+  cartBtn.addEventListener("click", () => {
+    LoadPage("cart", document.getElementById("container"));
+  })
 }
 function LoadTrangChu(){
   const header = document.querySelector(".Header .name");
