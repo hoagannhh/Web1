@@ -38,8 +38,8 @@ loadPageHome()
 export function loadPageHome(){
     InsertPage("taskBar", taskBarContainer);
     // InsertPage("productDetail", ContentContainer);
-    InsertPage("cart", ContentContainer);
-    // InsertPage("product", ContentContainer);
+    // InsertPage("cart", ContentContainer);
+    InsertPage("product", ContentContainer);
 }
 export function LoadPage(pageName, container) {
   RemoveData(container);

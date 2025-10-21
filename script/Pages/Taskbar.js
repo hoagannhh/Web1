@@ -1,4 +1,4 @@
-import { ButtonVerification  } from "./ButtonVerification .js"
+import { ButtonVerification, IsAuthenticated  } from "./ButtonVerification .js"
 import { LoadPage } from "../LoadPage.js";
 export const TaskBar = {
     html : `<div class="task-bar">
@@ -256,7 +256,10 @@ export const TaskBar = {
 function Cart(){
   const cartBtn = document.querySelector(".bag");
   cartBtn.addEventListener("click", () => {
-    LoadPage("cart", document.getElementById("container"));
+    if (IsAuthenticated)
+      LoadPage("cart", document.getElementById("container"));
+    else
+      alert("hay dang nhap truoc khi truy cap vao gio hang")
   })
 }
 function LoadTrangChu(){
