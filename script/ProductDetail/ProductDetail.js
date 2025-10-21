@@ -1,5 +1,8 @@
+import { LoadPage } from '../LoadPage.js';
 import {IsAuthenticated} from '../Pages/ButtonVerification .js'
+import { Cart } from '../Pages/Cart.js';
 
+let profileProduct;
 export const ProductDetail = {
     html: `
     <img class="banner" src="../img/Group 22.png" alt="" />
@@ -107,16 +110,29 @@ export const ProductDetail = {
     canDeleteCss: true,
     init: function(){
         // console.log(this.HandleEvent());
-         AddEventImgColor();
-         AddEventButtonChooseSize();
-        AddEventbuttonSubmit();
+        console.log("Init in product detail");
+        //  AddEventImgColor();
+        //  AddEventButtonChooseSize();
+        // AddEventbuttonSubmit();
 
     },
     HandleEvent: function(proInfor){
-      console.log(proInfor);
+      // console.log(proInfor);
+      console.log("handle Event in product detail");
+      SetProInfor(proInfor);
       AddImage(proInfor);
+
+      
+      AddEventImgColor();
+      AddEventButtonChooseSize();
+      AddEventbuttonSubmit();
       this.init();
     }
+}
+function SetProInfor(proInfor){
+  profileProduct = proInfor;
+  console.log(profileProduct);
+  console.log(typeof(profileProduct));
 }
 function AddEventButtonChooseSize(){
   const btns = document.querySelectorAll(".size");
@@ -128,7 +144,9 @@ function AddEventButtonChooseSize(){
       if (btn.classList.contains("size-selected")){
         btn.classList.remove("size-selected")
       }else{
-        btn.classList.add("size-selected")
+        btn.classList.add("size-selected");
+        console.log(btn.textContent);
+        profileProduct.size = btn.textContent;
       }
     })
   })
@@ -149,6 +167,12 @@ function AddEventImgColor(){
       }
       else  {
         img.classList.add("selected-img");
+        const path = img.src;
+        const indexHyphen = path.lastIndexOf('-'); 
+        const indexDot = path.lastIndexOf('.'); 
+        const color = path.slice(indexHyphen + 1, indexDot);
+        console.log(color);
+        profileProduct.color = color;
       }
     })
   })
@@ -162,9 +186,12 @@ function AddEventbuttonSubmit(){
         }
       const isChooseSize = !!document.querySelector(".size.size-selected");
       const isChooseColor = !!document.querySelector(".color-img.selected-img");
-        console.log(isChooseColor + " " + isChooseSize);
-      if (isChooseColor && isChooseColor){
+        // console.log(isChooseColor + " " + isChooseSize);
+      if (isChooseSize && isChooseColor){
         alert("them vao gio hang");
+        // LoadPage("cart", document.getElementById("container"));
+        console.log(profileProduct)
+        Cart.HandleEventInCart(profileProduct);
       }
   })
 }

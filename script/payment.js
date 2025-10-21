@@ -304,6 +304,18 @@ function setupPaymentListeners() {
       window.location.href = "paymentconfirm.html";
     }
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const allButtons = document.querySelectorAll(".payment-methood");
+    allButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        allButtons.forEach(function (btn) {
+          btn.classList.remove("active");
+        });
+        this.classList.add("active");
+      });
+    });
+  });
 }
 
 setupPaymentListeners();

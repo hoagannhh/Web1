@@ -1,4 +1,4 @@
-import { ButtonVerification  } from "./ButtonVerification .js"
+import { ButtonVerification, IsAuthenticated  } from "./ButtonVerification .js"
 import { LoadPage } from "../LoadPage.js";
 export const TaskBar = {
     html : `<div class="task-bar">
@@ -248,9 +248,19 @@ export const TaskBar = {
     canDeleteCss: false,
     init: function(){
       ButtonVerification.init();  
+      Cart();
       headerScroll();
       LoadTrangChu();
     }
+}
+function Cart(){
+  const cartBtn = document.querySelector(".bag");
+  cartBtn.addEventListener("click", () => {
+    if (IsAuthenticated)
+      LoadPage("cart", document.getElementById("container"));
+    else
+      alert("hay dang nhap truoc khi truy cap vao gio hang")
+  })
 }
 function LoadTrangChu(){
   const header = document.querySelector(".Header .name");

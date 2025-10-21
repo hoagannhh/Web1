@@ -39,8 +39,8 @@ function LoadSideBar(){
       .then((data) => {
         allProducts = data;
         renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
-        renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
         HandleEventProduct(allProducts);
+        renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
       })
       .catch((error) => console.error(error));
   }
@@ -55,7 +55,7 @@ export function HandleEventProduct(allProducts){
 
 
         ProductDetail.HandleEvent(allProducts.find(productDeta => productDeta.id === product.dataset.id ));
-        console.log(" su kien cua prod-demo");
+        // console.log(" su kien cua prod-demo");
     })
   })
 
@@ -94,7 +94,8 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
                         `;
   });
 
-  document.querySelector(".product-grid").innerHTML = htmlProduct;
+  // document.querySelector(".product-grid").innerHTML =  htmlProduct;
+  document.querySelector(".product-grid").insertAdjacentHTML("beforeend", htmlProduct)
 }
 function renderPagination(htmlProduct, allProducts, currentPage, productsPerPage) {
   const totalPages = Math.ceil(allProducts.length / productsPerPage);
@@ -114,6 +115,7 @@ function renderPagination(htmlProduct, allProducts, currentPage, productsPerPage
 
   document.querySelectorAll(".page-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      console.log("Chia trang trong products")
       currentPage = Number(e.target.dataset.page);
       renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
       renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
