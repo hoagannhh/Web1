@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* =================================
+           THIẾT LẬP CƠ BẢN (RESET)
+        ================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa; /* Màu nền xám nhạt */
+            color: #333;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* =================================
+           LAYOUT CHÍNH CỦA DASHBOARD
+        ================================= */
+        .dashboard-container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 2rem auto; /* Căn giữa và tạo khoảng cách */
+        }
+
+        /* =================================
+           HEADER (Dashboard, Search, User)
+        ================================= */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem; /* Đệm bên trái cho icon */
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-profile span {
+            font-weight: 500;
+        }
+
+        /* =================================
+           LƯỚI THỐNG KÊ (4 THẺ)
+        ================================= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 cột bằng nhau */
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card .icon-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0; /* Màu nền icon mặc định */
+        }
+
+        .stat-card i {
+            font-size: 1.5rem;
+            color: #333;
+        }
+        
+        /* Tùy chỉnh màu icon (giống trong ảnh) */
+        .stat-card .icon-container.top-product { background-color: #e0e0e0; }
+        .stat-card .icon-container.sales { background-color: #e6f7ff; }
+        .stat-card .icon-container.sales i { color: #1890ff; }
+        .stat-card .icon-container.orders { background-color: #e6fffb; }
+        .stat-card .icon-container.orders i { color: #13c2c2; }
+        .stat-card .icon-container.users { background-color: #fff0f6; }
+        .stat-card .icon-container.users i { color: #eb2f96; }
+
+
+        .stat-info h3 {
+            font-size: 0.9rem;
+            color: #777;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-info .percentage {
+            font-size: 0.9rem;
+            color: #27ae60; /* Màu xanh lá */
+        }
+
+        /* =================================
+           NỘI DUNG CHÍNH (2 CỘT)
+        ================================= */
+        .main-content {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        /* Cột bên trái: Top Products */
+        .top-products {
+            flex: 2; /* Chiếm 2/3 không gian */
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-products h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 cột */
+            gap: 2rem;
+        }
+
+        .product-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .product-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #f4f4f4;
+        }
+
+        .product-info h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-info .sold {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-info .profit {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Cột bên phải: Top Users */
+        .top-users {
+            flex: 1; /* Chiếm 1/3 không gian */
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-users-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        /* Bỏ đường viền cho item cuối cùng */
+        .user-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .user-item .rank {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #888;
+            width: 25px; /* Cố định độ rộng để căn thẳng hàng */
+        }
+
+        .user-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-item .username {
+            font-weight: 500;
+        }
+        
+        /* =================================
+           RESPONSIVE (Cho màn hình nhỏ)
+        ================================= */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 cột */
+            }
+            .main-content {
+                flex-direction: column; /* Xếp chồng 2 cột */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .search-bar {
+                width: 100%;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr; /* 1 cột */
+            }
+            .product-grid {
+                grid-template-columns: 1fr; /* 1 cột */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="dashboard-header">
+            <h1>Dashboard</h1>
+
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search">
+            </div>
+
+            <div class="user-profile">
+                <img src="https://via.placeholder.com/40x40.png?text=Goku" alt="User Avatar">
+                <span>Son Goku</span>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="icon-container top-product">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Top-selling product</h3>
+                    <div class="value">Bella UT Femme</div>
+                    <div class="percentage">+3,6% since last month</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon-container sales">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total sales</h3>
+                    <div class="value">360.000.000₫</div>
+                    <div class="percentage">+3,6% since last month</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon-container orders">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total orders</h3>
+                    <div class="value">3600 orders</div>
+                    <div class="percentage">+3,6% since last month</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon-container users">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>New users</h3>
+                    <div class="value">360 new users</div>
+                    <div class="percentage">+3,6% since last month</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-content">
+
+            <div class="top-products">
+                <h2>Top sold Products</h2>
+                <div class="product-grid">
+                    
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/80x80.png?text=Shoe1" alt="Bella UT Femme">
+                        <div class="product-info">
+                            <h4>Bella UT Femme</h4>
+                            <div class="sold">Sold: 100 prods</div>
+                            <div class="profit">Profit margin: 28,57%</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/80x80.png?text=Shoe2" alt="Chuck 70">
+                        <div class="product-info">
+                            <h4>Chuck 70</h4>
+                            <div class="sold">Sold: 30 prods</div>
+                            <div class="profit">Profit margin: 28,57%</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/80x80.png?text=Shoe3" alt="Air Jordan 4 RM">
+                        <div class="product-info">
+                            <h4>Air Jordan 4 RM</h4>
+                            <div class="sold">Sold: 50 prods</div>
+                            <div class="profit">Profit margin: 28,57%</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/80x80.png?text=Shoe4" alt="Classic Slip-On">
+                        <div class="product-info">
+                            <h4>Classic Slip-On Checkerboard Shoe</h4>
+                            <div class="sold">Sold: 49 prods</div>
+                            <div class="profit">Profit margin: 28,57%</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="top-users">
+                <div class="top-users-header">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <h2>Top 5 users</h2>
+                </div>
+                <div class="user-list">
+                    
+                    <div class="user-item">
+                        <span class="rank">#1</span>
+                        <img src="https://via.placeholder.com/40x40.png?text=M" alt="Marin">
+                        <span class="username">Marin</span>
+                    </div>
+
+                    <div class="user-item">
+                        <span class="rank">#2</span>
+                        <img src="https://via.placeholder.com/40x40.png?text=Mi" alt="Minato">
+                        <span class="username">Minato</span>
+                    </div>
+
+                    <div class="user-item">
+                        <span class="rank">#3</span>
+                        <img src="https://via.placeholder.com/40x40.png?text=S" alt="Sakura">
+                        <span class="username">Sakura</span>
+                    </div>
+
+                    <div class="user-item">
+                        <span class="rank">#4</span>
+                        <img src="https://via.placeholder.com/40x40.png?text=D" alt="Đức">
+                        <span class="username">Đức</span>
+                    </div>
+
+                    <div class="user-item">
+                        <span class="rank">#5</span>
+                        <img src="https://via.placeholder.com/40x40.png?text=Da" alt="Danh">
+                        <span class="username">Danh</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

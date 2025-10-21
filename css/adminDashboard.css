@@ -1,0 +1,217 @@
+body{
+    margin:0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    overflow-y: hidden;
+}
+.admin-dashboard-container{
+    display: flex;
+    gap: 20px;
+}
+
+.main-content{
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    flex-direction: column;
+}
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+.right-header{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-right: 10px;
+}
+.left-header p{
+    font-size: 2.5rem;
+    font-family: "Maven Pro", sans-serif;
+    margin: 0;
+}
+
+/* =================================
+           LƯỚI THỐNG KÊ (4 THẺ)
+        ================================= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 cột bằng nhau */
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            padding: 20px 10px 0 0;
+        }
+
+        .stat-card {
+            height: 100px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card .icon-container {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000000; /* Màu nền icon mặc định */
+        }
+
+        
+        
+       
+
+
+        .stat-info h3 {
+            font-size: 0.9rem;
+            color: #777;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-info .percentage {
+            font-size: 0.9rem;
+            color: #27ae60; /* Màu xanh lá */
+        }
+
+        /* =================================
+           NỘI DUNG CHÍNH (2 CỘT)
+        ================================= */
+        .main-container {
+            display: flex;
+            gap: 1.5rem;
+            padding-right: 10px;
+        }
+
+        /* Cột bên trái: Top Products */
+        .top-products {
+            flex: 2; /* Chiếm 2/3 không gian */
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-products h2 {
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 cột */
+            gap: 1rem;
+            
+        }
+
+        .product-card {
+            height: 260px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .product-card img {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #f4f4f4;
+            border: 1px solid #e0e0e0;
+        }
+
+        .product-info h4 {
+            width: 300px;
+            font-size: 2rem;
+            font-weight: 500;
+            
+        }
+
+        .product-info .sold {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-info .profit {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Cột bên phải: Top Users */
+        .top-users {
+            flex: 0.57; /* Chiếm 1/3 không gian */
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-users-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .user-item {
+            display: flex;
+            height: 5rem;
+            width: 100%;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #111111;
+        }
+        
+        /* Bỏ đường viền cho item cuối cùng */
+        .user-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .user-item .rank {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #888;
+            width: 25px; /* Cố định độ rộng để căn thẳng hàng */
+        }
+
+        .user-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-item .username {
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
