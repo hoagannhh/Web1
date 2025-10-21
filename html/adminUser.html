@@ -1,68 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin User</title>
-    <link rel="stylesheet" href="../css/adminsidebar.css">
-    <link rel="stylesheet" href="../css/adminUser.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/adminsidebar.css" />
+    <link rel="stylesheet" href="../css/adminUser.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="admin-user-container">
-        <div class="sidebar">
+      <div class="sidebar">
         <div><p class="shop-name">Đế Vương</p></div>
         <div class="admin-account">
-            <button class="admin-account-btn">
-                <img src="../img/goku.jpg" alt="" class="admin-avatar">
-                <p class="admin-name">Trần Chính Thành</p>
-            </button>
+          <button class="admin-account-btn">
+            <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+            <p class="admin-name">Trần Chính Thành</p>
+          </button>
         </div>
         <div class="sidebar-list">
-            <ul>
-                <li><button class="sidebar-button"><img src="../icon/admindashboardwhite.png" alt="" class="admin-icon">Dashboard</button></li>
-                <li><button class="sidebar-button"><img src="../icon/adminuser.png" alt="" class="admin-icon">User/Customer</button></li>
-                <li><button class="sidebar-button"><img src="../icon/admincategory.png" alt="" class="admin-icon">Category</button></li>
-                <li><button class="sidebar-button"><img src="../icon/adminproduct.png" alt="" class="admin-icon">Products</button></li>
-                <li><button class="sidebar-button"><img src="../icon/adminimport.png" alt="" class="admin-icon">Import products</button></li>
-                <li><button class="sidebar-button"><img src="../icon/adminprice.png" alt="" class="admin-icon">Price</button></li>
-                <li><button class="sidebar-button"><img src="../icon/adminorder.png" alt="" class="admin-icon">Order</button></li>
-            </ul>
+          <ul>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admindashboardwhite.png"
+                  alt=""
+                  class="admin-icon"
+                />Dashboard
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminuser.png"
+                  alt=""
+                  class="admin-icon"
+                />User/Customer
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admincategory.png"
+                  alt=""
+                  class="admin-icon"
+                />Category
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminproduct.png"
+                  alt=""
+                  class="admin-icon"
+                />Products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminimport.png"
+                  alt=""
+                  class="admin-icon"
+                />Import products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminprice.png"
+                  alt=""
+                  class="admin-icon"
+                />Price
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminorder.png"
+                  alt=""
+                  class="admin-icon"
+                />Order
+              </button>
+            </li>
+          </ul>
         </div>
-    </div>
-    
-    <div class="main-content">
+      </div>
+
+      <div class="main-content">
         <div class="header">
-            <div class="left-header">
-                <div><p>User/Customer</p></div>
-            </div>
-            <div class="right-header">
-            
+          <div class="left-header">
+            <div><p>User/Customer</p></div>
+          </div>
+          <div class="right-header">
             <div class="admin-account">
-                <button class="admin-account-btn">
-                    <img src="../img/goku.jpg" alt="" class="admin-avatar"> 
-                    <p style="color: black;">Trần Chính Thành</p></button>
-                </div>
+              <button class="admin-account-btn">
+                <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+                <p style="color: black">Trần Chính Thành</p>
+              </button>
             </div>
-        
-            
+          </div>
+        </div>
+        <div class="user-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>DoB</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="user-info">
+                    <img
+                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+                      alt="Marin avatar"
+                    />
+                    <span>Marin</span>
+                  </div>
+                </td>
+                <td>09/12/2005</td>
+                <td>0987654321</td>
+                <td>marin@gmail.com</td>
+                <td>
+                  <button class="btn btn-lock">Khóa tài khoản</button>
+                  <button class="btn btn-reset">Đổi mật khẩu</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user-info">
+                    <img
+                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+                      alt="Minato avatar"
+                    />
+                    <span>Minato</span>
+                  </div>
+                </td>
+                <td>09/12/2005</td>
+                <td>0987654321</td>
+                <td>minato@gmail.com</td>
+                <td>
+                  <button class="btn btn-lock">Khóa tài khoản</button>
+                  <button class="btn btn-reset">Đổi mật khẩu</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user-info">
+                    <img
+                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+                      alt="Sakura avatar"
+                    />
+                    <span>Sakura</span>
+                  </div>
+                </td>
+                <td>09/12/2005</td>
+                <td>0987654321</td>
+                <td>sakura@gmail.com</td>
+                <td>
+                  <button class="btn btn-lock">Khóa tài khoản</button>
+                  <button class="btn btn-reset">Đổi mật khẩu</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user-info">
+                    <img
+                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+                      alt="Đức avatar"
+                    />
+                    <span>Đức</span>
+                  </div>
+                </td>
+                <td>09/12/2005</td>
+                <td>0987654321</td>
+                <td>duc@gmail.com</td>
+                <td>
+                  <button class="btn btn-lock">Khóa tài khoản</button>
+                  <button class="btn btn-reset">Đổi mật khẩu</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user-info">
+                    <img
+                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+                      alt="Danh avatar"
+                    />
+                    <span>Danh</span>
+                  </div>
+                </td>
+                <td>09/12/2005</td>
+                <td>0987654321</td>
+                <td>danh@gmail.com</td>
+                <td>
+                  <button class="btn btn-lock">Khóa tài khoản</button>
+                  <button class="btn btn-reset">Đổi mật khẩu</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    </div>
-</div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const allButtons = document.querySelectorAll('.sidebar-button');
-            allButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    allButtons.forEach(function(btn) {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
+      document.addEventListener("DOMContentLoaded", function () {
+        const allButtons = document.querySelectorAll(".sidebar-button");
+        allButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            allButtons.forEach(function (btn) {
+              btn.classList.remove("active");
             });
+            this.classList.add("active");
+          });
         });
+      });
     </script>
-</body>
+  </body>
 </html>
