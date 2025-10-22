@@ -3,9 +3,9 @@ import { LoadCss, LoadPage } from "../LoadPage.js";
 import { SideBar } from "./SideBar.js";
 import { ProductDetail } from "../ProductDetail/ProductDetail.js";
 
-export const Product ={
-  html: 
-  `
+export let allProducts = [];
+export const Product = {
+  html: `
   <div>
     <img src="../img/Group 22.png" alt="" class="just-do-it" /></div>
       ${SideBar.html}
@@ -17,56 +17,68 @@ export const Product ={
   `,
   css: `../css/product.css`,
   canDeleteCss: true,
-  init: function(){
+  init: function () {
     // load thang filter của trang sản phẫm
     LoadSideBar();
     LoadProductPage();
+  },
+};
+
+function LoadSideBar() {
+  LoadCss("sidebar");
+  SideBar.init();
+}
+export function LoadProductPage() {
+  let htmlProduct = "";
+
+  let currentPage = 1;
+  const productsPerPage = 9; // số sản phẩm trên 1 trang
+
+  // fetch("../data/product.json")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     allProducts = data;
+  //     renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
+  //     HandleEventProduct(allProducts);
+  //     renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+  //   })
+  //   .catch((error) => console.error(error));
+  if (allProducts && allProducts.length > 0) {
+    renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
+    HandleEventProduct(allProducts);
+    renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+  } else {
+    // Xử lý trường hợp không có dữ liệu (chẳng hạn do lỗi load ban đầu)
+    console.error(
+      "Không tìm thấy dữ liệu sản phẩm để render. Đang kiểm tra lại load ban đầu."
+    );
   }
 }
-
-function LoadSideBar(){
-    LoadCss("sidebar");
-    SideBar.init();
-}
- function LoadProductPage(){
-    let htmlProduct = "";
-    let allProducts = [];
-    let currentPage = 1;
-    const productsPerPage = 9; // số sản phẩm trên 1 trang
-
-    fetch("../data/product.json")
-      .then((response) => response.json())
-      .then((data) => {
-        allProducts = data;
-        renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
-        HandleEventProduct(allProducts);
-        renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
-      })
-      .catch((error) => console.error(error));
-  }
-export function HandleEventProduct(allProducts){
+export function HandleEventProduct(allProducts) {
   let products = document.querySelectorAll(".prod-demo");
   products.forEach((product) => {
     product.addEventListener("click", () => {
-        LoadPage("productDetail", document.getElementById("container"));
+      LoadPage("productDetail", document.getElementById("container"));
 
-        console.log(allProducts);
-        console.log(allProducts.find(productDeta => productDeta.id === product.dataset.id ));
+      console.log(allProducts);
+      console.log(
+        allProducts.find((productDeta) => productDeta.id === product.dataset.id)
+      );
 
-
-        ProductDetail.HandleEvent(allProducts.find(productDeta => productDeta.id === product.dataset.id ));
-        // console.log(" su kien cua prod-demo");
-    })
-  })
-
+      ProductDetail.HandleEvent(
+        allProducts.find((productDeta) => productDeta.id === product.dataset.id)
+      );
+      // console.log(" su kien cua prod-demo");
+    });
+  });
 
   let btns = document.querySelectorAll(".buy-now-btn");
   btns.forEach((btn) => {
     btn.addEventListener("click", (event) => {
-        console.log(" su kien cua btns");
-        event.stopPropagation();
-    })
-  })
+      console.log(" su kien cua btns");
+      event.stopPropagation();
+    });
+  });
 }
 function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
   const startIndex = (currentPage - 1) * productsPerPage;
@@ -94,10 +106,17 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
                         `;
   });
 
-  // document.querySelector(".product-grid").innerHTML =  htmlProduct;
-  document.querySelector(".product-grid").insertAdjacentHTML("beforeend", htmlProduct)
+  document.querySelector(".product-grid").innerHTML = htmlProduct;
+  // document
+  //   .querySelector(".product-grid")
+  //   .insertAdjacentHTML("beforeend", htmlProduct);
 }
-function renderPagination(htmlProduct, allProducts, currentPage, productsPerPage) {
+function renderPagination(
+  htmlProduct,
+  allProducts,
+  currentPage,
+  productsPerPage
+) {
   const totalPages = Math.ceil(allProducts.length / productsPerPage);
   let paginationHTML = "";
 
@@ -115,7 +134,7 @@ function renderPagination(htmlProduct, allProducts, currentPage, productsPerPage
 
   document.querySelectorAll(".page-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      console.log("Chia trang trong products")
+      console.log("Chia trang trong products");
       currentPage = Number(e.target.dataset.page);
       renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
       renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
