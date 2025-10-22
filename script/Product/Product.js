@@ -2,9 +2,8 @@
 import { LoadCss, LoadPage } from "../LoadPage.js";
 import { SideBar } from "./SideBar.js";
 import { ProductDetail } from "../ProductDetail/ProductDetail.js";
+import { allProducts } from "../LoadPage.js";
 
-
-export let allProducts = [];
 export const Product ={
   html: 
   `
@@ -30,31 +29,44 @@ function LoadSideBar(){
     LoadCss("sidebar");
     SideBar.init();
 }
+export function LoadProductByName(name){
+  LoadPage("product", document.getElementById("container"));
+  
+}
  function LoadProductPage(){
     let htmlProduct = "";
     // allProducts = [];
     let currentPage = 1;
     const productsPerPage = 9; // số sản phẩm trên 1 trang
+    if (allProducts.length === 0){
+      console.log("load");
+      fetch("../data/product.json")
+        .then((response) => response.json())
+        .then((data) => {
+          allProducts = data;
+          renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
+          HandleEventProduct(allProducts);
+          renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+        })
+        .catch((error) => console.error(error));
+    }else{
+            console.log("loaupdate");
 
-    fetch("../data/product.json")
-      .then((response) => response.json())
-      .then((data) => {
-        allProducts = data;
-        renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
-        HandleEventProduct(allProducts);
-        renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
-      })
-      .catch((error) => console.error(error));
+          renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
+          HandleEventProduct(allProducts);
+          renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+    }
       
 }
+// hàm để liên kết giauwx product và product detail
 export function HandleEventProduct(allProducts){
   let products = document.querySelectorAll(".prod-demo");
   products.forEach((product) => {
     product.addEventListener("click", () => {
         LoadPage("productDetail", document.getElementById("container"));
 
-        console.log(allProducts);
-        console.log(allProducts.find(productDeta => productDeta.id === product.dataset.id ));
+        // console.log(allProducts);
+        // console.log(allProducts.find(productDeta => productDeta.id === product.dataset.id ));
 
 
         ProductDetail.HandleEvent(allProducts.find(productDeta => productDeta.id === product.dataset.id ));

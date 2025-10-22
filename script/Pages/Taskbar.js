@@ -249,9 +249,16 @@ export const TaskBar = {
     init: function(){
       ButtonVerification.init();  
       Cart();
+      FindAProductByNAme();
       headerScroll();
       LoadTrangChu();
     }
+}
+function FindAProductByNAme(){
+  const search = document.querySelector(".Search");
+  search.addEventListener("change", () => {
+    LoadPage("product",)
+  })
 }
 function Cart(){
   const cartBtn = document.querySelector(".bag");

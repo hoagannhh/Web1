@@ -7,7 +7,7 @@ import { ProductDetail } from './ProductDetail/ProductDetail.js';
 import { Product } from './Product/Product.js'
 import { SideBar } from "./Product/SideBar.js";
 import { Cart } from './Pages/Cart.js'
-import { allProducts } from "./Product/Product.js";
+// import { allProducts } from "./Product/Product.js";
 import { footer } from "./Pages/footer.js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
@@ -37,10 +37,22 @@ export const pages = {
 const ContentContainer = document.getElementById("container");
 const taskBarContainer = document.getElementById("task-bar-container");
 const footContainer = document.getElementById("footer");
+export let allProducts = [];
 
-
-loadPageHome()
+LoadProduct();
+loadPageHome();
+console.log(allProducts);
 console.log(JSON.parse(localStorage.getItem("ACCOUNTS")));
+
+
+async function LoadProduct(){
+    fetch("../data/product.json")
+      .then((response) => response.json())
+      .then((data) => {
+        allProducts = data;
+      })
+      .catch((error) => console.error(error));
+}
 export function loadPageHome(){
     InsertPage("taskBar", taskBarContainer);
     // InsertPage("productDetail", ContentContainer);
