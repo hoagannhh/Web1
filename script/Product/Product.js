@@ -20,7 +20,7 @@ export const Product = {
   init: function () {
     // load thang filter của trang sản phẫm
     LoadSideBar();
-    LoadProductPage();
+    LoadAllProductPage();
   },
 };
 
@@ -28,21 +28,24 @@ function LoadSideBar() {
   LoadCss("sidebar");
   SideBar.init();
 }
-export function LoadProductPage() {
+export function LoadProductPageHaveProduct(products) {
+  let htmlProduct = "";
+  console.log("complete show product by search1")
+
+  let currentPage = 1;
+  const productsPerPage = 9; // số sản phẩm trên 1 trang
+  renderProduct(htmlProduct, products, currentPage, productsPerPage);
+  HandleEventProduct(products);
+  renderPagination(htmlProduct, products, currentPage, productsPerPage);
+  console.log("complete show product by search3")
+}
+export function LoadAllProductPage() {
   let htmlProduct = "";
 
   let currentPage = 1;
   const productsPerPage = 9; // số sản phẩm trên 1 trang
-
-  // fetch("../data/product.json")
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     allProducts = data;
-  //     renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
-  //     HandleEventProduct(allProducts);
-  //     renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
-  //   })
-  //   .catch((error) => console.error(error));
+  
+  console.log(allProducts)
   if (allProducts && allProducts.length > 0) {
     renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
     HandleEventProduct(allProducts);
