@@ -7,6 +7,8 @@ import { ProductDetail } from './ProductDetail/ProductDetail.js';
 import { Product } from './Product/Product.js'
 import { SideBar } from "./Product/SideBar.js";
 import { Cart } from './Pages/Cart.js'
+import { allProducts } from "./Product/Product.js";
+import { footer } from "./Pages/footer.js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
@@ -29,17 +31,22 @@ export const pages = {
   product: Product,
   sidebar: SideBar,
   cart: Cart,
+  footer: footer,
 };
 // div này sẽ chứa code html sau khi load code từ object pages
 const ContentContainer = document.getElementById("container");
 const taskBarContainer = document.getElementById("task-bar-container");
-loadPageHome()
+const footContainer = document.getElementById("footer");
 
+
+loadPageHome()
+console.log(JSON.parse(localStorage.getItem("ACCOUNTS")));
 export function loadPageHome(){
     InsertPage("taskBar", taskBarContainer);
     // InsertPage("productDetail", ContentContainer);
     // InsertPage("cart", ContentContainer);
-    InsertPage("product", ContentContainer);
+    InsertPage("home", ContentContainer);
+    InsertPage("footer", footContainer);
 }
 export function LoadPage(pageName, container) {
   RemoveData(container);

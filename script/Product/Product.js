@@ -3,6 +3,8 @@ import { LoadCss, LoadPage } from "../LoadPage.js";
 import { SideBar } from "./SideBar.js";
 import { ProductDetail } from "../ProductDetail/ProductDetail.js";
 
+
+export let allProducts = [];
 export const Product ={
   html: 
   `
@@ -30,7 +32,7 @@ function LoadSideBar(){
 }
  function LoadProductPage(){
     let htmlProduct = "";
-    let allProducts = [];
+    // allProducts = [];
     let currentPage = 1;
     const productsPerPage = 9; // số sản phẩm trên 1 trang
 
@@ -43,7 +45,8 @@ function LoadSideBar(){
         renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
       })
       .catch((error) => console.error(error));
-  }
+      
+}
 export function HandleEventProduct(allProducts){
   let products = document.querySelectorAll(".prod-demo");
   products.forEach((product) => {

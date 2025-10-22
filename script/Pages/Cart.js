@@ -1,7 +1,9 @@
 import {LoadPage} from '../LoadPage.js'
+
+
 let html = '';
-let products = [];
-let totalMoney = 0;
+export let products = [];
+export let totalMoney = 0;
 export const Cart ={
     html: 
     `
