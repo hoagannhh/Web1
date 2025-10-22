@@ -346,7 +346,7 @@ function LoadProductPage(filterState){
 }
 function Filter(filterState, data){
   // console.log("-------------------");
-  // console.log(filterState);
+  console.log(filterState);
   // console.log(data);
   let products = [];
 
@@ -358,23 +358,23 @@ function Filter(filterState, data){
 
   if (filterState.price !== null){
     console.log("price");
-    products = data.filter(product => filterState.price <=  product.price);
+    products = products.filter(product => filterState.price <=  product.price);
   }
 
   if (filterState.onSale !== false){
         console.log("on sale");
 
-    products = data.filter(product => product.onSale === "true");
+    products = products.filter(product => product.onSale === "true");
   }
 
   if (filterState.size !== null){
         console.log("size");
-    products = data.filter(product => product.size.includes(Number(filterState.size)));
+    products = products.filter(product => product.size.includes(Number(filterState.size)));
   }
 
     if (filterState.colors.length > 0) {
       console.log("color");
-      products = data.filter(product => {
+      products = products.filter(product => {
         return filterState.colors.some(selectedColor => 
           product.color.includes(selectedColor)
         );
@@ -391,7 +391,7 @@ function Filter(filterState, data){
   }
 
 
-  // console.log(products);
+  console.log(products);
 
   return products;
 }

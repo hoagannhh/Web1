@@ -1,19 +1,24 @@
 html {
-    /* Đã xóa font-size: 62.5%; */
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    height: 3000px;
-}
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+/* body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+} */
 
 p {
-    font-size: 14px; /* Chuyển từ 1.4rem */
-    /* margin: 0px; */
+    font-size: 14px;
 }
 
 .modal-overlay {
-    /* display: none; */
     position: fixed;
     top: 0;
     left: 0;
@@ -21,98 +26,160 @@ p {
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
-}
-#register-form{
     display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
+
+/* body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+} */
+
 .register {
-    position: absolute;
-    width: 35vw;
-    height: 80vh;
-    position: fixed;
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    max-height: 90vh;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    padding: 40px 30px;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    overflow-y: auto;
 }
 
 .register .font-register {
-    font-size: clamp(14px, 2vw, 24px);
+    font-size: clamp(18px, 2vw, 24px);
     text-align: center;
-    margin: 0px;
+    margin: 0 0 30px 0;
 }
 
-.register input,
-.btn {
-    width: 50%;
-    height: 5%;
+#register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Input wrapper để chứa input + error message */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.register input {
+    width: 100%;
+    height: 45px;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.register input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+.register input.error {
+    border-color: #ff4444;
 }
 
 .register .first-and-last-name {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    width: 51%;
-    height: 5%;
+    gap: 15px;
+    width: 100%;
 }
 
-.register .first-and-last-name input {
-    height: 100%;
-    width: 120%;
+.register .first-and-last-name .input-wrapper {
+    flex: 1;
+}
+
+/* Error message styling */
+.error-message {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #ff4444;
+}
+
+.error-message.show {
+    display: block;
 }
 
 .have-an-account {
     display: flex;
-    justify-content: space-between;
-    width: 50%;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    margin: -5px 0;
 }
 
 .have-an-account p {
-    display: inline-block;
-    margin: 0px;
+    margin: 0;
     color: gray;
+    font-size: 14px;
 }
 
 .have-an-account button {
     border: none;
     background-color: transparent;
     cursor: pointer;
-    color: gray;
+    color: #1a73e8;
+    font-size: 14px;
+    padding: 0;
+    text-decoration: underline;
 }
 
-.have-an-account {
-    margin: -5% 0%;
+.have-an-account button:hover {
+    color: #0d47a1;
 }
 
 .register .btn.continue {
+    width: 100%;
+    height: 50px;
     background-color: black;
     color: white;
-    font-size: 22px; /* Chuyển từ 2.2rem */
+    font-size: 16px;
     font-weight: bold;
-    /* margin-top: -5%; */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register .btn.continue:hover {
+    background-color: #333;
 }
 
 .button-close-register {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    width: 10% !important;
-    height: 10% !important;
-    max-width: 40px;
-    min-width: 30px;
-    max-height: 40px;
-    min-height: 30px;
-    border-radius: 100%;
-    transform: translate(-50%, -50%);
-    bottom: 93%;
-    left: 99%;
+    line-height: 1;
+    transition: background-color 0.3s;
+}
+
+.button-close-register:hover {
+    background-color: #f5f5f5;
 }
