@@ -25,7 +25,9 @@ export const ButtonVerification = {
               `,
         css:'../css/taskbar.css',
         init: function(){
-          document.addEventListener("DOMContentLoaded", function(){
+          
+            console.log("in cant");
+
             const container = document.getElementById("container");
             // dang nhap
             const login = document.querySelector(".login .in");
@@ -33,7 +35,6 @@ export const ButtonVerification = {
             // dang ky
             const register = document.querySelector(".login .up");
             
-
             if (!login || !register) {
               console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
               return;
@@ -41,7 +42,7 @@ export const ButtonVerification = {
             
             HandleRegister(register, container);
             HandleLogin(login, container);
-          })
+   
           
       }
   }

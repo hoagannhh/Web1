@@ -6,13 +6,8 @@ import { accountComponent } from "./Pages/accountPage.js";
 import { ProductDetail } from "./ProductDetail/ProductDetail.js";
 import { allProducts, Product } from "./Product/Product.js";
 import { SideBar } from "./Product/SideBar.js";
-<<<<<<< HEAD
-import { Cart } from './Pages/Cart.js'
-// import { allProducts } from "./Product/Product.js";
-import { footer } from "./Pages/footer.js";
-=======
 import { Cart } from "./Pages/Cart.js";
->>>>>>> 26ea5e9f84043947f61e08c97072e5c42938e6bb
+import { footer } from "./Pages/footer.js"
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
@@ -34,11 +29,14 @@ export const pages = {
   productDetail: ProductDetail,
   product: Product,
   sidebar: SideBar,
+  footer: footer,
   cart: Cart,
 };
 // div này sẽ chứa code html sau khi load code từ object pages
 const ContentContainer = document.getElementById("container");
 const taskBarContainer = document.getElementById("task-bar-container");
+const footerContainer = document.getElementById("footer");;
+startApplication();
 
 async function loadInitialData() {
   console.log("Test................");
@@ -61,16 +59,17 @@ async function startApplication() {
   //nhở bỏ trang cần load vào hàm này
   loadPageHome();
 }
-// loadPageHome();
 
-startApplication();
 
 console.log(allProducts);
 export function loadPageHome() {
   InsertPage("taskBar", taskBarContainer);
   // InsertPage("productDetail", ContentContainer);
   // InsertPage("cart", ContentContainer);
-  InsertPage("product", ContentContainer);
+  // InsertPage("product", ContentContainer);
+  InsertPage("home", ContentContainer);
+
+  InsertPage("footer", footerContainer);
 }
 export function LoadPage(pageName, container) {
   RemoveData(container);

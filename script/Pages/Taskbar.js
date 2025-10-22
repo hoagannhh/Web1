@@ -247,9 +247,16 @@ export const TaskBar = {
     css  : `../css/taskbar.css`,
     canDeleteCss: false,
     init: function(){
+                  console.log("brdor vertication");
+
       ButtonVerification.init();  
+                        console.log("after vertication");
+
+      
+      
+
       Cart();
-      FindAProductByNAme();
+      // FindAProductByNAme();
       headerScroll();
       LoadTrangChu();
     }

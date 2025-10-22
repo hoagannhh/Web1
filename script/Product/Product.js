@@ -2,7 +2,6 @@
 import { LoadCss, LoadPage } from "../LoadPage.js";
 import { SideBar } from "./SideBar.js";
 import { ProductDetail } from "../ProductDetail/ProductDetail.js";
-import { allProducts } from "../LoadPage.js";
 
 export let allProducts = [];
 export const Product = {
