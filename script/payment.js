@@ -1,3 +1,6 @@
+// import { totalMoney, products } from "./Pages/Cart.js";
+// import { LoadPage } from "LoadPage.js";
+
 function showForm() {
   document.getElementById("address-list-view").classList.add("hidden");
   document.getElementById("form-view").classList.remove("hidden");
@@ -144,6 +147,150 @@ function selectMethod(element, methodName) {
     infoCard.classList.add("hidden");
   }
 }
+
+// đoạn này là tính tiền và invoice
+const storedTotalMoney = localStorage.getItem("cartTotalMoney");
+const totalMoneyFromStorage = storedTotalMoney
+  ? parseFloat(storedTotalMoney)
+  : 0;
+
+// Lấy products
+const storedProducts = localStorage.getItem("cartProducts");
+const productsFromStorage = storedProducts ? JSON.parse(storedProducts) : [];
+
+console.log(totalMoneyFromStorage);
+console.log(productsFromStorage);
+
+const priceInCart = document.querySelector(".payment-price");
+priceInCart.innerHTML = `${new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+}).format(totalMoneyFromStorage)}vnđ`;
+
+// tính tiền ship nè
+
+const TARGET_AMOUNT = 5000000;
+let shipPrice = 250000;
+
+function updateProgressBar(currentAmount, targetAmount) {
+  // Tính phần trăm
+  let percentage = (currentAmount / targetAmount) * 100;
+
+  // 0% đến 100%
+  if (percentage > 100) {
+    percentage = 100;
+  } else if (percentage < 0) {
+    percentage = 0;
+  }
+
+  const progressBar = document.querySelector(".progress-bar");
+
+  if (progressBar) {
+    // Cập nhật
+    progressBar.style.width = percentage.toFixed(2) + "%";
+
+    console.log(`cập nhật okk: ${percentage.toFixed(2)}%`);
+
+    //đổi màu
+    if (percentage === 100) {
+      progressBar.style.backgroundColor = "gold";
+    } else {
+      progressBar.style.backgroundColor = "green"; // Trở lại màu mặc định
+    }
+  }
+}
+updateProgressBar(totalMoneyFromStorage, TARGET_AMOUNT);
+
+function caculateShip() {
+  if (totalMoneyFromStorage >= 5000000) {
+    shipPrice = 0;
+    document.querySelector(".price_ship").innerHTML = `${formatPrice(
+      shipPrice
+    )} vnđ`;
+  } else {
+    document.querySelector(".price_ship").innerHTML = `${formatPrice(
+      shipPrice
+    )} vnđ`;
+  }
+}
+/// tổng tiền tất cả nha mấy ku (+ cả ship nếu có)
+caculateShip();
+let totalBill = totalMoneyFromStorage + shipPrice;
+document.querySelector(".price-bill").innerHTML = `${formatPrice(
+  totalBill
+)} vnđ`;
+//invoice
+
+productsFromStorage.forEach((product) => {
+  // Chỉ xử lý các sản phẩm được chọn (selected: true)
+  // if (!product.selected) {
+  //   console.log(product);
+  //   return;
+  // }
+  console.log("Sản phẩm có trong mảng (dù chưa chọn):", product);
+  console.log(product["img-represent"]);
+});
+function formatPrice(number) {
+  if (typeof number !== "number") {
+    number = parseFloat(number) || 0;
+  }
+  const formatter = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+  return formatter.format(number);
+}
+
+function renderInvoiceProducts(productsArray) {
+  // 1. Chọn container nơi bạn muốn chèn các hóa đơn
+  const container = document.getElementById("invoice-container"); // THAY THẾ bằng ID container thực tế của bạn
+  if (!container) {
+    console.error("Lỗi: Không tìm thấy phần tử container cho hóa đơn.");
+    return;
+  }
+  console.log(productsArray);
+
+  let invoiceHTML = "";
+
+  productsArray.forEach((product) => {
+    // Chỉ xử lý các sản phẩm được chọn (selected: true)
+    if (!product.selected) {
+      return;
+    }
+
+    // 2. Định dạng giá cho sản phẩm
+    const itemPrice = formatPrice(product.price * product.quantity);
+
+    // 3. Tạo HTML cho một hóa đơn sản phẩm
+    invoiceHTML += `
+            <div class="invoice">
+                <div class="date-invoice">Arrives Fri, Sep 12</div> 
+                <div class="invoice-product">
+                    <div class="img-invoice-product">
+                        <img
+                            class="img-invoice-product-img"
+                            src="${product["img-represent"]}" 
+                        />
+                    </div>
+                    <div class="infor-invoice">
+                        <div class="name-invoice-product">${product.name}</div>
+                        <div class="qty-invoice-product">Qty: ${product.quantity}</div>
+                        <div class="size-invoice-product">Size: EU ${product.size}</div>
+                        <div class="price-invoice-product">${itemPrice} vnđ</div>
+                    </div>
+                </div>
+                <hr class="line-invoice" />
+            </div>
+        `;
+    // console.log(product["img-represent"]);
+  });
+
+  // 4. Chèn toàn bộ chuỗi HTML vào container
+  container.innerHTML = invoiceHTML;
+}
+renderInvoiceProducts(productsFromStorage);
+
+//-------------------------tính tiền, invoice
 
 const creditMethod = document.querySelector(".credit-method");
 const paypalMethod = document.querySelector(".paypal-method");
