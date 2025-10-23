@@ -156,7 +156,7 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
   const currentProducts = allProducts.slice(startIndex, endIndex);
 
   htmlProduct = ""; // reset nội dung cũ
-
+  console.log(allProducts);
   currentProducts.forEach((product) => {
     htmlProduct += `
  <div class="prod-demo" data-id="${product.id}">
