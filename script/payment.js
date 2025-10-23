@@ -360,6 +360,14 @@ function setupPaymentListeners() {
     backPayment.addEventListener("click", () => {
       window.location.href = "payment.html";
     });
+
+    document
+      .querySelector(".confirm-btn-review-payment")
+      .addEventListener("click", () => {
+        localStorage.removeItem("cartProducts");
+        localStorage.removeItem("cartTotalMoney");
+        console.log(localStorage.getItem("cartProducts"));
+      });
     return;
   }
 
