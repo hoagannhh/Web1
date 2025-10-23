@@ -340,7 +340,8 @@ hr {
 }
 .qty-invoice-product,
 .size-invoice-product,
-.price-invoice-product {
+.price-invoice-product,
+.color-invoice-product {
   font-size: 1rem;
   font-weight: bold;
   color: gray;

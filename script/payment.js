@@ -157,15 +157,30 @@ const totalMoneyFromStorage = storedTotalMoney
 // Lấy products
 const storedProducts = localStorage.getItem("cartProducts");
 const productsFromStorage = storedProducts ? JSON.parse(storedProducts) : [];
+const productsForInvoice = productsFromStorage.filter(
+  (product) => product.selected === true
+);
+
+// 1. Tính toán lại tổng tiền chỉ từ sản phẩm đã chọn (Sử dụng productsForInvoice)
+const totalMoneyForInvoice = productsForInvoice.reduce((sum, product) => {
+  // Lưu ý: Tùy thuộc vào cách bạn lưu price (string hay number)
+  // Giả sử price đã là number, nếu không phải thì cần parse
+  const price =
+    typeof product.price === "string"
+      ? parseFloat(product.price.replace(/,/g, ""))
+      : product.price;
+  return sum + price * product.quantity;
+}, 0);
 
 console.log(totalMoneyFromStorage);
 console.log(productsFromStorage);
 
+// 2. Cập nhật lại tổng tiền hiển thị (Dùng totalMoneyForInvoice)
 const priceInCart = document.querySelector(".payment-price");
 priceInCart.innerHTML = `${new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
-}).format(totalMoneyFromStorage)}vnđ`;
+}).format(totalMoneyForInvoice)}vnđ`;
 
 // tính tiền ship nè
 
@@ -202,7 +217,7 @@ function updateProgressBar(currentAmount, targetAmount) {
 updateProgressBar(totalMoneyFromStorage, TARGET_AMOUNT);
 
 function caculateShip() {
-  if (totalMoneyFromStorage >= 5000000) {
+  if (totalMoneyForInvoice >= 5000000) {
     shipPrice = 0;
     document.querySelector(".price_ship").innerHTML = `${formatPrice(
       shipPrice
@@ -215,12 +230,16 @@ function caculateShip() {
 }
 /// tổng tiền tất cả nha mấy ku (+ cả ship nếu có)
 caculateShip();
+console.log(totalMoneyFromStorage);
+
 let totalBill = totalMoneyFromStorage + shipPrice;
 document.querySelector(".price-bill").innerHTML = `${formatPrice(
   totalBill
 )} vnđ`;
-//invoice
 
+console.log(formatPrice(totalBill));
+
+//invoice
 productsFromStorage.forEach((product) => {
   // Chỉ xử lý các sản phẩm được chọn (selected: true)
   // if (!product.selected) {
@@ -242,26 +261,34 @@ function formatPrice(number) {
 }
 
 function renderInvoiceProducts(productsArray) {
-  // 1. Chọn container nơi bạn muốn chèn các hóa đơn
-  const container = document.getElementById("invoice-container"); // THAY THẾ bằng ID container thực tế của bạn
+  const container = document.getElementById("invoice-container");
   if (!container) {
     console.error("Lỗi: Không tìm thấy phần tử container cho hóa đơn.");
     return;
   }
-  console.log(productsArray);
+  console.log("Sản phẩm đã lọc để render Invoice:", productsArray);
 
   let invoiceHTML = "";
 
   productsArray.forEach((product) => {
-    // Chỉ xử lý các sản phẩm được chọn (selected: true)
-    if (!product.selected) {
-      return;
-    }
+    // Xử lý Size: Ưu tiên selectedSize (từ Product), sau đó là size (từ Cart)
+    // Nếu product.size là một mảng (như trong Product data), ta không dùng nó.
+    const displaySize =
+      product.selectedSize ||
+      (typeof product.size === "string" || typeof product.size === "number"
+        ? product.size
+        : "N/A");
 
-    // 2. Định dạng giá cho sản phẩm
+    // Xử lý Color: Ưu tiên selectedColor (từ Product), sau đó là color (từ Cart)
+    // Nếu product.color là một mảng (như trong Product data), ta không dùng nó.
+    const displayColor =
+      product.selectedColor ||
+      (typeof product.color === "string" ? product.color : "N/A");
+
+    // Định dạng tổng giá trị của sản phẩm (Giá * Số lượng)
     const itemPrice = formatPrice(product.price * product.quantity);
 
-    // 3. Tạo HTML cho một hóa đơn sản phẩm
+    // Tạo HTML cho một hóa đơn sản phẩm
     invoiceHTML += `
             <div class="invoice">
                 <div class="date-invoice">Arrives Fri, Sep 12</div> 
@@ -275,20 +302,21 @@ function renderInvoiceProducts(productsArray) {
                     <div class="infor-invoice">
                         <div class="name-invoice-product">${product.name}</div>
                         <div class="qty-invoice-product">Qty: ${product.quantity}</div>
-                        <div class="size-invoice-product">Size: EU ${product.size}</div>
+                        
+                        <div class="size-invoice-product">Size: EU ${displaySize}</div>
+                        <div class="color-invoice-product">Color: ${displayColor}</div>
+                        
                         <div class="price-invoice-product">${itemPrice} vnđ</div>
                     </div>
                 </div>
                 <hr class="line-invoice" />
             </div>
         `;
-    // console.log(product["img-represent"]);
   });
 
-  // 4. Chèn toàn bộ chuỗi HTML vào container
   container.innerHTML = invoiceHTML;
 }
-renderInvoiceProducts(productsFromStorage);
+renderInvoiceProducts(productsForInvoice);
 
 //-------------------------tính tiền, invoice
 
