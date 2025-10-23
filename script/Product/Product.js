@@ -150,22 +150,21 @@ export function HandleEventProduct(allProducts) {
         const selectedSize = selectedSizeElement.dataset.size;
         const selectedColor = selectedColorElement.dataset.color;
 
-        // 1. Tìm sản phẩm gốc
+        //sản phẩm gốc
         const productToCheckout = allProducts.find(
           (productDeta) => productDeta.id === productId
         );
 
         if (productToCheckout) {
-          // 💡 BƯỚC SỬA: TẠO ĐỐI TƯỢNG MỚI ĐỒNG NHẤT VỚI BÊN CART
-          // Ghi đè thuộc tính 'size' và 'color' bằng giá trị đã chọn.
+          //
+          // tạo object mới và ghi đè thuộc tính 'size' và 'color' bằng giá trị đã chọn.
           const productWithCartStructure = {
             ...productToCheckout,
-            // Thay thế thuộc tính mảng 'size' bằng giá trị chuỗi đã chọn
+
             size: selectedSize,
-            // Thay thế thuộc tính mảng 'color' bằng giá trị chuỗi đã chọn
+
             color: selectedColor,
 
-            // Thêm thuộc tính cần thiết khác
             checkOut: true,
             selected: true, // Thêm selected: true để tương thích với logic lọc của Cart
             quantity: 1,
@@ -182,7 +181,7 @@ export function HandleEventProduct(allProducts) {
           // Ở đây, ta chỉ cần thêm sản phẩm vào mảng.
           productsChecked.push(productWithCartStructure);
 
-          // 3. Tính lại tổng tiền và lưu vào LocalStorage
+          //tổng tiền và lưu vào LocalStorage
           totalMoney = productsChecked.reduce(
             (sum, item) => sum + item.price * item.quantity,
             0

@@ -271,24 +271,19 @@ function renderInvoiceProducts(productsArray) {
   let invoiceHTML = "";
 
   productsArray.forEach((product) => {
-    // Xử lý Size: Ưu tiên selectedSize (từ Product), sau đó là size (từ Cart)
-    // Nếu product.size là một mảng (như trong Product data), ta không dùng nó.
     const displaySize =
       product.selectedSize ||
       (typeof product.size === "string" || typeof product.size === "number"
         ? product.size
         : "N/A");
 
-    // Xử lý Color: Ưu tiên selectedColor (từ Product), sau đó là color (từ Cart)
-    // Nếu product.color là một mảng (như trong Product data), ta không dùng nó.
     const displayColor =
       product.selectedColor ||
       (typeof product.color === "string" ? product.color : "N/A");
 
-    // Định dạng tổng giá trị của sản phẩm (Giá * Số lượng)
+    //  (Giá * Số lượng)
     const itemPrice = formatPrice(product.price * product.quantity);
 
-    // Tạo HTML cho một hóa đơn sản phẩm
     invoiceHTML += `
             <div class="invoice">
                 <div class="date-invoice">Arrives Fri, Sep 12</div> 
@@ -355,18 +350,28 @@ function setupPaymentListeners() {
       document.querySelector(
         ".precent-sale"
       ).innerHTML = `${localStorage.getItem("userCodePromo")}`;
+      document.querySelector(".price-bill").innerHTML = `${formatPrice(
+        (totalBill *
+          (100 -
+            parseFloat(
+              localStorage.getItem("userCodePromo").replace("%", "")
+            ))) /
+          100
+      )} vnđ`;
     }
     const backPayment = document.querySelector(".back-btn-review-payment");
     backPayment.addEventListener("click", () => {
       window.location.href = "payment.html";
     });
 
+    const paymentConfirmation = document.querySelector(".confirm_successfull");
     document
       .querySelector(".confirm-btn-review-payment")
       .addEventListener("click", () => {
         localStorage.removeItem("cartProducts");
         localStorage.removeItem("cartTotalMoney");
         console.log(localStorage.getItem("cartProducts"));
+        paymentConfirmation.classList.remove("hidden");
       });
     return;
   }
@@ -384,7 +389,7 @@ function setupPaymentListeners() {
       fetch("../data/promo.json")
         .then((response) => response.json())
         .then((data) => {
-          listCodePromo = data;
+          let listCodePromo = data;
 
           const foundCode = listCodePromo.find(
             (item) => item.code === codePromo.value.trim().toUpperCase()
