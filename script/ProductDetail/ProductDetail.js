@@ -130,7 +130,7 @@ export const ProductDetail = {
     }
 }
 function SetProInfor(proInfor){
-  profileProduct = proInfor;
+  profileProduct = {...proInfor};
   console.log(profileProduct);
   console.log(typeof(profileProduct));
 }
