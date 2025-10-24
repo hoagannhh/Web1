@@ -42,6 +42,8 @@ export const Cart = {
     const container = document.querySelector(".list-product-bought");
     container.insertAdjacentHTML("beforeend", html);
     AddEventForProduct();
+    AddEventCheckout();
+    CaculateTotalMoney();
   },
   HandleEventInCart: function (inforProduct) {
     console.log(inforProduct);
@@ -50,6 +52,26 @@ export const Cart = {
     console.log(products);
   },
 };
+function AddEventCheckout() {
+  const checkoutBtn = document.querySelector(".checkout");
+  const container = document.getElementById("container"); // Lấy container chính
+
+  checkoutBtn.addEventListener("click", () => {
+    // Lọc ra các sản phẩm đã được chọn
+    const productsToCheckout = products.filter((p) => p.selected === true);
+
+    if (productsToCheckout.length === 0) {
+      alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+      return;
+    }
+
+    // Đảm bảo dữ liệu giỏ hàng mới nhất đã được lưu trước khi chuyển trang
+    // (Giả định: CaculateTotalMoney đã được gọi trước đó và SaveCartData đã chạy)
+
+    // 2. Load trang Payment
+    LoadPage("payment", container);
+  });
+}
 function AddEventForProduct() {
   products.forEach((product) => {
     // console.log(product);

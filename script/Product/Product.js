@@ -189,6 +189,8 @@ export function HandleEventProduct(allProducts) {
 
           // Gọi hàm SaveCartData để lưu dữ liệu đã cập nhật
           SaveCartData(productsChecked, totalMoney); // (Xem phần bổ sung bên dưới)
+          card.classList.remove("flipped"); // Đóng card trước khi chuyển trang (Tùy chọn)
+          LoadPage("payment", container);
 
           card.classList.remove("flipped");
           alert(
