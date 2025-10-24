@@ -7,7 +7,10 @@ import { ProductDetail } from "./ProductDetail/ProductDetail.js";
 import { allProducts, Product } from "./Product/Product.js";
 import { SideBar } from "./Product/SideBar.js";
 import { Cart } from "./Pages/Cart.js";
-import { footer } from "./Pages/footer.js"
+import { footer } from "./Pages/footer.js";
+
+import { PaymentComponent } from "./payment/payment.js";
+import { PaymentConfirmComponent } from "./payment/paymentConfirm.js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
@@ -31,11 +34,14 @@ export const pages = {
   sidebar: SideBar,
   footer: footer,
   cart: Cart,
+
+  payment: PaymentComponent,
+  paymentConfirm: PaymentConfirmComponent,
 };
 // div này sẽ chứa code html sau khi load code từ object pages
 const ContentContainer = document.getElementById("container");
 const taskBarContainer = document.getElementById("task-bar-container");
-const footerContainer = document.getElementById("footer");;
+const footerContainer = document.getElementById("footer");
 startApplication();
 
 async function loadInitialData() {
@@ -59,7 +65,6 @@ async function startApplication() {
   //nhở bỏ trang cần load vào hàm này
   loadPageHome();
 }
-
 
 console.log(allProducts);
 export function loadPageHome() {
