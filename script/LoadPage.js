@@ -3,10 +3,14 @@ import { TaskBar } from "./Pages/Taskbar.js";
 import { ButtonLogin } from "./Pages/ButtonLogin.js";
 import { ButtonRegister } from "./Pages/ButtonRegister.js";
 import { accountComponent } from "./Pages/accountPage.js";
-import { ProductDetail } from './ProductDetail/ProductDetail.js';
-import { Product } from './Product/Product.js'
+import { ProductDetail } from "./ProductDetail/ProductDetail.js";
+import { allProducts, Product } from "./Product/Product.js";
 import { SideBar } from "./Product/SideBar.js";
-import { Cart } from './Pages/Cart.js'
+import { Cart } from "./Pages/Cart.js";
+import { footer } from "./Pages/footer.js";
+
+import { PaymentComponent } from "./Pages/payment.js";
+import { PaymentConfirmComponent } from "./Pages/paymentConfirm.js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
@@ -28,60 +32,92 @@ export const pages = {
   productDetail: ProductDetail,
   product: Product,
   sidebar: SideBar,
+  footer: footer,
   cart: Cart,
+
+  payment: PaymentComponent,
+  paymentConfirm: PaymentConfirmComponent,
 };
 // div này sẽ chứa code html sau khi load code từ object pages
 const ContentContainer = document.getElementById("container");
 const taskBarContainer = document.getElementById("task-bar-container");
-loadPageHome()
+const footerContainer = document.getElementById("footer");
+startApplication();
 
-export function loadPageHome(){
-    InsertPage("taskBar", taskBarContainer);
-    // InsertPage("productDetail", ContentContainer);
-    // InsertPage("cart", ContentContainer);
-    InsertPage("product", ContentContainer);
+async function loadInitialData() {
+  console.log("Test................");
+  try {
+    const response = await fetch("../data/product.json");
+    const data = await response.json();
+
+    // Gán dữ liệu vào mảng allProducts đã được export từ Product.js
+    allProducts.push(...data);
+    console.log(allProducts.length);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function startApplication() {
+  // chờ dữ liệu được load xong (thằng await này lm xong mơi đc chạy thg khác)
+  await loadInitialData();
+
+  //nhở bỏ trang cần load vào hàm này
+  loadPageHome();
+}
+
+console.log(allProducts);
+export function loadPageHome() {
+  InsertPage("taskBar", taskBarContainer);
+  // InsertPage("productDetail", ContentContainer);
+  // InsertPage("cart", ContentContainer);
+  // InsertPage("product", ContentContainer);
+  InsertPage("home", ContentContainer);
+
+  InsertPage("footer", footerContainer);
 }
 export function LoadPage(pageName, container) {
   RemoveData(container);
   InsertPage(pageName, container);
 }
-function RemoveData(container){
+function RemoveData(container) {
   // xóa html
   container.innerHTML = "";
   // xóa css
-  const allCssLinks = document.querySelectorAll('link[rel="stylesheet"]')
+  const allCssLinks = document.querySelectorAll('link[rel="stylesheet"]');
   if (!allCssLinks) return;
-  allCssLinks.forEach((css) =>{
-      // if (css.dataset.)
-      if (css.dataset.canDeleteCss   === "true"){
-        css.remove();
-      }
+  allCssLinks.forEach((css) => {
+    // if (css.dataset.)
+    if (css.dataset.canDeleteCss === "true") {
+      css.remove();
+    }
   });
 }
-export function InsertPage(pageName, container){
-    if (!pages[pageName]){
-        console.error("Không tìm thấy page có tên: " + pageName + " quay lại trang home");
-        pageName ="home";
-    }
-    LoadHtml(pageName, container);
-    LoadCss(pageName);
-    loadLogic(pageName);
+export function InsertPage(pageName, container) {
+  if (!pages[pageName]) {
+    console.error(
+      "Không tìm thấy page có tên: " + pageName + " quay lại trang home"
+    );
+    pageName = "home";
+  }
+  LoadHtml(pageName, container);
+  LoadCss(pageName);
+  loadLogic(pageName);
+}
 
-}   
-
-function loadLogic(pageName){
+function loadLogic(pageName) {
   const pageComponent = pages[pageName];
   if (!pageComponent)
     console.error("ko tìm thấy html của " + pageName + " này trong Object");
   pageComponent.init();
 }
 
-function LoadHtml(pageName, container){
-    const pageComponent = pages[pageName];
-    if (!pageComponent)
-        console.error("ko tìm thấy html của " + pageName + " này trong Object");
-    container.insertAdjacentHTML("afterbegin", pageComponent.html);
-    // container.innerHTML += pageComponent["html"];
+function LoadHtml(pageName, container) {
+  const pageComponent = pages[pageName];
+  if (!pageComponent)
+    console.error("ko tìm thấy html của " + pageName + " này trong Object");
+  container.insertAdjacentHTML("afterbegin", pageComponent.html);
+  // container.innerHTML += pageComponent["html"];
 }
 
 export function LoadCss(pageName) {
@@ -107,6 +143,6 @@ export function LoadCss(pageName) {
   const linkElement = document.createElement("link");
   linkElement.rel = "stylesheet";
   linkElement.href = element;
-  linkElement.setAttribute('data-can-delete-css', pageComponent.canDeleteCss);
+  linkElement.setAttribute("data-can-delete-css", pageComponent.canDeleteCss);
   document.head.appendChild(linkElement);
 }

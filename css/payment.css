@@ -2,7 +2,7 @@
   display: flex;
   width: 100%;
   margin-top: 50px;
-  height: 600px;
+  /* height: 600px; */
 }
 .left-payment,
 .right-payment {
@@ -52,13 +52,17 @@
   margin-top: 50px;
 }
 .button-change {
-  width: 100px;
+  width: 25%;
   padding: 10px 10px 10px 10px;
   background-color: black;
   color: white;
   font-size: 1rem;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+}
+.button-change:active {
+  background-color: rgb(115, 114, 114);
 }
 .input-infor-address {
   border-style: solid;
@@ -82,6 +86,10 @@
   padding: 10px;
   border-radius: 4px;
   border: none;
+  cursor: pointer;
+}
+.select-btn:active {
+  background-color: rgb(115, 114, 114);
 }
 .add-new-btn {
   background-color: rgb(0, 0, 0);
@@ -93,6 +101,10 @@
   border: none;
   width: 50%;
   box-sizing: border-box;
+  cursor: pointer;
+}
+.add-new-btn:active {
+  background-color: rgb(115, 114, 114);
 }
 .back-btn {
   background-color: white;
@@ -104,6 +116,10 @@
   border-style: solid;
   width: 50%;
   box-sizing: border-box;
+  cursor: pointer;
+}
+.back-btn:active {
+  background-color: rgb(115, 114, 114);
 }
 .confirm-btn {
   background-color: rgb(0, 0, 0);
@@ -127,7 +143,7 @@
   margin-bottom: 20px;
 }
 .infor-ship {
-  width: 400px;
+  width: 90%;
   margin-top: 30px;
 }
 
@@ -153,7 +169,7 @@
   border-style: solid;
   border-width: 1px;
   border-radius: 4px;
-  width: 300px;
+  /* width: 300px; */
   width: 75%;
   box-sizing: border-box;
 }
@@ -214,10 +230,10 @@
   gap: 50px;
 }
 .icon-card {
-  width: 50px;
+  width: 15%;
 }
 .icon-paypal {
-  width: 100px;
+  width: 30%;
   margin-left: 10px;
 }
 .infor-card {
@@ -268,7 +284,7 @@
 }
 
 .progress {
-  width: 400px;
+  width: 100%;
   height: 10px;
   background-color: #ddd;
   border-radius: 10px;
@@ -325,11 +341,14 @@ hr {
   width: 60%;
 }
 .img-invoice-product-img {
-  width: 200px;
+  width: 90%;
 }
 .infor-invoice {
   width: 40%;
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .name-invoice-product {
   font-size: 1.8rem;
@@ -337,7 +356,8 @@ hr {
 }
 .qty-invoice-product,
 .size-invoice-product,
-.price-invoice-product {
+.price-invoice-product,
+.color-invoice-product {
   font-size: 1rem;
   font-weight: bold;
   color: gray;
@@ -367,7 +387,12 @@ hr {
   border: none;
   width: 50%;
   box-sizing: border-box;
+  cursor: pointer;
 }
+.confirm-btn-review-payment:active {
+  background-color: rgb(115, 114, 114);
+}
+
 .back-btn-review-payment {
   background-color: white;
   color: black;
@@ -378,11 +403,68 @@ hr {
   border-style: solid;
   width: 50%;
   box-sizing: border-box;
+  cursor: pointer;
+}
+.back-btn-review-payment:active {
+  background-color: #b2b0b0;
+}
+
+.confirm_successfull {
+  position: fixed;
+  background-color: #00000080;
+  font-size: 1.5rem;
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.table_successfull {
+  background-color: white;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  width: 40%;
+}
+.tick_icon {
+  display: flex;
+  background-color: green;
+  padding: 6% 2%;
+  width: 20%;
+  height: 200%;
+  margin-left: 40%;
+
+  border-radius: 100%;
+}
+.tick_img {
+  width: 50%;
+  justify-items: center;
+  justify-content: center;
+  margin-left: 25%;
+}
+.successfull_text {
+  margin-top: 20%;
+  text-align: center;
+}
+.go_home {
+  background-color: black;
+  color: white;
+  padding: 2%;
+  border-radius: 10px;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 10%;
+  text-align: center;
+  cursor: pointer;
 }
 .hidden {
   display: none;
 }
 
-body {
-  height: 4000px;
-}
+/* body {
+} */

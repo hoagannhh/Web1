@@ -1,4 +1,4 @@
-import {LoadPage} from '../LoadPage.js'
+import { LoadPage } from "../LoadPage.js";
 
 export const HomeComponent = {
   html: `    <div class="image-demo">
@@ -128,15 +128,15 @@ export const HomeComponent = {
       </div>
     </div>`,
   canDeleteCss: true,
-  css : `../css/home.css`,
-  init: function(){
+  css: `../css/home.css`,
+  init: function () {
     AddEventForOverlayButtonMore();
-  }
+  },
 };
-function AddEventForOverlayButtonMore(){
+function AddEventForOverlayButtonMore() {
   const btnMore = document.querySelector(".overlay-btn");
   const container = document.getElementById("container");
   btnMore.addEventListener("click", () => {
-    LoadPage("product", container)
-  })
+    LoadPage("product", container);
+  });
 }

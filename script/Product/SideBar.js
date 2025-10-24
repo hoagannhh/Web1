@@ -1,4 +1,6 @@
-import {HandleEventProduct} from '../Product/Product.js'
+import {HandleEventProduct, LoadProductPageHaveProduct} from '../Product/Product.js'
+import { allProducts } from '../Product/Product.js';
+import { LoadAllProductPage } from '../Product/Product.js';
 export const SideBar = {
     html: `
   <div class="container">
@@ -218,20 +220,57 @@ export const SideBar = {
         // console.log(filterState.sortBy);
         
         sideBar();
-        AddEventButtonChooseSize(filterState);
-        AddEventButton(filterState);
-        ChooseGender(filterState);
-        ChooseProductSale(filterState);
-        FilterByMoney(filterState);
-        FilterByColor(filterState);
-
+        DevideFlowFilter(filterState, null, false);
     }
 }
-function AfterFilter(filterState){
-    // console.log(filterState);
-    LoadProductPage(filterState);
+export function DevideFlowFilter(filterState, products,isFilterBySeach){
+  if (isFilterBySeach){
+    console.log("filter by search " + isFilterBySeach)
+    FilterVipBySearch(products, isFilterBySeach)
+  }else{
+    console.log("filter by All")
+    FilterVip(filterState, isFilterBySeach)
+  }
 }
-function FilterByColor(filterState){
+function FilterVipBySearch(products, isFilterBySeach){
+    const filterState = {
+          gender: [],
+          price: null,
+          onSale: false,
+          size: null,
+          colors: [],
+          sortBy: "Featured" // Giá trị mặc định
+        };
+      AddEventButtonChooseSize(filterState, isFilterBySeach, products);
+        AddEventButton(filterState, isFilterBySeach, products);
+        ChooseGender(filterState, isFilterBySeach, products);
+        ChooseProductSale(filterState, isFilterBySeach, products);
+        FilterByMoney(filterState, isFilterBySeach, products);
+        FilterByColor(filterState, isFilterBySeach, products);
+}
+function FilterVip(filterState, isFilterBySeach, products){
+      AddEventButtonChooseSize(filterState, isFilterBySeach, products);
+        AddEventButton(filterState, isFilterBySeach, products);
+        ChooseGender(filterState, isFilterBySeach, products);
+        ChooseProductSale(filterState, isFilterBySeach, products);
+        FilterByMoney(filterState, isFilterBySeach, products);
+        FilterByColor(filterState, isFilterBySeach, products);
+
+}
+function AfterFilter(filterState, isFilterBySeach, products){
+    // console.log(filterState);
+    if (!isFilterBySeach){
+      console.log("Bat dau filter bth");
+        LoadProductPage(filterState);
+    }
+    else {
+      console.log("Bat dau filter theo ten");
+      products = Filter(filterState, products);
+      LoadProductPageHaveProduct(products)
+    }
+
+}
+function FilterByColor(filterState, isFilterBySeach, products){
   const colors = document.querySelectorAll(".color-input");
   colors.forEach((color) => {
     color.addEventListener("click", (event) => {
@@ -240,12 +279,13 @@ function FilterByColor(filterState){
       }else{
         filterState.colors.push(event.target.value);
       }
-      AfterFilter(filterState);
+      AfterFilter(filterState, isFilterBySeach, products);
     })
   })
 }
 // filter theo giá
-function FilterByMoney(filterState){
+function FilterByMoney(filterState, isFilterBySeach, products){
+  console.log("filter by money")
   const inputs = document.querySelector('.sub-menu input[type = "number"]');
   inputs.addEventListener("change", (event) => {
     if (Number(event.target.value) < 0){
@@ -253,11 +293,11 @@ function FilterByMoney(filterState){
     }else{
       filterState.price = Number(event.target.value);
     }
-      AfterFilter(filterState);
+      AfterFilter(filterState, isFilterBySeach, products);
   })
 }
 // filter theo sản phẩm được giảm giá
-function ChooseProductSale(filterState){
+function ChooseProductSale(filterState, isFilterBySeach, products){
   const submenu = document.querySelectorAll(".black-check");
   submenu.forEach(checkBox => {
     checkBox.addEventListener("change", () => {
@@ -266,12 +306,12 @@ function ChooseProductSale(filterState){
           filterState.onSale = true;
         else
           filterState.onSale = false;
-      AfterFilter(filterState);
+      AfterFilter(filterState, isFilterBySeach, products);
     })
   })
 }
 // filter theo giới tính
-function ChooseGender(filterState){
+function ChooseGender(filterState, isFilterBySeach, products){
   const submenu = document.querySelectorAll(".black-check");
   submenu.forEach((checkBox) => {
     checkBox.addEventListener("change", () => {
@@ -281,13 +321,13 @@ function ChooseGender(filterState){
         }else{
           filterState.gender = filterState.gender.filter(g => g !== checkBox.id)
         }
-      AfterFilter(filterState);
+      AfterFilter(filterState, isFilterBySeach, products);
       }
     })
   })
 }
 // ||-- Ham Check --||Hàm để in trạng thái ra console mỗi khi có thay đổi
-function AddEventButtonChooseSize(filterState){
+function AddEventButtonChooseSize(filterState, isFilterBySeach, products){
   const allButton = document.querySelectorAll(".sidebar-size-btn");
   allButton.forEach(button => {
       button.addEventListener("click", () => {
@@ -298,11 +338,11 @@ function AddEventButtonChooseSize(filterState){
 
           filterState.size = button.textContent;
           button.classList.add("selected");
-      AfterFilter(filterState);
+      AfterFilter(filterState, isFilterBySeach, products);
       })
   })
 }
-function AddEventButton(filterState){
+function AddEventButton(filterState, isFilterBySeach, products){
   const allButton = document.querySelectorAll(".dropdown-option");
   allButton.forEach(button => {
       button.addEventListener("click", () => {
@@ -311,7 +351,7 @@ function AddEventButton(filterState){
           })
           filterState.sortBy = button.textContent;
           button.classList.add("selected");
-      AfterFilter(filterState);
+      AfterFilter(filterState, isFilterBySeach, products);
       })
   })
 }
@@ -327,30 +367,30 @@ function sideBar(){
   });
 }
 function LoadProductPage(filterState){
+  
     let htmlProduct = "";
-    let allProducts = [];
+    let temp = [];
     let currentPage = 1;
     const productsPerPage = 9; // số sản phẩm trên 1 trang
 
-    fetch("../data/product.json")
-      .then((response) => response.json())
-      .then((data) => {
-        allProducts = Filter(filterState, data);
 
-
-        renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
-        renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
-        HandleEventProduct(allProducts)
-      })
-      .catch((error) => console.error(error));
+        temp = Filter(filterState, allProducts);
+        if (temp.length === 0){
+          alert("ko tim thay san pham nao");
+          LoadAllProductPage();
+          return;
+        }
+        renderProduct(htmlProduct, temp, currentPage, productsPerPage);
+        renderPagination(htmlProduct, temp, currentPage, productsPerPage);
+        HandleEventProduct(temp)
 }
 function Filter(filterState, data){
   // console.log("-------------------");
-  // console.log(filterState);
+  console.log(filterState);
   // console.log(data);
   let products = [];
 
-  products = products.filter(product => product.gender.includes(filterState.gender));
+  products = data.filter(product => product.gender.includes(filterState.gender));
   if (filterState.gender.length > 0) {
         console.log("gender");
     products = data.filter(product => filterState.gender.includes(product.gender));
@@ -358,23 +398,23 @@ function Filter(filterState, data){
 
   if (filterState.price !== null){
     console.log("price");
-    products = data.filter(product => filterState.price <=  product.price);
+    products = products.filter(product => filterState.price <=  product.price);
   }
 
   if (filterState.onSale !== false){
         console.log("on sale");
 
-    products = data.filter(product => product.onSale === "true");
+    products = products.filter(product => product.onSale === "true");
   }
 
   if (filterState.size !== null){
         console.log("size");
-    products = data.filter(product => product.size.includes(Number(filterState.size)));
+    products = products.filter(product => product.size.includes(Number(filterState.size)));
   }
 
     if (filterState.colors.length > 0) {
       console.log("color");
-      products = data.filter(product => {
+      products = products.filter(product => {
         return filterState.colors.some(selectedColor => 
           product.color.includes(selectedColor)
         );
@@ -391,7 +431,7 @@ function Filter(filterState, data){
   }
 
 
-  // console.log(products);
+  console.log(products);
 
   return products;
 }
