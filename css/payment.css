@@ -2,7 +2,7 @@
   display: flex;
   width: 100%;
   margin-top: 50px;
-  height: 600px;
+  /* height: 600px; */
 }
 .left-payment,
 .right-payment {
@@ -466,6 +466,5 @@ hr {
   display: none;
 }
 
-body {
-  height: 4000px;
-}
+/* body {
+} */

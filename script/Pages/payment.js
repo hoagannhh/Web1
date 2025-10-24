@@ -602,24 +602,37 @@ export const PaymentComponent = {
       element.classList.add("selected");
       selectedMethod = methodName;
       if (infoCard) {
-        if (methodName === "credit") infoCard.classList.remove("hidden");
-        else infoCard.classList.add("hidden");
+        if (methodName === "credit") {
+          infoCard.classList.remove("hidden");
+        } else {
+          infoCard.classList.add("hidden");
+        }
       }
     }
 
     // --- Gắn sự kiện Payment Methods ---
-    creditMethod?.addEventListener("click", () =>
-      selectMethod(creditMethod, "credit")
-    );
-    paypalMethod?.addEventListener("click", () =>
-      selectMethod(paypalMethod, "paypal")
-    );
-    mBankingMethod?.addEventListener("click", () =>
-      selectMethod(mBankingMethod, "banking")
-    );
-    cashMethod?.addEventListener("click", () =>
-      selectMethod(cashMethod, "cash")
-    );
+    if (creditMethod) {
+      creditMethod?.addEventListener("click", () =>
+        selectMethod(creditMethod, "credit")
+      );
+    }
+
+    if (paypalMethod) {
+      paypalMethod?.addEventListener("click", () =>
+        selectMethod(paypalMethod, "paypal")
+      );
+    }
+
+    if (mBankingMethod) {
+      mBankingMethod?.addEventListener("click", () =>
+        selectMethod(mBankingMethod, "banking")
+      );
+    }
+    if (cashMethod) {
+      cashMethod?.addEventListener("click", () =>
+        selectMethod(cashMethod, "cash")
+      );
+    }
 
     // --- Gắn sự kiện Promo ---
     promo?.addEventListener("click", () => {
@@ -658,7 +671,7 @@ export const PaymentComponent = {
     });
 
     // --- Gắn sự kiện Confirm Payment ---
-    confirmButton?.addEventListener("click", () => {
+    confirmButton?.addEventListener("click", async () => {
       if (!selectedMethod) {
         alert("Vui lòng chọn một phương thức thanh toán trước.");
         return;
@@ -670,9 +683,19 @@ export const PaymentComponent = {
         const cardNumber = document.getElementById("card-number");
         const cardHolder = document.getElementById("card-holder");
 
-        if (cardNumber.value.trim() === "" || cardHolder.value.trim() === "") {
+        if (cardNumber.value.trim() === "") {
           alert("Vui lòng nhập đầy đủ thông tin thẻ.");
           checkConfirm = false;
+          cardNumber.focus();
+          cardNumber.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+        if (cardHolder.value.trim() === "") {
+          alert("Vui lòng nhập đầy đủ thông tin thẻ.");
+          checkConfirm = false;
+          cardHolder.focus();
+          cardHolder.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
         } else {
           const paymentData = {
             cardNumber: cardNumber.value,
@@ -680,28 +703,21 @@ export const PaymentComponent = {
           };
           localStorage.setItem("payment-method", "CREDIT");
           localStorage.setItem("credit-method", JSON.stringify(paymentData));
+          console.log("Credit okkk");
+          console.log(localStorage.getItem("payment-method"));
+          console.log(localStorage.getItem("credit-method"));
         }
       } else {
         localStorage.setItem("payment-method", selectedMethod.toUpperCase());
-        localStorage.removeItem("credit-method");
+        // localStorage.removeItem("credit-method");
+        console.log(` ${selectedMethod.toUpperCase()} okkk`);
+        console.log(localStorage.getItem("payment-method"));
       }
 
       if (checkConfirm) {
         if (codePromo && codePromo.value.trim() === "") {
           localStorage.removeItem("userCodePromo");
         }
-
-        // document.addEventListener("DOMContentLoaded", function () {
-        //   const allButtons = document.querySelectorAll(".payment-methood");
-        //   allButtons.forEach(function (button) {
-        //     button.addEventListener("click", function () {
-        //       allButtons.forEach(function (btn) {
-        //         btn.classList.remove("active");
-        //       });
-        //       this.classList.add("active");
-        //     });
-        //   });
-        // });
 
         // 💡 CHUYỂN TRANG THEO MÔ HÌNH LOADPAGE (SPA)
         LoadPage(
@@ -710,5 +726,16 @@ export const PaymentComponent = {
         );
       }
     });
+    // document.addEventListener("DOMContentLoaded", function () {
+    //   const allButtons = document.querySelectorAll(".payment-methood");
+    //   allButtons.forEach(function (button) {
+    //     button.addEventListener("click", function () {
+    //       allButtons.forEach(function (btn) {
+    //         btn.classList.remove("active");
+    //       });
+    //       this.classList.add("active");
+    //     });
+    //   });
+    // });
   },
 };
