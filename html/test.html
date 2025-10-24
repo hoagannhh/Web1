@@ -5,103 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Management</title>
     <link rel="stylesheet" href="style.css" />
-    <style></style>
-  </head>
-  <body>
- <div class="prod-demo" data-id="${product.id}">
-    <div class="card-inner">
-      <!-- MẶT TRƯỚC -->
-      <div class="card-front">
-        <div class="prod">
-          <div class="new-in-prod"><p class="new-text">New</p></div>
-          <img class="img-prod" src="../product-img/s1/ms1-1.png" />
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 20px; }
+        .container { max-width: 800px; margin: auto; }
+        h2 { text-align: center; color: #333; }
+        
+        /* Bộ lọc */
+        .filters { 
+            background-color: #fff; 
+            padding: 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            margin-bottom: 20px; 
+            display: flex; 
+            gap: 15px;
+        }
+        .filters select, .filters input { padding: 8px; border: 1px solid #ccc; border-radius: 5px; }
+        
+        /* Bảng lịch sử */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #005a9c; /* Màu xanh đậm cho tiêu đề */
+            color: white;
+        }
+        tr:nth-child(even) { background-color: #f7f7f7; }
+        tr:hover { background-color: #f1f1f1; }
+        
+        .status-completed { color: green; font-weight: bold; }
+        .status-cancelled { color: red; font-weight: bold; }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Lịch sử đưa đón học sinh</h2>
+        
+        <div class="filters">
+            <input type="date" id="start-date">
+            <input type="date" id="end-date">
+            <select id="route">
+                <option value="">Chọn Tuyến</option>
+                <option value="adv-thd">An Dương Vương - Trần Hưng Đạo</option>
+                </select>
+            <select id="driver">
+                <option value="">Chọn Tài xế</option>
+                <option value="avan">A. Văn</option>
+                </select>
         </div>
-        <div class="info-prod">
-          <p class="name-prod">${product.name}</p>
-          <p class="atribute-prod">${product.gender} ${product.brand}</p>
-          <p class="price">${ConvertINTtoVND(product.price)}</p>
-          <div class="buy-now">
-            <button class="buy-now-btn">Buy Now</button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- MẶT SAU -->
-      <div class="card-back">
-        <div class="back-content">
-          <h2>JONHSIDE</h2>
-          <div class="size-selector">
-            <h3>SELECT YOUR COLOR</h3>
-            <div class="color-option">
-              <img class="img-color" src="../product-img/s1/s1-black.png" alt="">
-              <img class="img-color" src="../product-img/s1/s1-blue.png" alt="">
-              <img class="img-color" src="../product-img/s1/s1-yellow.png" alt="">
-            </div>
-            <h3>SELECT YOUR SIZE</h3>
-            <div class="size-options">
-              <button class="size-btn" data-size="38.0">38.0</button>
-              <button class="size-btn" data-size="38.5">38.5</button>
-              <button class="size-btn" data-size="39.0">39.0</button>
-              <button class="size-btn" data-size="39.5">39.5</button>
-              <button class="size-btn" data-size="40.0">40.0</button>
-              <button class="size-btn" data-size="40.5">40.5</button>
-              <button class="size-btn" data-size="41.0">41.0</button>
-              <button class="size-btn" data-size="41.5">41.5</button>
-              <button class="size-btn" data-size="42.0">42.0</button>
-            </div>
-          </div>
-          <p class="price" style="color: white; font-size: 1.3rem;">${ConvertINTtoVND(product.price)}</p>
-          <div class="back-buttons">
-            <button class="checkout-btn">Checkout</button>
-            <button class="back-btn">←</button>
-          </div>
-        </div>
-      </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Giờ</th>
+                    <th>Tuyến đường</th>
+                    <th>Tài xế</th>
+                    <th>Số HS</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>20/10/2025</td>
+                    <td>06:30 (Đón)</td>
+                    <td>An Dương Vương - Trần Hưng Đạo</td>
+                    <td>A. Văn</td>
+                    <td>3/3</td>
+                    <td class="status-completed">Hoàn thành</td>
+                </tr>
+                <tr>
+                    <td>19/10/2025</td>
+                    <td>16:00 (Trả)</td>
+                    <td>An Dương Vương - Trần Hưng Đạo</td>
+                    <td>A. Văn</td>
+                    <td>3/3</td>
+                    <td class="status-completed">Hoàn thành</td>
+                </tr>
+                <tr>
+                    <td>19/10/2025</td>
+                    <td>06:30 (Đón)</td>
+                    <td>An Dương Vương - Trần Hưng Đạo</td>
+                    <td>A. Văn</td>
+                    <td>2/3</td>
+                    <td class="status-cancelled">Vắng 1 (Bé C)</td>
+                </tr>
+                 </tbody>
+        </table>
+        
     </div>
-  </div>
-  <script>
-    // Sau khi render products
-document.querySelectorAll('.buy-now-btn').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const card = this.closest('.prod-demo');
-    card.classList.add('flipped');
-  });
-});
 
-// Nút quay lại
-document.querySelectorAll('.back-btn').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const card = this.closest('.prod-demo');
-    card.classList.remove('flipped');
-  });
-});
-
-// Chọn size
-document.querySelectorAll('.size-selector .size-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    // Bỏ selected khỏi tất cả size cùng card
-    const card = this.closest('.prod-demo');
-    card.querySelectorAll('.size-selector .size-btn').forEach(b => b.classList.remove('selected'));
-    // Thêm selected vào size được chọn
-    this.classList.add('selected');
-  });
-});
-
-// Checkout
-document.querySelectorAll('.checkout-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const card = this.closest('.prod-demo');
-    const selectedSize = card.querySelector('.size-btn.selected');
-    if (selectedSize) {
-      console.log('Checkout with size:', selectedSize.dataset.size);
-      // Xử lý checkout ở đây
-    } else {
-      alert('Vui lòng chọn size!');
-    }
-  });
-});
-  </script>
-  </body>
+</body>
 </html>

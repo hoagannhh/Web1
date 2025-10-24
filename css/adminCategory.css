@@ -1,0 +1,255 @@
+body {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  /* overflow: hidden; */
+}
+
+.admin-category-container {
+  display: flex;
+  gap: 20px;
+}
+
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+}
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+.right-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-right: 10px;
+}
+.left-header p {
+  font-size: 2rem;
+  font-family: "Maven Pro", sans-serif;
+  margin: 0;
+}
+.category-table-container {
+  width: 100%;
+  max-width: 1200px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* Đảm bảo các góc bo được áp dụng cho bảng */
+}
+
+/* --- Bảng chính --- */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Gộp đường viền ô */
+}
+
+/* --- Tiêu đề bảng (Header) --- */
+thead tr {
+  background-color: #111111; /* Màu đen */
+  color: #ffffff;
+}
+
+th,
+td {
+  height: 54px;
+  padding: 16px;
+  text-align: center;
+  vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+
+th {
+  font-weight: 600;
+}
+
+/* --- Nội dung bảng (Body) --- */
+tbody tr {
+  border-bottom: 1px solid #f0f0f0; /* Đường kẻ mờ ngăn cách các hàng */
+}
+
+tbody tr:last-child {
+  border-bottom: none; /* Bỏ đường kẻ ở hàng cuối cùng */
+}
+
+.show-text {
+  color: #00af0c;
+}
+.hide-text {
+  color: #868686;
+}
+
+/* --- Các nút (Buttons) --- */
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 4px;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.85; /* Hiệu ứng mờ đi khi di chuột */
+}
+
+.btn-lock {
+  background-color: #af0000; /* Màu đỏ */
+  border: 1px solid #ff0000;
+}
+
+.btn-reset {
+  background-color: #ffd900;
+  border: 1px solid #ccb63f;
+}
+
+/* --- Phân trang (Pagination) --- */
+.pagination {
+  display: flex;
+  justify-content: flex-end; /* Căn lề phải */
+  align-items: center;
+}
+
+.pagination a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%; /* Hình tròn */
+  margin: 0 4px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.show-hide-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.add-btn {
+  padding: 20px 20px;
+  width: fit-content;
+  background-color: black;
+  color: white;
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+}
+.popup-bc {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.popup-show {
+  display: flex;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.popup-content {
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  transition: transform 0.3s ease;
+  border-radius: 20px;
+  width: 450px;
+}
+.popup-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.popup-hide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cecece;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+.popup-delete-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffdddd;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+.category-data {
+  border: 1px solid #000000;
+  border-radius: 10px;
+  padding: 15px;
+}
+.popup-content img {
+  height: 30px;
+  width: fit-content;
+  background-color: #cecece;
+}
+
+.popup-content-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popup-content-text p {
+  width: 95%;
+}
+
+.popup-content-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.cancel-button {
+  background-color: white;
+  border: 1px solid #a3a3a3;
+  border-radius: 10px;
+  font-size: 1.25rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  color: #a3a3a3;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+.hide-confirm-button {
+  background-color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: #ffffff;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
