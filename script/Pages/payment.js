@@ -230,7 +230,7 @@ export const PaymentComponent = {
             Confirm
           </button>
           <!-- nút quay lại -->
-          <button type="button" class="back-btn">Back</button>
+          <button type="button" class="back-btn" id ="back-btn-payment">Back</button>
         </div>
       </div>
       <div class="right-payment">
@@ -670,7 +670,7 @@ export const PaymentComponent = {
       }
     });
 
-    // --- Gắn sự kiện Confirm Payment ---
+    // Confirm Payment
     confirmButton?.addEventListener("click", async () => {
       if (!selectedMethod) {
         alert("Vui lòng chọn một phương thức thanh toán trước.");
@@ -719,23 +719,51 @@ export const PaymentComponent = {
           localStorage.removeItem("userCodePromo");
         }
 
-        // 💡 CHUYỂN TRANG THEO MÔ HÌNH LOADPAGE (SPA)
-        LoadPage(
-          "paymentConfirm",
-          container || document.getElementById("container")
-        );
+        //  CHUYỂN TRANG THEO MÔ HÌNH LOADPAGE
+        LoadPage("paymentConfirm", document.getElementById("container"));
       }
     });
-    // document.addEventListener("DOMContentLoaded", function () {
-    //   const allButtons = document.querySelectorAll(".payment-methood");
-    //   allButtons.forEach(function (button) {
-    //     button.addEventListener("click", function () {
-    //       allButtons.forEach(function (btn) {
-    //         btn.classList.remove("active");
-    //       });
-    //       this.classList.add("active");
-    //     });
-    //   });
-    // });
+    paymentMethods.forEach((method) => {
+      const methodName = method.classList.contains("credit-method")
+        ? "credit"
+        : method.classList.contains("paypal-method")
+        ? "paypal"
+        : method.classList.contains("m-banking-method")
+        ? "banking"
+        : "cash";
+
+      method.addEventListener("click", function () {
+        paymentMethods.forEach((btn) => btn.classList.remove("active"));
+        this.classList.add("active");
+
+        self.selectedMethod = methodName;
+        paymentMethods.forEach((btn) => btn.classList.remove("selected"));
+        this.classList.add("selected");
+
+        if (infoCard) {
+          if (self.selectedMethod === "credit")
+            infoCard.classList.remove("hidden");
+          else infoCard.classList.add("hidden");
+        }
+      });
+    });
+
+    //back payment
+    const backBtn = document.getElementById("back-btn-payment"); // Nút Back chính của trang Payment
+    const container = document.getElementById("container"); // Lấy container chính
+
+    if (backBtn) {
+      backBtn.addEventListener("click", () => {
+        const source = sessionStorage.getItem("checkoutSource");
+
+        if (source === "product_detail") {
+          LoadPage("product", container);
+        } else {
+          LoadPage("cart", container);
+        }
+
+        sessionStorage.removeItem("checkoutSource");
+      });
+    }
   },
 };
