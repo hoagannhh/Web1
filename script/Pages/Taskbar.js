@@ -1,5 +1,9 @@
 import { ButtonVerification, IsAuthenticated  } from "./ButtonVerification .js"
 import { LoadPage } from "../LoadPage.js";
+import {allProducts} from "../Product/Product.js"
+import { LoadProductPageHaveProduct } from "../Product/Product.js";
+import { DevideFlowFilter } from "../Product/SideBar.js";
+
 export const TaskBar = {
     html : `<div class="task-bar">
       <div class="Header">
@@ -249,9 +253,27 @@ export const TaskBar = {
     init: function(){
       ButtonVerification.init();  
       Cart();
+      FindAProductByNAme();
       headerScroll();
       LoadTrangChu();
     }
+}
+function FindAProductByNAme(){
+  const search = document.querySelector(".Search");
+  search.addEventListener("change", (event) => {
+    console.log("Load After Search")
+    LoadPage("product", document.getElementById("container"));
+    const products = allProducts.filter(pro =>{
+      const temp = pro.name.toLowerCase()
+      return temp.includes(event.target.value.toLowerCase());
+    })
+    console.log(products);
+
+    console.log("1");
+    LoadProductPageHaveProduct(products);
+    console.log("2");
+    DevideFlowFilter(null, products, true);
+  })
 }
 function Cart(){
   const cartBtn = document.querySelector(".bag");

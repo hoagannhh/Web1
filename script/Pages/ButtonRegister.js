@@ -3,25 +3,51 @@ import { InsertPage } from "../LoadPage.js";
 export const ButtonRegister = {
   html: 
     `
-    <div class="modal-overlay">
+     <div class="modal-overlay">
         <div class="register">
-            <button class="button-close-register">&times;</button>
+            <button class="button-close-register" onclick="closeModal()">&times;</button>
             <p class="font-register"><strong>Register Account</strong></p>
             
             <form id="register-form">
                 <div class="first-and-last-name">
-                    <input type="text" name="firstname" id="firstname-input" class="firstname" placeholder="Firstname" required>
-                    <input type="text" name="lastname" id="lastname-input" class="lastname" placeholder="Lastname" required>
+                    <div class="input-wrapper">
+                        <input type="text" name="firstname" id="firstname-input" placeholder="Firstname" required>
+                        <span class="error-message" id="firstname-error"></span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" name="lastname" id="lastname-input" placeholder="Lastname" required>
+                        <span class="error-message" id="lastname-error"></span>
+                    </div>
                 </div>
-                <input type="text" name="username" id="username-input" class="username" placeholder="Username" required>
-                <input type="password" name="password" id="password-input" class="password" placeholder="Password" required>
-                <input type="password" name="confirm-password" id="confirm-password-input" class="confirm-password" placeholder="Confirm Password" required>
-                <input type="tel" name="phonenumber" id="phone-input" class="phonenumber" placeholder="Phone number" required>
-                <input type="text" name="address" id="address-input" class="address" placeholder="Address" required>
+
+                <div class="input-wrapper">
+                    <input type="text" name="username" id="username-input" placeholder="Username" required>
+                    <span class="error-message" id="username-error"></span>
+                </div>
+
+                <div class="input-wrapper">
+                    <input type="password" name="password" id="password-input" placeholder="Password" required>
+                    <span class="error-message" id="password-error"></span>
+                </div>
+
+                <div class="input-wrapper">
+                    <input type="password" name="confirm-password" id="confirm-password-input" placeholder="Confirm Password" required>
+                    <span class="error-message" id="confirm-password-error"></span>
+                </div>
+
+                <div class="input-wrapper">
+                    <input type="tel" name="phonenumber" id="phone-input" placeholder="Phone number" required>
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+
+                <div class="input-wrapper">
+                    <input type="text" name="address" id="address-input" placeholder="Address" required>
+                    <span class="error-message" id="address-error">aaa</span>
+                </div>
                 
                 <div class="have-an-account">
                     <p>Already have an account?</p>
-                    <button class="sign-in-button" type="button">Sign in</button>
+                    <button class="sign-in-button" type="button" onclick="goToSignIn()">Sign in</button>
                 </div>
 
                 <button type="submit" class="btn continue">CONTINUE</button>
@@ -33,11 +59,12 @@ export const ButtonRegister = {
   css: `../css/register.css`,
   init: function(){
     console.log("Do something register in here");
-            document.querySelector(".modal-overlay").style.display = "flex";
+    document.querySelector(".modal-overlay").style.display = "flex";
     AddEventButtonClose();
     AddEventButtonSignin();
   }
 };
+
 function AddEventButtonSignin(){
     const buttonSignIn = document.querySelector(".sign-in-button");
     buttonSignIn.addEventListener("click", () => {

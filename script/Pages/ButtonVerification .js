@@ -25,7 +25,9 @@ export const ButtonVerification = {
               `,
         css:'../css/taskbar.css',
         init: function(){
-          document.addEventListener("DOMContentLoaded", function(){
+          
+            console.log("in cant");
+
             const container = document.getElementById("container");
             // dang nhap
             const login = document.querySelector(".login .in");
@@ -33,7 +35,6 @@ export const ButtonVerification = {
             // dang ky
             const register = document.querySelector(".login .up");
             
-
             if (!login || !register) {
               console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
               return;
@@ -41,13 +42,14 @@ export const ButtonVerification = {
             
             HandleRegister(register, container);
             HandleLogin(login, container);
-          })
+   
           
       }
   }
 
 // ----------------------------------------------------
 // ----------------- LOGIN - REGISTER------------------
+
 function HandleRegister(register, container) {
     register.addEventListener("click", () => {
       container.insertAdjacentHTML("afterbegin", ButtonRegister.html);
@@ -79,14 +81,28 @@ function HandleDataRegister() {
     };
 
     if (userData.password !== userData.confirmPassword) {
-      alert("Mật khẩu xác nhạn không chính xác");
-      return;
+        ShowError("confirm-password-error", "Mật khẩu khong chính xác")
+        ShowError("password-error", "Mật khẩu khong chính xác")
+        event.preventDefault();
+              return;
+
     }
     const finalUser = { ...userData };
     delete finalUser.confirmPassword;
 
-    const jsonData = JSON.stringify(finalUser, null, 2);
-    localStorage.setItem("myUsers", jsonData);
+    let users = JSON.parse(localStorage.getItem("ACCOUNTS")) || [];
+    
+    if (users.find(user => user.username === finalUser.username)){
+      ShowError("username-error", "ten dang nhap da ton tai");
+      event.preventDefault();
+      return;
+    }
+
+    console.log("Dang ky check: " + users)
+    users.push(finalUser)
+    const jsonData = JSON.stringify(users, null, 2);
+    localStorage.setItem("ACCOUNTS", jsonData);
+    console.log(localStorage.getItem("ACCOUNTS"));
     // console.log(
     //   "Dữ liệu đã lưu trong localStorage:",
     //   localStorage.getItem("myUsers")
@@ -95,6 +111,16 @@ function HandleDataRegister() {
 
     // localStorage.setItem('userInfo', jsonData);
   });
+}
+function ShowError(id, error){
+    const containerError = document.getElementById(id);
+    if(!!error){
+        containerError.style.display = "block"
+        containerError.textContent = error;
+    }else{
+        containerError.style.display = "none"
+        inerError.textContent = error;
+    }
 }
 function HandleLogin(login, container) {
   // tạo 1 form login
@@ -111,6 +137,7 @@ function HandleLogin(login, container) {
 }
 function HandleDataLogin(modelOverlay, container) {
   // -------------load data ---------------------
+  // let accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
   let accounts;
   fetch("../data/account.json")
     .then((response) => response.json())
@@ -127,29 +154,34 @@ function HandleDataLogin(modelOverlay, container) {
       console.log("Đăng nhập bằng tài khoản user ở file account.js");
     } else {
       // console.log("Đăng nhập bằng tài khoản user ở local");
-      const userIndividual = JSON.parse(localStorage.getItem("myUsers"));
+      const userIndividual = JSON.parse(localStorage.getItem("ACCOUNTS"));
+      console.log(userIndividual);
       const userAccount = {
         username: document.getElementById("username-login").value.trim(),
         password: document.getElementById("password-login").value.trim(),
       };
+            console.log(userAccount);
+
       // console.log("------------------------------")
       // console.log(userIndividual);
       // console.log(userIndividual.username + " " + userAccount.username);
       // console.log(userIndividual.password + " " + userAccount.password);
       // console.log("------------------------------")
-      if (
-        userIndividual.username === userAccount.username &&
-        userIndividual.password === userAccount.password
-      ) {
-        // console.log(123);
-        ConfirmSuccessful(modelOverlay, container);
-        return;
+      for (let i = 0; i < userIndividual.length; i ++){
+        if (userIndividual[i].username === userAccount.username &&
+            userIndividual[i].password === userAccount.password
+        ){
+          ConfirmSuccessful(modelOverlay, container);
+          return;
+        }
       }
+
       alert("Tên đăng nhập hoặc mật khẩu không đúng!");
     }
   });
 }
 function Verification(modelOverlay, accounts, container) {
+  console.log(container);
   const userAccount = {
     username: document.getElementById("username-login").value.trim(),
     password: document.getElementById("password-login").value.trim(),
