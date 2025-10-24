@@ -757,6 +757,11 @@ export const PaymentComponent = {
         const source = sessionStorage.getItem("checkoutSource");
 
         if (source === "product_detail") {
+          // Quay về trang Product Detail (hoặc trang Home nếu muốn)
+          // Do không có ID sản phẩm cụ thể, ta quay về trang Products
+          LoadPage("product", container);
+        }
+        if (source === "product_detail") {
           LoadPage("product", container);
         } else {
           LoadPage("cart", container);
