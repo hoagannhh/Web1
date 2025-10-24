@@ -1,0 +1,87 @@
+:root {
+  --default-height: 10px;
+}
+.order{
+    display: flex;
+    /* margin-top: 120px; */
+    position: relative;
+    gap: 5%;
+      width: 70%; /* Adjust width as needed */
+  max-width: 95%;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+    transform: translate(-50%, 0%);  /* margin-top: 80px  ; */
+}
+.just-do-it{
+    margin-top: 120px;
+}
+.sidebar{
+    display: flex;
+    flex-direction: column;
+}
+.order .main-content{
+    width: 70%;
+}
+.order .main-content, .list-order{
+    display: flex;
+    flex-direction: column;
+
+}
+.list-product-history .header{
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 10px 20px 25px 10px;
+
+}
+.list-product-history{
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    border: 1px solid rgb(162, 161, 161);
+    box-shadow: 5px 4px 8px 1px #888888;
+    margin-top: 30px;
+}
+.product-history{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 25px 10px;
+}
+.product-history .product__img{
+    width: 100px;
+}
+.product-conainer-infor{
+    display: flex;
+    gap: 10px;
+}
+.horizontal-bar{
+    width: 100%;
+    background-color: rgb(204, 204, 204);
+    height: 1px;
+    margin: 5px 0px;
+}
+.sidebar__account, .order-history, .account{
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar__account-icon{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+     /* align-items: center */
+}
+.vertical-bar{
+    height: 100vh;
+    width: 1px;
+    background-color: rgb(204, 204, 204);
+}
+.order-history__img, .account__img{
+    /* margin-top: 10px; */
+    width: 25px;
+    height: 25px;
+    display: flex;
+}
