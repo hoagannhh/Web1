@@ -56,6 +56,7 @@
                   src="../icon/admincategory.png"
                   alt=""
                   class="admin-icon"
+                  
                 />Category
               </button>
             </li>
@@ -113,183 +114,25 @@
             </div>
           </div>
         </div>
-        <div class="category-table-container"></div>
-        <div>
+        <div class="category-table-container">
+
+        </div>
+        <div class="category-footer">
           <button class="add-btn">
             <img src="../icon/add.png" alt="" style="width: 30px" />
             <span style="padding-top: 2px">Thêm loại mới</span>
           </button>
+          <div class="pagination-container"></div>
         </div>
+        
       </div>
     </div>
     <div class="popup-bc">
-      <div class="popup-content"></div>
-    </div>
-
-    <script>
-      let categoryTable = `<table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Type quantity</th>
-                <th>Status</th>
-
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td>Nam</td>
-                <td>1000</td>
-                <td class="show-text">Đang hiển thị</td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td>Nữ</td>
-                <td>1000</td>
-                <td class="show-text">Đang hiển thị</td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td>Trẻ em</td>
-                <td>1000</td>
-                <td class="show-text">Đang hiển thị</td>
-              </tr>
-
-              <tr>
-                <td>
-                  <img
-                    src="../icon/show.png"
-                    alt=""
-                    class="show-hide-icon hide-icon-js"
-                  />
-                </td>
-                <td>Mùa thu</td>
-                <td>0</td>
-                <td class="show-text">Đang hiển thị</td>
-                <td>
-                  <button class="btn btn-lock">Xóa</button>
-                  <button class="btn btn-reset">Sửa</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <img src="../icon/hide.png" alt="" class="show-hide-icon" />
-                </td>
-                <td>Giáng sinh</td>
-                <td>0</td>
-                <td class="hide-text">Ẩn</td>
-                <td>
-                  <button class="btn btn-lock">Xóa</button>
-                  <button class="btn btn-reset">Sửa</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>`;
-      // --- 1. Lấy các phần tử ---
-      const hideButtons = document.querySelectorAll(".hide-icon-js"); // Đổi tên thành số nhiều
-      const deleteButtons = document.querySelectorAll(".btn-lock"); // Đổi tên thành số nhiều
-      const popup = document.querySelector(".popup-bc");
-      const popupContentContainer = document.querySelector(".popup-content");
-      document.querySelector(".category-table-container").innerHTML =
-        categoryTable;
-      // --- 2. Nội dung HTML cho các loại popup ---
-      const popupContentHide = `<div class="popup-content-header">
-      <div class="popup-hide-icon">
-        <img src="../icon/hide.png" alt="" />
+      <div class="popup-content">
+        
       </div>
-      <h2>Ẩn loại sản phẩm</h2>
-      <div class="category-data">Mùa thu</div>
     </div>
-    <div class="popup-content-text">
-      <p>
-        Bạn có chắc chắn ẩn loại sản phẩm này?
-        <br />Người dùng sẽ không thể thấy loại sản phẩm này. Bạn có thể
-        hiển thị lại sau
-      </p>
-    </div>
-    <div class="popup-content-footer">
-      <button class="cancel-button">Hủy</button>
-      <button class="hide-confirm-button">Xác nhận ẩn</button>
-    </div>`;
 
-      const popupContentDelete = `<div class="popup-content-header">
-      <div class="popup-delete-icon">
-        <img
-          src="../icon/Delete.png"
-          alt=""
-          style="background-color: #ffdddd"
-        />
-      </div>
-      <h2 style="color: #eb3223">Xóa loại sản phẩm</h2>
-      <div class="category-data">Mùa thu</div>
-    </div>
-    <div class="popup-content-text">
-      <p>
-        Hành động này không thể hoàn tác. Tất cả sản phẩm thuộc loại này có
-        thể sẽ bị ảnh hưởng. Bạn có chắc chắn muốn xóa?
-      </p>
-    </div>
-    <div class="popup-content-footer">
-      <button class="cancel-button">Hủy</button>
-      <button
-        class="hide-confirm-button"
-        style="background-color: #af0000; border: 1px solid #ff6060"
-      >
-        Xác nhận xóa
-      </button>
-    </div>`;
-
-      function openPopup(htmlContent) {
-        if (popupContentContainer) {
-          popupContentContainer.innerHTML = htmlContent;
-        }
-        popup.classList.add("popup-show");
-      }
-      hideButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          openPopup(popupContentHide);
-        });
-      });
-      deleteButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          openPopup(popupContentDelete);
-        });
-      });
-
-      popup.addEventListener("click", (event) => {
-        const target = event.target;
-        if (target.classList.contains("cancel-button")) {
-          popup.classList.remove("popup-show");
-        }
-
-        // (Nâng cao) Nếu click vào nền mờ (chính là `popup`) -> Đóng popup
-        if (target === popup) {
-          popup.classList.remove("popup-show");
-        }
-        if (target.classList.contains("hide-confirm-button")) {
-          popup.classList.remove("popup-show");
-          document.querySelector(".show-text").innerHTML = "Ẩn";
-
-          console.log(document.querySelector(".show-text"));
-        }
-      });
-      document.addEventListener("DOMContentLoaded", function () {
-        const allButtons = document.querySelectorAll(".sidebar-button");
-        allButtons.forEach(function (button) {
-          button.addEventListener("click", function () {
-            allButtons.forEach(function (btn) {
-              btn.classList.remove("active");
-            });
-            this.classList.add("active");
-          });
-        });
-      });
-    </script>
+    <script src="../script/Pages/adminCategory.js"></script>
   </body>
 </html>

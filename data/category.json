@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "name": "Nam",
+      "quantity": 1000,
+      "isShown": true,
+      "manageable": false
+    },
+    {
+      "name": "Nữ",
+      "quantity": 1000,
+      "isShown": true,
+      "manageable": false
+    },
+    {
+      "name": "Trẻ em",
+      "quantity": 1000,
+      "isShown": true,
+      "manageable": false
+    },
+    {
+      "name": "Mùa thu",
+      "quantity": 0,
+      "isShown": true,
+      "manageable": true
+    },
+    {
+      "name": "Giáng sinh",
+      "quantity": 0,
+      "isShown": true,
+      "manageable": true
+    }
+  ]
+}

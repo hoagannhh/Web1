@@ -147,7 +147,7 @@ tbody tr:last-child {
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  margin-top: 20px;
+  
 }
 .modal-content {
   background-color: white;
@@ -204,6 +204,15 @@ tbody tr:last-child {
   height: 50px;
   border-radius: 100%;
 }
+.popup-fix-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF3DD;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
 .category-data {
   border: 1px solid #000000;
   border-radius: 10px;
@@ -220,6 +229,23 @@ tbody tr:last-child {
   justify-content: center;
   align-items: center;
 }
+.popup-content-input{
+  display: flex;
+  flex-direction: column;
+  
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#category-name-input{
+  
+  height: 35px;
+  border: 1px solid #a3a3a3;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
 .popup-content-text p {
   width: 95%;
 }
@@ -241,7 +267,7 @@ tbody tr:last-child {
   margin: 10px;
   cursor: pointer;
 }
-.hide-confirm-button {
+.confirm-btn {
   background-color: rgb(0, 0, 0);
   border: none;
   border-radius: 10px;
@@ -252,4 +278,34 @@ tbody tr:last-child {
   padding: 10px;
   margin: 10px;
   cursor: pointer;
+}
+.category-footer {
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  
+  
+}
+.pagination-container {
+  
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+.pagination-container button{
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  font-size: 1.25rem;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.pagination-container button.active{
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
 }
