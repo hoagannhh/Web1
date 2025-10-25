@@ -313,6 +313,9 @@ export const PaymentConfirmComponent = {
       });
 
     // --- Nút Confirm Order (Xác nhận và dọn dẹp) ---
+    // ... (Bên trong PaymentConfirmComponent.init: function () { ... )
+
+    // --- Nút Confirm Order (Xác nhận và dọn dẹp) ---
     document
       .querySelector(".confirm-btn-review-payment")
       ?.addEventListener("click", () => {
@@ -321,21 +324,49 @@ export const PaymentConfirmComponent = {
           successPopup.classList.remove("hidden");
         }
 
-        // Dọn dẹp LocalStorage sau khi đặt hàng thành công
-        localStorage.removeItem("cartProducts");
-        localStorage.removeItem("cartTotalMoney");
+        // 1. Lấy toàn bộ sản phẩm trong giỏ hàng
+        const allProducts =
+          JSON.parse(localStorage.getItem("cartProducts")) || [];
+
+        // 2. Lọc ra các sản phẩm KHÔNG nằm trong đơn hàng vừa thanh toán
+        // (Sản phẩm KHÔNG có cờ selected hoặc checkOut)
+        const remainingProducts = allProducts.filter(
+          (product) => product.selected !== true && product.checkOut !== true
+        );
+
+        // 3. Dọn dẹp LocalStorage và chỉ lưu lại các sản phẩm còn lại
+
+        // Xóa các khóa tạm thời của quá trình thanh toán
         localStorage.removeItem("payment-method");
         localStorage.removeItem("credit-method");
         localStorage.removeItem("userCodePromo");
+
+        // Cập nhật lại danh sách sản phẩm trong giỏ hàng
+        if (remainingProducts.length > 0) {
+          localStorage.setItem(
+            "cartProducts",
+            JSON.stringify(remainingProducts)
+          );
+          // Cần cập nhật lại cartTotalMoney nếu bạn dùng nó
+        } else {
+          // Nếu không còn sản phẩm nào, xóa khóa giỏ hàng
+          localStorage.removeItem("cartProducts");
+          localStorage.removeItem("cartTotalMoney");
+        }
 
         // Ẩn các nút Confirm/Back
         document
           .querySelector(".form-btn-review-payment")
           ?.classList.add("hidden");
+
+        console.log(localStorage.getItem("payment-method"));
+        console.log(localStorage.getItem("cartProducts"));
       });
 
     // --- Nút Go to Homepage ---
     document.getElementById("go-home-btn")?.addEventListener("click", () => {
+      localStorage.removeItem("cartProducts");
+      localStorage.removeItem("cartTotalMoney");
       LoadPage("home", container);
     });
   },

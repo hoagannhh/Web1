@@ -131,12 +131,29 @@ export function HandleEventProduct(allProducts) {
   console.log(checkOut);
   function SaveCartData() {
     // Lưu tổng tiền (dữ liệu nguyên thủy)
+    // console.log(localStorage.getItem("payment-method"));
+    console.log(localStorage.getItem("cartProducts"));
+
+    if (localStorage.getItem("cartProducts") != null) {
+      localStorage.removeItem("cartProducts");
+      console.log("đã xóa");
+      console.log(localStorage.removeItem("cartProducts"));
+    } else {
+      console.log("Rỗng");
+    }
+    if (localStorage.getItem("cartTotalMoney") != null) {
+      localStorage.removeItem("cartTotalMoney");
+    } else {
+      console.log("Rỗng");
+    }
     localStorage.setItem("cartTotalMoney", totalMoney);
 
     // Lưu danh sách sản phẩm (chuyển sang JSON string)
     localStorage.setItem("cartProducts", JSON.stringify(productsChecked));
 
     console.log("Dữ liệu giỏ hàng đã được lưu vào LocalStorage.");
+    // console.log(localStorage.getItem("payment-method"));
+    console.log(localStorage.getItem("cartProducts"));
   }
   document.querySelectorAll(".checkout-btn").forEach((btn) => {
     btn.addEventListener("click", function (event) {
@@ -179,6 +196,7 @@ export function HandleEventProduct(allProducts) {
 
           // Nếu muốn ghi đè nếu đã tồn tại, hãy xóa phần kiểm tra trùng lặp phức tạp.
           // Ở đây, ta chỉ cần thêm sản phẩm vào mảng.
+          productsChecked = []; //dòng này out trinh luôn
           productsChecked.push(productWithCartStructure);
 
           //tổng tiền và lưu vào LocalStorage
@@ -190,6 +208,8 @@ export function HandleEventProduct(allProducts) {
           // Gọi hàm SaveCartData để lưu dữ liệu đã cập nhật
           SaveCartData(productsChecked, totalMoney); // (Xem phần bổ sung bên dưới)
           card.classList.remove("flipped"); // Đóng card trước khi chuyển trang (Tùy chọn)
+          console.log(localStorage.getItem("cartProducts"));
+          sessionStorage.setItem("checkoutSource", "product_detail");
           LoadPage("payment", container);
 
           card.classList.remove("flipped");
@@ -203,7 +223,7 @@ export function HandleEventProduct(allProducts) {
         alert("Vui lòng chọn size và color!");
       }
     });
-    SaveCartData();
+    // SaveCartData();
   });
   // let btns = document.querySelectorAll(".buy-now-btn");
   // btns.forEach((btn) => {

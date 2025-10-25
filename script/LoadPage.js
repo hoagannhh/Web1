@@ -9,8 +9,8 @@ import { SideBar } from "./Product/SideBar.js";
 import { Cart } from "./Pages/Cart.js";
 import { footer } from "./Pages/footer.js";
 
-import { PaymentComponent } from "./Pages/payment.js";
-import { PaymentConfirmComponent } from "./Pages/paymentConfirm.js";
+import { PaymentComponent } from "./payment/payment.js";
+import { PaymentConfirmComponent } from "./payment/paymentConfirm.js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
