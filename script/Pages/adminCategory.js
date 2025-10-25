@@ -194,7 +194,7 @@
           class="page-btn prev-btn" 
           ${currentPage === 1 ? 'disabled' : ''}
         >
-          &laquo; Trước
+          &lt;
         </button>
       `;
 
@@ -216,7 +216,7 @@
           class="page-btn next-btn" 
           ${currentPage === totalPages ? 'disabled' : ''}
         >
-          Sau &raquo;
+          &gt;
         </button>
       `;
 
