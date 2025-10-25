@@ -2,6 +2,7 @@
 import { LoadCss, LoadPage } from "../LoadPage.js";
 import { SideBar } from "./SideBar.js";
 import { ProductDetail } from "../ProductDetail/ProductDetail.js";
+import { IsAuthenticated } from "../Pages/ButtonVerification .js";
 // import { totalMoney, products } from "../Pages/Cart.js";
 
 export let allProducts = [];
@@ -158,69 +159,73 @@ export function HandleEventProduct(allProducts) {
   document.querySelectorAll(".checkout-btn").forEach((btn) => {
     btn.addEventListener("click", function (event) {
       event.stopPropagation();
-      const card = this.closest(".prod-demo");
-      const productId = card.dataset.id;
-      const selectedSizeElement = card.querySelector(".size-btn.selected");
-      const selectedColorElement = card.querySelector(".img-color.selected");
+      if (IsAuthenticated){
+        const card = this.closest(".prod-demo");
+        const productId = card.dataset.id;
+        const selectedSizeElement = card.querySelector(".size-btn.selected");
+        const selectedColorElement = card.querySelector(".img-color.selected");
 
-      if (selectedSizeElement && selectedColorElement) {
-        const selectedSize = selectedSizeElement.dataset.size;
-        const selectedColor = selectedColorElement.dataset.color;
+        if (selectedSizeElement && selectedColorElement) {
+          const selectedSize = selectedSizeElement.dataset.size;
+          const selectedColor = selectedColorElement.dataset.color;
 
-        //sản phẩm gốc
-        const productToCheckout = allProducts.find(
-          (productDeta) => productDeta.id === productId
-        );
-
-        if (productToCheckout) {
-          //
-          // tạo object mới và ghi đè thuộc tính 'size' và 'color' bằng giá trị đã chọn.
-          const productWithCartStructure = {
-            ...productToCheckout,
-
-            size: selectedSize,
-
-            color: selectedColor,
-
-            checkOut: true,
-            selected: true, // Thêm selected: true để tương thích với logic lọc của Cart
-            quantity: 1,
-
-            // Giữ lại selectedSize/selectedColor chỉ để tham chiếu (hoặc xóa nếu không cần)
-            // selectedSize: selectedSize,
-            // selectedColor: selectedColor,
-          };
-
-          // 2. Thêm vào productsChecked (đã có cấu trúc giống Cart)
-          // Lưu ý: Tùy thuộc vào logic giỏ hàng của bạn, bạn có thể kiểm tra trùng lặp tại đây
-
-          // Nếu muốn ghi đè nếu đã tồn tại, hãy xóa phần kiểm tra trùng lặp phức tạp.
-          // Ở đây, ta chỉ cần thêm sản phẩm vào mảng.
-          productsChecked = []; //dòng này out trinh luôn
-          productsChecked.push(productWithCartStructure);
-
-          //tổng tiền và lưu vào LocalStorage
-          totalMoney = productsChecked.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
+          //sản phẩm gốc
+          const productToCheckout = allProducts.find(
+            (productDeta) => productDeta.id === productId
           );
 
-          // Gọi hàm SaveCartData để lưu dữ liệu đã cập nhật
-          SaveCartData(productsChecked, totalMoney); // (Xem phần bổ sung bên dưới)
-          card.classList.remove("flipped"); // Đóng card trước khi chuyển trang (Tùy chọn)
-          console.log(localStorage.getItem("cartProducts"));
-          sessionStorage.setItem("checkoutSource", "product_detail");
-          LoadPage("payment", container);
+          if (productToCheckout) {
+            //
+            // tạo object mới và ghi đè thuộc tính 'size' và 'color' bằng giá trị đã chọn.
+            const productWithCartStructure = {
+              ...productToCheckout,
 
-          card.classList.remove("flipped");
-          alert(
-            `Đã thêm sản phẩm "${productToCheckout.name}" (Size: ${selectedSize}, Color: ${selectedColor}) vào giỏ hàng!`
-          );
+              size: selectedSize,
+
+              color: selectedColor,
+
+              checkOut: true,
+              selected: true, // Thêm selected: true để tương thích với logic lọc của Cart
+              quantity: 1,
+
+              // Giữ lại selectedSize/selectedColor chỉ để tham chiếu (hoặc xóa nếu không cần)
+              // selectedSize: selectedSize,
+              // selectedColor: selectedColor,
+            };
+
+            // 2. Thêm vào productsChecked (đã có cấu trúc giống Cart)
+            // Lưu ý: Tùy thuộc vào logic giỏ hàng của bạn, bạn có thể kiểm tra trùng lặp tại đây
+
+            // Nếu muốn ghi đè nếu đã tồn tại, hãy xóa phần kiểm tra trùng lặp phức tạp.
+            // Ở đây, ta chỉ cần thêm sản phẩm vào mảng.
+            productsChecked = []; //dòng này out trinh luôn
+            productsChecked.push(productWithCartStructure);
+
+            //tổng tiền và lưu vào LocalStorage
+            totalMoney = productsChecked.reduce(
+              (sum, item) => sum + item.price * item.quantity,
+              0
+            );
+
+            // Gọi hàm SaveCartData để lưu dữ liệu đã cập nhật
+            SaveCartData(productsChecked, totalMoney); // (Xem phần bổ sung bên dưới)
+            card.classList.remove("flipped"); // Đóng card trước khi chuyển trang (Tùy chọn)
+            console.log(localStorage.getItem("cartProducts"));
+            sessionStorage.setItem("checkoutSource", "product_detail");
+            LoadPage("payment", container);
+
+            card.classList.remove("flipped");
+            alert(
+              `Đã thêm sản phẩm "${productToCheckout.name}" (Size: ${selectedSize}, Color: ${selectedColor}) vào giỏ hàng!`
+            );
+          } else {
+            console.error("Không tìm thấy sản phẩm với ID:", productId);
+          }
         } else {
-          console.error("Không tìm thấy sản phẩm với ID:", productId);
+          alert("Vui lòng chọn size và color!");
         }
-      } else {
-        alert("Vui lòng chọn size và color!");
+      }else{
+        alert("Dang nhap truoc khi mua hang")
       }
     });
     // SaveCartData();

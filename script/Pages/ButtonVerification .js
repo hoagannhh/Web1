@@ -2,7 +2,7 @@ import { ButtonLogin } from "./ButtonLogin.js";
 import { ButtonRegister } from "./ButtonRegister.js";
 import { LoadCss, LoadPage } from "../LoadPage.js";
 
-
+export let username;
 export let IsAuthenticated = false;
 export const ButtonVerification = {
         html: `        
@@ -171,6 +171,7 @@ function HandleDataLogin(modelOverlay, container) {
         if (userIndividual[i].username === userAccount.username &&
             userIndividual[i].password === userAccount.password
         ){
+          username = userAccount.username;
           ConfirmSuccessful(modelOverlay, container);
           return;
         }

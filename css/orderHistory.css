@@ -28,7 +28,7 @@
     flex-direction: column;
 
 }
-.list-product-history .header{
+.list-product .header{
     display: flex;
     width: 100%;
     box-sizing: border-box;
@@ -36,7 +36,7 @@
     padding: 10px 20px 25px 10px;
 
 }
-.list-product-history{
+.list-product{
     display: flex;
     box-sizing: border-box;
     flex-direction: column;

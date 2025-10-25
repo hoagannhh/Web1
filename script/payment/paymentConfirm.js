@@ -1,7 +1,7 @@
 // paymentconfirm.js (hoặc script/Pages/PaymentConfirm.js)
 
 import { LoadPage } from "../LoadPage.js";
-
+import { username } from "../Pages/ButtonVerification .js";
 // Hàm format giá tiền (cần thiết cho cả 2 component)
 function formatPrice(number) {
   if (typeof number !== "number") {
@@ -271,7 +271,6 @@ export const PaymentConfirmComponent = {
     );
     const reviewTotalBill = document.querySelector(".review-total-bill");
 
-    // Xử lý Promo Code
     if (promoCode) {
       const salePercentMatch = promoCode.match(/(\d+)%/); // Lấy số từ chuỗi sale '10%'
       const salePercent = salePercentMatch
@@ -334,7 +333,28 @@ export const PaymentConfirmComponent = {
           (product) => product.selected !== true && product.checkOut !== true
         );
 
+        // lưu lịch sử giao dịch
+
+        const orderHistory = allProducts.filter(
+          (product) => product.selected === true || product.checkOut === true
+        );
         // 3. Dọn dẹp LocalStorage và chỉ lưu lại các sản phẩm còn lại
+
+        let orderList = JSON.parse(localStorage.getItem("orderHistory"));
+        if (orderList === null) {
+            orderList = [];
+          }
+        const newOrderId = "order-" + new Date().getTime();
+        const newOrder = {
+            id: newOrderId,
+            username: username,
+            listProducts: orderHistory,
+            totalMoney: totalBill,
+            ngayDatHang: new Date().toISOString()
+          };
+        orderList.push(newOrder)
+        localStorage.setItem("orderHistory", JSON.stringify(orderList));
+
 
         // Xóa các khóa tạm thời của quá trình thanh toán
         localStorage.removeItem("payment-method");
@@ -343,6 +363,7 @@ export const PaymentConfirmComponent = {
 
         // Cập nhật lại danh sách sản phẩm trong giỏ hàng
         if (remainingProducts.length > 0) {
+          // cập nhập lịch sử giao hàng
           localStorage.setItem(
             "cartProducts",
             JSON.stringify(remainingProducts)
@@ -359,7 +380,8 @@ export const PaymentConfirmComponent = {
           .querySelector(".form-btn-review-payment")
           ?.classList.add("hidden");
 
-        console.log(localStorage.getItem("payment-method"));
+        // console.log(localStorage.getItem("payment-method"));
+        console.log(JSON.parse((localStorage.getItem("orderHistory"))));
         console.log(localStorage.getItem("cartProducts"));
       });
 

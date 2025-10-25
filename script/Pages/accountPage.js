@@ -1,18 +1,19 @@
-import { InsertPage } from '../LoadPage.js';
+import { InsertPage, LoadPage } from '../LoadPage.js';
 
 export const accountComponent = {
     // 1. Cập nhật HTML để bao gồm cả trường "Địa chỉ"
-    html: `<div class="profile-container">
+    html: `
+    <div class="profile-container">
         <div class="sidebar">
             <div class="user-info-mini">
                 <img src="../img/547992253_823059776934031_1523588798799183290_n.jpg" alt="Ảnh đại diện" class="avatar-mini">
                 <span class="username-mini">tranchinhthanh</span>
             </div>
             <nav class="nav-menu">
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item account">
                     <img src="../icon/User.png" alt="" class="material-icons"> Tài khoản của tôi
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item order">
                     <img src="../icon/Bill.png" alt="" class="material-icons"> Lịch sử giao dịch
                 </a>
             </nav>
@@ -78,7 +79,24 @@ export const accountComponent = {
         console.log("Account component initialized");
 
         // Tất cả các hàm được định nghĩa bên trong `init` để tránh xung đột với bên ngoài.
-
+        const addEventForNav = () => {
+            const nav = document.querySelectorAll(".nav-item");
+            console.log(nav)
+            nav.forEach(link => {
+                            console.log(link)
+                if(link.classList.contains("account")){
+                    link.addEventListener("click", () => {
+                        LoadPage("account", document.getElementById("container"));
+                        return;
+                    })
+                }else if (link.classList.contains("order")){
+                    link.addEventListener("click", () => {
+                        LoadPage("orderHistory",  document.getElementById("container"));
+                        return;
+                    })
+                }
+            })
+        };
         const closeAllOpenInputs = (elementToExclude) => {
             document.querySelectorAll(".edit-input, .email-container").forEach((input) => {
                 const parentOfInput = input.parentElement;
@@ -242,6 +260,7 @@ export const accountComponent = {
         };
 
         // --- TẢI DỮ LIỆU BAN ĐẦU ---
+        addEventForNav();
         loadProfileData();
     },
 };

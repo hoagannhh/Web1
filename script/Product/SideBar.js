@@ -206,7 +206,7 @@ export const SideBar = {
       </div>    
     `,
     css: `../css/sidebar.css`,
-    canDeleteCss: false,
+    canDeleteCss: true,
     init: function (){
         // console.log("Do something in here side bar");
         const filterState = {

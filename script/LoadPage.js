@@ -11,6 +11,7 @@ import { footer } from "./Pages/footer.js";
 
 import { PaymentComponent } from "./payment/payment.js";
 import { PaymentConfirmComponent } from "./payment/paymentConfirm.js";
+import { OrderHistory } from "./Pages/OrderHistory.js";
 // --------------------------------------
 // các bước để thêm dữ liệu 1 trang mới vào
 // - bước 1: bạn phải tạo 1 file js chứa code html, đường link css và init()=> hàm tạo logic cho file
@@ -34,7 +35,7 @@ export const pages = {
   sidebar: SideBar,
   footer: footer,
   cart: Cart,
-
+  orderHistory: OrderHistory,
   payment: PaymentComponent,
   paymentConfirm: PaymentConfirmComponent,
 };
@@ -46,6 +47,7 @@ startApplication();
 
 async function loadInitialData() {
   console.log("Test................");
+  // localStorage.removeItem("orderHistory");
   try {
     const response = await fetch("../data/product.json");
     const data = await response.json();
