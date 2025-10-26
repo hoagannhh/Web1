@@ -47,7 +47,7 @@ export const ButtonRegister = {
                 
                 <div class="have-an-account">
                     <p>Already have an account?</p>
-                    <button class="sign-in-button" type="button" onclick="goToSignIn()">Sign in</button>
+                    <button class="sign-in-button" type="button" onclick="AddEventButtonSignin()">Sign in</button>
                 </div>
 
                 <button type="submit" class="btn continue">CONTINUE</button>
@@ -59,7 +59,7 @@ export const ButtonRegister = {
   css: `../css/register.css`,
   init: function(){
     console.log("Do something register in here");
-    document.querySelector(".modal-overlay").style.display = "flex";
+    document.querySelector(".modal-overlay").style.display = "block";
     AddEventButtonClose();
     AddEventButtonSignin();
   }

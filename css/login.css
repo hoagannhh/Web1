@@ -30,12 +30,13 @@ button{
 
 .login-form {
   position: relative;
+  display: block;
   height: 50vh;
   width: 90vw;
   background-color: rgb(255, 255, 255);
   top: 50%;
   left: 50%;
-  transform: translate(-105%, -75%);
+  transform: translate(-50%, -50%);
   min-width: 300px;
   min-height: 500px;
   max-height: 800px;

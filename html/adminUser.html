@@ -138,81 +138,7 @@
                 </td>
               </tr>
 
-              <tr>
-                <td>
-                  <div class="user-info">
-                    <img
-                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
-                      alt="Minato avatar"
-                    />
-                    <span>Minato</span>
-                  </div>
-                </td>
-                <td>09/12/2005</td>
-                <td>0987654321</td>
-                <td>minato@gmail.com</td>
-                <td>
-                  <button class="btn btn-lock">Khóa tài khoản</button>
-                  <button class="btn btn-reset">Đổi mật khẩu</button>
-                </td>
-              </tr>
 
-              <tr>
-                <td>
-                  <div class="user-info">
-                    <img
-                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
-                      alt="Sakura avatar"
-                    />
-                    <span>Sakura</span>
-                  </div>
-                </td>
-                <td>09/12/2005</td>
-                <td>0987654321</td>
-                <td>sakura@gmail.com</td>
-                <td>
-                  <button class="btn btn-lock">Khóa tài khoản</button>
-                  <button class="btn btn-reset">Đổi mật khẩu</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="user-info">
-                    <img
-                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
-                      alt="Đức avatar"
-                    />
-                    <span>Đức</span>
-                  </div>
-                </td>
-                <td>09/12/2005</td>
-                <td>0987654321</td>
-                <td>duc@gmail.com</td>
-                <td>
-                  <button class="btn btn-lock">Khóa tài khoản</button>
-                  <button class="btn btn-reset">Đổi mật khẩu</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="user-info">
-                    <img
-                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
-                      alt="Danh avatar"
-                    />
-                    <span>Danh</span>
-                  </div>
-                </td>
-                <td>09/12/2005</td>
-                <td>0987654321</td>
-                <td>danh@gmail.com</td>
-                <td>
-                  <button class="btn btn-lock">Khóa tài khoản</button>
-                  <button class="btn btn-reset">Đổi mật khẩu</button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -221,7 +147,7 @@
     <script>
 
 
-
+      loadAccount();
 // hàm 1
       document.addEventListener("DOMContentLoaded", function () {
         const allButtons = document.querySelectorAll(".sidebar-button");
@@ -234,6 +160,41 @@
           });
         });
       });
+
+
+// hàm 2
+      const loadAccount = () => {
+        let html =``;
+        const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
+        if (accounts && accounts.length > 0){
+          accounts.forEach(account => {
+            
+          })
+        }
+        html += 
+        `
+              <tr>
+                <td>
+                  <div class="user-info">
+                    <img
+                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+                      alt="Marin avatar"
+                    />
+                    <span>{Marin}</span>
+                  </div>
+                </td>
+                <td>09/12/2005</td>
+                <td>0987654321</td>
+                <td>marin@gmail.com</td>
+                <td>
+                  <button class="btn btn-lock">Khóa tài khoản</button>
+                  <button class="btn btn-reset">Đổi mật khẩu</button>
+                </td>
+              </tr>
+        `
+      }
+
+
     </script>
   </body>
 </html>
