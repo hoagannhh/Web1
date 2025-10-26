@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/adminsidebar.css" />
+    <link rel="stylesheet" href="../css/adminOrders.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="admin-order-container">
+      <div class="sidebar">
+        <div><p class="shop-name">Đế Vương</p></div>
+        <div class="admin-account">
+          <button class="admin-account-btn">
+            <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+            <p class="admin-name">Trần Chính Thành</p>
+          </button>
+        </div>
+        <div class="sidebar-list">
+          <ul>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admindashboardwhite.png"
+                  alt=""
+                  class="admin-icon"
+                />Dashboard
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminuser.png"
+                  alt=""
+                  class="admin-icon"
+                />User/Customer
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admincategory.png"
+                  alt=""
+                  class="admin-icon"
+                />Category
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminproduct.png"
+                  alt=""
+                  class="admin-icon"
+                />Products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminimport.png"
+                  alt=""
+                  class="admin-icon"
+                />Import products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminprice.png"
+                  alt=""
+                  class="admin-icon"
+                />Price
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminorder.png"
+                  alt=""
+                  class="admin-icon"
+                />Order
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="header">
+          <div class="left-header">
+            <div><p>Order</p></div>
+          </div>
+          <div class="right-header">
+            <div class="admin-account">
+              <button class="admin-account-btn">
+                <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+                <p style="color: black">Trần Chính Thành</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-container">
+          <div class="order-content">
+            <div class="filter-order">
+              <div class="filter-order-selection">
+                <div class="filter-label">Ngày nhập</div>
+                <div class="date-input-wrapper">
+                  <input type="date" value="2025-10-18" />
+                </div>
+              </div>
+              <div class="filter-order-selection">
+                <div class="filter-label">Ngày nhập</div>
+                <div class="date-input-wrapper">
+                  <input type="date" value="2025-10-25" />
+                </div>
+              </div>
+              <div class="filter-order-selection">
+                <div class="filter-label">Tình trạng</div>
+                <select>
+                  <option value="all">Tất cả</option>
+                  <option value="delivered">Đã giao</option>
+                  <option value="new">Mới đặt</option>
+                  <option value="cancelled">Hủy</option>
+                  <option value="processed">Đã xử lý</option>
+                </select>
+              </div>
+              <button class="filter-button">
+                <img src="../icon/adminFillter.png" alt="Filter Icon" />
+                Lọc đơn hàng
+              </button>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th class="customer-name-header">Customer Name</th>
+                  <th>Order date</th>
+                  <th>Total price</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>DH001</td>
+                  <td class="customer-cell">
+                    <img
+                      src="../img/goku.jpg"
+                      alt="Marin"
+                      class="customer-avatar"
+                    />
+                    Marin
+                  </td>
+                  <td>18/10/2025</td>
+                  <td class="price-cell">5.710.000 đ</td>
+                  <td><span class="status-tag delivered">Đã giao</span></td>
+                  <td>
+                    <button class="action-btn detail-btn">Xem chi tiết</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DH001</td>
+                  <td class="customer-cell">
+                    <img
+                      src="../img/goku.jpg"
+                      alt="Minato"
+                      class="customer-avatar"
+                    />
+                    Minato
+                  </td>
+                  <td>18/10/2025</td>
+                  <td class="price-cell">2.280.000 đ</td>
+                  <td><span class="status-tag new">Mới đặt</span></td>
+                  <td>
+                    <button class="action-btn detail-btn">Xem chi tiết</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DH001</td>
+                  <td class="customer-cell">
+                    <img
+                      src="../img/goku.jpg"
+                      alt="Sakura"
+                      class="customer-avatar"
+                    />
+                    Sakura
+                  </td>
+                  <td>18/10/2025</td>
+                  <td class="price-cell">3.950.000 đ</td>
+                  <td><span class="status-tag cancelled">Hủy</span></td>
+                  <td>
+                    <button class="action-btn detail-btn">Xem chi tiết</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DH001</td>
+                  <td class="customer-cell">
+                    <img
+                      src="../img/goku.jpg"
+                      alt="Đức"
+                      class="customer-avatar"
+                    />
+                    Đức
+                  </td>
+                  <td>18/10/2025</td>
+                  <td class="price-cell">2.280.000 đ</td>
+                  <td><span class="status-tag processed">Đã xử lý</span></td>
+                  <td>
+                    <button class="action-btn detail-btn">Xem chi tiết</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-container">
+            <button class="page-arrow prev-page">
+              <img src="../icon/prev.png" alt="Previous" />
+            </button>
+            <button class="page-number">1</button>
+            <button class="page-number">2</button>
+            <button class="page-number">3</button>
+            <button class="page-number">4</button>
+            <button class="page-number">5</button>
+            <button class="page-arrow next-page">
+              <img src="../icon/next.png" alt="Next" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const allButtons = document.querySelectorAll(".sidebar-button");
+        allButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            allButtons.forEach(function (btn) {
+              btn.classList.remove("active");
+            });
+            this.classList.add("active");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
