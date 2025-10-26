@@ -29,14 +29,18 @@ function renderInvoiceProducts(productsArray) {
 
     invoiceHTML += `
             <div class="invoice">
-                <div class="date-invoice">Arrives Fri, Sep 12</div> 
+                <div class="date-invoice">${getThoiGianThucDinhDang()}</div> 
                 <div class="invoice-product">
                     <div class="img-invoice-product">
-                        <img class="img-invoice-product-img" src="${product["img-represent"]}" />
+                        <img class="img-invoice-product-img" src="${
+                          product["img-represent"]
+                        }" />
                     </div>
                     <div class="infor-invoice">
                         <div class="name-invoice-product">${product.name}</div>
-                        <div class="qty-invoice-product">Qty: ${product.quantity}</div>
+                        <div class="qty-invoice-product">Qty: ${
+                          product.quantity
+                        }</div>
                         <div class="size-invoice-product">Size: EU ${displaySize}</div>
                         <div class="color-invoice-product">Color: ${displayColor}</div>
                         <div class="price-invoice-product">${itemPrice} vnđ</div>
@@ -47,6 +51,20 @@ function renderInvoiceProducts(productsArray) {
         `;
   });
   container.innerHTML = invoiceHTML;
+}
+
+function getThoiGianThucDinhDang() {
+  const ngayHienTai = new Date();
+
+  const options = {
+    weekday: "short", // Thứ (viết tắt): Fri
+    month: "short", // Tháng (viết tắt): Sep
+    day: "numeric", // Ngày trong tháng: 12
+  };
+
+  const ngayDuocDinhDang = ngayHienTai.toLocaleDateString("en-US", options);
+
+  return `Arrives ${ngayDuocDinhDang}`;
 }
 
 export const PaymentConfirmComponent = {
@@ -342,19 +360,18 @@ export const PaymentConfirmComponent = {
 
         let orderList = JSON.parse(localStorage.getItem("orderHistory"));
         if (orderList === null) {
-            orderList = [];
-          }
+          orderList = [];
+        }
         const newOrderId = "order-" + new Date().getTime();
         const newOrder = {
-            id: newOrderId,
-            username: username,
-            listProducts: orderHistory,
-            totalMoney: totalBill,
-            ngayDatHang: new Date().toISOString()
-          };
-        orderList.push(newOrder)
+          id: newOrderId,
+          username: username,
+          listProducts: orderHistory,
+          totalMoney: totalBill,
+          ngayDatHang: new Date().toISOString(),
+        };
+        orderList.push(newOrder);
         localStorage.setItem("orderHistory", JSON.stringify(orderList));
-
 
         // Xóa các khóa tạm thời của quá trình thanh toán
         localStorage.removeItem("payment-method");
@@ -381,7 +398,7 @@ export const PaymentConfirmComponent = {
           ?.classList.add("hidden");
 
         // console.log(localStorage.getItem("payment-method"));
-        console.log(JSON.parse((localStorage.getItem("orderHistory"))));
+        console.log(JSON.parse(localStorage.getItem("orderHistory")));
         console.log(localStorage.getItem("cartProducts"));
       });
 
