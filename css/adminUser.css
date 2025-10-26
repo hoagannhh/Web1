@@ -136,3 +136,6 @@ tbody tr:last-child {
   font-size: 14px;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
+.btn-unlock{
+  background-color: rgb(10, 191, 10);
+}
