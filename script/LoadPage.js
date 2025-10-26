@@ -48,6 +48,7 @@ startApplication();
 async function loadInitialData() {
   console.log("Test................");
   // localStorage.removeItem("orderHistory");
+  // localStorage.removeItem("ACCOUNTS");
   try {
     const response = await fetch("../data/product.json");
     const data = await response.json();

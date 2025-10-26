@@ -54,7 +54,7 @@ function linkSignUp(){
         console.log(signUp);
         signUp.addEventListener("click", () => {
             RemoveForm();
-            InsertPage("register");
+            InsertPage("register", document.getElementById("container"));
         });
     } else {
         console.error("Không tìm thấy nút 'sign-in'!");

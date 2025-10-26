@@ -69,7 +69,7 @@ function AddEventButtonSignin(){
     const buttonSignIn = document.querySelector(".sign-in-button");
     buttonSignIn.addEventListener("click", () => {
         RemoveForm();
-        InsertPage("login");
+        InsertPage("login", document.getElementById("container"));
     })
 }
 function AddEventButtonClose(){

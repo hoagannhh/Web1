@@ -6,7 +6,6 @@ export const SideBar = {
   <div class="container">
       <div class="sidebar">
         <div class="product-head">
-          <div><h2>Men's shoes(1000)</h2></div>
         </div>
 
         <ul class="sidebar-menu">

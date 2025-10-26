@@ -4,7 +4,6 @@ let donhang = 1;
 export const OrderHistory = {
     html: `
     </div>
-        <div><img src="../img/Group 22.png" alt="" class="just-do-it" /></div>
     <div class="order">
       <div class="sidebar">
           <div class="sidebar__account">
@@ -40,29 +39,41 @@ export const OrderHistory = {
 }
 function handleHistory(){
     console.log(username);
-    const orders = JSON.parse(localStorage.getItem("orderHistory"));
+    let orders = JSON.parse(localStorage.getItem("orderHistory"));
     console.log(orders);
-    if (orders >= 1){
+    if (orders && orders.length > 0) { 
         orders = orders.filter(order => order.username === username);
     }
     console.log(orders);
     let html = '';
-    orders.forEach(order => {
+    if (orders === null){
         html += `
-        <div class="list-product">
-              <div class="header">
-                  <div class="header__time">${order.ngayDatHang}</div>
-                  <div class="header__id">${"Đơn hàng: " + donhang}</div>
-                  <div class="header__money">Thành tiền: ${formatPrice(order.totalMoney)}</div>
-              </div>
-              <!-- <div class="horizontal-bar"></div> -->
-              <div class="list-product-history">
-                ${LoadHtmlProduct(order.listProducts)}
-              </div>
-          </div>
+            <div class="not-find">KHÔNG CÓ LỊCH SỬ GIAO DỊCH<div>
         `
-        donhang ++;
-    });
+    }else {      
+        if (orders.length === 0){
+        html += `
+            <div class="not-find">KHÔNG CÓ LỊCH SỬ GIAO DỊCH<div>
+        `
+        } else{
+            orders.forEach(order => {
+                html += `
+                <div class="list-product">
+                      <div class="header">
+                          <div class="header__time">${formatISODate(order.ngayDatHang)}</div>
+                          <div class="header__id">${"Đơn hàng: " + donhang}</div>
+                          <div class="header__money">Thành tiền: ${formatPrice(order.totalMoney)}</div>
+                      </div>
+                      <!-- <div class="horizontal-bar"></div> -->
+                      <div class="list-product-history">
+                        ${LoadHtmlProduct(order.listProducts)}
+                      </div>
+                  </div>
+                `
+                donhang ++;
+            });
+        }
+    }
     document.querySelector(".main-content").innerHTML = html;
 
 }
@@ -110,4 +121,18 @@ function formatPrice(number) {
     maximumFractionDigits: 0,
   });
   return formatter.format(number);
+}
+
+function formatISODate(isoString) {
+  const date = new Date(isoString);
+
+  const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+  
+  const year = date.getFullYear();
+
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
 }

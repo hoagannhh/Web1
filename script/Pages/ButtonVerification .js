@@ -167,6 +167,15 @@ function HandleDataLogin(modelOverlay, container) {
       // console.log(userIndividual.username + " " + userAccount.username);
       // console.log(userIndividual.password + " " + userAccount.password);
       // console.log("------------------------------")
+      if (userIndividual  === null){
+        alert("ten dang nhap hoac mat khau khong dung")
+        return;
+      }
+      if (userIndividual.length === 0){
+        alert("ten dang nhap hoac mat khau khong dung")
+        return;
+      }
+
       for (let i = 0; i < userIndividual.length; i ++){
         if (userIndividual[i].username === userAccount.username &&
             userIndividual[i].password === userAccount.password
