@@ -119,18 +119,18 @@
               <div class="filter-order-selection">
                 <div class="filter-label">Ngày nhập</div>
                 <div class="date-input-wrapper">
-                  <input type="date" value="2025-10-18" />
+                  <input type="date" placeholder="dd/mm/yyyy" id="dateFrom" />
                 </div>
               </div>
               <div class="filter-order-selection">
                 <div class="filter-label">Ngày nhập</div>
                 <div class="date-input-wrapper">
-                  <input type="date" value="2025-10-25" />
+                  <input type="date" placeholder="dd/mm/yyyy" id="dateTo" />
                 </div>
               </div>
               <div class="filter-order-selection">
                 <div class="filter-label">Tình trạng</div>
-                <select>
+                <select id="statusFilter">
                   <option value="all">Tất cả</option>
                   <option value="delivered">Đã giao</option>
                   <option value="new">Mới đặt</option>
@@ -244,6 +244,93 @@
         </div>
       </div>
     </div>
+    <div class="admin-detail-container hidden">
+      <div class="order-detail">
+        <div class="infor-order">
+          <div class="title-order-detail">Chi tiết đơn hàng</div>
+          <div class="infor-detail">
+            Mã đơn hàng: DH001 - Đặt lúc: 07:00:00 18/10/2025
+          </div>
+        </div>
+        <hr />
+        <div class="infor-customer">
+          <div class="customer-detail">
+            <div class="link-customer">
+              <div class="title-order-detail">Thông tin khách hàng</div>
+              <div class="customer-name-display">Marin</div>
+              <div class="customer-phone-display">0987654321</div>
+              <hr />
+              <div class="address-customer">
+                <div class="title-order-detail">Địa chỉ giao hàng</div>
+                <div class="address-display">
+                  123 Đường ABC, Phường 1, Quận 2, TP.HCM
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-detail">
+            <div class="title-order-detail">Sản phẩm trong đơn</div>
+            <div class="list-product">
+              <div class="product-item">
+                <img
+                  src="../img/nike-air-force.png"
+                  alt="Sản phẩm 1"
+                  class="product-img"
+                />
+                <div class="product-info">
+                  <p class="product-name">Classic Slip-On Checkerboard Shoe</p>
+                  <p class="product-qty-price">SL: 1 x 2.480.000 ₫</p>
+                </div>
+                <div class="item-price">2.480.000 ₫</div>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../img/nike-air-force.png"
+                  alt="Sản phẩm 1"
+                  class="product-img"
+                />
+                <div class="product-info">
+                  <p class="product-name">Classic Slip-On Checkerboard Shoe</p>
+                  <p class="product-qty-price">SL: 1 x 2.480.000 ₫</p>
+                </div>
+                <div class="item-price">2.480.000 ₫</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="update-status">
+          <div>
+            <div class="title-order-detail">Cập nhật tình trạng</div>
+            <select class="status-select">
+              <option value="delivered">Đã giao</option>
+              <option value="new" selected>Mới đặt</option>
+              <option value="cancelled">Hủy</option>
+              <option value="processed">Đã xử lý</option>
+            </select>
+          </div>
+          <div class="money-order">
+            <div class="total-product">
+              Tổng tiền hàng:
+              <span class="total-product-money">5.680.000 ₫</span>
+            </div>
+            <div class="ship-order">
+              Phí vận chuyển: <span class="ship-order-money">30.000 ₫</span>
+            </div>
+            <div class="total-order">
+              <span class="total-order-text">Tổng cộng:</span>
+              <span class="total-order-money">5.710.000 ₫</span>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="btn-from-order-detail">
+          <button class="btn-cancel">Hủy</button>
+          <button class="btn-save">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const allButtons = document.querySelectorAll(".sidebar-button");
@@ -257,5 +344,6 @@
         });
       });
     </script>
+    <script src="../script/adminOrder.js"></script>
   </body>
 </html>
