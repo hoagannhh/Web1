@@ -178,8 +178,12 @@ function HandleDataLogin(modelOverlay, container) {
 
       for (let i = 0; i < userIndividual.length; i ++){
         if (userIndividual[i].username === userAccount.username &&
-            userIndividual[i].password === userAccount.password
+            userIndividual[i].password === userAccount.password 
         ){
+          if (userIndividual[i].isLockAccount != null && userIndividual[i].isLockAccount){
+            alert("Tai khoan da bi khoa");
+            return;
+          }
           username = userAccount.username;
           ConfirmSuccessful(modelOverlay, container);
           return;

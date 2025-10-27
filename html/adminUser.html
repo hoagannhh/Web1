@@ -15,7 +15,11 @@
     />
   </head>
   <body>
+      <div class="model-overlay">
+   </div>
+    </div>
     <div class="admin-user-container">
+
       <div class="sidebar">
         <div><p class="shop-name">Đế Vương</p></div>
         <div class="admin-account">
@@ -144,57 +148,7 @@
         </div>
       </div>
     </div>
-    <script>
-
-
-      loadAccount();
-// hàm 1
-      document.addEventListener("DOMContentLoaded", function () {
-        const allButtons = document.querySelectorAll(".sidebar-button");
-        allButtons.forEach(function (button) {
-          button.addEventListener("click", function () {
-            allButtons.forEach(function (btn) {
-              btn.classList.remove("active");
-            });
-            this.classList.add("active");
-          });
-        });
-      });
-
-
-// hàm 2
-      const loadAccount = () => {
-        let html =``;
-        const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
-        if (accounts && accounts.length > 0){
-          accounts.forEach(account => {
-            
-          })
-        }
-        html += 
-        `
-              <tr>
-                <td>
-                  <div class="user-info">
-                    <img
-                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
-                      alt="Marin avatar"
-                    />
-                    <span>{Marin}</span>
-                  </div>
-                </td>
-                <td>09/12/2005</td>
-                <td>0987654321</td>
-                <td>marin@gmail.com</td>
-                <td>
-                  <button class="btn btn-lock">Khóa tài khoản</button>
-                  <button class="btn btn-reset">Đổi mật khẩu</button>
-                </td>
-              </tr>
-        `
-      }
-
-
-    </script>
+<script type="module" src="../script/admin/adminUser.js">
+</script>
   </body>
 </html>

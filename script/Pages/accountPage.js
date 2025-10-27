@@ -1,4 +1,6 @@
 import { InsertPage, LoadPage } from '../LoadPage.js';
+import { username } from './ButtonVerification .js'; 
+
 
 export const accountComponent = {
     // 1. Cập nhật HTML để bao gồm cả trường "Địa chỉ"
@@ -77,7 +79,7 @@ export const accountComponent = {
     
     init: function() {
         console.log("Account component initialized");
-
+        document.querySelector(".readonly-value").innerHTML = username;
         // Tất cả các hàm được định nghĩa bên trong `init` để tránh xung đột với bên ngoài.
         const addEventForNav = () => {
             const nav = document.querySelectorAll(".nav-item");
@@ -119,9 +121,13 @@ export const accountComponent = {
         };
 
         const loadProfileData = () => {
-            const savedData = localStorage.getItem("userProfile");
+            const savedData = JSON.parse(localStorage.getItem("ACCOUNTS"));
             if (savedData) {
-                const userProfile = JSON.parse(savedData);
+                const userPro = savedData.find(account => account.username === username);
+                console.log(userPro);
+                if (!userPro.userProfile) return;
+                const userProfile = userPro.userProfile;
+                console.log(userProfile);
                 document.getElementById("full-name").value = userProfile.fullName || "";
                 if (userProfile.gender) {
                     document.querySelector(`input[name="gender"][value="${userProfile.gender}"]`).checked = true;
@@ -154,8 +160,25 @@ export const accountComponent = {
                     userProfile[key] = "";
                 }
             }
-
-            localStorage.setItem("userProfile", JSON.stringify(userProfile));
+            const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
+            console.log(accounts)
+            let account = accounts.find(acc => acc.username === username);
+            account = {
+                ...account,
+                userProfile
+            }
+            console.log(account);
+            for(let i = 0; i < accounts.length; i++)
+            {
+                if (accounts[i].username === username){
+                    console.log(accounts[i].username);
+                    console.log(account);
+                    
+                    accounts[i] = account;
+                }
+            };
+            console.log(accounts);
+            localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
             alert("Đã lưu thông tin thành công!");
             // Đã xóa location.reload();
         };

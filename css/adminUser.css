@@ -88,10 +88,240 @@ tbody tr:last-child {
   margin-right: 12px;
   object-fit: cover; /* Đảm bảo ảnh vừa vặn */
 }
+/* khung mở tài khoản */
+.form-change-password .icon,.form-verification-unlock .icon{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+.form-verification-unlock .form-verification__Headerlock{
+  font-size: 23px;
+  color: #00AF0C;
 
+}
+.form-verification-unlock .btn.cancel{
+  box-sizing: content-box;
+  color: gray;
+  background-color: white;
+  border: gray solid 2px;
+  border-radius: 2x;
+  width: 50px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.form-verification-unlock .container-btn{
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.form-verification-unlock .btn.veritification{
+  box-sizing: content-box;
+  font-weight: bold;
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+  background-color: #00FF44;
+  border: rgb(0, 254, 174) solid 2px;
+  border-radius: 2x;
+  width: 150px;
+  
+}
+.form-verification-unlock .icon.represent{
+  padding: 10px;
+}
+.form-verification-unlock .form-verification__name{
+  font-size: 20px;
+}
+
+.form-verification-unlock .container-infor-lockacc{
+  display: flex;
+  border: #111111 solid 1px;
+  padding: 0px 20px;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 20px;
+}
+.form-verification-unlock .container-notification{
+  margin-top: 20px; 
+}
+.form-verification-unlock .icon.lock{
+  background-color: #D3FFD6;
+  padding: 10px;
+}
+.form-verification-unlock  .notification{
+  font-size: 19px;
+  padding: 0px 20px;
+  margin: 0px;
+}
+.form-verification-unlock .form-verification__header{
+  margin-top: 15px;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-verification-unlock{
+  background-color: white;
+  border-radius: 20px;
+  width: 600px;
+  height: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* khung khóa tài khoản */
+.form-verification .icon{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+.form-verification__Headerlock{
+  font-size: 23px;
+  color: red;
+
+}
+.btn.cancel{
+  box-sizing: content-box;
+  color: gray;
+  background-color: white;
+  border: gray solid 2px;
+  border-radius: 2x;
+  width: 50px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.container-btn{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.btn.veritification{
+  box-sizing: content-box;
+  font-weight: bold;
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(122, 16, 16);
+  border: rgb(233, 9, 9) solid 2px;
+  border-radius: 2x;
+  width: 150px;
+  
+}
+.icon.represent{
+  padding: 10px;
+}
+.form-verification__name{
+  font-size: 20px;
+}
+
+.container-infor-lockacc{
+  display: flex;
+  border: #111111 solid 1px;
+  padding: 0px 20px;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 20px;
+}
+.form-verification .container-notification{
+  margin-top: 20px; 
+}
+.icon.lock{
+  background-color: #FFDDDD;
+  padding: 10px;
+}
+.container-notification .notification{
+  font-size: 19px;
+  padding: 0px 20px;
+  margin: 0px;
+}
+.form-verification__header{
+  margin-top: 15px;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: space-around;
+}
+.form-verification{
+  display: block;
+  background-color: white;
+  border-radius: 20px;
+  width: 600px;
+  height: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.model-overlay{
+  display: none;
+  position: fixed;
+  background-color: rgba(55, 52, 52, 0.5);
+  width: 100vw;
+  height: 100vh; 
+  z-index: 5;
+}
+/* khung đổi mật khẩu */
+.form-change-password .form-verification__header{
+  display: flex;
+  gap: 10px;
+}
+.print-error{
+  /* position: absolute; */
+  color: red;
+  font-size: 10px;
+}
+.form-change-password fieldset{
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+  box-shadow: 2px 2px 5px 0.2px black;
+  height: 200px;
+  width: 350px;
+  margin: 20px 0px;
+}
+.form-change-password{
+  background-color: white;
+  border-radius: 20px;
+  width: 600px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+fieldset input{
+  padding: 10px 20px;
+  margin: 10px 0px;
+
+}
+.form-change-password .btn.veritification{
+    background-color: #0080AF;
+
+}
+.form-verification__HeaderKey{
+  font-size: 20px;
+  /* font-weight: bold; */
+  color: #0080AF;
+}
+.form-change-password .container-btn{
+  width: 70%;
+}
+.icon.key{
+  background-color:#C7F0FF;
+  padding: 10px;
+}
 /* --- Các nút (Buttons) --- */
 .btn {
   border: none;
+  box-sizing: border-box;
+  width: 150px;
   border-radius: 6px;
   padding: 8px 12px;
   color: white;
