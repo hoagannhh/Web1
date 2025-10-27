@@ -34,7 +34,7 @@ export const ButtonLogin = {
     canDeleteCss: true,
     init: function(){
         console.log("first");
-            document.querySelector(".modal-overlay").style.display = "flex";
+            document.querySelector(".modal-overlay").style.display = "block";
 
         AddEventButtonClose();
         linkSignUp();

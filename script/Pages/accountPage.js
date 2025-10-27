@@ -97,6 +97,7 @@ export const accountComponent = {
                 }
             })
         };
+        
         const closeAllOpenInputs = (elementToExclude) => {
             document.querySelectorAll(".edit-input, .email-container").forEach((input) => {
                 const parentOfInput = input.parentElement;

@@ -1,0 +1,453 @@
+console.log(localStorage.getItem("orderHistory"));
+// console.log(username);
+// let orders = JSON.parse(localStorage.getItem("orderHistory"));
+// console.log(orders);
+// if (orders && orders.length > 0) {
+//   orders = orders.filter((order) => order.username === username);
+// }
+// console.log(orders);
+document.addEventListener("DOMContentLoaded", function () {
+  const ordersPerPage = 7;
+  let currentPage = 1;
+  let allOrders = [];
+  let currentEditingOrderId = null;
+
+  // Lcái này là của chi tiết hóa đơn
+  const detailModal = document.querySelector(".admin-detail-container");
+  const tableBody = document.querySelector("table tbody");
+
+  // các trạng thái
+  const orderStatus = {
+    delivered: { text: "Đã giao", class: "delivered" },
+    new: { text: "Mới đặt", class: "new" },
+    cancelled: { text: "Hủy", class: "cancelled" },
+    processed: { text: "Đã xử lý", class: "processed" },
+  };
+
+  function formatDate(isoDateString) {
+    if (!isoDateString) return "";
+    try {
+      const date = new Date(isoDateString);
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    } catch (e) {
+      return "N/A";
+    }
+  }
+
+  function formatCurrency(number) {
+    if (typeof number !== "number") return "0 đ";
+    return number
+      .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
+      .replace("₫", "đ");
+  }
+
+  // cái này render chi tiết đơn hàng
+  function renderOrderDetail(order) {
+    // Lấy các phần
+    const statusSelect = document.querySelector(".status-select");
+    const currentStatus = order.status || "new";
+    const statusClasses = ["delivered", "new", "cancelled", "processed"];
+    //cái này để làm màu
+    if (statusSelect) {
+      // mặc định là new
+      statusSelect.value = currentStatus;
+
+      // 2. Thêm class màu ban đầu
+      // Xóa tất cả các class màu cũ
+      statusClasses.forEach((c) => statusSelect.classList.remove(c));
+      // Thêm class màu mới tương ứng với trạng thái đơn hàng
+      statusSelect.classList.add(currentStatus);
+
+      // 3. Xử lý sự kiện khi Admin thay đổi trạng thái
+      statusSelect.onchange = function () {
+        // Xóa tất cả class màu cũ khi giá trị thay đổi
+        statusClasses.forEach((c) => statusSelect.classList.remove(c));
+        // Thêm class mới dựa trên giá trị được chọn
+        statusSelect.classList.add(this.value);
+      };
+    }
+
+    const orderIdDisplay = order.id ? `DH${order.id.slice(-5)}` : "DH00000";
+    const orderTime = new Date(order.ngayDatHang).toLocaleTimeString("vi-VN", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    const orderDate = formatDate(order.ngayDatHang);
+
+    // Header : id hóa đơn các thứ
+    const inforDetail = document.querySelector(".infor-detail");
+    if (inforDetail) {
+      const orderIdDisplay = order.id ? `DH${order.id.slice(-5)}` : "DH00000";
+      const orderTime = new Date(order.ngayDatHang).toLocaleTimeString(
+        "vi-VN",
+        { hour: "2-digit", minute: "2-digit", second: "2-digit" }
+      );
+      const orderDate = formatDate(order.ngayDatHang);
+      inforDetail.textContent = `Mã đơn hàng: ${orderIdDisplay} – Đặt lúc: ${orderTime} ${orderDate}`;
+    }
+    console.log(order.username);
+    console.log(order.address);
+    // Thông tin khách hàng & Địa chỉ
+    document.querySelector(".customer-name-display").textContent =
+      order.username || "N/A";
+    document.querySelector(".customer-phone-display").textContent =
+      order.address && order.address.phone ? order.address.phone : "N/A";
+    // document.querySelector(
+    //   ".customer-detail .info-block div:nth-child(3)"
+    // ).textContent = order.address ? order.address.phone : "N/A";
+
+    document.querySelector(".address-display").textContent = order.address
+      ? order.address.address
+      : "N/A";
+
+    //Danh sách sản phẩm
+    const productDetailContainer = document.querySelector(".product-detail");
+    const listProductContainer = document.querySelector(".list-product");
+
+    let productTotalPrice = 0;
+
+    if (productDetailContainer && listProductContainer) {
+      listProductContainer.innerHTML = "";
+
+      order.listProducts.forEach((product) => {
+        const itemPrice = product.price * product.quantity;
+        productTotalPrice += itemPrice;
+        const productItem = document.createElement("div");
+        productItem.className = "product-item";
+        productItem.innerHTML = `
+            <img src="${product["img-represent"]}" alt="${
+          product.name
+        }" class="product-img" />
+            <div class="product-info">
+                <p class="product-name">${product.name}</p>
+                <p class="product-qty-price">SL: ${
+                  product.quantity
+                } x ${formatCurrency(product.price)}</p>
+            </div>
+            <div class="item-price">${formatCurrency(itemPrice)}</div>
+        `;
+        listProductContainer.appendChild(productItem); // <--- ĐỔ VÀO CONTAINER MỚI
+      });
+    }
+
+    //tiền
+    const shippingFee = order.ship; // Giả định phí vận chuyển
+    const finalTotal = productTotalPrice + shippingFee;
+
+    document.querySelector(".total-product-money").textContent =
+      formatCurrency(productTotalPrice);
+    document.querySelector(".ship-order-money").textContent =
+      formatCurrency(shippingFee);
+    document.querySelector(".total-order-money").textContent =
+      formatCurrency(finalTotal);
+
+    // Hiển thị
+    detailModal.classList.remove("hidden");
+  }
+
+  //Hàm Đóng Modal
+  function closeDetailModal() {
+    detailModal.classList.add("hidden");
+  }
+
+  //nút Đóng/Hủy trong Modal
+  function setupModalListeners() {
+    const detailModal = document.querySelector(".admin-detail-container");
+
+    // Nút Hủy
+    document
+      .querySelector(".btn-cancel")
+      .addEventListener("click", closeDetailModal);
+
+    //  Nút Lưu thay đổi
+    document.querySelector(".btn-save").addEventListener("click", () => {
+      // Lấy trạng thái mới được chọn
+      const statusSelect = document.querySelector(".status-select");
+      const newStatus = statusSelect ? statusSelect.value : null;
+
+      if (currentEditingOrderId && newStatus) {
+        // Tìm đơn hàng trong mảng allOrders
+        const orderIndex = allOrders.findIndex(
+          (o) => o.id === currentEditingOrderId
+        );
+
+        if (orderIndex !== -1) {
+          // Cập nhật trạng thái trong mảng bộ nhớ
+          allOrders[orderIndex].status = newStatus;
+
+          // Lưu lại toàn bộ dữ liệu vào LocalStorage
+          try {
+            // Dữ liệu trong localStorage thường được lưu theo thứ tự cũ (hoặc đảo ngược)
+            // Ở đây, ta giả định allOrders đang là mảng mới nhất đầu tiên.
+            // Cần đảo ngược lại khi lưu vào localStorage nếu fetchAllOrders có reverse.
+
+            // Giữ nguyên thứ tự hiện tại của allOrders và lưu
+            localStorage.setItem("orderHistory", JSON.stringify(allOrders));
+
+            alert(
+              `Đã cập nhật trạng thái đơn hàng DH${currentEditingOrderId.slice(
+                -5
+              )} thành: ${
+                statusSelect.options[statusSelect.selectedIndex].text
+              }!`
+            );
+
+            // load lại bảng ds hóa đơn
+            loadOrderTable();
+            renderPagination();
+
+            // Đóng modal và reset ID
+            currentEditingOrderId = null;
+            closeDetailModal();
+          } catch (e) {
+            console.error("Lỗi khi lưu dữ liệu vào localStorage:", e);
+            alert("Không thể lưu thay đổi do lỗi hệ thống.");
+          }
+        } else {
+          alert("Không tìm thấy đơn hàng để cập nhật.");
+        }
+      } else {
+        alert("Lỗi: Không thể xác định trạng thái hoặc ID đơn hàng.");
+      }
+    });
+
+    // Đóng modal khi click ra ngoài
+    detailModal.addEventListener("click", (e) => {
+      if (e.target === detailModal) {
+        closeDetailModal();
+      }
+    });
+  }
+  // Dữ liệu Gốc
+  let originalOrders = [];
+  function fetchAllOrders() {
+    const rawData = localStorage.getItem("orderHistory");
+    let orders = [];
+
+    if (rawData) {
+      try {
+        orders = JSON.parse(rawData);
+      } catch (e) {
+        console.error("Lỗi khi parse dữ liệu đơn hàng từ localStorage:", e);
+      }
+    }
+
+    orders.reverse();
+    allOrders = orders;
+    originalOrders = orders;
+    renderPagination();
+  }
+
+  // lọc hóa đơn
+  function filterOrders(orders) {
+    // Lấy giá trị bộ lọc an toàn
+    const statusFilterEl = document.getElementById("statusFilter");
+    const statusFilter = statusFilterEl ? statusFilterEl.value : "all";
+
+    const dateFromEl = document.getElementById("dateFrom");
+    // Giá trị là YYYY-MM-DD hoặc ""
+    const dateFromValue = dateFromEl ? dateFromEl.value : null;
+
+    const dateToEl = document.getElementById("dateTo");
+    const dateToValue = dateToEl ? dateToEl.value : null;
+
+    // Lọc theo Tình trạng
+    let filtered = orders.filter(
+      (order) =>
+        (order.status || "new") === statusFilter || statusFilter === "all"
+    );
+
+    // Lọc theo Ngày nhập
+    if (dateFromValue || dateToValue) {
+      // Hàm tiện ích tạo Date object chuẩn (Midnight UTC) từ YYYY-MM-DD
+      const createUTCISODate = (dateString) => {
+        if (!dateString) return null;
+        // Tạo Date object từ chuỗi YYYY-MM-DDT00:00:00Z để đảm bảo không lệch múi giờ.
+        return new Date(dateString + "T00:00:00Z");
+      };
+
+      const fromDateUTC = createUTCISODate(dateFromValue);
+      const toDateUTC = createUTCISODate(dateToValue);
+
+      filtered = filtered.filter((order) => {
+        const orderDateStr = order.ngayDatHang;
+        if (!orderDateStr) return false;
+
+        // Ngày đặt hàng cũng được chuẩn hóa về Midnight UTC
+        const isoDatePart = orderDateStr.split("T")[0];
+        const orderDateUTC = new Date(isoDatePart + "T00:00:00Z");
+
+        let isAfterFrom = true;
+        let isBeforeTo = true;
+
+        //Ngày Bắt đầu (From Date)
+        if (fromDateUTC) {
+          isAfterFrom = orderDateUTC >= fromDateUTC;
+        }
+
+        //Ngày Kết thúc (To Date)
+        if (toDateUTC) {
+          // Để bao gồm cả ngày kết thúc, chúng ta so sánh orderDateUTC < (Ngày sau ngày kết thúc)
+          const dayAfterTo = new Date(toDateUTC);
+          dayAfterTo.setUTCDate(dayAfterTo.getUTCDate() + 1);
+
+          isBeforeTo = orderDateUTC < dayAfterTo;
+        }
+
+        return isAfterFrom && isBeforeTo;
+      });
+    }
+
+    return filtered;
+  }
+
+  // hàm này để lọc
+  function applyFilters() {
+    currentPage = 1; // trang 1 sau khi lọc
+
+    // Lọc
+    allOrders = filterOrders(originalOrders);
+
+    // load bảng và phân trang
+    loadOrderTable();
+    renderPagination();
+  }
+
+  // thực hiện lọc khi click lọc
+  function initFilterListeners() {
+    // btn lọc đơn hàng
+    const filterButton = document.querySelector(".filter-button");
+    if (filterButton) {
+      filterButton.addEventListener("click", applyFilters);
+    }
+
+    // //dropdown Status (Sử dụng lại ID đã thêm)
+    // const statusFilterEl = document.getElementById("statusFilter");
+
+    // if (statusFilterEl) {
+    //   // Khi giá trị trong select thay đổi, áp dụng bộ lọc ngay lập tức
+    //   statusFilterEl.addEventListener("change", applyFilters);
+    // }
+
+    // (Tùy chọn) Thêm listener cho dropdown Status để lọc tức thì
+    // document
+    //   .getElementById("statusFilter")
+    //   .addEventListener("change", applyFilters);
+  }
+
+  // load bảng theo Trang Hiện tại
+  function loadOrderTable() {
+    if (!tableBody) return;
+    tableBody.innerHTML = "";
+
+    //tính toán page
+    const startIndex = (currentPage - 1) * ordersPerPage;
+    const endIndex = startIndex + ordersPerPage;
+    const ordersToShow = allOrders.slice(startIndex, endIndex);
+
+    if (ordersToShow.length === 0) {
+      const noDataRow = document.createElement("tr");
+      noDataRow.innerHTML = `<td colspan="6" style="text-align: center; padding: 20px;">Không có đơn hàng nào để hiển thị trên trang này.</td>`;
+      tableBody.appendChild(noDataRow);
+      return;
+    }
+
+    ordersToShow.forEach((order) => {
+      // tạo 1 hàng hóa đơn
+      const orderIDDisplay = order.id ? `DH${order.id.slice(-5)}` : "DH00000";
+      const orderDateFormatted = formatDate(order.ngayDatHang);
+      const totalMoneyFormatted = formatCurrency(order.totalMoney);
+      const customerName = order.username || "Chưa rõ";
+      const customerAvatar = "../img/goku.jpg";
+      const statusKey = order.status || "new";
+      const statusInfo = orderStatus[statusKey] || orderStatus.new;
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+                <td>${orderIDDisplay}</td>
+                <td class="customer-cell">
+                    <img src="${customerAvatar}" alt="${customerName}" class="customer-avatar" />
+                    ${customerName}
+                </td>
+                <td>${orderDateFormatted}</td>
+                <td class="price-cell">${totalMoneyFormatted}</td>
+                <td><span class="status-tag ${statusInfo.class}">${statusInfo.text}</span></td>
+                <td><button class="action-btn detail-btn" data-order-id="${order.id}">Xem chi tiết</button></td>
+            `;
+      tableBody.appendChild(row);
+    });
+
+    // xem chi tiết
+    document.querySelectorAll(".detail-btn").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        detailModal.classList.remove("hidden");
+        const orderId = e.target.getAttribute("data-order-id");
+
+        currentEditingOrderId = orderId;
+        // Tìm đơn hàng tương ứng
+        const orderData = allOrders.find((o) => o.id === orderId);
+        if (orderData) {
+          renderOrderDetail(orderData);
+        } else {
+          console.error("Không tìm thấy dữ liệu đơn hàng:", orderId);
+        }
+      });
+    });
+  }
+
+  //hàm phân trang
+  function renderPagination() {
+    const paginationContainer = document.querySelector(".pagination-container");
+    if (!paginationContainer) return;
+
+    const totalPages = Math.ceil(allOrders.length / ordersPerPage);
+    paginationContainer.innerHTML = "";
+
+    const prevButton = document.createElement("button");
+    prevButton.className = "page-arrow prev-page";
+    prevButton.innerHTML = '<img src="../icon/prev.png" alt="Previous" />';
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener("click", () => changePage(currentPage - 1));
+    paginationContainer.appendChild(prevButton);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const pageButton = document.createElement("button");
+      pageButton.className = "page-number";
+      if (i === currentPage) {
+        pageButton.classList.add("active");
+      }
+      pageButton.textContent = i;
+      pageButton.addEventListener("click", () => changePage(i));
+      paginationContainer.appendChild(pageButton);
+    }
+
+    const nextButton = document.createElement("button");
+    nextButton.className = "page-arrow next-page";
+    nextButton.innerHTML = '<img src="../icon/next.png" alt="Next" />';
+    nextButton.disabled = currentPage === totalPages || totalPages === 0;
+    nextButton.addEventListener("click", () => changePage(currentPage + 1));
+    paginationContainer.appendChild(nextButton);
+
+    window.scrollTo(0, 0);
+  }
+
+  function changePage(newPage) {
+    const totalPages = Math.ceil(allOrders.length / ordersPerPage);
+    if (newPage >= 1 && newPage <= totalPages) {
+      currentPage = newPage;
+      loadOrderTable();
+      renderPagination();
+    }
+  }
+
+  // run
+  fetchAllOrders();
+  loadOrderTable();
+  setupModalListeners();
+  initFilterListeners();
+});
