@@ -654,7 +654,8 @@ export const PaymentComponent = {
     }
 
     // --- Gắn sự kiện Promo ---
-    promo?.addEventListener("click", () => {
+
+    function handlePromo() {
       if (codePromo.value.trim() === "") {
         codePromo.focus();
         codePromo.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -673,19 +674,32 @@ export const PaymentComponent = {
             if (foundCode) {
               console.log(`sale: ${foundCode.sale}`);
               localStorage.setItem("userCodePromo", foundCode.sale);
-              console.log(localStorage.getItem("userCodePromo"));
+              console.log(localStorage.getItem("userCodePromo")); // Cập nhật giao diện: áp dụng giảm giá
               document.querySelector(
                 ".process-promo"
-              ).innerHTML = `Sale: ${localStorage.getItem("userCodePromo")}`;
+              ).innerHTML = `Sale: ${localStorage.getItem("userCodePromo")}`; // TODO: Thêm logic tính toán lại tổng tiền ở đây
             } else {
               console.log("sai r nhập lại đi");
               document.querySelector(
                 ".process-promo"
               ).innerHTML = `sai r nhập lại đi`;
+              localStorage.removeItem("userCodePromo"); // Xóa mã nếu sai
             }
+          })
+          .catch((error) => {
+            console.error("Lỗi khi tải promo.json:", error);
+            document.querySelector(".process-promo").innerHTML = `Lỗi tải mã`;
           });
+      }
+    }
+    // Gắn sự kiện click cho nút Apply
+    promo?.addEventListener("click", handlePromo); // Gắn sự kiện keypress cho ô input mã giảm giá
 
-        // console.log(listCodePromo);
+    codePromo?.addEventListener("keypress", (event) => {
+      // Kiểm tra xem phím được nhấn có phải là Enter (key: 'Enter' hoặc keyCode: 13)
+      if (event.key === "Enter" || event.keyCode === 13) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định (ví dụ: gửi form)
+        handlePromo(); // Gọi hàm xử lý mã giảm giá
       }
     });
 
