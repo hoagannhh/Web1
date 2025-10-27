@@ -248,7 +248,7 @@
         console.log("LocalStorage trống. Đang tải từ file JSON...");
         try {
           // !!! QUAN TRỌNG: HÃY SỬA ĐƯỜNG DẪN NÀY CHO ĐÚNG !!!
-          const response = await fetch('../data/categories.json'); // Ví dụ: './categories.json'
+          const response = await fetch('/data/category.json'); // Ví dụ: './categories.json'
           
           if (!response.ok) {
             throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
