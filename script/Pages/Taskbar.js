@@ -1,11 +1,11 @@
-import { ButtonVerification, IsAuthenticated  } from "./ButtonVerification .js"
+import { ButtonVerification, IsAuthenticated } from "./ButtonVerification .js";
 import { LoadPage } from "../LoadPage.js";
-import {allProducts} from "../Product/Product.js"
+import { allProducts } from "../Product/Product.js";
 import { LoadProductPageHaveProduct } from "../Product/Product.js";
 import { DevideFlowFilter } from "../Product/SideBar.js";
 
 export const TaskBar = {
-    html : `<div class="task-bar">
+  html: `<div class="task-bar">
       <div class="Header">
         <div class="Name-Shop">
           <p class="name">ĐẾ VƯƠNG</p>
@@ -14,7 +14,7 @@ export const TaskBar = {
           <input class="Search" type="text" placeholder="Search" />
           <img class="Search-icon" src="../icon/Search.png" />
         </div>
-        ${ButtonVerification.html }
+        ${ButtonVerification.html}
         
       </div>
 
@@ -248,49 +248,47 @@ export const TaskBar = {
         <div class="bag"><img class="bag-icon" src="../icon/bag.png" /></div>
       </div>
     </div>`,
-    css  : `../css/taskbar.css`,
-    canDeleteCss: false,
-    init: function(){
-      ButtonVerification.init();  
-      Cart();
-      FindAProductByNAme();
-      headerScroll();
-      LoadTrangChu();
-    }
-}
-function FindAProductByNAme(){
+  css: `../css/taskbar.css`,
+  canDeleteCss: false,
+  init: function () {
+    ButtonVerification.init();
+    Cart();
+    FindAProductByNAme();
+    headerScroll();
+    LoadTrangChu();
+  },
+};
+function FindAProductByNAme() {
   const search = document.querySelector(".Search");
   search.addEventListener("change", (event) => {
-    console.log("Load After Search")
+    console.log("Load After Search");
     LoadPage("product", document.getElementById("container"));
-    const products = allProducts.filter(pro =>{
-      const temp = pro.name.toLowerCase()
+    const products = allProducts.filter((pro) => {
+      const temp = pro.name.toLowerCase();
       return temp.includes(event.target.value.toLowerCase());
-    })
+    });
     console.log(products);
 
     console.log("1");
     LoadProductPageHaveProduct(products);
     console.log("2");
     DevideFlowFilter(null, products, true);
-  })
+  });
 }
-function Cart(){
+function Cart() {
   const cartBtn = document.querySelector(".bag");
   cartBtn.addEventListener("click", () => {
-    if (IsAuthenticated)
-      LoadPage("cart", document.getElementById("container"));
-    else
-      alert("hay dang nhap truoc khi truy cap vao gio hang")
-  })
+    if (IsAuthenticated) LoadPage("cart", document.getElementById("container"));
+    else alert("hay dang nhap truoc khi truy cap vao gio hang");
+  });
 }
-function LoadTrangChu(){
+function LoadTrangChu() {
   const header = document.querySelector(".Header .name");
   header.addEventListener("click", () => {
     LoadPage("home", document.getElementById("container"));
-  })
+  });
 }
-function headerScroll(){
+function headerScroll() {
   const header = document.querySelector(".task-bar");
   let lastScroll = 0;
   window.addEventListener("scroll", () => {

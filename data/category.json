@@ -1,34 +1,22 @@
 {
   "categories": [
     {
-      "name": "Nam",
+      "name": "Men's",
       "quantity": 1000,
       "isShown": true,
       "manageable": false
     },
     {
-      "name": "Nữ",
+      "name": "Women's",
       "quantity": 1000,
       "isShown": true,
       "manageable": false
     },
     {
-      "name": "Trẻ em",
+      "name": "Kid's",
       "quantity": 1000,
       "isShown": true,
       "manageable": false
-    },
-    {
-      "name": "Mùa thu",
-      "quantity": 0,
-      "isShown": true,
-      "manageable": true
-    },
-    {
-      "name": "Giáng sinh",
-      "quantity": 0,
-      "isShown": true,
-      "manageable": true
     }
   ]
 }

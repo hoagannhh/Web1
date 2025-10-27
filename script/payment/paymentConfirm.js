@@ -2,6 +2,7 @@
 
 import { LoadPage } from "../LoadPage.js";
 import { username } from "../Pages/ButtonVerification .js";
+import { products as productsCart } from "../Pages/Cart.js";
 // Hàm format giá tiền (cần thiết cho cả 2 component)
 function formatPrice(number) {
   if (typeof number !== "number") {
@@ -351,6 +352,13 @@ export const PaymentConfirmComponent = {
           (product) => product.selected !== true && product.checkOut !== true
         );
 
+        console.log(remainingProducts);
+
+        productsCart.splice(0, productsCart.length);
+
+        productsCart.push(...remainingProducts);
+        console.log(productsCart);
+
         // lưu lịch sử giao dịch
 
         const orderHistory = allProducts.filter(
@@ -367,6 +375,8 @@ export const PaymentConfirmComponent = {
           id: newOrderId,
           username: username,
           listProducts: orderHistory,
+          address: selectedAddress,
+          ship: shipPrice,
           totalMoney: totalBill,
           ngayDatHang: new Date().toISOString(),
         };
