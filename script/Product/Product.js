@@ -159,7 +159,7 @@ export function HandleEventProduct(allProducts) {
   document.querySelectorAll(".checkout-btn").forEach((btn) => {
     btn.addEventListener("click", function (event) {
       event.stopPropagation();
-      if (IsAuthenticated){
+      if (IsAuthenticated) {
         const card = this.closest(".prod-demo");
         const productId = card.dataset.id;
         const selectedSizeElement = card.querySelector(".size-btn.selected");
@@ -224,8 +224,8 @@ export function HandleEventProduct(allProducts) {
         } else {
           alert("Vui lòng chọn size và color!");
         }
-      }else{
-        alert("Dang nhap truoc khi mua hang")
+      } else {
+        alert("Dang nhap truoc khi mua hang");
       }
     });
     // SaveCartData();
