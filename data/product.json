@@ -18,7 +18,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -44,7 +44,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -66,7 +66,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -91,7 +91,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -112,7 +112,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -139,7 +139,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -165,7 +165,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -187,7 +187,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -212,7 +212,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -233,7 +233,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -260,7 +260,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -286,7 +286,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -308,7 +308,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -333,7 +333,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -354,7 +354,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -381,7 +381,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -407,7 +407,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -429,7 +429,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -454,7 +454,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -475,7 +475,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -502,7 +502,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -528,7 +528,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -550,7 +550,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -575,7 +575,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -596,7 +596,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -623,7 +623,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -649,7 +649,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -671,7 +671,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -696,7 +696,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -717,7 +717,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -744,7 +744,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -770,7 +770,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -792,7 +792,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -817,7 +817,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -838,7 +838,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -865,7 +865,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -891,7 +891,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -913,7 +913,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -938,7 +938,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -959,7 +959,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {
@@ -986,7 +986,7 @@
     "gender": "men",
     "brand": "Nike",
     "price": 4109000,
-    "cost": 2054500,
+    "cost": 2739333,
     "color": ["red", "yellow", "black", "blue"],
     "size": [39, 40, 41, 42, 43, 44],
     "rating": {
@@ -1012,7 +1012,7 @@
     "gender": "men",
     "brand": "Adidas",
     "price": 2500000,
-    "cost": 1250000,
+    "cost": 1666667,
     "color": ["green", "blue", "red"],
     "size": [39, 40, 41, 42, 43],
     "rating": {
@@ -1034,7 +1034,7 @@
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
-    "cost": 1000000,
+    "cost": 1333333,
     "color": "pink",
     "size": [35, 36, 37, 38, 39],
     "rating": {
@@ -1059,7 +1059,7 @@
     "gender": "men",
     "brand": "Vans",
     "price": 1580000,
-    "cost": 790000,
+    "cost": 1053333,
     "color": ["blue", "black", "brown", "pink"],
     "size": [38, 39, 40, 41, 42, 43],
     "rating": {
@@ -1080,7 +1080,7 @@
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
-    "cost": 1050000,
+    "cost": 1400000,
     "color": "pink",
     "size": [36, 37, 38, 39, 40],
     "rating": {

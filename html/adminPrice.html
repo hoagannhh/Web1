@@ -118,15 +118,18 @@
             <div class="title-filter">Theo loại sản phẩm</div>
             <div class="filter-selection">
               <div>Nam</div>
-              <div class="profit">50%</div>
+              <div class="profit-container">
+                <input type="text" class="profit" value="0%""></div>
             </div>
             <div class="filter-selection">
               <div>Nữ</div>
-              <div class="profit">50%</div>
+              <div class="profit-container">
+                <input type="text" class="profit" value="0%""></div>
             </div>
             <div class="filter-selection">
               <div>Trẻ em</div>
-              <div class="profit">50%</div>
+              <div class="profit-container">
+                <input type="text" class="profit" value="0%""></div>
             </div>
             <div>
               <button class="filter-save-btn">Lưu</button>
@@ -135,14 +138,16 @@
           <div class="with-product">
             <div class="title-filter">Theo sản phẩm</div>
             <div class="filter-selection">
-              <div>Bella UT Femme</div>
+              <div class="name-product-update-profit"></div>
               <div class="profit-with-product">
-                <div class="profit">50%</div>
+                <div class="profit-container">
+                <!-- <input type="text" class="profit" value="0%""> -->
+              </div>
                 <div>
-                  <img
+                  <!-- <img
                     class="with-product-delete-img"
                     src="../icon/adminDelete.png"
-                  />
+                  /> -->
                 </div>
               </div>
             </div>
@@ -155,7 +160,7 @@
     <div class="view-content">
         <div class="table-controls">
             <div class="search-bar">
-                <input type="text" placeholder="Bella UT Femme" />
+                <input type="text" placeholder="Bella UT Femme" id="productSearchInput" />
                 <img src="../icon/adminPriceSearch.png" alt="Search" class="search-icon" />
             </div>
         </div>
@@ -176,7 +181,7 @@
                     <td>Women</td>
                     <td>1.400.000 đ</td>
                     <td>
-                        <span class="profit-tag">50% Theo sản phẩm</span>
+                        <span class="profit-tag">50% Mặc định</span>
                     </td>
                     <td class="final-price">2.100.000 đ</td>
                 </tr>
@@ -198,6 +203,8 @@
           });
         });
       });
-    </script>
+    </script><script type="module" src="../script/adminPrice.js"></script>
+    <!-- <script src="../script/adminPrice.js"></script> -->
+    
   </body>
 </html>
