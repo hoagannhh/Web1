@@ -127,6 +127,7 @@ export const ProductDetail = {
     this.init();
   },
 };
+
 function SetProInfor(proInfor) {
   profileProduct = { ...proInfor };
   console.log(profileProduct);
@@ -248,6 +249,7 @@ function AddEventbuttonSubmit() {
     if (isChooseSize && isChooseColor) {
       alert("Thêm vào giỏ hàng");
       // Logic thêm vào giỏ hàng bình thường
+      console.log(profileProduct)
       Cart.HandleEventInCart(profileProduct);
     } else {
       alert("Vui lòng chọn size và color!");
