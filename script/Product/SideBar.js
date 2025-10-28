@@ -375,13 +375,19 @@ function LoadProductPage(filterState) {
 
   temp = Filter(filterState, allProducts);
   if (temp.length === 0) {
+    console.log(document.querySelector("selected"));
     alert("ko tim thay san pham nao");
+
+    // đặt lại filter
+    ResetAllFilters();
+    // load lại trang web
     LoadAllProductPage();
     return;
   }
   renderProduct(htmlProduct, temp, currentPage, productsPerPage);
   renderPagination(htmlProduct, temp, currentPage, productsPerPage);
   HandleEventProduct(temp);
+
 }
 function Filter(filterState, data) {
   // console.log("-------------------");
@@ -501,4 +507,29 @@ function renderPagination(
 
 function ConvertINTtoVND(number) {
   return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
+}
+function ResetAllFilters() {
+  // Reset checkboxes (Gender, Sale, Colors)
+  const allCheckboxes = document.querySelectorAll('.black-check, .color-input');
+  allCheckboxes.forEach(checkbox => {
+    checkbox.checked = false;
+  });
+  
+  // Reset price input
+  const priceInput = document.querySelector('.sub-menu input[type="number"]');
+  if (priceInput) {
+    priceInput.value = '';
+  }
+  
+  // Reset size buttons
+  const sizeButtons = document.querySelectorAll('.sidebar-size-btn');
+  sizeButtons.forEach(btn => {
+    btn.classList.remove('selected');
+  });
+  
+  // Reset sort buttons
+  const sortButtons = document.querySelectorAll('.dropdown-option');
+  sortButtons.forEach(btn => {
+    btn.classList.remove('selected');
+  });
 }
