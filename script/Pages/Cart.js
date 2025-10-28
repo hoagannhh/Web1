@@ -1,6 +1,8 @@
 import { LoadPage } from "../LoadPage.js";
+import { username } from "./ButtonVerification .js";
 
 let html = "";
+let isGetInit = true;
 export let products = [];
 export let totalMoney = 0;
 export const Cart = {
@@ -39,25 +41,68 @@ export const Cart = {
   canDeleteCss: true,
   init: function () {
     console.log("In cart");
+    products = [];
+    html = "";
+    totalMoney = 0;
+    isGetInit = true;
+    
     const container = document.querySelector(".list-product-bought");
     container.insertAdjacentHTML("beforeend", html);
-    AddEventForProduct();
+    GetDataCart();
     AddEventCheckout();
     CaculateTotalMoney();
   },
   HandleEventInCart: function (inforProduct) {
     console.log(inforProduct);
     CreateProduct(inforProduct);
-
     console.log(products);
   },
 };
+
+function GetDataCart(){
+  let cart = localStorage.getItem("cart");
+  if (cart != null){
+    cart = JSON.parse(cart);
+    console.log(cart);
+    cart.forEach(c => {
+      if (c.username === username){
+        c.productWithoutCheckout.forEach(i => {
+          CreateProduct(i);
+        })
+      }
+    })
+  }
+}
+
+function SaveDataCart(){
+  let cart = localStorage.getItem("cart");
+  if (cart != null){
+    cart = JSON.parse(cart);
+  }else{
+    cart = [];
+  }
+  let productWithoutCheckout = products.filter(p => p.selected === false)
+  let element = {
+    productWithoutCheckout,
+    username
+  }
+  if (cart.find(c => c.username === username)){
+    cart.forEach(c => {
+      if (c.username === username){
+        c.productWithoutCheckout = productWithoutCheckout;
+      }
+    })
+  }else{
+    cart.push(element);
+  } 
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
 function AddEventCheckout() {
   const checkoutBtn = document.querySelector(".checkout");
-  const container = document.getElementById("container"); // Lấy container chính
+  const container = document.getElementById("container");
 
   checkoutBtn.addEventListener("click", () => {
-    // Lọc ra các sản phẩm đã được chọn
     const productsToCheckout = products.filter((p) => p.selected === true);
 
     if (productsToCheckout.length === 0) {
@@ -65,56 +110,32 @@ function AddEventCheckout() {
       return;
     }
 
-    // Đảm bảo dữ liệu giỏ hàng mới nhất đã được lưu trước khi chuyển trang
-    // (Giả định: CaculateTotalMoney đã được gọi trước đó và SaveCartData đã chạy)
-
-    // 2. Load trang Payment
     sessionStorage.setItem("checkoutSource", "cart");
     LoadPage("payment", container);
   });
 }
-function AddEventForProduct() {
-  products.forEach((product) => {
-    // console.log(product);
-    UpdateQuantity(product);
-    AddEventHandleQuantity(product);
-    AddEventHandleQuantity_ve(product);
-    AddEventHandleQuantity_v3(product);
-    products.forEach((p) => {
-      p.selected = false; //3 dòng này out trinh vcl
-    });
-    AddEventCheckoxProduct(product);
-    // SaveQuantity(product);
-  });
-}
 
-//Thêm Cái này để lưu
 function SaveCartData() {
-  // Lưu tổng tiền (dữ liệu nguyên thủy)
-  // console.log(localStorage.getItem("payment-method"));
   console.log(localStorage.getItem("cartProducts"));
 
   if (localStorage.getItem("cartProducts") != null) {
     localStorage.removeItem("cartProducts");
     console.log("đã xóa");
-    console.log(localStorage.removeItem("cartProducts"));
   }
   if (localStorage.getItem("cartTotalMoney") != null) {
     localStorage.removeItem("cartTotalMoney");
   }
-
+  SaveDataCart();
   localStorage.setItem("cartTotalMoney", totalMoney);
-
-  // Lưu danh sách sản phẩm (chuyển sang JSON string)
   localStorage.setItem("cartProducts", JSON.stringify(products));
 
   console.log("Dữ liệu giỏ hàng đã được lưu vào LocalStorage.");
-  // console.log(localStorage.getItem("payment-method"));
-  console.log(localStorage.getItem("cartProducts"));
+  console.log(JSON.parse(localStorage.getItem("cartProducts")));
 }
 
 function AddEventHandleQuantity_v3(productInfor) {
   const prod = document.getElementById(productInfor.id);
+  if (!prod) return;  
   const inpt = prod.querySelector(".quantity");
   inpt.addEventListener("change", (event) => {
     if (event.target.value < 0) {
@@ -125,8 +146,10 @@ function AddEventHandleQuantity_v3(productInfor) {
     if (productInfor.selected) CaculateTotalMoneyWithoutQuantity(productInfor);
   });
 }
+
 function AddEventCheckoxProduct(productInfor) {
   const prod = document.getElementById(productInfor.id);
+  if (!prod) return;  
   const checkBox = prod.querySelector(".is-bought");
   checkBox.addEventListener("change", () => {
     productInfor.selected = checkBox.checked;
@@ -134,11 +157,12 @@ function AddEventCheckoxProduct(productInfor) {
     CaculateTotalMoneyWithoutQuantity(productInfor);
   });
 }
+
 function CaculateTotalMoneyWithoutQuantity(productInfor) {
   console.log(productInfor.quantity);
   const prod = document.getElementById(productInfor.id);
+  if (!prod) return;  
   let temp = 0;
-  // if (totalMoney <= 0) return;
   temp = Number(productInfor.price) * Number(productInfor.quantity);
 
   if (productInfor.selected) totalMoney += temp;
@@ -147,15 +171,18 @@ function CaculateTotalMoneyWithoutQuantity(productInfor) {
 
   CaculateTotalMoney();
 }
+
 function CaculateTotalMoney() {
   totalMoney = 0;
 
   products.forEach((product) => {
     if (product.selected) {
       const temp = document.getElementById(product.id);
-      console.log(temp);
-      console.log(temp.querySelector(".price").textContent);
-      totalMoney += parseVND_manual(temp.querySelector(".price").textContent);
+      if (temp) {  
+        console.log(temp);
+        console.log(temp.querySelector(".price").textContent);
+        totalMoney += parseVND_manual(temp.querySelector(".price").textContent);
+      }
     }
   });
   document.querySelector(".total-cost").textContent = formatVND_manual(
@@ -167,22 +194,28 @@ function CaculateTotalMoney() {
 
   SaveCartData();
 }
-// update so luong mỗi khi truy cập vào cart tránh trường hợp bị mất số lượng khi out khỏi giỏ hàng
+
 function UpdateQuantity(productInfor) {
   if (productInfor.quantity === 1) return;
   const prod = document.getElementById(productInfor.id);
-  prod.querySelector(".quantity").value = productInfor.quantity;
+  if (prod) {  
+    prod.querySelector(".quantity").value = productInfor.quantity;
+  }
 }
+
 function AddEventHandleQuantity_ve(productInfor) {
   const prod = document.getElementById(productInfor.id);
+  if (!prod) return;  
   const inp = prod.querySelector(".quantity");
   inp.addEventListener("change", (event) => {
     productInfor.quantity = event.target.value;
     CaculateTotalMoneyWithoutQuantity(productInfor);
   });
 }
+
 function AddEventHandleQuantity(productInfor) {
   const product = document.getElementById(productInfor.id);
+  if (!product) return;  
   const btnAdd = product.querySelector(".add");
   const btnSubstract = product.querySelector(".subtract");
 
@@ -206,7 +239,6 @@ function AddEventHandleQuantity(productInfor) {
       }
       products.forEach((productInNewProducts) => {
         CreateProduct(productInNewProducts);
-        AddEventForProduct();
       });
       LoadPage("cart", document.getElementById("container"));
 
@@ -217,45 +249,59 @@ function AddEventHandleQuantity(productInfor) {
     CaculateTotalMoneyWithoutQuantity(productInfor);
   });
 }
+
 function CreateProduct(inforProduct) {
+  const productWithQuantity = {
+    ...inforProduct,
+    quantity: inforProduct.quantity || 1,
+    selected: false,
+  };
+  
+  products.push(productWithQuantity);
+  
   html += `
-            <div id=${inforProduct.id} class="product-bought" checked = "${
-    inforProduct.selected || false
+            <div id=${productWithQuantity.id} class="product-bought" checked = "${
+    productWithQuantity.selected || false
   }">
                 <input class="is-bought" type="checkbox" >
                 <div class="detail-product">
                     <div class="represent">
-                        <img src="${inforProduct["img-represent"]}" alt="">
+                        <img src="${productWithQuantity["img-represent"]}" alt="">
                         <div class="navigator">
                             <button  class="subtract">-</button>
                             <input  class="quantity" type="number" value="${
-                              inforProduct.quantity || 1
+                              productWithQuantity.quantity || 1
                             }">
                             <button  class="add">+</button>
                         </div>
                     </div>
                     <div class="infor-product-bought">
-                        <p class="name">${inforProduct.name}</p>
+                        <p class="name">${productWithQuantity.name}</p>
                         <p class="kind-of-shoes">${
-                          inforProduct.gender + "'s Shoes"
+                          productWithQuantity.gender + "'s Shoes"
                         }</p>
-                        <p class="brand">${inforProduct.brand}</p>
-                        <p class="color">${inforProduct.color}</p>
-                        <p class="size">${inforProduct.size}</p>
+                        <p class="brand">${productWithQuantity.brand}</p>
+                        <p class="color">${productWithQuantity.color}</p>
+                        <p class="size">${productWithQuantity.size}</p>
                     </div>
                 </div>
-                <p class="price">${formatVND_manual(inforProduct.price)}</p>
+                <p class="price">${formatVND_manual(productWithQuantity.price)}</p>
             </div>
             `;
-  console.log(html);
-  const productWithQuantity = {
-    ...inforProduct,
-    quantity: 1,
-    selected: false,
-  };
-  // products = [];
-  products.push(productWithQuantity);
+  
+  const container = document.querySelector(".list-product-bought");
+  if (container) {
+    container.insertAdjacentHTML("beforeend", html);
+    html = "";  /
+    
+    UpdateQuantity(productWithQuantity);
+    AddEventHandleQuantity(productWithQuantity);
+    AddEventHandleQuantity_ve(productWithQuantity);
+    AddEventHandleQuantity_v3(productWithQuantity);
+    AddEventCheckoxProduct(productWithQuantity);
+  }
 }
+
 function formatVND_manual(number) {
   let numString = number.toString();
 
@@ -275,6 +321,7 @@ function formatVND_manual(number) {
   }
   return formattedInteger + decimalPart + "vnđ";
 }
+
 function parseVND_manual(vndString) {
   if (typeof vndString !== "string") {
     return 0;
