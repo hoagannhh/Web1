@@ -4,179 +4,89 @@
   <meta charset="utf-8" />
   <title>Import Products</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    /*ĐỊNH NGHĨA BIẾN TOÀN CỤC CHO MÀU SẮC & GIAO DIỆN */
-    :root{
-  --bg:#f2f3f4;
-  --primary:#111;
-  --accent:#ffb400;
-  --danger:#d9534f;
-  --success:#28a745;
-  --muted:#777;
-  --card:#fff;
-  --panel:#0b0b0b;
-}
-*{box-sizing:border-box}
-/* Giao diện chung  */
-body{
-  margin:0;
-  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-  background:var(--bg);
-  color:#111;
-  min-height:100vh;
-  display:flex;
-  align-items:stretch;
-}
-
-/* Sidebar */
-.sidebar{
-  width:220px;
-  background:#0f0f10;
-  color:#fff;
-  padding:20px 16px;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  border-radius: 0 20px 20px 0;
-  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-}
-.brand{
-  font-weight:700;
-  font-size:30px;
-  margin-bottom:6px;
-}
-.avatar{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  color: #cfcfcf;
-  font-size:14px;
-}
-.menu{ margin-top:14px; display:flex; flex-direction:column; gap:8px;}
-.menu button{
-  background:transparent; color:#ddd; border:none; text-align:left; padding:10px 8px; border-radius:8px; cursor:pointer;
-}
-.menu button.active{ background:#232323; color:#fff; font-weight:600; }
-
-/* Main */
-.main{
-  flex:1;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-}
-.topbar{ display:flex; justify-content:space-between; align-items:center; gap:16px; }
-.search{ width:300px; display:flex; gap:8px; align-items:center; }
-.search input{ flex:1; padding:8px 10px; border-radius:20px; border:1px solid #ccc; }
-
-.panel{
-  background:var(--card);
-  border-radius:10px;
-  padding:18px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-}
-
-/* table */
-table{ width:100%; border-collapse:collapse; font-size:15px; }
-thead th{
-  text-align:left; padding:12px; background:#111; color:#fff; border-radius:6px;
-  font-weight:600;
-}
-tbody td{ padding:16px; border-bottom:1px solid #eee; vertical-align:middle; }
-.actions{ display:flex; gap:8px; justify-content:flex-end; }
-.btn{ padding:8px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:600; }
-.btn.add{ background:#111; color:#fff; box-shadow: 0 4px 6px rgba(0,0,0,0.08);}
-.btn.edit{ background: #ffc107; color:#111; }
-.btn.delete{ background: #d9534f; color:#fff; }
-.btn.complete{ background: #28a745; color:#fff; }
-.status { font-weight:700; color:var(--success); }
-.status.pending{ color:#ffb400; }
-.status.deleted{ color:#d9534f; }
-
-/* Phần Trang */
-.pagination {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  justify-content: flex-end; 
-  margin-top: 12px;
-  font-weight: 600;
-  padding-right: 8px; 
-}
-.pagination span {
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: #111;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-}
-.pagination span:hover {
-  background: #111;
-  color: #fff;
-}
-.pagination span.active {
-  background: #111;
-  color: #fff;
-}
-
-
-/* modal (overlay hiển thị thêm/sửa/xem) */
-.overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.45); display:none; align-items:center; justify-content:center; z-index:50; padding:20px; }
-.modal{
-  width:820px; max-width:100%; background:#fff; border-radius:12px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,0.24);
-  transform: translateY(10px);
-}
-.modal h3{ margin:0 0 8px 0; color:#111;}
-.modal .row{ display:flex; gap:12px; margin-bottom:12px; align-items:center; }
-.field{ flex:1; display:flex; flex-direction:column; gap:6px; }
-.field label{ font-size:13px; color:var(--muted); }
-.field input{ padding:8px 10px; border:1px solid #ccc; border-radius:6px; }
-
-.products-table{ width:100%; border-collapse:collapse; margin-top:8px; margin-bottom:8px;}
-.products-table thead th{ background:#000; color:#fff; padding:10px; font-size:13px; }
-.products-table td{ padding:8px; border:1px solid #eee; }
-.small{ width:110px; }
-
-.modal .controls{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:12px; }
-.link{ color:#007bff; cursor:pointer; font-weight:600; }
-
-/* Xác nhận xóa */
-.confirm { width:420px; text-align:left; }
-
-/* responsive (cho màn hình nhỏ) */
-@media (max-width:900px){
-  .modal{ width:95%; }
-  .sidebar{ display:none; }
-  body{ padding:0; }
-}
-
-  </style>
+   <link rel="stylesheet" href="../css/adminsidebar.css" />
+    <link rel="stylesheet" href="../css/adminImportProduct.css" />
 </head>
 <body>
         <!--Sidebar-->
-  <aside class="sidebar">
-    <div class="brand">Đế Vương</div>
-    <div class="avatar">
-      <div style="width:40px;height:40px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;color:#fff">TC</div>
-      <div>
-        <div style="font-weight:700">Trần Chinh Thành</div>
-        <div style="font-size:12px;color:#bdbdbd">Admin</div>
+       <div class="admin-importproduct-container">
+      <div class="sidebar">
+        <div><p class="shop-name">Đế Vương</p></div>
+        <div class="admin-account">
+          <button class="admin-account-btn">
+            <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+            <p class="admin-name">Trần Chính Thành</p>
+          </button>
+        </div>
+        <div class="sidebar-list">
+          <ul>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admindashboardwhite.png"
+                  alt=""
+                  class="admin-icon"
+                />Dashboard
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminuser.png"
+                  alt=""
+                  class="admin-icon"
+                />User/Customer
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admincategory.png"
+                  alt=""
+                  class="admin-icon"
+                  
+                />Category
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminproduct.png"
+                  alt=""
+                  class="admin-icon"
+                />Products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminimport.png"
+                  alt=""
+                  class="admin-icon"
+                />Import products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminprice.png"
+                  alt=""
+                  class="admin-icon"
+                />Price
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminorder.png"
+                  alt=""
+                  class="admin-icon"
+                />Order
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-
-    <nav class="menu">
-      <button>Dashboard</button>
-      <button>User/customer</button>
-      <button>Category</button>
-      <button>Products</button>
-      <button class="active">Import products</button>
-      <button>Price</button>
-      <button>Orders</button>
-    </nav>
-  </aside>
     <!--Main-->
   <main class="main">
     <div class="topbar">
@@ -517,3 +427,7 @@ pagination.innerHTML=`
 
 </body>
 </html>
+
+
+
+
