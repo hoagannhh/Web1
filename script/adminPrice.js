@@ -17,7 +17,7 @@ let searchKeyword = "";
 // - productSpecific: Quy tắc áp dụng riêng cho từng product ID
 const profitRules = {
   // Mặc định 50% cho tất cả nếu không có rule cụ thể
-  defaultCategoryProfit: 50,
+  defaultCategoryProfit: 0,
   category: {
     Men: 0,
     Women: 0,
@@ -537,6 +537,12 @@ async function startApplication() {
     ?.addEventListener("click", () => {});
   renderProductsTable();
   console.log("Dữ liệu sản phẩm đã sẵn sàng:", allProducts);
+
+  localStorage.setItem("allProduct", JSON.stringify(allProducts));
+
+  let allProductss = localStorage.getItem("allProduct");
+
+  console.log(JSON.parse(allProductss));
 }
 
 // Bắt đầu quá trình tải dữ liệu
