@@ -134,7 +134,7 @@ export const accountComponent = {
                 }
                 updateSpanContent("date", userProfile.birthDate);
                 updateSpanContent("email", userProfile.email);
-                updateSpanContent("tel", userProfile.phoneNumber);
+                updateSpanContent("tel", userPro.phoneNumber);
                 updateSpanContent("address", userPro.address);
             }
         };
