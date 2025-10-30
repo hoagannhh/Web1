@@ -1,1 +1,3 @@
-html/adminCategory.html 
+export const adminProduct ={
+    html: ""
+}
