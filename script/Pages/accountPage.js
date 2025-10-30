@@ -1,7 +1,7 @@
 import { InsertPage, LoadPage } from '../LoadPage.js';
 import { username } from './ButtonVerification .js'; 
 
-
+let isFirstTimeAccess = true;
 export const accountComponent = {
     // 1. Cập nhật HTML để bao gồm cả trường "Địa chỉ"
     html: `
@@ -125,7 +125,45 @@ export const accountComponent = {
             if (savedData) {
                 const userPro = savedData.find(account => account.username === username);
                 console.log(userPro);
-                if (!userPro.userProfile) return;
+
+                // if (!userPro.userProfile) return;
+                if (!userPro.isFirstTimeAccess){
+                    updateSpanContent("tel", userPro.phone);
+                    updateSpanContent("address", userPro.address);
+
+                    
+                    const userProfile = {
+                        fullName: document.getElementById("full-name").value,
+                        gender: document.querySelector('input[name="gender"]:checked')?.value || "",
+                        birthDate: document.querySelector('[data-type="date"]').previousElementSibling.textContent,
+                        email: document.querySelector('[data-type="email"]').previousElementSibling.textContent,
+                        phoneNumber: document.querySelector('[data-type="tel"]').previousElementSibling.textContent,
+                        address: document.querySelector('[data-type="address"]').previousElementSibling.textContent,
+                    };
+                    console.log(123);
+  
+                    userPro.isFirstTimeAccess = true;
+
+                    const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
+                    console.log(accounts)
+                    let account = {
+                        ...userPro,
+                        userProfile
+                    }
+                    console.log(account);
+                    for(let i = 0; i < accounts.length; i++)
+                    {
+                        if (accounts[i].username === username){
+                            console.log(accounts[i].username);
+                            console.log(account);
+                            
+                            accounts[i] = account;
+                        }
+                    };
+                    console.log(accounts);
+                    localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
+                    return;
+                }
                 const userProfile = userPro.userProfile;
                 console.log(userProfile);
                 document.getElementById("full-name").value = userProfile.fullName || "";
@@ -134,8 +172,10 @@ export const accountComponent = {
                 }
                 updateSpanContent("date", userProfile.birthDate);
                 updateSpanContent("email", userProfile.email);
-                updateSpanContent("tel", userPro.phoneNumber);
-                updateSpanContent("address", userPro.address);
+                updateSpanContent("tel", userProfile.phoneNumber);
+                updateSpanContent("address", userProfile.address);
+                
+
             }
         };
 
@@ -154,7 +194,7 @@ export const accountComponent = {
                 phoneNumber: document.querySelector('[data-type="tel"]').previousElementSibling.textContent,
                 address: document.querySelector('[data-type="address"]').previousElementSibling.textContent,
             };
-
+            console.log(userProfile);
             for (const key in userProfile) {
                 if (userProfile[key] === "Chưa cập nhật") {
                     userProfile[key] = "";

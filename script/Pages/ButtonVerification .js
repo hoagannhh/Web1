@@ -78,6 +78,7 @@ function HandleDataRegister() {
       confirmPassword: document.getElementById("confirm-password-input").value,
       phone: document.getElementById("phone-input").value.trim(),
       address: document.getElementById("address-input").value.trim(),
+      isFirstTimeAccess: false,
     };
 
     if (userData.password !== userData.confirmPassword) {
