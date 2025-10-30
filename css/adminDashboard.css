@@ -8,7 +8,10 @@ body {
   display: flex;
   gap: 20px;
 }
-
+.admin-container{
+  display: flex;
+  gap: 4%;
+}
 .main-content {
   display: flex;
   flex-grow: 1;
