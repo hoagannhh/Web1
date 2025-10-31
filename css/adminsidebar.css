@@ -5,6 +5,7 @@ ul {
 }
 
 .sidebar {
+
   background-color: black;
   height: 100%;
   width: 250px;
@@ -19,7 +20,7 @@ ul {
 }
 .shop-name {
   color: white;
-
+  margin-bottom: 30px;
   padding: 10px 0 10px 0;
   font-size: 1.8rem;
 
