@@ -1,4 +1,5 @@
 import { LoadPage } from "../LoadPage.js";
+import { username } from "../Pages/ButtonVerification .js";
 
 function formatPrice(number) {
   if (typeof number !== "number") {
@@ -315,6 +316,13 @@ export const PaymentComponent = {
 
   init: function () {
     console.log("Payment Page Logic Initialized.");
+    const accountInfo = JSON.parse(localStorage.getItem("ACCOUNTS"));
+    const userPro = accountInfo.find(
+      (account) => account.username === username
+    );
+    console.log(userPro);
+    // Dùng 'username' làm khóa duy nhất cho mỗi tài khoản
+    console.log(accountInfo);
 
     // =========================================================
     // 1. ĐỊNH NGHĨA CÁC HÀM PHỤ TRỢ (CỤC BỘ)
@@ -388,6 +396,34 @@ export const PaymentComponent = {
     }
 
     // --- Hàm logic địa chỉ ---
+
+    function getCurrentUserKey() {
+      const accountInfo = JSON.parse(localStorage.getItem("ACCOUNTS"));
+      // Dùng 'username' làm khóa duy nhất cho mỗi tài khoản
+      console.log(accountInfo);
+      if (accountInfo) {
+        const userPro = accountInfo.find(
+          (account) => account.username === username
+        );
+        console.log(userPro);
+
+        return userPro.username;
+      }
+
+      return "guest";
+    }
+    function getCurrentAccountObject() {
+      const accountInfo = JSON.parse(localStorage.getItem("ACCOUNTS"));
+      if (accountInfo) {
+        const userPro = accountInfo.find(
+          (account) => account.username === username
+        );
+        console.log(userPro);
+
+        return userPro;
+      }
+    }
+
     function showForm() {
       const list = document.getElementById("address-list-view");
       const form = document.getElementById("form-view");
@@ -406,13 +442,16 @@ export const PaymentComponent = {
 
     function renderAddressList() {
       // ... (Logic renderAddressList của bạn, dùng .select-btn và data-index)
+      const userKey = getCurrentUserKey();
       const listEl = document.getElementById("address-list");
       if (!listEl) return;
       listEl.innerHTML = ""; // reset
-      const stored = JSON.parse(localStorage.getItem("userAddresses")) || [];
+      const stored =
+        JSON.parse(localStorage.getItem(`userAddresses_${userKey}`)) || [];
+      console.log(stored);
 
       if (stored.length === 0) {
-        listEl.innerHTML = `<li>No saved addresses. <button class="add-new-btn-list" id="add-new-address-btn-list">Add New Address</button></li>`;
+        listEl.innerHTML = `<li>No saved addresses.</li>`;
         document
           .getElementById("add-new-address-btn-list")
           ?.addEventListener("click", showForm);
@@ -455,7 +494,9 @@ export const PaymentComponent = {
     }
 
     function selectAddress(index) {
-      const stored = JSON.parse(localStorage.getItem("userAddresses")) || [];
+      const userKey = getCurrentUserKey();
+      const stored =
+        JSON.parse(localStorage.getItem(`userAddresses_${userKey}`)) || [];
       const selected = stored[index];
       const currentPhoneEl = document.getElementById("current-phone");
       const currentAddressEl = document.getElementById("current-address");
@@ -463,12 +504,16 @@ export const PaymentComponent = {
       if (selected) {
         if (currentPhoneEl) currentPhoneEl.textContent = selected.phone;
         if (currentAddressEl) currentAddressEl.textContent = selected.address;
-        localStorage.setItem("selectedAddress", JSON.stringify(selected));
+        localStorage.setItem(
+          `selectedAddress_${userKey}`,
+          JSON.stringify(selected)
+        );
       }
       showAddress();
     }
 
     function confirmAddress() {
+      const userKey = getCurrentUserKey();
       const phoneInput = document.getElementById("new-phone");
       const addressInput = document.getElementById("new-address");
       if (!phoneInput || !addressInput) return;
@@ -478,12 +523,18 @@ export const PaymentComponent = {
 
       if (phone !== "" && address !== "") {
         const newEntry = { phone, address };
-        const stored = JSON.parse(localStorage.getItem("userAddresses")) || [];
+        const stored =
+          JSON.parse(localStorage.getItem(`userAddresses_${userKey}`)) || [];
+
         stored.push(newEntry);
-        localStorage.setItem("userAddresses", JSON.stringify(stored));
+        localStorage.setItem(
+          `userAddresses_${userKey}`,
+          JSON.stringify(stored)
+        );
 
         phoneInput.value = "";
         addressInput.value = "";
+
         showAddressList();
       } else {
         alert("Vui lòng nhập đầy đủ số điện thoại và địa chỉ.");
@@ -563,9 +614,13 @@ export const PaymentComponent = {
     renderInvoiceProducts(productsForInvoice);
 
     // --- Load địa chỉ ban đầu ---
-    const selectedAddressString = localStorage.getItem("selectedAddress");
+    const userKey = getCurrentUserKey();
+    const selectedAddressString = localStorage.getItem(
+      `selectedAddress_${userKey}`
+    );
     const currentPhoneEl = document.getElementById("current-phone");
     const currentAddressEl = document.getElementById("current-address");
+    const accountUser = getCurrentAccountObject();
 
     if (selectedAddressString) {
       const selected = JSON.parse(selectedAddressString);
@@ -574,12 +629,40 @@ export const PaymentComponent = {
         if (currentAddressEl) currentAddressEl.textContent = selected.address;
       }
     } else {
-      const stored = JSON.parse(localStorage.getItem("userAddresses")) || [];
+      const stored =
+        JSON.parse(localStorage.getItem(`userAddresses_${userKey}`)) || [];
       if (stored.length > 0) {
         const last = stored[stored.length - 1];
         if (currentPhoneEl) currentPhoneEl.textContent = last.phone;
         if (currentAddressEl) currentAddressEl.textContent = last.address;
-        localStorage.setItem("selectedAddress", JSON.stringify(last));
+        localStorage.getItem(
+          `selectedAddress_${userKey}`,
+          JSON.stringify(last)
+        );
+      } else {
+        if (accountUser) {
+          if (currentPhoneEl) currentPhoneEl.textContent = accountUser.phone;
+          if (currentAddressEl)
+            currentAddressEl.textContent = accountUser.address;
+          const defaultAddress = {
+            phone: accountUser.phone,
+            address: accountUser.address,
+          };
+          let arrayTerm = [];
+          arrayTerm.push(defaultAddress);
+          console.log(defaultAddress);
+          localStorage.setItem(
+            `userAddresses_${userKey}`,
+            JSON.stringify(arrayTerm)
+          );
+          console.log(
+            JSON.parse(localStorage.getItem(`userAddresses_${userKey}`))
+          );
+          localStorage.setItem(
+            `selectedAddress_${userKey}`,
+            JSON.stringify(defaultAddress)
+          );
+        }
       }
     }
 

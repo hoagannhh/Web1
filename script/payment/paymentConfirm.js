@@ -3,6 +3,7 @@
 import { LoadPage } from "../LoadPage.js";
 import { username } from "../Pages/ButtonVerification .js";
 import { products as productsCart } from "../Pages/Cart.js";
+import { username as usernameaccount } from "../Pages/ButtonVerification .js";
 // Hàm format giá tiền (cần thiết cho cả 2 component)
 function formatPrice(number) {
   if (typeof number !== "number") {
@@ -236,6 +237,23 @@ export const PaymentConfirmComponent = {
       const price = parseFloat(String(product.price).replace(/,/g, "")) || 0;
       return sum + price * (product.quantity || 1);
     }, 0);
+    function getCurrentUserKey() {
+      const accountInfo = JSON.parse(localStorage.getItem("ACCOUNTS"));
+      // Dùng 'username' làm khóa duy nhất cho mỗi tài khoản
+      console.log(accountInfo);
+      if (accountInfo) {
+        const userPro = accountInfo.find(
+          (account) => account.username === usernameaccount
+        );
+        console.log(userPro);
+
+        return userPro.username;
+      }
+      // Trường hợp không tìm thấy tài khoản (hoặc chưa đăng nhập), bạn có thể dùng một khóa mặc định hoặc báo lỗi.
+      return "guest";
+    }
+
+    const userKey = getCurrentUserKey();
 
     let shipPrice = totalMoneyForInvoice >= TARGET_AMOUNT ? 0 : 250000;
     let totalBill = totalMoneyForInvoice + shipPrice;
@@ -243,7 +261,9 @@ export const PaymentConfirmComponent = {
     const paymentMethod = localStorage.getItem("payment-method");
     const creditData = localStorage.getItem("credit-method");
     const promoCode = localStorage.getItem("userCodePromo");
-    const selectedAddress = JSON.parse(localStorage.getItem("selectedAddress"));
+    const selectedAddress = JSON.parse(
+      localStorage.getItem(`selectedAddress_${userKey}`)
+    );
 
     // =========================================================
     // 2. HIỂN THỊ DỮ LIỆU REVIEW
