@@ -5,7 +5,7 @@ import { LoadCss, LoadPage } from "../LoadPage.js";
 export let username;
 export let IsAuthenticated = false;
 export const ButtonVerification = {
-        html: `        
+  html: `        
               <div class="login">
                 <button class="sign in">
                   <img class="icon-sign-in" src="../icon/Sign-in.png" />
@@ -16,51 +16,48 @@ export const ButtonVerification = {
               </div>
               <div class="user-authenticated">
                   <img class="user-represent" src="../img/User-represent.png" alt="">
-                  <p>user3636</p>
+                  <p id="name-user">user3636</p>
                   <div class = "routing">
                       <button class = "profile">Thông tin cá nhân</button>
                       <button class = "sign-out">Đăng xuất</button>
                   </div>
               </div>
               `,
-        css:'../css/taskbar.css',
-        init: function(){
-          
-            console.log("in cant");
+  css: "../css/taskbar.css",
+  init: function () {
+    console.log("in cant");
 
-            const container = document.getElementById("container");
-            // dang nhap
-            const login = document.querySelector(".login .in");
+    const container = document.getElementById("container");
+    // dang nhap
+    const login = document.querySelector(".login .in");
 
-            // dang ky
-            const register = document.querySelector(".login .up");
-            
-            if (!login || !register) {
-              console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
-              return;
-            }
-            
-            HandleRegister(register, container);
-            HandleLogin(login, container);
-   
-          
-      }
-  }
+    // dang ky
+    const register = document.querySelector(".login .up");
+
+    if (!login || !register) {
+      console.error("Không tìm thấy nút Sign In hoặc Sign Up!");
+      return;
+    }
+
+    HandleRegister(register, container);
+    HandleLogin(login, container);
+  },
+};
 
 // ----------------------------------------------------
 // ----------------- LOGIN - REGISTER------------------
 
 function HandleRegister(register, container) {
-    register.addEventListener("click", () => {
-      container.insertAdjacentHTML("afterbegin", ButtonRegister.html);
-      LoadCss("register");
+  register.addEventListener("click", () => {
+    container.insertAdjacentHTML("afterbegin", ButtonRegister.html);
+    LoadCss("register");
 
-      const modelOverlay = document.querySelector(".modal-overlay");
-      modelOverlay.style.display = "block";
+    const modelOverlay = document.querySelector(".modal-overlay");
+    modelOverlay.style.display = "block";
 
-      // xử lý nút tắt form register
-      CloseTab(".button-close-register", modelOverlay);
-      HandleDataRegister(modelOverlay);
+    // xử lý nút tắt form register
+    CloseTab(".button-close-register", modelOverlay);
+    HandleDataRegister(modelOverlay);
   });
 }
 function HandleDataRegister() {
@@ -74,7 +71,7 @@ function HandleDataRegister() {
       firstName: document.getElementById("firstname-input").value.trim(),
       lastName: document.getElementById("lastname-input").value.trim(),
       username: document.getElementById("username-input").value.trim(),
-      password: document.getElementById("password-input").value, 
+      password: document.getElementById("password-input").value,
       confirmPassword: document.getElementById("confirm-password-input").value,
       phone: document.getElementById("phone-input").value.trim(),
       address: document.getElementById("address-input").value.trim(),
@@ -82,25 +79,24 @@ function HandleDataRegister() {
     };
 
     if (userData.password !== userData.confirmPassword) {
-        ShowError("confirm-password-error", "Mật khẩu khong chính xác")
-        ShowError("password-error", "Mật khẩu khong chính xác")
-        event.preventDefault();
-              return;
-
+      ShowError("confirm-password-error", "Mật khẩu khong chính xác");
+      ShowError("password-error", "Mật khẩu khong chính xác");
+      event.preventDefault();
+      return;
     }
     const finalUser = { ...userData };
     delete finalUser.confirmPassword;
 
     let users = JSON.parse(localStorage.getItem("ACCOUNTS")) || [];
-    
-    if (users.find(user => user.username === finalUser.username)){
+
+    if (users.find((user) => user.username === finalUser.username)) {
       ShowError("username-error", "ten dang nhap da ton tai");
       event.preventDefault();
       return;
     }
 
-    console.log("Dang ky check: " + users)
-    users.push(finalUser)
+    console.log("Dang ky check: " + users);
+    users.push(finalUser);
     const jsonData = JSON.stringify(users, null, 2);
     localStorage.setItem("ACCOUNTS", jsonData);
     console.log(localStorage.getItem("ACCOUNTS"));
@@ -113,15 +109,15 @@ function HandleDataRegister() {
     // localStorage.setItem('userInfo', jsonData);
   });
 }
-function ShowError(id, error){
-    const containerError = document.getElementById(id);
-    if(!!error){
-        containerError.style.display = "block"
-        containerError.textContent = error;
-    }else{
-        containerError.style.display = "none"
-        inerError.textContent = error;
-    }
+function ShowError(id, error) {
+  const containerError = document.getElementById(id);
+  if (!!error) {
+    containerError.style.display = "block";
+    containerError.textContent = error;
+  } else {
+    containerError.style.display = "none";
+    inerError.textContent = error;
+  }
 }
 function HandleLogin(login, container) {
   // tạo 1 form login
@@ -131,7 +127,6 @@ function HandleLogin(login, container) {
     ButtonLogin.init();
     const modelOverlay = document.querySelector(".modal-overlay");
     modelOverlay.style.display = "block";
-
 
     HandleDataLogin(modelOverlay, container);
   });
@@ -161,27 +156,31 @@ function HandleDataLogin(modelOverlay, container) {
         username: document.getElementById("username-login").value.trim(),
         password: document.getElementById("password-login").value.trim(),
       };
-            console.log(userAccount);
+      console.log(userAccount);
 
       // console.log("------------------------------")
       // console.log(userIndividual);
       // console.log(userIndividual.username + " " + userAccount.username);
       // console.log(userIndividual.password + " " + userAccount.password);
       // console.log("------------------------------")
-      if (userIndividual  === null){
-        alert("ten dang nhap hoac mat khau khong dung")
+      if (userIndividual === null) {
+        alert("ten dang nhap hoac mat khau khong dung");
         return;
       }
-      if (userIndividual.length === 0){
-        alert("ten dang nhap hoac mat khau khong dung")
+      if (userIndividual.length === 0) {
+        alert("ten dang nhap hoac mat khau khong dung");
         return;
       }
 
-      for (let i = 0; i < userIndividual.length; i ++){
-        if (userIndividual[i].username === userAccount.username &&
-            userIndividual[i].password === userAccount.password 
-        ){
-          if (userIndividual[i].isLockAccount != null && userIndividual[i].isLockAccount){
+      for (let i = 0; i < userIndividual.length; i++) {
+        if (
+          userIndividual[i].username === userAccount.username &&
+          userIndividual[i].password === userAccount.password
+        ) {
+          if (
+            userIndividual[i].isLockAccount != null &&
+            userIndividual[i].isLockAccount
+          ) {
             alert("Tai khoan da bi khoa");
             return;
           }
@@ -220,6 +219,7 @@ function ConfirmSuccessful(modelOverlay, container) {
 
   // cờ hiệu kiểm tra đã đăng nhập chưa
   IsAuthenticated = true;
+  document.getElementById("name-user").innerHTML = `${username}`;
 
   const formLogin = document.querySelector(".login");
   formLogin.style.display = "none";
@@ -231,18 +231,17 @@ function ConfirmSuccessful(modelOverlay, container) {
   // Đăng nhập thành công sẽ do something
   AddEventButtonProfile(container);
   AddEventButtonLogOut(formLogin, formAuthenticated, container);
-
 }
-function AddEventButtonLogOut(formLogin, formAuthenticated){
+function AddEventButtonLogOut(formLogin, formAuthenticated) {
   const logOut = document.querySelector(".sign-out");
   logOut.addEventListener("click", () => {
     formLogin.style.display = "flex";
     formAuthenticated.style.display = "none";
     IsAuthenticated = false;
     LoadPage("home", container);
-  })
+  });
 }
-function AddEventButtonProfile(container){
+function AddEventButtonProfile(container) {
   const account = document.querySelector(".profile");
   account.addEventListener("click", () => {
     LoadPage("account", container);
