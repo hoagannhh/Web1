@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Product</title>
-    <link rel="stylesheet" href="../css/adminsidebar.css">
-    <link rel="stylesheet" href="../css/adminProduct.css">
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="../css/adminsidebar.css">
+    <link rel="stylesheet" href="../css/adminCategory.css">
+    <title>Quản Lý Danh Mục</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-  </head>
-  <body>
-    <div class="admin-product-container">
+
+</head>
+<body>
+    <div class="admin-container">
+        <!-- SIDEBAR -->
       <div class="sidebar">
         <div><p class="shop-name">Đế Vương</p></div>
         <div class="admin-account">
@@ -50,6 +52,7 @@
                   src="../icon/admincategory.png"
                   alt=""
                   class="admin-icon"
+                  
                 />Category
               </button>
             </li>
@@ -93,527 +96,249 @@
         </div>
       </div>
 
-      <div class="main-content">
-        <div class="header">
-          <div class="left-header">
-            <p>Product</p>
-          </div>
-          <div class="right-header">
-            <div class="admin-account">
-              <button class="admin-account-btn">
-                <img src="../img/goku.jpg" alt="" class="admin-avatar" />
-                <p style="color: black">Trần Chính Thành</p>
-              </button>
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <h1 class="header-title">Category</h1>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div class="user-info">
+                        <img src="../img/goku.jpg" alt="" class="user-avatar">
+                        <span>Son Goku</span>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <!-- TABLE -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;"></th>
+                            <th>Name</th>
+                            <th>Type quantity</th>
+                            <th>Status</th>
+                            <th style="width: 150px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="hide-or-appear"><img src="../icon/Eye.png" alt=""></span></td>
+                            <td>Nam</td>
+                            <td>1000</td>
+                            <td><span class="status-active">Đang hiển thị</span></td>
+                            <td class="action-cell">
+                                <button class="btn btn-delete" onclick="openHideModal('Nam')">Xóa</button>
+                                <button class="btn btn-edit" onclick="openEditModal('Nam')">Sửa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-or-appear"><img src="../icon/Eye.png" alt=""></span></td>
+                            <td>Nữ</td>
+                            <td>1000</td>
+                            <td><span class="status-active">Đang hiển thị</span></td>
+                            <td class="action-cell">
+                                <button class="btn btn-delete" onclick="openHideModal('Nữ')">Xóa</button>
+                                <button class="btn btn-edit" onclick="openEditModal('Nữ')">Sửa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-or-appear"><img src="../icon/Eye.png" alt=""></span></td>
+                            <td>Trẻ em</td>
+                            <td>1000</td>
+                            <td><span class="status-active">Đang hiển thị</span></td>
+                            <td class="action-cell">
+                                <button class="btn btn-delete" onclick="openHideModal('Trẻ em')">Xóa</button>
+                                <button class="btn btn-edit" onclick="openEditModal('Trẻ em')">Sửa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-or-appear"><img src="../icon/Eye.png" alt=""></span></td>
+                            <td>Mùa Thu</td>
+                            <td>0</td>
+                            <td><span class="status-active">Đang hiển thị</span></td>
+                            <td class="action-cell">
+                                <button class="btn btn-delete" onclick="openHideModal('Mùa Thu')">Xóa</button>
+                                <button class="btn btn-edit" onclick="openEditModal('Mùa Thu')">Sửa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-or-appear"><img src="../icon/Blind.png" alt=""></span></td>
+                            <td>Christmas</td>
+                            <td>0</td>
+                            <td><span class="status-inactive">Ẩn</span></td>
+                            <td class="action-cell">
+                                <button class="btn btn-delete" onclick="openHideModal('Christmas')">Xóa</button>
+                                <button class="btn btn-edit" onclick="openEditModal('Christmas')">Sửa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <button class="add-btn" onclick="openAddModal()">
+                    <span class="add-icon">+</span>
+                    <span>Thêm loại mới</span>
+                </button>
+                <div class="pagination">
+                    <button class="arrow">◀</button>
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button class="arrow">▶</button>
+                </div>
+            </div>
         </div>
-        <div class="product-table-container">
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Inventory</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><img
-                    src="../icon/show.png"
-                    alt=""
-                    class="show-hide-icon hide-icon-js"
-                  /></td>
-                <td>s1</td>
-                <td><div class="product-container"><img src="../product-img/s1/ms1-1.png" alt="" class="product-img"> Air Jordan 4 RM</div></td>
-                <td>100</td>
-                <td>Men's</td>
-                <td class="show-text">Đang hiển thị</td>
-                <td class="action">
-                  <img src="../icon/Time Machine.png" alt="" style="cursor: pointer;" onclick="openInventoryModal('s1', 'Air Jordan 4 RM', 'Lịch sử: Nhập - Xuất - Tồn')">
-                  <button class="btn btn-lock" onclick="openDeleteModal('s1', 'Air Jordan 4 RM', '../product-img/s1/ms1-1.png')">Xóa</button>
-                  <button class="btn btn-reset" onclick="openEditProductForm()">Sửa</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td><img
-                    src="../icon/show.png"
-                    alt=""
-                    class="show-hide-icon hide-icon-js"
-                  /></td>
-                <td>s2</td>
-                <td><div class="product-container"><img src="../product-img/s2/ms2-1.png" alt="" class="product-img">Handball Spezial</div></td>
-                <td>100</td>
-                <td>Men's</td>
-                <td class="show-text">Đang hiển thị</td>
-                <td class="action">
-                  <img src="../icon/Time Machine.png" alt="" style="cursor: pointer;" onclick="openInventoryModal('s2', 'Handball Spezial', 'Lịch sử: Nhập - Xuất - Tồn')">
-                  <button class="btn btn-lock" onclick="openDeleteModal('s2', 'Handball Spezial', '../product-img/s2/ms2-1.png')">Xóa</button>
-                  <button class="btn btn-reset" onclick="openEditProductForm()">Sửa</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td><img
-                    src="../icon/show.png"
-                    alt=""
-                    class="show-hide-icon hide-icon-js"
-                  /></td>
-                <td>s3</td>
-                <td><div class="product-container"><img src="../product-img/s3/ms3-1.png" alt="" class="product-img">Chuck 70</div></td>
-                <td>100</td>
-                <td>Women's</td>
-                <td class="show-text">Đang hiển thị</td>
-                <td class="action">
-                  <img src="../icon/Time Machine.png" alt="" style="cursor: pointer;" onclick="openInventoryModal('s3', 'Chuck 70', 'Lịch sử: Nhập - Xuất - Tồn')">
-                  <button class="btn btn-lock" onclick="openDeleteModal('s3', 'Chuck 70', '../product-img/s3/ms3-1.png')">Xóa</button>
-                  <button class="btn btn-reset" onclick="openEditProductForm()">Sửa</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td><img
-                    src="../icon/show.png"
-                    alt=""
-                    class="show-hide-icon hide-icon-js"
-                  /></td>
-                <td>s4</td>
-                <td><div class="product-container"><img src="../product-img/s4/ms4-1.png" alt="" class="product-img">Classic Slip-On Checkerboard Shoe</div></td>
-                <td>100</td>
-                <td>Men's</td>
-                <td class="show-text">Đang hiển thị</td>
-                <td class="action">
-                  <img src="../icon/Time Machine.png" alt="" style="cursor: pointer;" onclick="openInventoryModal('s4', 'Classic Slip-On Checkerboard Shoe', 'Lịch sử: Nhập - Xuất - Tồn')">
-                  <button class="btn btn-lock" onclick="openDeleteModal('s4', 'Classic Slip-On Checkerboard Shoe', '../product-img/s4/ms4-1.png')">Xóa</button>
-                  <button class="btn btn-reset" onclick="openEditProductForm()">Sửa</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td><img
-                    src="../icon/show.png"
-                    alt=""
-                    class="show-hide-icon hide-icon-js"
-                  /></td>
-                <td>s5</td>
-                <td><div class="product-container"><img src="../product-img/s5/ms5-1.png" alt="" class="product-img">Bella UT Femme</div></td>
-                <td>100</td>
-                <td>Men's</td>
-                <td class="show-text">Đang hiển thị</td>
-                <td class="action">
-                  <img src="../icon/Time Machine.png" alt="" style="cursor: pointer;" onclick="openInventoryModal('s5', 'Bella UT Femme', 'Lịch sử: Nhập - Xuất - Tồn')">
-                  <button class="btn btn-lock" onclick="openDeleteModal('s5', 'Bella UT Femme', '../product-img/s5/ms5-1.png')">Xóa</button>
-                  <button class="btn btn-reset" onclick="openEditProductForm()">Sửa</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="product-footer">
-          <button class="add-btn" onclick="openProductForm()">
-            <img src="../icon/add.png" alt="" style="width: 20px" />
-            <span>Thêm sản phẩm mới</span>
-          </button>
-          <div class="pagination-container">
-            <button class="active">1</button>
-            <button>2</button>
-            <button>3</button>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- POPUP FORM THÊM - DISPLAY NONE -->
-    <div class="popup-bc" id="productFormModal">
-      <div class="popup-content">
-        <form class="form-content" id="productForm">
-          <!-- LEFT COLUMN -->
-          <div class="left-column">
-            <div class="image-section">
-              <label class="image-label">Hình ảnh sản phẩm</label>
-              <div class="image-box" onclick="document.querySelector('#productFormModal input[type=file]').click()">
-                <div class="image-icon">🖼️</div>
-              </div>
-              <input type="file" style="display: none;" accept="image/*">
-              <a href="#" class="help-text" onclick="event.preventDefault()">Tải ảnh lên hoặc kéo và thả</a>
-            </div>
-
-            <div class="form-group">
-              <label>Giới tính</label>
-              <input type="text" placeholder="">
-            </div>
-
-            <div class="form-group">
-              <label>Size</label>
-              <input type="text" placeholder="">
-            </div>
-
-            <div class="form-group">
-              <label>Màu sắc</label>
-              <input type="text" placeholder="">
-            </div>
-          </div>
-
-          <!-- RIGHT COLUMN -->
-          <div class="right-column">
-            <div class="form-group">
-              <label>Mã sản phẩm</label>
-              <input type="text" placeholder="">
-            </div>
-
-            <div class="form-group">
-              <label>Tên sản phẩm</label>
-              <input type="text" placeholder="">
-            </div>
-
-            <div class="form-group">
-              <label>Loại sản phẩm</label>
-              <select>
-                <option value="">Chọn loại</option>
-                <option value="1">Men's</option>
-                <option value="2">Women's</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Mô tả</label>
-              <textarea placeholder=""></textarea>
-            </div>
-          </div>
-
-          <!-- BUTTONS -->
-          <div class="form-buttons">
-            <button type="reset" class="btn-cancel" onclick="closeProductForm(event)">Hủy</button>
-            <button type="submit" class="btn-submit">Xác nhận thêm</button>
-          </div>
-        </form>
-      </div>
+    <!-- ADD CATEGORY MODAL -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Thêm danh mục mới</h2>
+            <form id="addForm">
+                <div class="form-group">
+                    <label>Tên danh mục</label>
+                    <input type="text" id="categoryName" placeholder="Nhập tên danh mục" required>
+                </div>
+                <div class="form-group">
+                    <label>Số lượng</label>
+                    <input type="number" id="categoryQuantity" placeholder="Nhập số lượng" value="0" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-modal-cancel" onclick="closeModal('addModal')">Hủy</button>
+                    <button type="submit" class="btn-modal-submit">Xác nhận thêm</button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <!-- POPUP FORM SỬA - DISPLAY NONE -->
-    <div class="popup-bc-edit" id="editProductFormModal">
-      <div class="popup-content-edit">
-        <div class="edit-header">
-          <div class="edit-icon-circle">🔧</div>
-          <h2 class="edit-title">Sửa loại sản phẩm</h2>
+    <!-- EDIT CATEGORY MODAL -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="edit-header">
+                <div class="edit-header-left">
+                    <img class="icon" src="../icon/Wrench.png" alt="">
+                    <h2 class="modal-title">Sửa danh mục</h2>
+                </div>
+                <div id ="selected-category">Mùa Thu</div>
+            </div>
+            <form id="editForm">
+                <div class="form-group">
+                    <label>Tên danh mục</label>
+                    <input type="text" id="editCategoryName" placeholder="Nhập tên danh mục" required>
+                </div>
+                <div class="form-group">
+                    <label>Số lượng</label>
+                    <input type="number" id="editCategoryQuantity" placeholder="Nhập số lượng" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-modal-cancel" onclick="closeModal('editModal')">Hủy</button>
+                    <button type="submit" class="btn-modal-submit">Xác nhận sửa</button>
+                </div>
+            </form>
         </div>
-
-        <form class="edit-form-content" id="editProductForm">
-          <!-- LEFT COLUMN -->
-          <div class="left-column">
-            <div class="edit-images-section">
-              <label class="image-label">Hình ảnh sản phẩm</label>
-              <div class="image-gallery">
-                <div class="gallery-item">
-                  <img src="../product-img/s1/ms1-1.png" alt="">
-                </div>
-                <div class="gallery-item">
-                  <img src="../product-img/s1/ms1-2.png" alt="">
-                </div>
-                <div class="gallery-item">
-                  <img src="../product-img/s1/ms1-3.png" alt="">
-                </div>
-                <div class="gallery-item">
-                  <img src="../product-img/s1/ms1-4.png" alt="">
-                </div>
-                <div class="gallery-item">
-                  <img src="../product-img/s1/ms1-5.png" alt="">
-                </div>
-              </div>
-              <a href="#" class="help-text" onclick="event.preventDefault()">Tải ảnh lên hoặc kéo và thả</a>
-            </div>
-
-            <div class="edit-form-group">
-              <label>Size</label>
-              <input type="text" value="">
-            </div>
-
-            <div class="edit-form-group">
-              <label>Màu sắc</label>
-              <input type="text" value="">
-            </div>
-
-            <div class="edit-form-group">
-              <label>Giới tính</label>
-              <input type="text" value="">
-            </div>
-          </div>
-
-          <!-- RIGHT COLUMN -->
-          <div class="right-column">
-            <div class="edit-form-group">
-              <label>Mã sản phẩm</label>
-              <input type="text" value="s1">
-            </div>
-
-            <div class="edit-form-group">
-              <label>Tên sản phẩm</label>
-              <input type="text" value="Air Jordan 4 RM">
-            </div>
-
-            <div class="edit-form-group">
-              <label>Loại sản phẩm</label>
-              <select>
-                <option value="nam" selected>Nam</option>
-                <option value="men">Men's</option>
-                <option value="women">Women's</option>
-              </select>
-            </div>
-
-            <div class="edit-form-group">
-              <label>Mô tả</label>
-              <textarea>Đôi giày sneaker này tái hiện lại chiếc AJ4 để nhận biết ngay lập tức dành cho cuộc sống năng động. Chúng tôi tập trung vào sự thoải mái và bền bỉ trong khi vận giữ được về ngoài có diện</textarea>
-            </div>
-          </div>
-
-          <!-- BUTTONS -->
-          <div class="edit-form-buttons">
-            <button type="reset" class="btn-cancel-edit" onclick="closeEditProductForm(event)">Hủy</button>
-            <button type="submit" class="btn-confirm-edit">Xác nhận sửa</button>
-          </div>
-        </form>
-      </div>
     </div>
 
-    <!-- DELETE CONFIRMATION MODAL - DISPLAY NONE -->
-    <div class="delete-modal" id="deleteModal">
-      <div class="delete-modal-content">
-        <div class="container-2">
-          <!-- Icon -->
-          <img class="delete-icon-container" src="../icon/Delete.png" alt="Delete Icon">
-          <!-- Title -->
-          <h2 class="delete-title">Xóa sản phẩm</h2>
+    <!-- HIDE CATEGORY MODAL -->
+    <div class="modal" id="hideModal">
+        <div class="modal-content">
+            <div class="hide-modal-header">
+                <div class="hide-header">
+                    <img  class="hide-icon" src="../icon/Blind.png" alt="">
+                    <h2>Ẩn loại sản phẩm</h2>
+                </div>
+                <p id="hideCategoryDisplay">Category Name</p>
+            </div>
+            <p style="margin-bottom: 25px; color: #666; font-size: 13px; line-height: 1.6;">
+                Bạn có chắc chắn ẩn loại sản phẩm này?<br>
+                Người dùng sẽ không thể thấy thoại sản phẩm này.<br>
+                Bạn có thể hiển thị lại sau
+            </p>
+            <div class="modal-buttons">
+                <button type="button" class="btn-modal-cancel" onclick="closeModal('hideModal')">Hủy</button>
+                <button type="button" class="btn-modal-submit" style="background: #1a1a1a;" onclick="confirmHide()">Xác nhận ẩn</button>
+            </div>
         </div>
-
-        <!-- Product Info -->
-        <div class="delete-product-info">
-          <img src="" alt="Product" class="product-delete-img" id="deleteProductImg">
-          <div class="product-delete-info-text">
-            <div class="product-delete-name" id="deleteProductName">Product Name</div>
-            <div class="product-delete-id" id="deleteProductId">s1</div>
-          </div>
-        </div>
-
-        <!-- Message -->
-        <p class="delete-message">
-          Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa?
-        </p>
-
-        <!-- Buttons -->
-        <div class="delete-modal-buttons">
-          <button class="btn-cancel-delete" onclick="closeDeleteModal()">Hủy</button>
-          <button class="btn-delete-confirm" onclick="confirmDelete()">Xác nhận Xóa</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- INVENTORY HISTORY MODAL - DISPLAY NONE -->
-    <div class="inventory-modal" id="inventoryModal">
-      <div class="inventory-modal-content">
-        <!-- Header -->
-        <div class="inventory-header">
-          <img class="inventory-icon-circle" src="../icon/Time Machine.png">
-          <div class="inventory-header-text">
-            <h2 id="productNameInventory">Air Jordan 4 RM</h2>
-            <p id="productDescInventory">Lịch sử: Nhập - Xuất - Tồn</p>
-          </div>
-        </div>
-
-        <!-- Filters -->
-        <div class="inventory-filters">
-          <div class="filter-group">
-            <label>Ngày nhập</label>
-            <input type="date" id="filterStartDate" placeholder="dd/mm/yyyy">
-          </div>
-          <div class="filter-group">
-            <label>Ngày nhập</label>
-            <input type="date" id="filterEndDate" placeholder="dd/mm/yyyy">
-          </div>
-          <button class="filter-btn" onclick="filterInventoryData()">Lọc</button>
-        </div>
-
-        <!-- Stats -->
-        <div class="inventory-stats">
-          <div class="stat-box inbound">
-            <div class="stat-label">Tổng nhập</div>
-            <p class="stat-value" id="totalInbound">+10</p>
-          </div>
-          <div class="stat-box outbound">
-            <div class="stat-label">Tổng xuất</div>
-            <p class="stat-value" id="totalOutbound">-2</p>
-          </div>
-          <div class="stat-box total">
-            <div class="stat-label">Tồn cuối</div>
-            <p class="stat-value" id="totalStock">8</p>
-          </div>
-        </div>
-
-        <!-- Table -->
-        <div class="inventory-table-container">
-          <table class="inventory-table">
-            <thead>
-              <tr>
-                <th>Ngày</th>
-                <th>Loại giao dịch</th>
-                <th>Mã tham chiếu</th>
-                <th>Thay đổi</th>
-                <th>Tồn cuối</th>
-              </tr>
-            </thead>
-            <tbody id="inventoryTableBody">
-              <tr>
-                <td class="transaction-date">19/10/2025</td>
-                <td class="transaction-type">Bán</td>
-                <td class="transaction-code">DH001</td>
-                <td class="transaction-change negative">-2</td>
-                <td class="transaction-total">8</td>
-              </tr>
-              <tr>
-                <td class="transaction-date">18/10/2025</td>
-                <td class="transaction-type">Nhập</td>
-                <td class="transaction-code">PN001</td>
-                <td class="transaction-change positive">+10</td>
-                <td class="transaction-total">10</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Buttons -->
-        <div class="inventory-buttons">
-          <button class="btn-cancel-inventory" onclick="closeInventoryModal()">Hủy</button>
-          <button class="btn-add-inventory" onclick="addInventoryRecord()">Xác nhận thêm</button>
-        </div>
-      </div>
     </div>
 
     <script>
-      let currentDeleteProductId = null;
+        let currentHideCategory = null;
 
-      // ===== THÊM SẢN PHẨM =====
-      function openProductForm() {
-        document.getElementById('productFormModal').classList.add('active');
-      }
-
-      function closeProductForm(event) {
-        if (event) event.preventDefault();
-        document.getElementById('productFormModal').classList.remove('active');
-      }
-
-      document.getElementById('productFormModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeProductForm();
+        // Mở modal thêm danh mục
+        function openAddModal() {
+            document.getElementById('addModal').classList.add('active');
         }
-      });
 
-      // ===== SỬA SẢN PHẨM =====
-      function openEditProductForm() {
-        document.getElementById('editProductFormModal').classList.add('active');
-      }
-
-      function closeEditProductForm(event) {
-        if (event) event.preventDefault();
-        document.getElementById('editProductFormModal').classList.remove('active');
-      }
-
-      document.getElementById('editProductFormModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeEditProductForm();
+        // Mở modal sửa danh mục
+        function openEditModal(categoryName) {
+            document.getElementById('editCategoryName').value = categoryName;
+            document.getElementById('editCategoryQuantity').value = '1000';
+            document.getElementById('editModal').classList.add('active');
         }
-      });
 
-      // ===== XÓA SẢN PHẨM =====
-      function openDeleteModal(productId, productName, productImg) {
-        currentDeleteProductId = productId;
-        document.getElementById('deleteProductId').textContent = productId;
-        document.getElementById('deleteProductName').textContent = productName;
-        document.getElementById('deleteProductImg').src = productImg;
-        document.getElementById('deleteModal').classList.add('active');
-      }
-
-      function closeDeleteModal() {
-        document.getElementById('deleteModal').classList.remove('active');
-        currentDeleteProductId = null;
-      }
-
-      function confirmDelete() {
-        console.log('Xóa sản phẩm:', currentDeleteProductId);
-        alert('Sản phẩm ' + currentDeleteProductId + ' đã được xóa');
-        closeDeleteModal();
-      }
-
-      document.getElementById('deleteModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeDeleteModal();
+        // Mở modal ẩn danh mục
+        function openHideModal(categoryName) {
+            currentHideCategory = categoryName;
+            document.getElementById('hideCategoryDisplay').textContent = categoryName;
+            document.getElementById('hideModal').classList.add('active');
         }
-      });
 
-      // ===== INVENTORY MODAL =====
-      function openInventoryModal(productId, productName, productDesc) {
-        if (productName) {
-          document.getElementById('productNameInventory').textContent = productName;
+        // Đóng modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
-        
-        if (productDesc) {
-          document.getElementById('productDescInventory').textContent = productDesc;
+
+        // Xác nhận ẩn danh mục
+        function confirmHide() {
+            console.log('Ẩn danh mục:', currentHideCategory);
+            alert('Danh mục ' + currentHideCategory + ' đã được ẩn thành công!');
+            closeModal('hideModal');
+            currentHideCategory = null;
         }
-        
-        document.getElementById('inventoryModal').classList.add('active');
-      }
 
-      function closeInventoryModal() {
-        document.getElementById('inventoryModal').classList.remove('active');
-      }
+        // Đóng modal khi click overlay
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
 
-      function filterInventoryData() {
-        const startDate = document.getElementById('filterStartDate').value;
-        const endDate = document.getElementById('filterEndDate').value;
-        
-        if (!startDate || !endDate) {
-          alert('Vui lòng chọn cả ngày bắt đầu và ngày kết thúc');
-          return;
-        }
-        
-        console.log('Lọc từ:', startDate, 'đến:', endDate);
-        alert('Đã lọc dữ liệu từ ' + startDate + ' đến ' + endDate);
-      }
+        // Xử lý form thêm danh mục
+        document.getElementById('addForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('categoryName').value;
+            const quantity = document.getElementById('categoryQuantity').value;
+            console.log('Thêm danh mục:', name, quantity);
+            alert('Danh mục ' + name + ' đã được thêm thành công!');
+            closeModal('addModal');
+            this.reset();
+        });
 
-      function addInventoryRecord() {
-        console.log('Thêm bản ghi nhập xuất kho');
-        alert('Đã thêm bản ghi nhập xuất kho thành công!');
-        closeInventoryModal();
-      }
+        // Xử lý form sửa danh mục
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('editCategoryName').value;
+            const quantity = document.getElementById('editCategoryQuantity').value;
+            console.log('Sửa danh mục:', name, quantity);
+            alert('Danh mục ' + name + ' đã được cập nhật thành công!');
+            closeModal('editModal');
+            this.reset();
+        });
 
-      document.getElementById('inventoryModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeInventoryModal();
-        }
-      });
-
-      // ÄÃ³ng modal khi nhấn ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          closeDeleteModal();
-          closeProductForm();
-          closeEditProductForm();
-          closeInventoryModal();
-        }
-      });
-
-      // ===== SUBMIT FORMS =====
-      document.getElementById('productForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        console.log('Form thêm sản phẩm submitted');
-      });
-
-      document.getElementById('editProductForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        console.log('Form sửa sản phẩm submitted');
-      });
+        // Đóng modal khi nhấn ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+        });
     </script>
-  </body>
+</body>
 </html>

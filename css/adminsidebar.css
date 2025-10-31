@@ -58,7 +58,7 @@ ul {
   border-top: 1px solid rgb(255, 255, 255);
 }
 .admin-icon {
-  width: 2rem;
+  width: 50px;
   height: 2rem;
   margin-right: 10px;
   object-fit: cover;
