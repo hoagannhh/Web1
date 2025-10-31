@@ -5,7 +5,7 @@ import { ProductDetail } from "../ProductDetail/ProductDetail.js";
 import { IsAuthenticated } from "../Pages/ButtonVerification .js";
 // import { totalMoney, products } from "../Pages/Cart.js";
 
-export let allProducts = [];
+export let allProducts = JSON.parse(localStorage.getItem("allProduct"));
 let productsChecked = [];
 export let totalMoney = 0;
 let checkOut = false;

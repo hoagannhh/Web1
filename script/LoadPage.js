@@ -43,33 +43,37 @@ export const pages = {
 const ContentContainer = document.getElementById("container");
 const taskBarContainer = document.getElementById("task-bar-container");
 const footerContainer = document.getElementById("footer");
-startApplication();
+// startApplication();
 
-async function loadInitialData() {
-  console.log("Test................");
-  // localStorage.removeItem("orderHistory");
-  // localStorage.removeItem("ACCOUNTS");
-  try {
-    const response = await fetch("../data/product.json");
-    const data = await response.json();
+// async function loadInitialData() {
+//   console.log("Test................");
+//   // localStorage.removeItem("orderHistory");
+//   // localStorage.removeItem("ACCOUNTS");
+//   // try {
+//   //   const response = await fetch("../data/product.json");
+//   //   const data = await response.json();
 
-    // Gán dữ liệu vào mảng allProducts đã được export từ Product.js
-    allProducts.push(...data);
-    console.log(allProducts.length);
-  } catch (error) {
-    console.error(error);
-  }
-}
+//   //   // Gán dữ liệu vào mảng allProducts đã được export từ Product.js
+//   //   allProducts.push(...data);
+//   //   console.log(allProducts.length);
+//   // } catch (error) {
+//   //   console.error(error);
+//   // }
+//   // allProducts = JSON.parse(localStorage.getItem("allProduct"));
+// }
 
-async function startApplication() {
-  // chờ dữ liệu được load xong (thằng await này lm xong mơi đc chạy thg khác)
-  await loadInitialData();
+// async function startApplication() {
+//   // chờ dữ liệu được load xong (thằng await này lm xong mơi đc chạy thg khác)
+//   await loadInitialData();
 
-  //nhở bỏ trang cần load vào hàm này
-  loadPageHome();
-}
+//   //nhở bỏ trang cần load vào hàm này
+//   loadPageHome();
+// }
 
-console.log(allProducts);
+console.log(JSON.parse(localStorage.getItem("allProduct")));
+loadPageHome();
+
+// console.log(allProducts);
 export function loadPageHome() {
   InsertPage("taskBar", taskBarContainer);
   // InsertPage("productDetail", ContentContainer);

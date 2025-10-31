@@ -455,6 +455,11 @@ function handleCategoryProfitChange() {
   document.querySelector(".filter-save-btn")?.addEventListener("click", () => {
     // Hiển thị thuộc tính 'price' đã được cập nhật
     renderProductsTable();
+    localStorage.setItem("allProduct", JSON.stringify(allProducts));
+
+    let allProductss = localStorage.getItem("allProduct");
+
+    console.log(JSON.parse(allProductss));
     console.log("Quy tắc lợi nhuận đã được lưu:", profitRules.category);
     console.log(
       "Dữ liệu sản phẩm với giá bán cập nhật:",
@@ -532,9 +537,13 @@ async function startApplication() {
   //Hiển thị bảng lần đầu
   renderProductsTable();
 
-  document
-    .querySelector(".filter-add-btn")
-    ?.addEventListener("click", () => {});
+  document.querySelector(".filter-add-btn")?.addEventListener("click", () => {
+    localStorage.setItem("allProduct", JSON.stringify(allProducts));
+
+    let allProductss = localStorage.getItem("allProduct");
+
+    console.log(JSON.parse(allProductss));
+  });
   renderProductsTable();
   console.log("Dữ liệu sản phẩm đã sẵn sàng:", allProducts);
 
