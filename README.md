@@ -25,6 +25,7 @@ Dự án tập trung vào phần **frontend**, giúp người học thực hành
 ---
 
 ## 📂 Cấu trúc thư mục (ví dụ)
+```
 /ShoeStore
 │
 ├── html
@@ -41,7 +42,7 @@ Dự án tập trung vào phần **frontend**, giúp người học thực hành
 └── /icon
 ├── /img
 └── /data (chứa dữ liệu khi khởi tạo)
-
+```
 ## 🎯 Yêu cầu chung
 Thực hiện hoàn chỉnh **giao diện website bán sản phẩm** (theo sản phẩm đã đăng ký).  
 Có đầy đủ các file HTML giao diện cho website, và các file này được liên kết với nhau, tạo thành một phiên bản **clickable prototype** hoàn chỉnh.
@@ -75,7 +76,7 @@ Có đầy đủ các file HTML giao diện cho website, và các file này đư
 **Tổng điểm phần End-User:** 5.0
 
 ## 👨‍💻 Tác giả
-**Nguyễn Hiếu Nghĩa - 3123560053**  
+**Nguyễn Hiếu Nghĩa**  
 🌐 GitHub: [https://github.com/MynameNghia123](https://github.com/MynameNghia123)
 **Hoàng Anh**  
 🌐 GitHub: [https://github.com/hoagannhh](https://github.com/hoagannhh)
