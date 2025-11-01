@@ -76,11 +76,12 @@ Có đầy đủ các file HTML giao diện cho website, và các file này đư
 **Tổng điểm phần End-User:** 5.0
 
 ## 👨‍💻 Tác giả
-**Nguyễn Hiếu Nghĩa**  
+
 🌐 GitHub: [https://github.com/MynameNghia123](https://github.com/MynameNghia123)
-**Hoàng Anh**  
+**Nguyễn Hiếu Nghĩa**  
 🌐 GitHub: [https://github.com/hoagannhh](https://github.com/hoagannhh)
-**Trần Chính Thành**  
+**Hoàng Anh**  
 🌐 GitHub: [https://github.com/TranChinhThanh](https://github.com/TranChinhThanh)
-**Quách Kỳ Minh**  
+**Trần Chính Thành**  
 🌐 GitHub: [https://github.com/KyMinhQuach](https://github.com/KyMinhQuach)
+**Quách Kỳ Minh**  
