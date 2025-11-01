@@ -314,8 +314,8 @@ function AddEvent() {
 function loadAccount(){
       let html = ``;
       const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
-
-      if (accounts && accounts.length > 0) {
+    console.log(accounts);
+      if (accounts && accounts.length > 0) {    
         accounts.forEach((account) => {
           let userProfile = account.userProfile;
 

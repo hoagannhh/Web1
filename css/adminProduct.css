@@ -15,8 +15,12 @@
         gap: 20px;
       }
 
-   
-
+      #container{
+        width: 100%;
+      }
+      .admin-container{
+        display: flex;
+      }
       /* ===== MAIN CONTENT ===== */
       .main-content {
         display: flex;

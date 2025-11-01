@@ -1,23 +1,25 @@
 import { AdminUser } from "./adminUser.js"
 import { AdminDashBoard } from "./adminDashBoard.js"
+import { AdminCategory } from "./adminCategory.js"
+import { AdminProduct } from "./adminProduct.js";
+import { AdminPrice } from "./adminPrice.js";
+import { AdminOrder } from "./adminOrder.js";
+import { AdminImportProduct } from "./adminImportPeoduct.js";
+
 import { AdminSideBar } from "./adminSideBar.js";
 const routes = {
     '/' : AdminDashBoard,
     '/user' : AdminUser,
+    '/category': AdminCategory,
+    '/product': AdminProduct,
+    '/price' : AdminPrice,
+    '/order' : AdminOrder,
+    '/importProduct': AdminImportProduct
 }
 // Khởi tạo khi DOM ready
-document.addEventListener('DOMContentLoaded', initRouter);
-
+navigateTo();
 export function navigateTo(path) {
     handleRouteChange(path);
-}
-function initRouter() {
-    handleRouteChange(window.location.pathname);
-    
-    // Lắng nghe sự thay đổi URL
-    window.addEventListener('popstate', (e) => {
-        handleRouteChange(e.state?.path || '/');
-    });
 }
 // hàm 1: router giúp cho việc điều hướng
 function handleRouteChange(path = "/") {

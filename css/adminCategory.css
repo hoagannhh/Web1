@@ -4,7 +4,14 @@ body {
   background-color: #f5f5f5;
   /* overflow: hidden; */
 }
-
+.admin-container{
+  display: flex;
+  width: 90vw;
+  gap: 20px;
+}
+#container{
+  width: 100%;
+}
 .admin-category-container {
   display: flex;
   gap: 20px;

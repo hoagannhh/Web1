@@ -105,6 +105,23 @@ function navigatePage(){
             }else if (btn.classList.contains("user")){
                 console.log("navigate user");
                 navigateTo("/user")
+            }else if (btn.classList.contains("category")){
+                console.log("navigate category");
+                navigateTo("/category")
+            }else if (btn.classList.contains("product")){
+                console.log("navigate product");
+                navigateTo("/product")
+            }else if (btn.classList.contains("import")){
+                console.log("navigate import");
+                navigateTo("/importProduct")
+
+            }else if (btn.classList.contains("price")){
+                console.log("navigate price");
+                navigateTo("/price")
+
+            }else if (btn.classList.contains("order")){
+                console.log("navigate order");
+                navigateTo("/order");
             }
         })
     })

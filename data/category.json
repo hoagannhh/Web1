@@ -1,19 +1,22 @@
 {
   "categories": [
     {
+      "id": 1,
       "name": "Men's",
       "quantity": 1000,
       "isShown": true,
       "manageable": false
     },
     {
+      "id": 2,
       "name": "Women's",
       "quantity": 1000,
       "isShown": true,
       "manageable": false
     },
     {
-      "name": "Kid's",
+      "id": 3,
+      "name": "UniSex",
       "quantity": 1000,
       "isShown": true,
       "manageable": false

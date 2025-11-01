@@ -7,7 +7,14 @@ body {
   display: flex;
   align-items: stretch;
 }
-.admin-container {
+      #container{
+        width: 100%;
+      }
+      .admin-container{
+        display: flex;
+        gap: 20px
+      }
+.admin-container .admin-container {
   display: flex;
   gap: 4%;
   flex-direction: column;

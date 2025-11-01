@@ -4,6 +4,13 @@
   gap: 3%;
   width: 100%;
 }
+      #container{
+        width: 100%;
+      }
+      .admin-container{
+        display: flex;
+        gap: 50px;
+      }
 .main-content {
   display: flex;
   flex-grow: 1;
