@@ -3,17 +3,17 @@ body {
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg);
   color: #111;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   align-items: stretch;
 }
-      #container{
-        width: 100%;
-      }
-      .admin-container{
-        display: flex;
-        gap: 20px
-      }
+#container {
+  width: 100%;
+}
+.admin-container {
+  display: flex;
+  gap: 20px;
+}
 .admin-container .admin-container {
   display: flex;
   gap: 4%;
