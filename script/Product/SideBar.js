@@ -608,16 +608,20 @@ function GetCategoryFromDatabase(){
     console.log(categories);
     return;
   }
+
+  console.log("----------------------------------------------------------------------------");
   console.log(categories);
   if (categories.length <= 3) return html;
   for (let i = 3; i < categories.length; i++){
-    html += 
-        `
-            <li>
-              <input type="checkbox" id="${categories[i].id}" class="black-check-category" />
-              <label for="${categories[i].id}">${categories[i].name}</label>
-            </li>
-        `
+    if (categories[i].isShown){
+      html += 
+          `
+              <li>
+                <input type="checkbox" id="${categories[i].id}" class="black-check-category" />
+                <label for="${categories[i].id}">${categories[i].name}</label>
+              </li>
+          `
+    }
   }
   return html;
 }
