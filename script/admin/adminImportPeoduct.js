@@ -1,7 +1,6 @@
 /*Demo data*/
 export const AdminImportProduct = {
-  html: 
-  `
+  html: `
       <main class="admin-container">
         <div class="header">
           <div class="left-header">
@@ -43,7 +42,7 @@ export const AdminImportProduct = {
                   <th style="width: 180px">Total quantity</th>
                   <th style="width: 180px">Total value</th>
                   <th style="width: 180px">Status</th>
-                  <th style="min-width: 180px; text-align: right">Action</th>
+                  <th style="width: 180px">Action</th>
                 </tr>
               </thead>
               <tbody id="orders-body">
@@ -83,44 +82,105 @@ export const AdminImportProduct = {
         </div>
       </div>
   `,
-  css:`../css/adminImportProduct.css`,
+  css: `../css/adminImportProduct.css`,
   canDeleteCss: true,
-  init: function(){
-
-    let orders = [
-      {
-        id: "PN001",
-        date: "2025-10-18",
-        items: [{ name: "Air Jordan 4 RM", qty: 300, price: 1600000 }],
-        status: "completed",
-      },
-      {
-        id: "PN002",
-        date: "2025-10-19",
-        items: [{ name: "Jordan Retro 12", qty: 100, price: 3500000 }],
-        status: "pending",
-      },
-      {
-        id: "PN003",
-        date: "2025-10-20",
-        items: [{ name: "Jordan Gamma 10", qty: 50, price: 1900000 }],
-        status: "pending",
-      },
-    ];
+  init: function () {
+    let orders = [];
+    const STORAGE_KEY = "productImport"; // main storage key for orders
+    // load from either new key or legacy key if present
+    function loadOrders() {
+      const raw =
+        localStorage.getItem(STORAGE_KEY) ||
+        localStorage.getItem("producImport"); // legacy
+      if (!raw) {
+        orders = [];
+        return;
+      }
+      try {
+        const parsed = JSON.parse(raw) || [];
+        if (
+          Array.isArray(parsed) &&
+          parsed.length &&
+          parsed[0] &&
+          (parsed[0].name || parsed[0].qty || parsed[0].price) &&
+          !parsed[0].id &&
+          !parsed[0].date
+        ) {
+          // legacy stored a list of items — convert to one order
+          orders = [
+            {
+              id: `PN${String(1).padStart(3, "0")}`,
+              date: new Date().toISOString().slice(0, 10),
+              items: parsed,
+              status: "pending",
+            },
+          ];
+        } else {
+          orders = normalizeOrdersArray(parsed);
+        }
+      } catch (err) {
+        console.error("Failed to parse orders from localStorage", err);
+        orders = [];
+      }
+    }
+    function saveOrders() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+      } catch (err) {
+        console.error("Failed to save orders to localStorage", err);
+      }
+    }
+    loadOrders();
+    console.log("loaded orders:", orders);
 
     /* Hàm tiện ích */
     const formatMoney = (n) =>
       n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "₫";
-    const calcTotal = (items) => items.reduce((s, it) => s + it.qty * it.price, 0);
+    const calcTotal = (items) =>
+      (Array.isArray(items) ? items : []).reduce(
+        (s, it) => s + (Number(it?.qty) || 0) * (Number(it?.price) || 0),
+        0
+      );
     const calcQty = (items) =>
-      items.reduce((s, it) => s + (Number(it.qty) || 0), 0);
+      (Array.isArray(items) ? items : []).reduce(
+        (s, it) => s + (Number(it?.qty) || 0),
+        0
+      );
+    // ensure orders loaded from localStorage always have items array
+    function normalizeOrdersArray(arr) {
+      return (arr || [])
+        .map((o, i) => {
+          // if element looks like an item (has name/qty/price) — wrap as single order later
+          if (o && (o.name || o.qty || o.price) && !o.id && !o.date) {
+            return null; // handled by caller
+          }
+          return {
+            id: o?.id ?? o?.orderId ?? `PN${String(i + 1).padStart(3, "0")}`,
+            date: o?.date ?? new Date().toISOString().slice(0, 10),
+            items: Array.isArray(o?.items) ? o.items : [],
+            status: o?.status ?? "pending",
+          };
+        })
+        .filter(Boolean);
+    }
 
     /*  Hiển thị bảng chính  */
     const ordersBody = document.getElementById("orders-body");
 
     function renderOrders() {
+      // Pagination: show 10 orders per page
+      const PAGE_SIZE = 6;
+      if (typeof renderOrders.currentPage === "undefined")
+        renderOrders.currentPage = 1;
+      const pageCount = Math.max(1, Math.ceil(orders.length / PAGE_SIZE));
+      if (renderOrders.currentPage > pageCount)
+        renderOrders.currentPage = pageCount;
+
       ordersBody.innerHTML = "";
-      orders.forEach((o, idx) => {
+      const start = (renderOrders.currentPage - 1) * PAGE_SIZE;
+      const pageItems = orders.slice(start, start + PAGE_SIZE);
+      pageItems.forEach((o, i) => {
+        const idx = start + i; // real index in orders array
         const tr = document.createElement("tr");
         const totalQty = calcQty(o.items);
         const totalVal = calcTotal(o.items);
@@ -135,7 +195,6 @@ export const AdminImportProduct = {
             <button class="btn delete" data-action="delete" data-idx="${idx}">Xóa</button>
           `;
         }
-        //render dòng dữ liệu
         tr.innerHTML = `
           <td>${o.id}</td>
           <td>${o.date}</td>
@@ -148,6 +207,9 @@ export const AdminImportProduct = {
         `;
         ordersBody.appendChild(tr);
       });
+
+      // render pagination controls
+      renderPagination(pageCount, renderOrders.currentPage);
     }
     renderOrders();
 
@@ -218,9 +280,9 @@ export const AdminImportProduct = {
                   <td><input class="items__name" value="${it.name}" ${
                     readOnly ? "disabled" : ""
                   }></td>
-                  <td><input class="items__qty" type="number" value="${it.qty}" ${
-                    readOnly ? "disabled" : ""
-                  }></td>
+                  <td><input class="items__qty" type="number" value="${
+                    it.qty
+                  }" ${readOnly ? "disabled" : ""}></td>
                   <td><input class="items__price" type="number" value="${
                     it.price
                   }" ${readOnly ? "disabled" : ""}></td>
@@ -300,10 +362,13 @@ export const AdminImportProduct = {
     });
 
     /*  Xác nhận xóa  */
-    document.getElementById("del-cancel").addEventListener("click", closeDelete);
+    document
+      .getElementById("del-cancel")
+      .addEventListener("click", closeDelete);
     document.getElementById("del-confirm").addEventListener("click", () => {
       if (currentDeleteIndex !== null) {
         orders.splice(currentDeleteIndex, 1);
+        saveOrders();
         renderOrders();
       }
       closeDelete();
@@ -320,20 +385,31 @@ export const AdminImportProduct = {
 
       if (btnCancel) btnCancel.onclick = closeOverlay;
 
+      // lưu tạm danh sách sản phẩm trong modal (draft) — không ghi đè orders chính
+      function saveDraftItems() {
+        try {
+          const items = gatherItems();
+          localStorage.setItem(STORAGE_KEY + "_draft", JSON.stringify(items));
+        } catch (err) {
+          console.error("Failed to save draft items", err);
+        }
+      }
+
       // thêm sản phẩm mới trong modal
       if (addProduct) {
         addProduct.onclick = () => {
           const tr = document.createElement("tr");
           tr.innerHTML = `
-            <td><input class="items__name" placeholder="Tên sản phẩm"></td>
-            <td><input class="items__qty" type="number" min="0" value="0"></td>
-            <td><input class="items__price" type="number" min="0" value="0"></td>
-            <td class="items__line">0₫</td>
-            <td><button data-remove class="btn" style="background:#f8f8f8">🗑️</button></td>
-          `;
+              <td><input class="items__name" placeholder="Tên sản phẩm"></td>
+              <td><input class="items__qty" type="number" min="0" value="0"></td>
+              <td><input class="items__price" type="number" min="0" value="0"></td>
+              <td class="items__line">0₫</td>
+              <td><button data-remove class="btn" style="background:#f8f8f8">🗑️</button></td>
+            `;
           tbody.appendChild(tr);
           bindItemRow(tr);
           recalcTotal();
+          saveDraftItems(); // lưu draft sản phẩm trong modal
         };
       }
 
@@ -348,6 +424,7 @@ export const AdminImportProduct = {
           const val = (+qty.value || 0) * (+price.value || 0);
           line.textContent = formatMoney(val);
           recalcTotal();
+          saveDraftItems(); // lưu draft khi thay đổi số lượng/giá
         };
 
         if (qty) qty.oninput = upd;
@@ -356,6 +433,7 @@ export const AdminImportProduct = {
           rm.onclick = () => {
             row.remove();
             recalcTotal();
+            saveDraftItems(); // lưu draft khi xóa dòng
           };
       }
 
@@ -370,8 +448,10 @@ export const AdminImportProduct = {
           const id = document.getElementById("order-id").value.trim();
           const date = document.getElementById("order-date").value;
           const items = gatherItems();
-          if (!id || !date || !items.length) return alert("Điền đầy đủ thông tin!");
+          if (!id || !date || !items.length)
+            return alert("Điền đầy đủ thông tin!");
           orders.push({ id, date, items, status: "pending" });
+          saveOrders();
           renderOrders();
           closeOverlay();
         };
@@ -382,7 +462,8 @@ export const AdminImportProduct = {
           const id = document.getElementById("order-id").value.trim();
           const date = document.getElementById("order-date").value;
           const items = gatherItems();
-          if (!id || !date || !items.length) return alert("Điền đầy đủ thông tin!");
+          if (!id || !date || !items.length)
+            return alert("Điền đầy đủ thông tin!");
           if (currentEditIndex !== null) {
             orders[currentEditIndex] = {
               id,
@@ -390,6 +471,7 @@ export const AdminImportProduct = {
               items,
               status: orders[currentEditIndex].status,
             };
+            saveOrders();
             renderOrders();
             closeOverlay();
           }
@@ -400,6 +482,7 @@ export const AdminImportProduct = {
         confirmComplete.onclick = () => {
           if (currentEditIndex !== null) {
             orders[currentEditIndex].status = "completed";
+            saveOrders();
             renderOrders();
             closeOverlay();
           }
@@ -409,6 +492,7 @@ export const AdminImportProduct = {
       // gắn sự kiện cho các dòng có sẵn (khi modal được mở với items đã có)
       // tìm tất cả các dòng hiện tại trong tbody và bind lại
       Array.from(tbody.querySelectorAll("tr")).forEach((tr) => bindItemRow(tr));
+      console.log(localStorage.getItem("producImport"));
     }
 
     /*  Hỗ trợ  */
@@ -424,17 +508,46 @@ export const AdminImportProduct = {
         .filter(Boolean);
     }
 
-    /* Phần < 1 2 3 4 5 .. > */
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = `
-      <span>&lt;</span>
-      <span class="active">1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>&gt;</span>
-    `;
+    /* Phần phân trang (10 sản phẩm / trang) */
+    function renderPagination(pageCount, currentPage) {
+      // lấy element khi cần để tránh lỗi TDZ (pagination có thể được truy cập trước khi biến được khởi tạo)
+      const pagination = document.getElementById("pagination");
+      if (!pagination) return;
+      // nếu chỉ 1 trang thì ẩn phân trang
+      if (pageCount <= 1) {
+        pagination.innerHTML = "";
+        return;
+      }
+      let html = `<span data-page="prev">&lt;</span>`;
+      for (let i = 1; i <= pageCount; i++) {
+        html += `<span data-page="${i}" class="${
+          i === currentPage ? "active" : ""
+        }">${i}</span>`;
+      }
+      html += `<span data-page="next">&gt;</span>`;
+      pagination.innerHTML = html;
+    }
 
-  }
-}
+    // xử lý click trên pagination (delegation) — gắn event sau khi DOM sẵn sàng
+    const paginationEl = document.getElementById("pagination");
+    if (paginationEl) {
+      paginationEl.addEventListener("click", (e) => {
+        const sp = e.target.closest("span");
+        if (!sp) return;
+        const p = sp.dataset.page;
+        if (!p) return;
+        const PAGE_SIZE = 10;
+        const pageCount = Math.max(1, Math.ceil(orders.length / PAGE_SIZE));
+        if (p === "prev") {
+          if (renderOrders.currentPage > 1) renderOrders.currentPage--;
+        } else if (p === "next") {
+          if (renderOrders.currentPage < pageCount) renderOrders.currentPage++;
+        } else {
+          renderOrders.currentPage = +p;
+        }
+        renderOrders();
+      });
+    }
+    // end init
+  },
+};
