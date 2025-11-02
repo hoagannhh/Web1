@@ -18,6 +18,10 @@
       #container{
         width: 100%;
       }
+      .admin-icon{
+        width: 30px;
+        box-sizing: content-box;
+      }
       .admin-container{
         display: flex;
       }

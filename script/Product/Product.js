@@ -308,6 +308,7 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
 }
 function LinkSize(product) {
   let html = ``;
+  console.log(product)
   product["size"].forEach((size) => {
     html += `
           <button class="size-btn" data-size="${size}">${size}</button>
