@@ -111,7 +111,10 @@ tbody tr:last-child {
   background-color: #af0000; /* Màu đỏ */
   border: 1px solid #ff0000;
 }
-
+.btn-unlock{
+  background-color: rgb(0, 254, 97);
+  border: 1px solid rgb(0, 254, 97);
+}
 .btn-reset {
   background-color: #ffd900;
   border: 1px solid #ccb63f;

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhiều Checkbox</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #667eea;
+    }
+    
+    label {
+      cursor: pointer;
+      font-size: 16px;
+      color: #555;
+      user-select: none;
+    }
+    
+    label:hover {
+      color: #667eea;
+    }
+    
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .result h2 {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    
+    .result p {
+      color: #333;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    
+    .empty {
+      color: #999;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chọn các mục yêu thích</h1>
+    
+    <div class="checkbox-group">
+      <div class="checkbox-item">
+        <input type="checkbox" id="option1" value="Phim">
+        <label for="option1">Phim</label>
+      </div>
+      
+      <div class="checkbox-item">
+        <input type="checkbox" id="option2" value="Âm nhạc">
+        <label for="option2">Âm nhạc</label>
+      </div>
+      
+      <div class="checkbox-item">
+        <input type="checkbox" id="option3" value="Thể thao">
+        <label for="option3">Thể thao</label>
+      </div>
+      
+      <div class="checkbox-item">
+        <input type="checkbox" id="option4" value="Công nghệ">
+        <label for="option4">Công nghệ</label>
+      </div>
+      
+      <div class="checkbox-item">
+        <input type="checkbox" id="option5" value="Du lịch">
+        <label for="option5">Du lịch</label>
+      </div>
+    </div>
+    
+    <div class="result">
+      <h2>Lựa chọn của bạn:</h2>
+      <p id="selected" class="empty">Chưa chọn gì</p>
+    </div>
+  </div>
+
+  <script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const selectedDiv = document.getElementById('selected');
+    
+    function updateSelection() {
+      const checked = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+      
+      if (checked.length === 0) {
+        selectedDiv.textContent = 'Chưa chọn gì';
+        selectedDiv.className = 'empty';
+      } else {
+        selectedDiv.textContent = checked.join(', ');
+        selectedDiv.className = '';
+      }
+    }
+    
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateSelection);
+    });
+  </script>
+</body>
+</html>

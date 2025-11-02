@@ -34,10 +34,9 @@ export const AdminCategory = {
   
   init: function() {
     console.log("Initializing AdminCategory");
-    
-    // =========================================
+    let SelectedCategory = null;
+
     // 1. KHAI BÁO BIẾN
-    // =========================================
     let categoriesData = [];
     let elementIndexToChange = null;
     let currentPage = 1;
@@ -168,14 +167,17 @@ export const AdminCategory = {
       const startIndex = (currentPage - 1) * rowsPerPage;
       const endIndex = startIndex + rowsPerPage;
       const paginatedData = categoriesData.slice(startIndex, endIndex);
-      
       // Tạo các hàng table
       const tableBodyHTML = paginatedData
         .map((category, index) => {
           const statusIcon = category.isShown ? "show.png" : "hide.png";
           const statusText = category.isShown ? "Đang hiển thị" : "Ẩn";
           const statusClass = category.isShown ? "show-text" : "hide-text";
-          
+
+          // logic nút Ẩn - Nút Hiện
+          const btn = category.isShown ? "btn-lock" : "btn-unlock";
+          const btnText = category.isShown ? "Ẩn" : "Hiện";
+
           const iconHTML = category.manageable
             ? `<td>
                 <img
@@ -189,7 +191,7 @@ export const AdminCategory = {
           
           const actionHTML = category.manageable
             ? `<td>
-                <button class="btn btn-lock" data-index="${startIndex + index}">Xóa</button>
+                <button class="btn ${btn}" data-index="${startIndex + index}">${btnText}</button>
                 <button class="btn btn-reset" data-index="${startIndex + index}">Sửa</button>
               </td>`
             : "<td></td>";
@@ -283,6 +285,7 @@ export const AdminCategory = {
     // 6. HÀM LƯU VÀO LOCALSTORAGE
     // =========================================
     function saveDataToLocalStorage() {
+      console.log(categoriesData)
       localStorage.setItem('categoriesDB', JSON.stringify(categoriesData));
     }
     
@@ -399,13 +402,21 @@ export const AdminCategory = {
           }
         }
         
-        // Xóa
+        // Ẩn 
         if (target.classList.contains("btn-lock")) {
-          openPopup(popupContentDelete, category.name);
+          SelectedCategory = target;
+          openPopup(popupContentHide, category.name);
+          console.log(target);
         }
-        
+        // Hiện
+        if (target.classList.contains("btn-unlock")) {
+          SelectedCategory = target;
+          openPopup(popupContentShow, category.name);
+          console.log(target);
+        }
         // Sửa
         if (target.classList.contains("btn-reset")) {
+          SelectedCategory = target;
           openPopup(popupContentEdit, category.name);
         }
       });
@@ -441,6 +452,7 @@ export const AdminCategory = {
         // Click vào overlay để đóng
         if (target === popup) {
           popup.classList.remove("popup-show");
+          SelectedCategory = null;
           elementIndexToChange = null;
           return;
         }
@@ -448,6 +460,7 @@ export const AdminCategory = {
         // Nút HỦY
         if (target.classList.contains("cancel-button")) {
           popup.classList.remove("popup-show");
+          SelectedCategory = null;
           elementIndexToChange = null;
           return;
         }
@@ -458,6 +471,7 @@ export const AdminCategory = {
           const newNameInput = popup.querySelector("#category-name-input");
           const newName = newNameInput ? newNameInput.value.trim() : null;
           
+          console.log(target)
           let pageToRender = currentPage;
           
           // Xử lý các action
@@ -465,6 +479,9 @@ export const AdminCategory = {
             case 'action-hide':
               if (elementIndexToChange !== null) {
                 categoriesData[elementIndexToChange].isShown = false;
+                target.classList.remove("action-hide");
+                target.classList.add("action-show");
+                
               }
               break;
               
@@ -504,7 +521,7 @@ export const AdminCategory = {
                   isShown: true,
                   manageable: true
                 });
-                console.log(`➕ Đã thêm category mới với ID: ${newId}`);
+                console.log(` Đã thêm category mới với ID: ${newId}`);
                 // Đi đến trang cuối
                 pageToRender = Math.ceil(categoriesData.length / rowsPerPage);
               } else {

@@ -171,5 +171,6 @@ export const AdminDashBoard = {
     init: function(){
         console.log("----------------------");
         console.log("In admin Dash Board");
+        // localStorage.removeItem("allProduct");
     }
 }
