@@ -24,7 +24,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s2",
@@ -50,7 +52,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s3",
@@ -72,7 +76,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s4",
@@ -97,7 +103,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s5",
@@ -118,7 +126,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s6",
@@ -145,7 +155,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s7",
@@ -171,7 +183,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s8",
@@ -193,7 +207,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s9",
@@ -218,7 +234,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s10",
@@ -239,7 +257,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s11",
@@ -266,7 +286,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s12",
@@ -292,7 +314,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s13",
@@ -314,7 +338,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s14",
@@ -339,7 +365,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s15",
@@ -360,7 +388,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s16",
@@ -387,7 +417,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s17",
@@ -413,7 +445,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s18",
@@ -435,7 +469,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s19",
@@ -460,7 +496,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s20",
@@ -481,7 +519,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s21",
@@ -508,7 +548,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s22",
@@ -534,7 +576,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s23",
@@ -556,7 +600,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s24",
@@ -581,7 +627,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s25",
@@ -602,7 +650,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s26",
@@ -629,7 +679,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s27",
@@ -655,7 +707,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s28",
@@ -677,7 +731,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s29",
@@ -702,7 +758,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s30",
@@ -723,7 +781,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s31",
@@ -750,7 +810,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s32",
@@ -776,7 +838,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s33",
@@ -798,7 +862,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s34",
@@ -823,7 +889,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s35",
@@ -844,7 +912,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s36",
@@ -871,7 +941,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s37",
@@ -897,7 +969,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s38",
@@ -919,7 +993,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s39",
@@ -944,7 +1020,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s40",
@@ -965,7 +1043,9 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s41",
@@ -992,7 +1072,9 @@
     "rating": {
       "stars": 4.8,
       "votes": 2154
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s42",
@@ -1018,7 +1100,9 @@
     "rating": {
       "stars": 4.6,
       "votes": 1720
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s43",
@@ -1040,7 +1124,9 @@
     "rating": {
       "stars": 4.7,
       "votes": 965
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   },
   {
     "id": "s44",
@@ -1065,7 +1151,9 @@
     "rating": {
       "stars": 4.5,
       "votes": 1203
-    }
+    },
+    "inventory": 1,
+    "category": "Men's"
   },
   {
     "id": "s45",
@@ -1086,6 +1174,8 @@
     "rating": {
       "stars": 4.4,
       "votes": 854
-    }
+    },
+    "inventory": 1,
+    "category": "Woman's"
   }
 ]

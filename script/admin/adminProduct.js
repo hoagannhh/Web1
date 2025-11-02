@@ -36,10 +36,7 @@ export const AdminProduct = {
             <img src="../icon/add.png" alt="" style="width: 20px" />
             <span>Thêm sản phẩm mới</span>
           </button>
-          <div class="pagination-container">
-            <button class="active">1</button>
-            <button>2</button>
-            <button>3</button>
+          <div class="pagination-container" id="paginationContainer">
           </div>
         </div>
       </div>
@@ -58,52 +55,62 @@ export const AdminProduct = {
               <div class="left-column">
                 <div class="image-section">
                   <label class="image-label">Hình ảnh sản phẩm</label>
-                  <div class="image-box" onclick="document.querySelector('#productFormModal input[type=file]').click()">
+                  <div class="image-box" id="imageBox" style="cursor: pointer;">
                     <div class="image-icon">🖼️</div>
                   </div>
-                  <input type="file" style="display: none;" accept="image/*">
+                  <input type="file" id="productImageInput" style="display: none;" accept="image/*">
+                  <div id="imagePreview" style="margin-top: 10px;"></div>
                   <a href="#" class="help-text" onclick="event.preventDefault()">Tải ảnh lên hoặc kéo và thả</a>
                 </div>
 
                 <div class="form-group">
                   <label>Giới tính</label>
-                  <input type="text" placeholder="">
+                  <select id="productGender">
+                    <option value="">Chọn giới tính</option>
+                    <option value="Men's">Men's</option>
+                    <option value="Women's">Women's</option>
+                  </select>
                 </div>
 
                 <div class="form-group">
                   <label>Size</label>
-                  <input type="text" placeholder="">
+                  <input type="text" id="productSize" placeholder="">
                 </div>
 
                 <div class="form-group">
                   <label>Màu sắc</label>
-                  <input type="text" placeholder="">
+                  <input type="text" id="productColor" placeholder="">
                 </div>
               </div>
 
               <div class="right-column">
                 <div class="form-group">
                   <label>Mã sản phẩm</label>
-                  <input type="text" placeholder="">
+                  <input type="text" id="productCode" placeholder="">
                 </div>
 
                 <div class="form-group">
                   <label>Tên sản phẩm</label>
-                  <input type="text" placeholder="">
+                  <input type="text" id="productName" placeholder="">
                 </div>
 
                 <div class="form-group">
                   <label>Loại sản phẩm</label>
-                  <select>
+                  <select id="productCategory">
                     <option value="">Chọn loại</option>
-                    <option value="1">Men's</option>
-                    <option value="2">Women's</option>
+                    <option value="Men's">Men's</option>
+                    <option value="Women's">Women's</option>
                   </select>
                 </div>
 
                 <div class="form-group">
                   <label>Mô tả</label>
-                  <textarea placeholder=""></textarea>
+                  <textarea id="productDesc" placeholder=""></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Số lượng tồn kho</label>
+                  <input type="number" id="productInventory" placeholder="0">
                 </div>
               </div>
 
@@ -128,65 +135,56 @@ export const AdminProduct = {
               <div class="left-column">
                 <div class="edit-images-section">
                   <label class="image-label">Hình ảnh sản phẩm</label>
-                  <div class="image-gallery">
-                    <div class="gallery-item">
-                      <img src="../product-img/s1/ms1-1.png" alt="">
-                    </div>
-                    <div class="gallery-item">
-                      <img src="../product-img/s1/ms1-2.png" alt="">
-                    </div>
-                    <div class="gallery-item">
-                      <img src="../product-img/s1/ms1-3.png" alt="">
-                    </div>
-                    <div class="gallery-item">
-                      <img src="../product-img/s1/ms1-4.png" alt="">
-                    </div>
-                    <div class="gallery-item">
-                      <img src="../product-img/s1/ms1-5.png" alt="">
-                    </div>
-                  </div>
-                  <a href="#" class="help-text" onclick="event.preventDefault()">Tải ảnh lên hoặc kéo và thả</a>
+                  <div id="editImageGallery" class="image-gallery"></div>
+                  <input type="file" id="editProductImageInput" style="display: none;" accept="image/*">
+                  <button type="button" class="btn" onclick="document.getElementById('editProductImageInput').click()" style="margin-top: 10px;">
+                    Thêm ảnh
+                  </button>
                 </div>
 
                 <div class="edit-form-group">
                   <label>Size</label>
-                  <input type="text" value="">
+                  <input type="text" id="editProductSize" value="">
                 </div>
 
                 <div class="edit-form-group">
                   <label>Màu sắc</label>
-                  <input type="text" value="">
+                  <input type="text" id="editProductColor" value="">
                 </div>
 
                 <div class="edit-form-group">
                   <label>Giới tính</label>
-                  <input type="text" value="">
+                  <input type=""text id="editProductGender"> 
                 </div>
               </div>
 
               <div class="right-column">
                 <div class="edit-form-group">
                   <label>Mã sản phẩm</label>
-                  <input type="text" value="s1">
+                  <input type="text" id="editProductCode" value="">
                 </div>
 
                 <div class="edit-form-group">
                   <label>Tên sản phẩm</label>
-                  <input type="text" value="Air Jordan 4 RM">
+                  <input type="text" id="editProductName" value="">
                 </div>
 
                 <div class="edit-form-group">
                   <label>Loại sản phẩm</label>
-                  <select>
-                    <option value="nam" selected>Nam</option>
-                    <option value="men">Men's</option>
-                    <option value="women">Women's</option>
+                  <select id="editProductCategory">
+                    <option value="Men's">Men's</option>
+                    <option value="Women's">Women's</option>
                   </select>
                 </div>
 
                 <div class="edit-form-group">
                   <label>Mô tả</label>
-                  <textarea>Đôi giày sneaker này tái hiện lại chiếc AJ4 để nhận biết ngay lập tức dành cho cuộc sống năng động. Chúng tôi tập trung vào sự thoải mái và bền bỉ trong khi vẫn giữ được vẻ ngoài có diện</textarea>
+                  <textarea id="editProductDesc"></textarea>
+                </div>
+
+                <div class="edit-form-group">
+                  <label>Số lượng tồn kho</label>
+                  <input type="number" id="editProductInventory" value="0">
                 </div>
               </div>
 
@@ -303,7 +301,21 @@ export const AdminProduct = {
       `
     },
 
+    // ===== PAGINATION CONFIG =====
+    currentPage: 1,
+    productsPerPage: 5,
+    allProducts: [
+      { id: 's1', name: 'Air Jordan 4 RM', img: '../product-img/s1/ms1-1.png', inventory: 100, category: "Men's" },
+      { id: 's2', name: 'Handball Spezial', img: '../product-img/s2/ms2-1.png', inventory: 100, category: "Men's" },
+      { id: 's3', name: 'Chuck 70', img: '../product-img/s3/ms3-1.png', inventory: 100, category: "Women's" },
+      { id: 's4', name: 'Classic Slip-On Checkerboard Shoe', img: '../product-img/s4/ms4-1.png', inventory: 100, category: "Men's" },
+      { id: 's5', name: 'Bella UT Femme', img: '../product-img/s5/ms5-1.png', inventory: 100, category: "Men's" }
+    ],
+
     init: function() {
+      // Load products from localStorage
+      this.loadProducts();
+      
       // Render modals vào container
       const modalsContainer = document.getElementById('modalsContainer');
       modalsContainer.innerHTML = 
@@ -312,10 +324,13 @@ export const AdminProduct = {
         this.modals.deleteModal + 
         this.modals.inventoryModal;
 
-      // Render product table
+      // Render initial page
       this.renderProductTable();
+      this.renderPagination();
 
       let currentDeleteProductId = null;
+      let currentEditProductId = null;
+      let currentProductImages = [];
 
       // ===== HELPER FUNCTIONS =====
       const closeAllModals = () => {
@@ -325,14 +340,47 @@ export const AdminProduct = {
         document.getElementById('inventoryModal').classList.remove('active');
       };
 
+      // ===== IMAGE CONVERSION =====
+      const fileToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      };
+
       // ===== THÊM SẢN PHẨM =====
       const openProductForm = () => {
+        currentProductImages = [];
+        document.getElementById('productForm').reset(); // reset form
+        document.getElementById('imagePreview').innerHTML = '';
         document.getElementById('productFormModal').classList.add('active');
       };
 
       const closeProductForm = () => {
         document.getElementById('productFormModal').classList.remove('active');
+        currentProductImages = [];
       };
+
+      document.getElementById('imageBox').addEventListener('click', () => {
+        document.getElementById('productImageInput').click();
+      });
+
+      document.getElementById('productImageInput').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const base64 = await fileToBase64(file);
+          currentProductImages.push(base64);
+          
+          const img = document.createElement('img');
+          img.src = base64;
+          img.style.maxWidth = '100px';
+          img.style.marginRight = '10px';
+          img.style.marginBottom = '10px';
+          document.getElementById('imagePreview').appendChild(img);
+        }
+      });
 
       document.getElementById('addProductBtn').addEventListener('click', openProductForm);
       document.getElementById('cancelProductBtn').addEventListener('click', closeProductForm);
@@ -341,20 +389,104 @@ export const AdminProduct = {
         if (e.target === this) closeProductForm();
       });
 
-      document.getElementById('productForm').addEventListener('submit', function(e) {
+      document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        console.log('Form thêm sản phẩm submitted');
+        
+        if (currentProductImages.length === 0) {
+          alert('Vui lòng chọn hình ảnh sản phẩm');
+          return;
+        }
+
+        const newProduct = {
+          id: document.getElementById('productCode').value,
+          name: document.getElementById('productName').value,
+          category: document.getElementById('productCategory').value,
+          gender: document.getElementById('productGender').value,
+          size: document.getElementById('productSize').value,
+          color: document.getElementById('productColor').value,
+          description: document.getElementById('productDesc').value,
+          inventory: parseInt(document.getElementById('productInventory').value) || 0,
+          img: currentProductImages[0],
+          images: currentProductImages,
+          status: 'Đang hiển thị',
+          createdAt: new Date().toISOString()
+        };
+
+        this.allProducts.push(newProduct);
+        localStorage.setItem('allProduct', JSON.stringify(this.allProducts));
+
+        console.log('Sản phẩm đã thêm:', newProduct);
+        alert('Thêm sản phẩm thành công!');
         closeProductForm();
+        this.currentPage = 1;
+        this.renderProductTable();
+        this.renderPagination();
       });
 
       // ===== SỬA SẢN PHẨM =====
-      const openEditProductForm = () => {
+      const openEditProductForm = (productId) => {
+        currentEditProductId = productId;
+        const product = this.allProducts.find(p => p.id === productId);
+
+        if (!product) return;
+        console.log(product);
+        document.getElementById('editProductCode').value = product.id;
+        document.getElementById('editProductName').value = product.name;
+        document.getElementById('editProductCategory').value = product.category;
+        document.getElementById('editProductGender').value = product.gender;
+        document.getElementById('editProductSize').value = Array.isArray(product.size) 
+                                                     ? product.size.join('-') 
+                                                     : product.size;
+        document.getElementById('editProductColor').value = Array.isArray(product.color) 
+                                                     ? product.color.join('-') 
+                                                     : product.color;
+        document.getElementById('editProductDesc').value = product.description || "none";
+        document.getElementById('editProductInventory').value = product.inventory || 0;
+
+        // Render images
+        const gallery = document.getElementById('editImageGallery');
+        console.log(product);
+        gallery.innerHTML = product["img-link-list"].map((img) => `
+          <div class="gallery-item" style="position: relative;">
+            <img src="${img}" alt="">
+            <button type="button" onclick="this.parentElement.remove()" 
+              style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer; padding: 5px;">
+              Xóa
+            </button>
+          </div>
+        `).join('');
+
+        console.log(product["img-link-list"]);
+        currentProductImages = [...product["img-link-list"]];
         document.getElementById('editProductFormModal').classList.add('active');
       };
 
       const closeEditProductForm = () => {
         document.getElementById('editProductFormModal').classList.remove('active');
+        currentEditProductId = null;
+        currentProductImages = [];
       };
+
+      document.getElementById('editProductImageInput').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const base64 = await fileToBase64(file);
+          currentProductImages.push(base64);
+          
+          const gallery = document.getElementById('editImageGallery');
+          const div = document.createElement('div');
+          div.className = 'gallery-item';
+          div.style.position = 'relative';
+          div.innerHTML = `
+            <img src="${base64}" alt="">
+            <button type="button" onclick="this.parentElement.remove()" 
+              style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer; padding: 5px;">
+              Xóa
+            </button>
+          `;
+          gallery.appendChild(div);
+        }
+      });
 
       document.getElementById('cancelEditBtn').addEventListener('click', closeEditProductForm);
       
@@ -362,10 +494,32 @@ export const AdminProduct = {
         if (e.target === this) closeEditProductForm();
       });
 
-      document.getElementById('editProductForm').addEventListener('submit', function(e) {
+      document.getElementById('editProductForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        console.log('Form sửa sản phẩm submitted');
-        closeEditProductForm();
+        
+        const idx = this.allProducts.findIndex(p => p.id === currentEditProductId);
+
+        if (idx !== -1) {
+          this.allProducts[idx] = {
+            ...this.allProducts[idx],
+            name: document.getElementById('editProductName').value,
+            category: document.getElementById('editProductCategory').value,
+            gender: document.getElementById('editProductGender').value,
+            size: ConvertInputToInt(document.getElementById('editProductSize').value),
+            color: ConvertInputToString(document.getElementById('editProductColor').value),
+            description: document.getElementById('editProductDesc').value,
+            inventory: parseInt(document.getElementById('editProductInventory').value) || 0,
+            "img-link-list": currentProductImages,
+            "img-represent": currentProductImages[0]
+          };
+
+          localStorage.setItem('allProduct', JSON.stringify(this.allProducts));
+          console.log('Sản phẩm đã cập nhật');
+          alert('Cập nhật sản phẩm thành công!');
+          closeEditProductForm();
+          this.renderProductTable();
+          this.renderPagination();
+        }
       });
 
       // ===== XÓA SẢN PHẨM =====
@@ -383,13 +537,21 @@ export const AdminProduct = {
       };
 
       const confirmDelete = () => {
+        const idx = this.allProducts.findIndex(p => p.id === currentDeleteProductId);
+        if (idx !== -1) {
+          this.allProducts.splice(idx, 1);
+          localStorage.setItem('allProduct', JSON.stringify(this.allProducts));
+        }
+
         console.log('Xóa sản phẩm:', currentDeleteProductId);
         alert('Sản phẩm ' + currentDeleteProductId + ' đã được xóa');
         closeDeleteModal();
+        this.renderProductTable();
+        this.renderPagination();
       };
 
       document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
-      document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+      document.getElementById('confirmDeleteBtn').addEventListener('click', () => confirmDelete.call(this));
       
       document.getElementById('deleteModal').addEventListener('click', function(e) {
         if (e.target === this) closeDeleteModal();
@@ -443,29 +605,74 @@ export const AdminProduct = {
       });
 
       // ===== EXPOSE FUNCTIONS FOR DYNAMIC TABLE ROWS =====
-      window.openEditProductForm = openEditProductForm;
+      window.openEditProductForm = (id) => openEditProductForm.call(this, id);
       window.openDeleteModal = openDeleteModal;
       window.openInventoryModal = openInventoryModal;
+      window.goToPage = (page) => this.goToPage(page);
+    },
+
+    // ===== LOAD PRODUCTS FROM LOCALSTORAGE =====
+    loadProducts: function() {
+      const stored = localStorage.getItem('allProduct');
+      if (stored) {
+        this.allProducts = JSON.parse(stored);
+      }
+    },
+
+    // ===== PAGINATION FUNCTIONS =====
+    goToPage: function(page) {
+      this.currentPage = page;
+      this.renderProductTable();
+      this.renderPagination();
+    },
+
+    getTotalPages: function() {
+      return Math.ceil(this.allProducts.length / this.productsPerPage);
+    },
+
+    getPaginatedProducts: function() {
+      const startIdx = (this.currentPage - 1) * this.productsPerPage;
+      const endIdx = startIdx + this.productsPerPage;
+      return this.allProducts.slice(startIdx, endIdx);
+    },
+
+    // ===== RENDER PAGINATION BUTTONS =====
+    renderPagination: function() {
+      const totalPages = this.getTotalPages();
+      const container = document.getElementById('paginationContainer');
+      let html = '';
+
+      // Nút Previous
+      if (this.currentPage > 1) {
+        html += `<button onclick="goToPage(${this.currentPage - 1})" style="margin-right: 5px;">←</button>`;
+      }
+
+      // Nút số trang
+      for (let i = 1; i <= totalPages; i++) {
+        const activeClass = i === this.currentPage ? 'active' : '';
+        html += `<button onclick="goToPage(${i})" class="${activeClass}">${i}</button>`;
+      }
+
+      // Nút Next
+      if (this.currentPage < totalPages) {
+        html += `<button onclick="goToPage(${this.currentPage + 1})" style="margin-left: 5px;">→</button>`;
+      }
+
+      container.innerHTML = html;
     },
 
     // ===== RENDER PRODUCT TABLE =====
     renderProductTable: function() {
-      const products = [
-        { id: 's1', name: 'Air Jordan 4 RM', img: '../product-img/s1/ms1-1.png', inventory: 100, category: "Men's" },
-        { id: 's2', name: 'Handball Spezial', img: '../product-img/s2/ms2-1.png', inventory: 100, category: "Men's" },
-        { id: 's3', name: 'Chuck 70', img: '../product-img/s3/ms3-1.png', inventory: 100, category: "Women's" },
-        { id: 's4', name: 'Classic Slip-On Checkerboard Shoe', img: '../product-img/s4/ms4-1.png', inventory: 100, category: "Men's" },
-        { id: 's5', name: 'Bella UT Femme', img: '../product-img/s5/ms5-1.png', inventory: 100, category: "Men's" }
-      ];
-
+      const products = this.getPaginatedProducts();
       const tbody = document.getElementById('productTableBody');
+      
       tbody.innerHTML = products.map(product => `
         <tr>
           <td><img src="../icon/show.png" alt="" class="show-hide-icon hide-icon-js" /></td>
           <td>${product.id}</td>
           <td>
             <div class="product-container">
-              <img src="${product.img}" alt="" class="product-img">
+              <img src="${product["img-represent"]}" alt="" class="product-img" style="max-width: 50px;">
               ${product.name}
             </div>
           </td>
@@ -475,9 +682,15 @@ export const AdminProduct = {
           <td class="action">
             <img src="../icon/Time Machine.png" alt="" style="cursor: pointer;" onclick="openInventoryModal('${product.id}', '${product.name}', 'Lịch sử: Nhập - Xuất - Tồn')">
             <button class="btn btn-lock" onclick="openDeleteModal('${product.id}', '${product.name}', '${product.img}')">Xóa</button>
-            <button class="btn btn-reset" onclick="openEditProductForm()">Sửa</button>
+            <button class="btn btn-reset" onclick="openEditProductForm('${product.id}')">Sửa</button>
           </td>
         </tr>
       `).join('');
     }
+}
+function ConvertInputToInt(string){
+  return string.split('-').map(Number);
+}
+function ConvertInputToString(string){
+  return string.split('-');
 }
