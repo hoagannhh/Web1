@@ -78,8 +78,8 @@ export function loadPageHome() {
   InsertPage("taskBar", taskBarContainer);
   // InsertPage("productDetail", ContentContainer);
   // InsertPage("cart", ContentContainer);
-  // InsertPage("product", ContentContainer);
-  InsertPage("home", ContentContainer);
+  // InsertPage("home", ContentContainer);
+  InsertPage("product", ContentContainer);
 
   InsertPage("footer", footerContainer);
 }
@@ -128,8 +128,6 @@ function LoadHtml(pageName, container) {
 }
 
 export function LoadCss(pageName) {
-  // ----------------------- kiểm tra các điều kiện -----------------------
-  //--------------------------------------------------------------------------
   const cssPath = `../css/${pageName}.css`;
   console.log(cssPath);
   const existingLink = document.querySelector(`link[href="${cssPath}"]`);
@@ -144,8 +142,7 @@ export function LoadCss(pageName) {
     console.error("ko tìm thấy css của " + pageName + " này trong Object");
   }
 
-  // ----------------------- link 1 css mới vào header -----------------------
-  //--------------------------------------------------------------------------
+  
   const element = pageComponent["css"];
   const linkElement = document.createElement("link");
   linkElement.rel = "stylesheet";

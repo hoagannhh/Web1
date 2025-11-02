@@ -204,6 +204,21 @@ export const SideBar = {
               <button class="dropdown-option">Low to High</button>
             </div>
           </li>
+          <li class="filter">
+            <button class="dropdown-btn">
+              <span>Category</span
+              ><img
+                src="../icon/drop-down-minor-svgrepo-com.svg"
+                alt=""
+                class="icon"
+              />
+            </button>
+            <ul class="sub-menu">
+              <div>
+                ${GetCategoryFromDatabase()}
+              </div>
+            </ul>
+          </li>
         </ul>
       </div>    
     `,
@@ -218,9 +233,11 @@ export const SideBar = {
       size: null,
       colors: [],
       sortBy: "Featured", // Giá trị mặc định
+      categories: [],
     };
     // console.log(filterState.sortBy);
 
+    //sư kiện đẻ hiện thị các field bên trong mỗi mục bạn muốn tìm kiếm
     sideBar();
     DevideFlowFilter(filterState, null, false);
   },
@@ -234,6 +251,7 @@ export function DevideFlowFilter(filterState, products, isFilterBySeach) {
     FilterVip(filterState, isFilterBySeach);
   }
 }
+// filter kết hợp với tìm kiếm tên ở trên
 function FilterVipBySearch(products, isFilterBySeach) {
   const filterState = {
     gender: [],
@@ -242,21 +260,26 @@ function FilterVipBySearch(products, isFilterBySeach) {
     size: null,
     colors: [],
     sortBy: "Featured", // Giá trị mặc định
+    categories: [],
   };
   AddEventButtonChooseSize(filterState, isFilterBySeach, products);
-  AddEventButton(filterState, isFilterBySeach, products);
+  AddEventButtonSortBy(filterState, isFilterBySeach, products);
+  AddEventBtnCategories(filterState, isFilterBySeach, products);
   ChooseGender(filterState, isFilterBySeach, products);
   ChooseProductSale(filterState, isFilterBySeach, products);
   FilterByMoney(filterState, isFilterBySeach, products);
   FilterByColor(filterState, isFilterBySeach, products);
 }
+// filter này chỉ sử dụng side bar
 function FilterVip(filterState, isFilterBySeach, products) {
   AddEventButtonChooseSize(filterState, isFilterBySeach, products);
-  AddEventButton(filterState, isFilterBySeach, products);
+  AddEventButtonSortBy(filterState, isFilterBySeach, products);
+  AddEventBtnCategories(filterState, isFilterBySeach, products);
   ChooseGender(filterState, isFilterBySeach, products);
   ChooseProductSale(filterState, isFilterBySeach, products);
   FilterByMoney(filterState, isFilterBySeach, products);
   FilterByColor(filterState, isFilterBySeach, products);
+
 }
 function AfterFilter(filterState, isFilterBySeach, products) {
   // console.log(filterState);
@@ -327,6 +350,37 @@ function ChooseGender(filterState, isFilterBySeach, products) {
     });
   });
 }
+// hàm chọn theo category
+function AddEventBtnCategories(filterState, isFilterBySeach, products){
+  console.log("filter theo category");
+  const submenu = document.querySelectorAll(".black-check-category");
+  console.log(submenu);
+
+  const categories = JSON.parse(localStorage.getItem("categoriesDB"));
+  let categoryID = [];
+  for(let i = 3; i < categories.length; i++){
+    categoryID.push(categories[i].id);
+  }
+  console.log(categoryID);
+  submenu.forEach((checkbox) => {
+    checkbox.addEventListener("change", ()=>{
+      // console.log(checkbox.id);
+      // console.log(categoryID)
+      // console.log(categoryID.includes(Number(checkbox.id)))
+      if (categoryID.includes(Number(checkbox.id))){
+        if (checkbox.checked){
+          filterState.categories.push(Number(checkbox.id));
+          console.log(filterState);
+        }else{
+          filterState.categories = filterState.categories.filter(c => c !== checkbox.id)
+                    console.log(filterState);
+
+        }
+        AfterFilter(filterState, isFilterBySeach, products);
+      }
+    })
+  })
+}
 // ||-- Ham Check --||Hàm để in trạng thái ra console mỗi khi có thay đổi
 function AddEventButtonChooseSize(filterState, isFilterBySeach, products) {
   const allButton = document.querySelectorAll(".sidebar-size-btn");
@@ -343,7 +397,7 @@ function AddEventButtonChooseSize(filterState, isFilterBySeach, products) {
     });
   });
 }
-function AddEventButton(filterState, isFilterBySeach, products) {
+function AddEventButtonSortBy(filterState, isFilterBySeach, products) {
   const allButton = document.querySelectorAll(".dropdown-option");
   allButton.forEach((button) => {
     button.addEventListener("click", () => {
@@ -356,6 +410,7 @@ function AddEventButton(filterState, isFilterBySeach, products) {
     });
   });
 }
+
 function sideBar() {
   const dropdownBtns = document.querySelectorAll(".dropdown-btn");
   dropdownBtns.forEach((btn) => {
@@ -431,7 +486,16 @@ function Filter(filterState, data) {
       );
     });
   }
-
+  console.log(filterState);
+  if (filterState.categories.length > 0){
+    console.log("filter: categories");
+    products = products.filter(p => {
+      // kiểm tra xem có ít nhất 1 cate gory có được chọn hay ko => true
+      return filterState.categories.some((selector) => {
+        p.category.includes(Number(selector));
+      })
+    })
+  }
   if (filterState.sortBy !== "Featured") {
     if (filterState.sortBy === "High to Low") {
       products = products.sort((a, b) => b.price - a.price);
@@ -509,7 +573,7 @@ function ConvertINTtoVND(number) {
   return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
 }
 function ResetAllFilters() {
-  // Reset checkboxes (Gender, Sale, Colors)
+  // Reset checkboxes (Gender, Sale, Colors, categories)
   const allCheckboxes = document.querySelectorAll('.black-check, .color-input');
   allCheckboxes.forEach(checkbox => {
     checkbox.checked = false;
@@ -532,4 +596,32 @@ function ResetAllFilters() {
   sortButtons.forEach(btn => {
     btn.classList.remove('selected');
   });
+}
+
+function GetCategoryFromDatabase(){
+  const categories = JSON.parse(localStorage.getItem("categoriesDB"));
+  let html = 
+  `
+  `;
+  if (!categories){
+    console.debug("Khong the load category tu local storage");
+    console.log(categories);
+    return;
+  }
+
+  console.log("----------------------------------------------------------------------------");
+  console.log(categories);
+  if (categories.length <= 3) return html;
+  for (let i = 3; i < categories.length; i++){
+    if (categories[i].isShown){
+      html += 
+          `
+              <li>
+                <input type="checkbox" id="${categories[i].id}" class="black-check-category" />
+                <label for="${categories[i].id}">${categories[i].name}</label>
+              </li>
+          `
+    }
+  }
+  return html;
 }

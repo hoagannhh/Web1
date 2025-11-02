@@ -553,11 +553,13 @@ export const AdminCategory = {
       // Gán sự kiện
       attachEventListeners();
     }
-    
+
     // =========================================
     // 10. CHẠY ỨNG DỤNG
     // =========================================
+    // localStorage.removeItem("categoriesDB");
     initializeApp();
+
   }
 };
 function generateNextId(categoriesData){
