@@ -1,6 +1,6 @@
+let allProducts = [];
 export const AdminDashBoard = {
-    html: 
-    `
+  html: `
       <div class="main-content">
         <div class="header">
           <div class="left-header">
@@ -166,12 +166,60 @@ export const AdminDashBoard = {
         </div>
       </div>
     `,
-    css: '../css/adminDashBoard.css',
-    canDeleteCss: true,
-    init: function(){
-        console.log("----------------------");
-        console.log("In admin Dash Board");
-        // localStorage.removeItem("allProduct");
+  css: "../css/adminDashBoard.css",
+  canDeleteCss: true,
+  init: async function () {
+    console.log("----------------------");
+    console.log("In admin Dash Board");
+    // localStorage.removeItem("allProduct");
+    // console.log(localStorage.removeItem("allProduct"));
+    console.log(allProducts);
+    const STORAGE_KEY = "allProduct";
 
+    // thử load từ localStorage trước
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          allProducts = parsed;
+          console.log(`Đã có dữ liệu ôk`);
+          return; // đã có dữ liệu, không cần fetch
+        }
+      } catch (e) {
+        console.warn("Corrupted localStorage data, will reload from JSON", e);
+        localStorage.removeItem(STORAGE_KEY);
+      }
     }
+
+    // nếu chưa có dữ liệu thì fetch từ file JSON và lưu vào localStorage
+    const JSON_FILE_PATH = "../data/product.json";
+    try {
+      await loadDataFromJson(JSON_FILE_PATH, allProducts);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(allProducts));
+      console.log(
+        `Saved ${allProducts.length} products to localStorage (${STORAGE_KEY})`
+      );
+    } catch (e) {
+      console.error("Failed to load products from JSON:", e);
+    }
+  },
+};
+async function loadDataFromJson(filePath, targetArray) {
+  console.log(`Bắt đầu tải dữ liệu từ: ${filePath}`);
+  try {
+    const response = await fetch(filePath);
+    if (!response.ok) {
+      throw new Error(`Lỗi HTTP: ${response.status} - Không thể tải tệp.`);
+    }
+
+    const data = await response.json();
+    targetArray.push(...data);
+
+    console.log(
+      `Tải dữ liệu hoàn tất. Số lượng mục đã tải: ${targetArray.length}`
+    );
+  } catch (error) {
+    console.error("Lỗi khi tải hoặc xử lý JSON:", error);
+  }
 }

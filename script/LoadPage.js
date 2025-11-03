@@ -78,8 +78,8 @@ export function loadPageHome() {
   InsertPage("taskBar", taskBarContainer);
   // InsertPage("productDetail", ContentContainer);
   // InsertPage("cart", ContentContainer);
-  // InsertPage("home", ContentContainer);
-  InsertPage("product", ContentContainer);
+  InsertPage("home", ContentContainer);
+  // InsertPage("product", ContentContainer);
 
   InsertPage("footer", footerContainer);
 }
@@ -142,7 +142,6 @@ export function LoadCss(pageName) {
     console.error("ko tìm thấy css của " + pageName + " này trong Object");
   }
 
-  
   const element = pageComponent["css"];
   const linkElement = document.createElement("link");
   linkElement.rel = "stylesheet";
