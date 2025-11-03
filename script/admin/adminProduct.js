@@ -375,11 +375,10 @@ export const AdminProduct = {
     this.loadProducts();
 
     // --- NEW: imported items (từ productImport) ---
+    console.log(localStorage.getItem("productImport"));
     let importedItems = []; // [{ name, totalQty }]
     const loadImportedItems = () => {
-      const raw =
-        localStorage.getItem("productImport") ||
-        localStorage.getItem("producImport");
+      const raw = localStorage.getItem("productImport");
       if (!raw) {
         importedItems = [];
         return;
@@ -400,20 +399,50 @@ export const AdminProduct = {
           // parsed is orders array -> flatten items
           const arr = Array.isArray(parsed) ? parsed : [];
           arr.forEach((o) => {
-            if (Array.isArray(o.items)) itemsList = itemsList.concat(o.items);
+            // if (Array.isArray(o.items)) itemsList = itemsList.concat(o.items);
+            if (Array.isArray(o.items)) {
+              o.items.forEach((it) => {
+                itemsList.push({
+                  ...it,
+                  status:
+                    o.status || (Number(it.qty) > 0 ? "completed" : "pending"),
+                });
+              });
+            }
           });
         }
         // aggregate by name
+        //   const map = {};
+        //   itemsList.forEach((it) => {
+        //     const name = (it.name || "").trim();
+        //     const qty = Number(it.qty) || 0;
+        //     if (!name) return;
+        //     map[name] = (map[name] || 0) + qty;
+        //   });
+        //   importedItems = Object.keys(map).map((name) => ({
+        //     name,
+        //     totalQty: map[name],
+        //     status: map[name] > 0 ? "completed" : "pending",
+        //   }));
+        // }
         const map = {};
         itemsList.forEach((it) => {
           const name = (it.name || "").trim();
           const qty = Number(it.qty) || 0;
+          const status = it.status;
           if (!name) return;
-          map[name] = (map[name] || 0) + qty;
+
+          if (!map[name]) map[name] = { totalQty: 0, status: status };
+          map[name].totalQty += qty;
+
+          // nếu cùng sản phẩm mà có status khác nhau → mixed
+          if (map[name].status !== status) map[name].status = "mixed";
         });
+
         importedItems = Object.keys(map).map((name) => ({
           name,
-          totalQty: map[name],
+          totalQty: map[name].totalQty,
+          status: map[name].status,
         }));
       } catch (err) {
         console.error("Failed to parse productImport", err);
@@ -427,10 +456,13 @@ export const AdminProduct = {
       sel.innerHTML =
         '<option value="">Chọn sản phẩm (lấy từ phiếu nhập)</option>';
       importedItems.forEach((it, idx) => {
-        const opt = document.createElement("option");
-        opt.value = it.name;
-        opt.textContent = `${it.name} — Sẵn có: ${it.totalQty}`;
-        sel.appendChild(opt);
+        console.log(it.status);
+        if (it.status == "completed") {
+          const opt = document.createElement("option");
+          opt.value = it.name;
+          opt.textContent = `${it.name} — Sẵn có: ${it.totalQty}`;
+          sel.appendChild(opt);
+        }
       });
     };
 
@@ -452,7 +484,10 @@ export const AdminProduct = {
       const categories = (Array.isArray(raw) ? raw : [])
         .map((c) =>
           typeof c === "object" && c !== null
-            ? { name: String(c.name || "").trim(), isShown: c.hasOwnProperty("isShown") ? !!c.isShown : true }
+            ? {
+                name: String(c.name || "").trim(),
+                isShown: c.hasOwnProperty("isShown") ? !!c.isShown : true,
+              }
             : { name: String(c).trim(), isShown: true }
         )
         .filter((c) => c.name);
@@ -471,9 +506,11 @@ export const AdminProduct = {
       if (addContainer) {
         addContainer.innerHTML = "";
         if (optionalItems.length === 0) {
-          if (addContainer.parentElement) addContainer.parentElement.style.display = "none";
+          if (addContainer.parentElement)
+            addContainer.parentElement.style.display = "none";
         } else {
-          if (addContainer.parentElement) addContainer.parentElement.style.display = "";
+          if (addContainer.parentElement)
+            addContainer.parentElement.style.display = "";
           optionalItems.forEach((item, idx) => {
             const id = `add_cat_${idx}`;
             const wrapper = document.createElement("label");
@@ -490,9 +527,11 @@ export const AdminProduct = {
       if (editContainer) {
         editContainer.innerHTML = "";
         if (optionalItems.length === 0) {
-          if (editContainer.parentElement) editContainer.parentElement.style.display = "none";
+          if (editContainer.parentElement)
+            editContainer.parentElement.style.display = "none";
         } else {
-          if (editContainer.parentElement) editContainer.parentElement.style.display = "";
+          if (editContainer.parentElement)
+            editContainer.parentElement.style.display = "";
           optionalItems.forEach((item, idx) => {
             const id = `edit_cat_${idx}`;
             const wrapper = document.createElement("label");
@@ -555,9 +594,13 @@ export const AdminProduct = {
       populateCategoryControls(); // render options each lần mở
 
       // clear main-type radios & optional checkboxes in add form to avoid remembering previous state
-      document.querySelectorAll('input[name="productMainType"]').forEach(r => r.checked = false);
-      const addChk = document.querySelectorAll('#categoryCheckboxes input[type="checkbox"]');
-      addChk.forEach(cb => cb.checked = false);
+      document
+        .querySelectorAll('input[name="productMainType"]')
+        .forEach((r) => (r.checked = false));
+      const addChk = document.querySelectorAll(
+        '#categoryCheckboxes input[type="checkbox"]'
+      );
+      addChk.forEach((cb) => (cb.checked = false));
 
       if (!importedItems.length) {
         alert(
@@ -711,8 +754,12 @@ export const AdminProduct = {
 
       // render checkboxes (in case categories changed) and CLEAR previous selections first
       populateCategoryControls();
-      document.querySelectorAll('input[name="editProductMainType"]').forEach(r => r.checked = false);
-      document.querySelectorAll('#editCategoryCheckboxes input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document
+        .querySelectorAll('input[name="editProductMainType"]')
+        .forEach((r) => (r.checked = false));
+      document
+        .querySelectorAll('#editCategoryCheckboxes input[type="checkbox"]')
+        .forEach((cb) => (cb.checked = false));
 
       // NEW: set edit main type radio + optional checkboxes
       const values = Array.isArray(product.category)
@@ -786,8 +833,12 @@ export const AdminProduct = {
       currentEditProductId = null;
       currentProductImages = [];
       // clear radios and checkboxes so next open starts fresh
-      document.querySelectorAll('input[name="editProductMainType"]').forEach(r => r.checked = false);
-      document.querySelectorAll('#editCategoryCheckboxes input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document
+        .querySelectorAll('input[name="editProductMainType"]')
+        .forEach((r) => (r.checked = false));
+      document
+        .querySelectorAll('#editCategoryCheckboxes input[type="checkbox"]')
+        .forEach((cb) => (cb.checked = false));
       // also reset edit form fields
       const f = document.getElementById("editProductForm");
       if (f) f.reset();
