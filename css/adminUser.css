@@ -4,7 +4,7 @@ body {
   background-color: #f5f5f5;
   overflow: hidden;
 }
-.admin-container{
+.admin-container {
   display: flex;
   gap: 4%;
 }
@@ -94,18 +94,18 @@ tbody tr:last-child {
   object-fit: cover; /* Đảm bảo ảnh vừa vặn */
 }
 /* khung mở tài khoản */
-.form-change-password .icon,.form-verification-unlock .icon{
+.form-change-password .icon,
+.form-verification-unlock .icon {
   width: 50px;
   height: 50px;
   border-radius: 100%;
   object-fit: cover;
 }
-.form-verification-unlock .form-verification__Headerlock{
+.form-verification-unlock .form-verification__Headerlock {
   font-size: 23px;
-  color: #00AF0C;
-
+  color: #00af0c;
 }
-.form-verification-unlock .btn.cancel{
+.form-verification-unlock .btn.cancel {
   box-sizing: content-box;
   color: gray;
   background-color: white;
@@ -116,31 +116,30 @@ tbody tr:last-child {
   font-size: 15px;
   font-weight: bold;
 }
-.form-verification-unlock .container-btn{
+.form-verification-unlock .container-btn {
   display: flex;
   margin-top: 20px;
   justify-content: flex-end;
   margin-right: 20px;
 }
-.form-verification-unlock .btn.veritification{
+.form-verification-unlock .btn.veritification {
   box-sizing: content-box;
   font-weight: bold;
   font-size: 15px;
   color: rgb(255, 255, 255);
-  background-color: #00FF44;
+  background-color: #00ff44;
   border: rgb(0, 254, 174) solid 2px;
   border-radius: 2x;
   width: 150px;
-  
 }
-.form-verification-unlock .icon.represent{
+.form-verification-unlock .icon.represent {
   padding: 10px;
 }
-.form-verification-unlock .form-verification__name{
+.form-verification-unlock .form-verification__name {
   font-size: 20px;
 }
 
-.form-verification-unlock .container-infor-lockacc{
+.form-verification-unlock .container-infor-lockacc {
   display: flex;
   border: #111111 solid 1px;
   padding: 0px 20px;
@@ -148,26 +147,26 @@ tbody tr:last-child {
   align-items: center;
   border-radius: 20px;
 }
-.form-verification-unlock .container-notification{
-  margin-top: 20px; 
+.form-verification-unlock .container-notification {
+  margin-top: 20px;
 }
-.form-verification-unlock .icon.lock{
-  background-color: #D3FFD6;
+.form-verification-unlock .icon.lock {
+  background-color: #d3ffd6;
   padding: 10px;
 }
-.form-verification-unlock  .notification{
+.form-verification-unlock .notification {
   font-size: 19px;
   padding: 0px 20px;
   margin: 0px;
 }
-.form-verification-unlock .form-verification__header{
+.form-verification-unlock .form-verification__header {
   margin-top: 15px;
   padding: 0px 20px;
   display: flex;
   justify-content: space-around;
 }
 
-.form-verification-unlock{
+.form-verification-unlock {
   background-color: white;
   border-radius: 20px;
   width: 600px;
@@ -178,18 +177,17 @@ tbody tr:last-child {
   transform: translate(-50%, -50%);
 }
 /* khung khóa tài khoản */
-.form-verification .icon{
+.form-verification .icon {
   width: 50px;
   height: 50px;
   border-radius: 100%;
   object-fit: cover;
 }
-.form-verification__Headerlock{
+.form-verification__Headerlock {
   font-size: 23px;
   color: red;
-
 }
-.btn.cancel{
+.btn.cancel {
   box-sizing: content-box;
   color: gray;
   background-color: white;
@@ -200,12 +198,12 @@ tbody tr:last-child {
   font-size: 15px;
   font-weight: bold;
 }
-.container-btn{
+.container-btn {
   display: flex;
   justify-content: flex-end;
   margin-right: 20px;
 }
-.btn.veritification{
+.btn.veritification {
   box-sizing: content-box;
   font-weight: bold;
   font-size: 15px;
@@ -214,16 +212,15 @@ tbody tr:last-child {
   border: rgb(233, 9, 9) solid 2px;
   border-radius: 2x;
   width: 150px;
-  
 }
-.icon.represent{
+.icon.represent {
   padding: 10px;
 }
-.form-verification__name{
+.form-verification__name {
   font-size: 20px;
 }
 
-.container-infor-lockacc{
+.container-infor-lockacc {
   display: flex;
   border: #111111 solid 1px;
   padding: 0px 20px;
@@ -231,25 +228,25 @@ tbody tr:last-child {
   align-items: center;
   border-radius: 20px;
 }
-.form-verification .container-notification{
-  margin-top: 20px; 
+.form-verification .container-notification {
+  margin-top: 20px;
 }
-.icon.lock{
-  background-color: #FFDDDD;
+.icon.lock {
+  background-color: #ffdddd;
   padding: 10px;
 }
-.container-notification .notification{
+.container-notification .notification {
   font-size: 19px;
   padding: 0px 20px;
   margin: 0px;
 }
-.form-verification__header{
+.form-verification__header {
   margin-top: 15px;
   padding: 0px 20px;
   display: flex;
   justify-content: space-around;
 }
-.form-verification{
+.form-verification {
   display: block;
   background-color: white;
   border-radius: 20px;
@@ -260,25 +257,25 @@ tbody tr:last-child {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.model-overlay{
+.model-overlay {
   display: none;
   position: fixed;
   background-color: rgba(55, 52, 52, 0.5);
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
   z-index: 5;
 }
 /* khung đổi mật khẩu */
-.form-change-password .form-verification__header{
+.form-change-password .form-verification__header {
   display: flex;
   gap: 10px;
 }
-.print-error{
+.print-error {
   /* position: absolute; */
   color: red;
   font-size: 10px;
 }
-.form-change-password fieldset{
+.form-change-password fieldset {
   display: flex;
   flex-direction: column;
   box-sizing: content-box;
@@ -287,7 +284,7 @@ tbody tr:last-child {
   width: 350px;
   margin: 20px 0px;
 }
-.form-change-password{
+.form-change-password {
   background-color: white;
   border-radius: 20px;
   width: 600px;
@@ -301,25 +298,23 @@ tbody tr:last-child {
   /* justify-content: center; */
   align-items: center;
 }
-fieldset input{
+fieldset input {
   padding: 10px 20px;
   margin: 10px 0px;
-
 }
-.form-change-password .btn.veritification{
-    background-color: #0080AF;
-
+.form-change-password .btn.veritification {
+  background-color: #0080af;
 }
-.form-verification__HeaderKey{
+.form-verification__HeaderKey {
   font-size: 20px;
   /* font-weight: bold; */
-  color: #0080AF;
+  color: #0080af;
 }
-.form-change-password .container-btn{
+.form-change-password .container-btn {
   width: 70%;
 }
-.icon.key{
-  background-color:#C7F0FF;
+.icon.key {
+  background-color: #c7f0ff;
   padding: 10px;
 }
 /* --- Các nút (Buttons) --- */
@@ -371,6 +366,37 @@ fieldset input{
   font-size: 14px;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-.btn-unlock{
+.btn-unlock {
   background-color: rgb(10, 191, 10);
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.pagination-container button {
+  background-color: white;
+  border: 1px solid #cdcdcd;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination-container button.active {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination-container button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-container button:hover:not(:disabled):not(.active) {
+  background-color: #ddd;
 }

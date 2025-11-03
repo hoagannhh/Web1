@@ -1,6 +1,5 @@
 export const AdminUser = {
-    html: 
-    `
+  html: `
     
       <div class="main-content">
         <div class="header">
@@ -54,27 +53,23 @@ export const AdminUser = {
       </div>
 
     `,
-    css: "../css/adminUser.css",
-    canDeleteCss: true,
-    init: function(){
-        loadAccount();
+  css: "../css/adminUser.css",
+  canDeleteCss: true,
+  init: function () {
+    loadAccount();
+  },
+};
+
+// hàm 4 xử lý khóa tài khoản
+function HandleLock(id, btn, accounts) {
+  let acc;
+  accounts.forEach((account) => {
+    if (account.username === id) {
+      acc = account;
     }
-}
-
-
-
-
-
-// hàm 4 xử lý khóa tài khoản 
-function HandleLock(id, btn, accounts){
-    let acc;
-    accounts.forEach(account => {
-        if (account.username === id){
-            acc = account;
-        }
-    })
-    console.log(acc);
-    const html = `         
+  });
+  console.log(acc);
+  const html = `         
     <div class="form-verification">
             <div class="form-verification__header">
             <img class="icon lock" src="../icon/Lock.png" alt="">
@@ -93,54 +88,53 @@ function HandleLock(id, btn, accounts){
                 <button class="btn veritification">Xác nhận khóa</button>
             </div>
         </div>`;
-    // khởi tạo form ban đầu
-    const model = document.querySelector(".model-overlay");
-    model.style.display = "block";
-    model.innerHTML = html;
-    
-    // th1: hủy k muốn khóa tài khoản này
-    console.log("before handle")
-    model.querySelector(".cancel").addEventListener("click", ()=>{
-        model.style.display = "none";
-        console.log("get in th1")
-    })
+  // khởi tạo form ban đầu
+  const model = document.querySelector(".model-overlay");
+  model.style.display = "block";
+  model.innerHTML = html;
 
-    // th2: muốn khóa tài khoản này
-    model.querySelector(".veritification").addEventListener("click", ()=>{
-        model.style.display = "none";
-        console.log("get in th2")
-        lockAccount(accounts, id);
+  // th1: hủy k muốn khóa tài khoản này
+  console.log("before handle");
+  model.querySelector(".cancel").addEventListener("click", () => {
+    model.style.display = "none";
+    console.log("get in th1");
+  });
 
-        convertTextLock(btn);
-    })
+  // th2: muốn khóa tài khoản này
+  model.querySelector(".veritification").addEventListener("click", () => {
+    model.style.display = "none";
+    console.log("get in th2");
+    lockAccount(accounts, id);
 
+    convertTextLock(btn);
+  });
 }
-function lockAccount(accounts, id){
-    accounts.forEach(account => {
-        if (account.username === id){
-            console.log(account);
-            let isLockAccount = true;
-            account = {
-                ...account,
-                isLockAccount
-            }
-            accounts = accounts.filter(acc => acc.username !== id)
-            accounts.push(account);
-            console.log(accounts);
-            localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
-        }
-    })
+function lockAccount(accounts, id) {
+  accounts.forEach((account) => {
+    if (account.username === id) {
+      console.log(account);
+      let isLockAccount = true;
+      account = {
+        ...account,
+        isLockAccount,
+      };
+      accounts = accounts.filter((acc) => acc.username !== id);
+      accounts.push(account);
+      console.log(accounts);
+      localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
+    }
+  });
 }
 // hàm 5 xử lý mở khóa tài khoản
-function HandleUnlock(id, btn, accounts){
-    let acc;
-    accounts.forEach(account => {
-        if (account.username === id){
-            acc = account;
-        }
-    })
-    console.log(acc);
-    const html = `           
+function HandleUnlock(id, btn, accounts) {
+  let acc;
+  accounts.forEach((account) => {
+    if (account.username === id) {
+      acc = account;
+    }
+  });
+  console.log(acc);
+  const html = `           
         <div class="form-verification-unlock">
             <div class="form-verification__header">
             <img class="icon lock" src="../icon/Padlock.png" alt="">
@@ -159,53 +153,52 @@ function HandleUnlock(id, btn, accounts){
                 <button class="btn veritification">Xác nhận</button>
             </div>
         </div>`;
-    // khởi tạo form ban đầu
-    const model = document.querySelector(".model-overlay");
-    model.style.display = "block";
-    model.innerHTML = html;
-    
-    // th1: hủy k muốn khóa tài khoản này
-    console.log("before handle")
-    model.querySelector(".cancel").addEventListener("click", ()=>{
-        model.style.display = "none";
-        console.log("get in th1")
-    })
+  // khởi tạo form ban đầu
+  const model = document.querySelector(".model-overlay");
+  model.style.display = "block";
+  model.innerHTML = html;
 
-    // th2: muốn mở khóa tài khoản này
-    model.querySelector(".veritification").addEventListener("click", ()=>{
-        model.style.display = "none";
-        console.log("get in th2")
-        unlockAccount(id, accounts);
-        convertTexUnlLock(btn);
-    })
+  // th1: hủy k muốn khóa tài khoản này
+  console.log("before handle");
+  model.querySelector(".cancel").addEventListener("click", () => {
+    model.style.display = "none";
+    console.log("get in th1");
+  });
 
+  // th2: muốn mở khóa tài khoản này
+  model.querySelector(".veritification").addEventListener("click", () => {
+    model.style.display = "none";
+    console.log("get in th2");
+    unlockAccount(id, accounts);
+    convertTexUnlLock(btn);
+  });
 }
-function unlockAccount(id, accounts){
-    accounts.forEach(account => {
-        if (account.username === id){
-            console.log(account);
-            let isLockAccount = false;
-            account = {
-                ...account,
-                isLockAccount
-            }
-            accounts = accounts.filter(acc => acc.username !== id)
-            accounts.push(account);
-            console.log(accounts);
-            localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
-        }
-    })
+function unlockAccount(id, accounts) {
+  accounts.forEach((account) => {
+    if (account.username === id) {
+      console.log(account);
+      let isLockAccount = false;
+      account = {
+        ...account,
+        isLockAccount,
+      };
+      accounts = accounts.filter((acc) => acc.username !== id);
+      accounts.push(account);
+      console.log(accounts);
+      localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
+    }
+  });
 }
 // hàm 6 xử lý quên mật khẩu
-function HandleResetPassword(id, btn, accounts){
-    let acc;
-    accounts.forEach(account => {
-        if (account.username === id){
-            acc = account;
-        }
-    })
-    console.log(acc);
-    const html =  `
+function HandleResetPassword(id, btn, accounts) {
+  let acc;
+  accounts.forEach((account) => {
+    if (account.username === id) {
+      acc = account;
+    }
+  });
+  console.log(acc);
+  const html = `
     <div class="form-change-password">
         <div class="form-verification__header">
             <img class="icon key" src="../icon/Key.png" alt="">
@@ -230,123 +223,230 @@ function HandleResetPassword(id, btn, accounts){
         <button class="btn veritification">Xác nhận đổi</button>
     </div>
     </div>
-    `
-    // khởi tạo
-    const model = document.querySelector(".model-overlay");
-    model.style.display = "block"
-    model.innerHTML = html;
+    `;
+  // khởi tạo
+  const model = document.querySelector(".model-overlay");
+  model.style.display = "block";
+  model.innerHTML = html;
 
-
-    // xử lý 
-    model.querySelector(".cancel").addEventListener("click", ()=>{
-        model.style.display = "none"
-    })
-    model.querySelector(".veritification").addEventListener("click", ()=>{
-        // xử lý đổi mật khẩu lưu lại data
-        changePassword(id, accounts, model);
-    })
-
-}
-function changePassword(id, accounts, model){
-    const pass = document.getElementById("password").value.trim();
-    const passCtn = document.getElementById("continue-password").value.trim();
-    console.log(pass + " -::- " + passCtn);
-    if (pass === passCtn){
-        accounts.forEach(acc => {
-            if (acc.username === id){
-                let newAcc = {
-                    ...acc,
-                    pass
-                }
-                console.log(newAcc);
-                accounts = accounts.filter(acc => acc.username !== id)
-                accounts.push(newAcc);
-                console.log(accounts);
-                localStorage.setItem("ACCOUNTS", JSON.stringify(accounts))
-            }
-        })
+  // xử lý
+  model.querySelector(".cancel").addEventListener("click", () => {
     model.style.display = "none";
-    }else {
-        document.querySelectorAll(".print-error").forEach(e => {
-            e.textContent = "Nhap sai mat khau";
-        })
-    }
+  });
+  model.querySelector(".veritification").addEventListener("click", () => {
+    // xử lý đổi mật khẩu lưu lại data
+    changePassword(id, accounts, model);
+  });
+}
+function changePassword(id, accounts, model) {
+  const pass = document.getElementById("password").value.trim();
+  const passCtn = document.getElementById("continue-password").value.trim();
+  console.log(pass + " -::- " + passCtn);
+  if (pass === passCtn) {
+    accounts.forEach((acc) => {
+      if (acc.username === id) {
+        let newAcc = {
+          ...acc,
+          pass,
+        };
+        console.log(newAcc);
+        accounts = accounts.filter((acc) => acc.username !== id);
+        accounts.push(newAcc);
+        console.log(accounts);
+        localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
+      }
+    });
+    model.style.display = "none";
+  } else {
+    document.querySelectorAll(".print-error").forEach((e) => {
+      e.textContent = "Nhap sai mat khau";
+    });
+  }
 }
 //hàm thay đổi chữ
-function convertTextLock(btn){
-    btn.classList.remove("btn-lock");
-    btn.classList.add("btn-unlock");
-    btn.textContent = "Mở khóa";
+function convertTextLock(btn) {
+  btn.classList.remove("btn-lock");
+  btn.classList.add("btn-unlock");
+  btn.textContent = "Mở khóa";
 }
-function convertTexUnlLock(btn){
-    btn.classList.remove("btn-unlock");
-    btn.classList.add("btn-lock");
-    btn.textContent = "Khóa tài khoản";
+function convertTexUnlLock(btn) {
+  btn.classList.remove("btn-unlock");
+  btn.classList.add("btn-lock");
+  btn.textContent = "Khóa tài khoản";
 }
 // hàm 3 (Nên định nghĩa trước khi gọi)
 function AddEvent() {
-    const container = document.querySelector(".main-content");
-    
-    container.addEventListener("click", (event)=>{
-        const clicked = event.target;
-        const tr = clicked.closest("tr");
-        const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
-        
-        console.log(tr);
-        console.log(accounts);
+  const container = document.querySelector(".main-content");
 
+  container.addEventListener("click", (event) => {
+    const clicked = event.target;
+    const tr = clicked.closest("tr");
+    const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
 
-        if (!tr) return;
-        const id = tr.dataset.id;
-
-        if (clicked.classList.contains("btn-lock")){
-            console.log("lock: " + id);
-            HandleLock(id, clicked, accounts);
-        }else if (clicked.classList.contains("btn-unlock")){
-            console.log("unlock: " + id);
-            HandleUnlock(id, clicked, accounts);
-        }else if (clicked.classList.contains("btn-reset")){
-            console.log("reset: " + id);
-            HandleResetPassword(id, clicked, accounts);
-        }
-    })
-};
-function loadAccount(){
-      let html = ``;
-      const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
+    console.log(tr);
     console.log(accounts);
-      if (accounts && accounts.length > 0) {    
-        accounts.forEach((account) => {
-          let userProfile = account.userProfile;
 
-          //  Kiểm tra userProfile có tồn tại không**
-          if (userProfile) {
-            html += `
-              <tr data-id=${account.username}>
-                <td>
-                  <div class="user-info">
-                    <img
-                      src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
-                      alt="Marin avatar"
-                    />
-                    <span>${userProfile.fullName || "None"}</span>
-                  </div>
-                </td>
-                <td>${userProfile.birthDate || "None"}</td>
-                <td>${userProfile.phoneNumber || "None"}</td>
-                <td>${userProfile.email || "None"}</td>
-                <td>
-                  <button class="btn btn-lock">Khóa tài khoản</button>
-                  <button class="btn btn-reset">Đổi mật khẩu</button>
-                </td>
-              </tr>
-            `;
-          }
-          // Bạn có thể thêm else ở đây để render 1 hàng báo lỗi cho account hỏng
-        });
+    if (!tr) return;
+    const id = tr.dataset.id;
+
+    if (clicked.classList.contains("btn-lock")) {
+      console.log("lock: " + id);
+      HandleLock(id, clicked, accounts);
+    } else if (clicked.classList.contains("btn-unlock")) {
+      console.log("unlock: " + id);
+      HandleUnlock(id, clicked, accounts);
+    } else if (clicked.classList.contains("btn-reset")) {
+      console.log("reset: " + id);
+      HandleResetPassword(id, clicked, accounts);
     }
-    const b = document.querySelector("tbody");
-    b.innerHTML = html;
-    AddEvent();
+  });
+}
+let currentPage = 1;
+const rowsPerPage = 7;
+let accountsData = []; // lưu tạm danh sách tài khoản
+// function loadAccount() {
+//   let html = ``;
+//   const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
+//   console.log(accounts);
+//   if (accounts && accounts.length > 0) {
+//     accounts.forEach((account) => {
+//       let userProfile = account.userProfile;
 
+//       //  Kiểm tra userProfile có tồn tại không**
+//       if (userProfile) {
+//         html += `
+//               <tr data-id=${account.username}>
+//                 <td>
+//                   <div class="user-info">
+//                     <img
+//                       src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+//                       alt="Marin avatar"
+//                     />
+//                     <span>${userProfile.fullName || "None"}</span>
+//                   </div>
+//                 </td>
+//                 <td>${userProfile.birthDate || "None"}</td>
+//                 <td>${userProfile.phoneNumber || "None"}</td>
+//                 <td>${userProfile.email || "None"}</td>
+//                 <td>
+//                   <button class="btn btn-lock">Khóa tài khoản</button>
+//                   <button class="btn btn-reset">Đổi mật khẩu</button>
+//                 </td>
+//               </tr>
+//             `;
+//       }
+//       // Bạn có thể thêm else ở đây để render 1 hàng báo lỗi cho account hỏng
+//     });
+//   }
+//   const b = document.querySelector("tbody");
+//   b.innerHTML = html;
+//   AddEvent();
+// }
+function loadAccount() {
+  const accounts = JSON.parse(localStorage.getItem("ACCOUNTS")) || [];
+  accountsData = accounts; // lưu danh sách gốc
+  renderPage(currentPage);
+  renderPaginationControls(accountsData.length);
+  AddEvent();
+}
+function renderPage(page) {
+  const tbody = document.querySelector("tbody");
+  tbody.innerHTML = "";
+
+  if (!accountsData || accountsData.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='5'>Không có tài khoản nào</td></tr>";
+    return;
+  }
+
+  const start = (page - 1) * rowsPerPage;
+  const end = start + rowsPerPage;
+  const paginatedItems = accountsData.slice(start, end);
+
+  let html = "";
+  paginatedItems.forEach((account) => {
+    const userProfile = account.userProfile || {};
+    html += `
+      <tr data-id="${account.username}">
+        <td>
+          <div class="user-info">
+            <img
+              src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
+              alt="User avatar"
+            />
+            <span>${userProfile.fullName || "None"}</span>
+          </div>
+        </td>
+        <td>${userProfile.birthDate || "None"}</td>
+        <td>${userProfile.phoneNumber || "None"}</td>
+        <td>${userProfile.email || "None"}</td>
+        <td>
+          <button class="btn ${
+            account.isLockAccount ? "btn-unlock" : "btn-lock"
+          }">
+            ${account.isLockAccount ? "Mở khóa" : "Khóa tài khoản"}
+          </button>
+          <button class="btn btn-reset">Đổi mật khẩu</button>
+        </td>
+      </tr>
+    `;
+  });
+  tbody.innerHTML = html;
+}
+
+// HÀM NAYF TẠO NÚT PHÂN TRANG
+function renderPaginationControls(totalItems) {
+  const totalPages = Math.ceil(totalItems / rowsPerPage);
+  const container = document.querySelector(".pagination-container");
+
+  // Nếu chưa có container -> tạo mới
+  if (!container) {
+    const paginationDiv = document.createElement("div");
+    paginationDiv.classList.add("pagination-container");
+    paginationDiv.style.textAlign = "center";
+    paginationDiv.style.marginTop = "20px";
+    document.querySelector(".user-table-container").appendChild(paginationDiv);
+  }
+
+  const pagination = document.querySelector(".pagination-container");
+  pagination.innerHTML = "";
+
+  // Nút "Prev"
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "‹";
+  prevBtn.disabled = currentPage === 1;
+  prevBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPage(currentPage);
+      renderPaginationControls(accountsData.length);
+    }
+  });
+  pagination.appendChild(prevBtn);
+
+  // Nút số trang
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    btn.classList.add("page-btn");
+    if (i === currentPage) btn.classList.add("active");
+    btn.addEventListener("click", () => {
+      currentPage = i;
+      renderPage(currentPage);
+      renderPaginationControls(accountsData.length);
+    });
+    pagination.appendChild(btn);
+  }
+
+  // Nút "Next"
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "›";
+  nextBtn.disabled = currentPage === totalPages;
+  nextBtn.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderPage(currentPage);
+      renderPaginationControls(accountsData.length);
+    }
+  });
+  pagination.appendChild(nextBtn);
 }

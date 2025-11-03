@@ -247,13 +247,16 @@ function AddEventBuyNow(productContainer) {
   });
 }
 function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
+  const validProducts = allProducts.filter((p) => p.inventory > 0);
+
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
-  const currentProducts = allProducts.slice(startIndex, endIndex);
+  const currentProducts = validProducts.slice(startIndex, endIndex);
 
   htmlProduct = ""; // reset nội dung cũ
   console.log(allProducts);
   currentProducts.forEach((product) => {
+    if (product.inventory <= 0) return;
     htmlProduct += `
  <div class="prod-demo" data-id="${product.id}">
     <div class="card-inner">
@@ -308,7 +311,7 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
 }
 function LinkSize(product) {
   let html = ``;
-  console.log(product)
+  console.log(product);
   product["size"].forEach((size) => {
     html += `
           <button class="size-btn" data-size="${size}">${size}</button>

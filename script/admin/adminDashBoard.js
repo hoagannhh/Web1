@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 let allProducts = [];
 let categories = [];
+=======
+>>>>>>> 89d5f0f40982a90b84442fef2101c72b3d3d7588
 export const AdminDashBoard = {
   html: `
       <div class="main-content">
@@ -174,7 +177,8 @@ export const AdminDashBoard = {
     console.log("In admin Dash Board");
     // localStorage.removeItem("categoriesDB");
     // console.log(localStorage.removeItem("allProduct"));
-
+    let allProducts = [];
+    console.log(allProducts);
     const STORAGE_KEY = "allProduct";
     const CATEGORY_KEY = "categoriesDB";
     await loadInitialData();
