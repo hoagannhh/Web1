@@ -5,6 +5,7 @@ import { AdminProduct } from "./adminProduct.js";
 import { AdminPrice } from "./adminPrice.js";
 import { AdminOrder } from "./adminOrder.js";
 import { AdminImportProduct } from "./adminImportPeoduct.js";
+import { AdminLogin } from "./adminLogin.js";
 
 import { AdminSideBar } from "./adminSideBar.js";
 const routes = {
@@ -14,11 +15,13 @@ const routes = {
     '/product': AdminProduct,
     '/price' : AdminPrice,
     '/order' : AdminOrder,
-    '/importProduct': AdminImportProduct
+    '/importProduct': AdminImportProduct,
+    '/login': AdminLogin
 }
 // Khởi tạo khi DOM ready
-navigateTo();
+navigateTo('/login');
 export function navigateTo(path) {
+
     handleRouteChange(path);
 }
 // hàm 1: router giúp cho việc điều hướng
