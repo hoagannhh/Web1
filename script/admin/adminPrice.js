@@ -122,17 +122,60 @@ export const AdminPrice = {
     // profitRules: Chứa các quy tắc lợi nhuận:
     // - category: Mặc định cho Men, Women, Kids
     // - productSpecific: Quy tắc áp dụng riêng cho từng product ID
-    const profitRules = {
-      // Mặc định 50% cho tất cả nếu không có rule cụ thể
-      defaultCategoryProfit: 0,
-      category: {
-        Men: 0,
-        Women: 0,
-        Kids: 0,
-      },
-      // Ví dụ: "s38": 60 (Lợi nhuận riêng 60% cho sản phẩm s38)
-      productSpecific: {},
-    };
+    // const profitRules = {
+    //   // Mặc định 50% cho tất cả nếu không có rule cụ thể
+    //   defaultCategoryProfit: 0,
+    //   category: {
+    //     Men: 0,
+    //     Women: 0,
+    //     Kids: 0,
+    //   },
+    //   // Ví dụ: "s38": 60 (Lợi nhuận riêng 60% cho sản phẩm s38)
+    //   productSpecific: {},
+    // };
+    const RULES_KEY = "priceProfitRules";
+    function loadProfitRules() {
+      try {
+        const raw = localStorage.getItem(RULES_KEY);
+        if (!raw) {
+          // đầu tiên lợi nhuận là 0
+          return {
+            defaultCategoryProfit: 0,
+            category: { Men: 0, Women: 0, Kids: 0 },
+            productSpecific: {},
+          };
+        }
+        const parsed = JSON.parse(raw);
+
+        return {
+          defaultCategoryProfit:
+            typeof parsed.defaultCategoryProfit === "number"
+              ? parsed.defaultCategoryProfit
+              : 0,
+          category: Object.assign(
+            { Men: 0, Women: 0, Kids: 0 },
+            parsed.category || {}
+          ),
+          productSpecific: parsed.productSpecific || {},
+        };
+      } catch (e) {
+        console.warn("kh load đc quy tắc lợi nhuận", e);
+        return {
+          defaultCategoryProfit: 0,
+          category: { Men: 0, Women: 0, Kids: 0 },
+          productSpecific: {},
+        };
+      }
+    }
+    function saveProfitRules() {
+      try {
+        localStorage.setItem(RULES_KEY, JSON.stringify(profitRules));
+      } catch (e) {
+        console.error("kh lưu đc", e);
+      }
+    }
+    // load quy tắc lợi nhuận
+    const profitRules = loadProfitRules();
 
     //Chuyển số sang định dạng tiền tệ VNĐ.
     function ConvertINTtoVND(number) {
@@ -287,12 +330,16 @@ export const AdminPrice = {
       );
       deleteButtons.forEach((button) => {
         button.addEventListener("click", (e) => {
+          const target = e.target.closest("[data-product-id]") || e.target;
           const productId = e.target.dataset.productId;
           if (
             productId &&
             profitRules.productSpecific.hasOwnProperty(productId)
           ) {
+            if (!confirm("Xác nhận xóa lợi nhuận riêng cho sản phẩm này?"))
+              return;
             delete profitRules.productSpecific[productId];
+            saveProfitRules();
             renderProductSpecificProfits();
             renderProductsTable(); // Cập nhật bảng chính
             console.log(`xáo lợi nhuận riêng cho sản phẩm ID ${productId}`);
@@ -313,6 +360,7 @@ export const AdminPrice = {
             profitRules.productSpecific[productId] = newProfit;
             e.target.value = `${newProfit}%`;
             renderProductsTable(); // Cập nhật bảng chính
+            saveProfitRules();
             console.log(
               `Cập nhật lợi nhuận riêng cho sản phẩm ID ${productId}: ${newProfit}%`
             );
@@ -559,9 +607,8 @@ export const AdminPrice = {
             if (!isNaN(newProfit) && newProfit >= 0) {
               profitRules.category[categoryName] = newProfit;
               event.target.value = `${newProfit}%`;
-
-              // Sau khi cập nhật lợi nhuận, bắt buộc phải re-render bảng
               renderProductsTable();
+              saveProfitRules();
               console.log(
                 `Cập nhật lợi nhuận cho ${displayName} (${categoryName}): ${newProfit}%`
               );
@@ -596,9 +643,22 @@ export const AdminPrice = {
           // Thay thế alert() bằng một thông báo trên giao diện
           const saveBtn = document.querySelector(".filter-save-btn");
           if (saveBtn) {
-            const originalText = saveBtn.textContent;
+            saveBtn.dataset.originalText =
+              saveBtn.dataset.originalText || saveBtn.textContent;
+
+            if (saveBtn._restoreTimeoutId)
+              clearTimeout(saveBtn._restoreTimeoutId);
+
             saveBtn.textContent = "Đã Lưu!";
-            setTimeout(() => (saveBtn.textContent = originalText), 1500);
+
+            saveBtn._restoreTimeoutId = setTimeout(() => {
+              const current = document.querySelector(".filter-save-btn");
+              if (current) {
+                current.textContent = current.dataset.originalText || "Lưu";
+
+                delete current._restoreTimeoutId;
+              }
+            }, 1500);
           }
         });
     }
