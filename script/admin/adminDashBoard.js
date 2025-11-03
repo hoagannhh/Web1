@@ -1,4 +1,3 @@
-let allProducts = [];
 export const AdminDashBoard = {
   html: `
       <div class="main-content">
@@ -173,6 +172,7 @@ export const AdminDashBoard = {
     console.log("In admin Dash Board");
     // localStorage.removeItem("allProduct");
     // console.log(localStorage.removeItem("allProduct"));
+    let allProducts = [];
     console.log(allProducts);
     const STORAGE_KEY = "allProduct";
 
