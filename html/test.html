@@ -1,203 +1,157 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập Admin</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    const openProductForm = () => {
+      // load imported items each lần mở form để luôn cập nhật(Sẩn phẩm nhập từ kho)
+      loadImportedItems();
+      // render checkboxes each lần mở của mỗi category
+      populateProductSelect();
+
+      // render options each lần mở(Chọn loại)
+      populateCategoryControls();
+
+      // Clear check box cho nó trống lại
+      document
+        .querySelectorAll('input[name="productMainType"]')
+        .forEach((r) => (r.checked = false));
+      const addChk = document.querySelectorAll(
+        '#categoryCheckboxes input[type="checkbox"]'
+      );
+      addChk.forEach((cb) => (cb.checked = false));
+
+      if (!importedItems.length) {
+        alert(
+          "Không có sản phẩm trong phiếu nhập (productImport). Vui lòng thêm phiếu nhập trước khi thêm sản phẩm."
+        );
+        return;
+      }
+
+      currentProductImages = [];
+      document.getElementById("productForm").reset(); // reset form
+      document.getElementById("imagePreview").innerHTML = "";
+      // đảm bảo input readonly được xóa giá trị cũ
+      document.getElementById("productCode").value = "";
+      document.getElementById("productName").value = "";
+      document.getElementById("productInventory").value = 0;
+      document.getElementById("productFormModal").classList.add("active");
+    };
+
+    // khi chọn sản phẩm từ select -> tự set tên, mã và tồn kho
+    document.addEventListener("change", function (e) {
+      if (e.target && e.target.id === "productSelect") {
+        const selVal = e.target.value;
+        const item = importedItems.find((it) => it.name === selVal);
+        if (item) {
+          // chỉ tự điền tên và tồn kho — không ghi đè mã (người dùng có thể nhập thủ công)
+          document.getElementById("productName").value = selVal;
+          document.getElementById("productInventory").value =
+            item.totalQty || 0;
+        } else {
+          document.getElementById("productName").value = "";
+          document.getElementById("productInventory").value = 0;
+        }
+      }
+    });
+
+    const closeProductForm = () => {
+      document.getElementById("productFormModal").classList.remove("active");
+      currentProductImages = [];
+    };
+
+    document.getElementById("imageBox").addEventListener("click", () => {
+      document.getElementById("productImageInput").click();
+    });
+
+    document
+      .getElementById("productImageInput")
+      .addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const base64 = await fileToBase64(file);
+          currentProductImages.push(base64);
+
+          const img = document.createElement("img");
+          img.src = base64;
+          img.style.maxWidth = "100px";
+          img.style.marginRight = "10px";
+          img.style.marginBottom = "10px";
+          document.getElementById("imagePreview").appendChild(img);
+        }
+      });
+
+    document
+      .getElementById("addProductBtn")
+      .addEventListener("click", openProductForm);
+    document
+      .getElementById("cancelProductBtn")
+      .addEventListener("click", closeProductForm);
+
+    document
+      .getElementById("productFormModal")
+      .addEventListener("click", function (e) {
+        if (e.target === this) closeProductForm();
+      });
+
+    document
+      .getElementById("productForm")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // bắt buộc chọn sản phẩm từ productSelect
+        const selectedName = document.getElementById("productSelect").value;
+        if (!selectedName) {
+          alert("Vui lòng chọn 1 sản phẩm từ phiếu nhập (productImport).");
+          return;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        // NEW: lấy main type (radio) + optional checkbox categories
+        const mainTypeInput = document.querySelector(
+          'input[name="productMainType"]:checked'
+        );
+        if (!mainTypeInput) {
+          alert("Vui lòng chọn Loại chính (Men's / Women's / Unisex).");
+          return;
+        }
+        const mainType = mainTypeInput.value;
+
+        const optionalCats = Array.from(
+          document.querySelectorAll(
+            '#categoryCheckboxes input[type="checkbox"]:checked'
+          )
+        ).map((c) => c.value);
+
+        const selectedCats = [mainType, ...optionalCats].filter(Boolean);
+
+        if (currentProductImages.length === 0) {
+          alert("Vui lòng chọn hình ảnh sản phẩm");
+          return;
         }
 
-        .login-container {
-            background: white;
-            width: 100%;
-            max-width: 400px;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+        // sử dụng tên đã chọn; mã và tồn kho đã tự điền (mã có thể do user nhập)
+        const newProduct = {
+          id:
+            document.getElementById("productCode").value || `IMP-${Date.now()}`,
+          name: selectedName,
+          // now store category as array (main + optional)
+          category: selectedCats,
+          gender: document.getElementById("productGender").value,
+          size: document.getElementById("productSize").value,
+          color: document.getElementById("productColor").value,
+          description: document.getElementById("productDesc").value,
+          inventory:
+            parseInt(document.getElementById("productInventory").value) || 0,
+          img: currentProductImages[0],
+          images: currentProductImages,
+          "img-represent": currentProductImages[0],
+          "img-link-list": currentProductImages,
+          status: "Đang hiển thị",
+          createdAt: new Date().toISOString(),
+        };
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        this.allProducts.push(newProduct);
+        localStorage.setItem("allProduct", JSON.stringify(this.allProducts));
 
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: #000;
-            border-radius: 8px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .login-header h1 {
-            font-size: 24px;
-            color: #000;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .login-header p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #000;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #000;
-        }
-
-        .form-group input::placeholder {
-            color: #999;
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-
-        .remember-forgot input[type="checkbox"] {
-            width: auto;
-            margin-right: 6px;
-            cursor: pointer;
-        }
-
-        .remember-forgot label {
-            margin: 0;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .remember-forgot a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .remember-forgot a:hover {
-            color: #000;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background: #000;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .login-btn:hover {
-            background: #222;
-        }
-
-        .login-btn:active {
-            background: #111;
-        }
-
-        .signup-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .signup-link a {
-            color: #000;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .signup-link a:hover {
-            color: #222;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-header">
-            <div class="logo">⚙️</div>
-            <h1>Đề Vương</h1>
-            <p>Admin Dashboard</p>
-        </div>
-
-        <form onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label for="email">Email hoặc Tên đăng nhập</label>
-                <input type="text" id="email" name="email" placeholder="Nhập email của bạn" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Mật khẩu</label>
-                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
-            </div>
-
-           
-
-            <button type="submit" class="login-btn">Đăng Nhập</button>
-        </form>
-    </div>
-
-    <script>
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Giả lập đăng nhập
-            if (email && password) {
-                alert('Đăng nhập thành công!');
-                // Redirect tới trang admin
-                // window.location.href = '/admin/dashboard';
-            }
-        }
-    </script>
-</body>
-</html>
+        console.log("Sản phẩm đã thêm:", newProduct);
+        alert("Thêm sản phẩm thành công!");
+        closeProductForm();
+        this.currentPage = 1;
+        this.renderProductTable();
+        this.renderPagination();
+      });

@@ -1,4 +1,5 @@
 let allProducts = [];
+let categories = [];
 export const AdminDashBoard = {
   html: `
       <div class="main-content">
@@ -171,13 +172,42 @@ export const AdminDashBoard = {
   init: async function () {
     console.log("----------------------");
     console.log("In admin Dash Board");
-    // localStorage.removeItem("allProduct");
+    // localStorage.removeItem("categoriesDB");
     // console.log(localStorage.removeItem("allProduct"));
-    console.log(allProducts);
+
     const STORAGE_KEY = "allProduct";
+    const CATEGORY_KEY = "categoriesDB";
+    await loadInitialData();
 
     // thử load từ localStorage trước
-    const stored = localStorage.getItem(STORAGE_KEY);
+    // const stored_2 = localStorage.getItem(CATEGORY_KEY);
+    // const stored = localStorage.getItem(STORAGE_KEY);
+    // if (stored_2) {
+    //   try {
+    //     const parsed = JSON.parse(stored_2);
+    //     if (Array.isArray(parsed) && parsed.length > 0) {
+    //       categories = parsed;
+    //       console.log(`Đã có dữ liệu ôk`);
+    //       return; // đã có dữ liệu, không cần fetch
+    //     }
+    //   } catch (e) {
+    //     console.warn("Corrupted localStorage data, will reload from JSON", e);
+    //     localStorage.removeItem(CATEGORY_KEY);
+    //   }
+    // }
+    //     // nếu chưa có dữ liệu thì fetch từ file JSON và lưu vào localStorage
+    // const JSON_FILE_PATH_2 = "../data/category.json";
+    // try {
+    //   await loadDataFromJson(JSON_FILE_PATH_2, categories);
+    //   localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
+    //   console.log(
+    //     `Saved ${categories.length} products to localStorage (${CATEGORY_KEY})`
+    //   );
+    // } catch (e) {
+    //   console.error("Failed to load products from JSON:", e);
+    // }
+
+
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
@@ -203,6 +233,8 @@ export const AdminDashBoard = {
     } catch (e) {
       console.error("Failed to load products from JSON:", e);
     }
+    console.log(allProducts);
+    console.log(categories);
   },
 };
 async function loadDataFromJson(filePath, targetArray) {
@@ -221,5 +253,81 @@ async function loadDataFromJson(filePath, targetArray) {
     );
   } catch (error) {
     console.error("Lỗi khi tải hoặc xử lý JSON:", error);
+  }
+}
+async function loadInitialData() {
+  try {
+    // 1. Luôn load data từ JSON trước (base data)
+    console.log("Đang tải dữ liệu từ file JSON...");
+    const response = await fetch('../data/category.json');
+    
+    if (!response.ok) {
+      throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    let categoriesFromJSON = data.categories || [];
+    console.log("Đã load từ JSON:", categoriesFromJSON);
+    
+    // 2. Kiểm tra localStorage
+    const storedData = localStorage.getItem('categoriesDB');
+    
+    if (storedData) {
+      console.log("Phát hiện dữ liệu trong localStorage, đang merge...");
+      const categoriesFromLocalStorage = JSON.parse(storedData);
+      
+      // 3. Tạo Map để dễ tìm kiếm theo tên
+      const jsonMap = new Map();
+      categoriesFromJSON.forEach(cat => {
+        jsonMap.set(cat.name, cat);
+      });
+      
+      // 4. Merge: Cập nhật thông tin từ localStorage vào JSON data
+      categoriesFromLocalStorage.forEach(localCat => {
+        if (jsonMap.has(localCat.name)) {
+          // Category đã tồn tại trong JSON -> cập nhật thông tin từ localStorage
+          const index = categoriesFromJSON.findIndex(c => c.name === localCat.name);
+          if (index !== -1) {
+            // Giữ lại các thay đổi từ localStorage (isShown, quantity...)
+            categoriesFromJSON[index] = {
+              ...categoriesFromJSON[index],
+              ...localCat
+            };
+          }
+        } else {
+          // Category không có trong JSON -> là category mới do user thêm
+          categoriesFromJSON.push(localCat);
+        }
+      });
+      
+      console.log("Đã merge dữ liệu:", categoriesFromJSON);
+    } else {
+      console.log("LocalStorage trống, sử dụng dữ liệu từ JSON.");
+    }
+    
+    // 5. Lưu lại vào localStorage sau khi merge
+    localStorage.setItem('categoriesDB', JSON.stringify(categoriesFromJSON));
+    
+    return categoriesFromJSON;
+    
+  } catch (error) {
+    console.error("Không thể tải file JSON:", error);
+    
+    // Fallback: Nếu lỗi, thử load từ localStorage
+    const storedData = localStorage.getItem('categoriesDB');
+    if (storedData) {
+      console.log("Sử dụng dữ liệu từ localStorage do lỗi load JSON.");
+      return JSON.parse(storedData);
+    }
+    
+    // Trả về dữ liệu mẫu nếu không có gì
+    console.log("Sử dụng dữ liệu mẫu.");
+    return [
+      { name: "Nam", quantity: 1000, isShown: true, manageable: true },
+      { name: "Nữ", quantity: 1000, isShown: true, manageable: true },
+      { name: "Trẻ em", quantity: 1000, isShown: true, manageable: true },
+      { name: "Mùa Thu", quantity: 0, isShown: true, manageable: true },
+      { name: "Christmas", quantity: 0, isShown: false, manageable: true }
+    ];
   }
 }
