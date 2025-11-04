@@ -68,42 +68,7 @@ export const ProductDetail = {
         </div>
       </div>
       <div class="container-other">
-        <div class="product">
-          <img class="product-img" src="../img/image 38.png" alt="" />
-          <p class="name">Nike p-6000</p>
-          <p class="kind-of-shoe">woman's shoe</p>
-          <p class="price">3,239,000 Đ</p>
-        </div>
-        <div class="product">
-          <img class="product-img" src="../img/image 38.png" alt="" />
-          <p class="name">Nike p-6000</p>
-          <p class="kind-of-shoe">woman's shoe</p>
-          <p class="price">3,239,000 Đ</p>
-        </div>
-        <div class="product">
-          <img class="product-img" src="../img/image 38.png" alt="" />
-          <p class="name">Nike p-6000</p>
-          <p class="kind-of-shoe">woman's shoe</p>
-          <p class="price">3,239,000 Đ</p>
-        </div>
-        <div class="product">
-          <img class="product-img" src="../img/image 38.png" alt="" />
-          <p class="name">Nike p-6000</p>
-          <p class="kind-of-shoe">woman's shoe</p>
-          <p class="price">3,239,000 Đ</p>
-        </div>
-        <div class="product">
-          <img class="product-img" src="../img/image 38.png" alt="" />
-          <p class="name">Nike p-6000</p>
-          <p class="kind-of-shoe">woman's shoe</p>
-          <p class="price">3,239,000 Đ</p>
-        </div>
-        <div class="product">
-          <img class="product-img" src="../img/image 38.png" alt="" />
-          <p class="name">Nike p-6000</p>
-          <p class="kind-of-shoe">woman's shoe</p>
-          <p class="price">3,239,000 Đ</p>
-        </div>
+          ${ShowMoreProduct()}
       </div>
     </div>`,
   css: `../css/productDetail.css`,
@@ -315,16 +280,30 @@ function EditNameProduct(proInfor) {
 function AddImageColor(proInfor) {
   const colors = document.querySelector(".container-infor .color");
   let htmlImage = ``;
-  proInfor["img-link-color"].forEach((link) => {
-    htmlImage += `
-            <img
-              class="color-img"
-              src=${link}
-              alt=""
-            />
-    `;
-    colors.insertAdjacentHTML("beforeend", htmlImage);
-  });
+  if (proInfor.hasOwnProperty("img-link-color")){    
+    proInfor["img-link-color"].forEach((link) => {
+      
+      htmlImage += `
+              <img
+                class="color-img"
+                src=${link}
+                alt=""
+              />
+      `;
+    });
+  }else {
+    proInfor.color.forEach((link) => {
+      link = link.trim();
+      htmlImage += `
+              <img
+                class="color-img"
+                src="../img/color/${link}.png"
+                alt=""
+              />
+      `;
+    });
+  }
+  colors.insertAdjacentHTML("beforeend", htmlImage);
   colors.innerHTML = htmlImage;
   // colors.innerHTML += ;
 }
@@ -333,3 +312,57 @@ function AddImageRepresent(proInfor) {
   represent.src = ` ${proInfor["img-represent"]} `;
 }
 // InsertPage("productDetail");
+function ShowMoreProduct(){
+  const allProduct = JSON.parse(localStorage.getItem("allProduct"))
+  let i = 0;
+  let html = ``;
+  allProduct.forEach(p => {
+    if (i > 5) return;
+    html += 
+    `
+        <div class="product">
+          <img class="product-img" src="${p["img-represent"]}" alt="" />
+          <p class="name">${p.name}</p>
+          <p class="kind-of-shoe">${ConvertIDToCategoryOpt(p.category)}</p>
+          <p class="price">${ConvertINTtoVND(Number(p.price))}</p>
+        </div>
+    `
+    i++;
+  })
+  return html;
+}
+function ConvertINTtoVND(number) {
+  return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
+}
+
+function ConvertIDToCategoryOpt(proCate){
+    // console.log(proCate);
+  const categories = JSON.parse(localStorage.getItem("categoriesDB"));
+  let temp = []
+  // console.log(categories);
+  if (categories.length <= 3) return temp;
+  for (let i = 3; i < categories.length; i++){
+    for (let j = 0; j < proCate.length; j++){
+      if (categories[i].id === proCate[j]){
+        temp.push(categories[i].name);
+      }
+    }
+  }
+  // console.log(temp)
+  return temp;
+}
+function ConvertIDToCategoryMain(proCate){
+  // console.log(proCate);
+  const categories = JSON.parse(localStorage.getItem("categoriesDB"));
+  // console.log(categories);
+  let temp = []
+  for (let i = 0; i < categories.length; i++){
+    for (let j = 0; j < proCate.length; j++){
+      if (categories[i].id === proCate[j] && i < 3){
+        temp.push(categories[i].name);
+      }
+    }
+  }
+    // console.log(temp)
+  return temp;
+}
