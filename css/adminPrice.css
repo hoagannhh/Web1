@@ -4,13 +4,13 @@
   gap: 3%;
   width: 100%;
 }
-      #container{
-        width: 100%;
-      }
-      .admin-container{
-        display: flex;
-        gap: 50px;
-      }
+#container {
+  width: 100%;
+}
+.admin-container {
+  display: flex;
+  gap: 50px;
+}
 .main-content {
   display: flex;
   flex-grow: 1;
@@ -59,6 +59,8 @@
   padding: 2%;
   gap: 10px;
   margin-top: 2%;
+  height: 250px;
+  overflow-y: auto;
 }
 .title-filter {
   font-weight: bold;

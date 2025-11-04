@@ -27,6 +27,12 @@ export const AdminImportProduct = {
           >
             <div style="color: var(--muted)">Danh sách phiếu nhập</div>
             <div style="display: flex; gap: 12px; align-items: center">
+            <input
+            type="text"
+            id="search-input"
+            placeholder="Tìm theo ID, Ngày hoặc Trạng thái..."
+            style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;"
+        />
               <button class="btn add" id="btn-add-order">
                 + Thêm phiếu nhập
               </button>
@@ -86,6 +92,7 @@ export const AdminImportProduct = {
   canDeleteCss: true,
   init: function () {
     let orders = [];
+    let allOrders = []; // lưu trữ toàn bộ đơn hàng để hỗ trợ tìm kiếm
     const STORAGE_KEY = "productImport"; // main storage key for orders
     // load from either new key or legacy key if present
     function loadOrders() {
@@ -132,6 +139,7 @@ export const AdminImportProduct = {
       }
     }
     loadOrders();
+    allOrders = orders;
     console.log("loaded orders:", orders);
 
     /* Hàm tiện ích */
@@ -163,6 +171,29 @@ export const AdminImportProduct = {
           };
         })
         .filter(Boolean);
+    }
+
+    // Hàm tìm kiếm
+    function filterAndRenderOrders(searchTerm) {
+      console.log("Tìm kiếm đang chạy với từ khóa:", searchTerm); // <-- THÊM LOG NÀY
+      console.log(allOrders);
+      console.log(orders);
+
+      if (!searchTerm || !searchTerm.trim()) {
+        orders = allOrders; // Nếu rỗng thì hiển thị tất cả
+      } else {
+        const term = searchTerm.toLowerCase().trim();
+        // Lọc theo ID, Date, hoặc Status
+        orders = allOrders.filter(
+          (o) =>
+            o.id.toLowerCase().includes(term) ||
+            o.date.includes(term) ||
+            (o.status === "completed" ? "hoàn thành" : "nhập").includes(term)
+        );
+      }
+      renderOrders.currentPage = 1; // Luôn về trang 1 sau khi tìm kiếm
+      renderOrders(); // Render lại bảng
+      console.log("Số lượng đơn hàng sau khi lọc:", orders.length); // <-- THÊM LOG NÀY
     }
 
     /*  Hiển thị bảng chính  */
@@ -556,6 +587,14 @@ export const AdminImportProduct = {
         renderOrders();
       });
     }
+    // ...
+    const searchInput = document.getElementById("search-input");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        filterAndRenderOrders(e.target.value);
+      });
+    }
+    // end init
     // end init
   },
 };
