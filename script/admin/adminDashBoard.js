@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 let allProducts = [];
 let categories = [];
-=======
->>>>>>> 89d5f0f40982a90b84442fef2101c72b3d3d7588
 export const AdminDashBoard = {
   html: `
       <div class="main-content">
@@ -176,7 +173,7 @@ export const AdminDashBoard = {
     console.log("----------------------");
     console.log("In admin Dash Board");
     // localStorage.removeItem("categoriesDB");
-    // console.log(localStorage.removeItem("allProduct"));
+    // localStorage.removeItem("allProduct");
     let allProducts = [];
     console.log(allProducts);
     const STORAGE_KEY = "allProduct";
@@ -184,8 +181,8 @@ export const AdminDashBoard = {
     await loadInitialData();
 
     // thử load từ localStorage trước
-    // const stored_2 = localStorage.getItem(CATEGORY_KEY);
-    // const stored = localStorage.getItem(STORAGE_KEY);
+    const stored_2 = localStorage.getItem(CATEGORY_KEY);
+    const stored = localStorage.getItem(STORAGE_KEY);
     // if (stored_2) {
     //   try {
     //     const parsed = JSON.parse(stored_2);

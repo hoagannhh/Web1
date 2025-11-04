@@ -741,6 +741,7 @@ export const AdminProduct = {
           "img-represent": currentProductImages[0],
           "img-link-list": currentProductImages,
           status: "Đang hiển thị",
+          price: 10000000,
           createdAt: new Date().toISOString(),
         };
 
@@ -1001,6 +1002,7 @@ export const AdminProduct = {
             inventory:
               parseInt(document.getElementById("editProductInventory").value) ||
               0,
+              price: 100000,
             "img-link-list": currentProductImages,
             "img-represent": currentProductImages[0],
           };
