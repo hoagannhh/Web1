@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-let allProducts = [];
-=======
->>>>>>> 5234bb697371b77e48b35d07bd8a778a1e9bd8d3
 let categories = [];
 export const AdminDashBoard = {
   html: `
