@@ -172,7 +172,7 @@ export const AdminDashBoard = {
     console.log("----------------------");
     console.log("In admin Dash Board");
     // localStorage.removeItem("categoriesDB");
-    // console.log(localStorage.removeItem("allProduct"));
+    // localStorage.removeItem("allProduct");
     let allProducts = [];
     console.log(allProducts);
     const STORAGE_KEY = "allProduct";

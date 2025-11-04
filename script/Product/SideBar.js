@@ -364,16 +364,20 @@ function AddEventBtnCategories(filterState, isFilterBySeach, products){
   console.log(categoryID);
   submenu.forEach((checkbox) => {
     checkbox.addEventListener("change", ()=>{
-      // console.log(checkbox.id);
-      // console.log(categoryID)
-      // console.log(categoryID.includes(Number(checkbox.id)))
+      console.log(checkbox.id);
+      console.log(checkbox.checked);
+      console.log(categoryID)
+      console.log(categoryID.includes(Number(checkbox.id)))
       if (categoryID.includes(Number(checkbox.id))){
         if (checkbox.checked){
-          filterState.categories.push(Number(checkbox.id));
-          console.log(filterState);
+          console.log(typeof(checkbox.id))
+          console.log(checkbox.id)
+        console.log("Trước push:", filterState.categories);
+        filterState.categories.push(Number(checkbox.id));
+        console.log("Sau push:", filterState.categories);
         }else{
-          filterState.categories = filterState.categories.filter(c => c !== checkbox.id)
-                    console.log(filterState);
+          filterState.categories = filterState.categories.filter(c => c !== Number(checkbox.id))
+                    console.log(filterState.categories);
 
         }
         AfterFilter(filterState, isFilterBySeach, products);
@@ -430,12 +434,13 @@ function LoadProductPage(filterState) {
 
   temp = Filter(filterState, allProducts);
   if (temp.length === 0) {
-    console.log(document.querySelector("selected"));
     alert("ko tim thay san pham nao");
 
     // đặt lại filter
-    ResetAllFilters();
+    ResetAllFilters(filterState);
     // load lại trang web
+    console.log("sau khi resset calue: ")
+    console.log(filterState)
     LoadAllProductPage();
     return;
   }
@@ -446,6 +451,7 @@ function LoadProductPage(filterState) {
 }
 function Filter(filterState, data) {
   // console.log("-------------------");
+  console.log("danh muc filter:" );
   console.log(filterState);
   // console.log(data);
   let products = [];
@@ -486,13 +492,13 @@ function Filter(filterState, data) {
       );
     });
   }
-  console.log(filterState);
+  console.log(filterState.categories);
   if (filterState.categories.length > 0){
     console.log("filter: categories");
     products = products.filter(p => {
       // kiểm tra xem có ít nhất 1 cate gory có được chọn hay ko => true
       return filterState.categories.some((selector) => {
-        p.category.includes(Number(selector));
+        return p.category.includes(Number(selector));
       })
     })
   }
@@ -572,9 +578,9 @@ function renderPagination(
 function ConvertINTtoVND(number) {
   return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
 }
-function ResetAllFilters() {
+function ResetAllFilters(filterState) {
   // Reset checkboxes (Gender, Sale, Colors, categories)
-  const allCheckboxes = document.querySelectorAll('.black-check, .color-input');
+  const allCheckboxes = document.querySelectorAll('.black-check, .color-input, .black-check-category');
   allCheckboxes.forEach(checkbox => {
     checkbox.checked = false;
   });
@@ -596,6 +602,23 @@ function ResetAllFilters() {
   sortButtons.forEach(btn => {
     btn.classList.remove('selected');
   });
+  filterState.gender = [];
+  filterState.price = null;
+  filterState.onSale = false;
+  filterState.size = null;
+  filterState.colors = [];
+  filterState.sortBy = "Featured";
+  filterState.categories = [];
+  // filterState = {
+  //   gender: [],
+  //   price: null,
+  //   onSale: false,
+  //   size: null,
+  //   colors: [],
+  //   sortBy: "Featured", // Giá trị mặc định
+  //   categories: [],
+  // };
+
 }
 
 function GetCategoryFromDatabase(){
