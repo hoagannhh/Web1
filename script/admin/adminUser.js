@@ -76,7 +76,7 @@ function HandleLock(id, btn, accounts) {
             <p class="form-verification__Headerlock">Khóa tài khoản</p>
             <div class="container-infor-lockacc">
                 <img class="icon represent" src="../img/goku.jpg" alt="goku">
-                <p class="form-verification__name">${acc.userProfile.fullName}</p>
+                <p class="form-verification__name">${acc.userProfile.fullName || acc.firstName + " " + acc.lastName}</p>
             </div>
             </div>
             <div class="container-notification">
@@ -239,15 +239,15 @@ function HandleResetPassword(id, btn, accounts) {
   });
 }
 function changePassword(id, accounts, model) {
-  const pass = document.getElementById("password").value.trim();
+  const password = document.getElementById("password").value.trim();
   const passCtn = document.getElementById("continue-password").value.trim();
-  console.log(pass + " -::- " + passCtn);
-  if (pass === passCtn) {
+  console.log(password + " -::- " + passCtn);
+  if (password === passCtn) {
     accounts.forEach((acc) => {
       if (acc.username === id) {
         let newAcc = {
           ...acc,
-          pass,
+          password,
         };
         console.log(newAcc);
         accounts = accounts.filter((acc) => acc.username !== id);
@@ -373,11 +373,11 @@ function renderPage(page) {
               src="../img/547992253_823059776934031_1523588798799183290_n.jpg"
               alt="User avatar"
             />
-            <span>${userProfile.fullName || "None"}</span>
+            <span>${userProfile.fullName || account.firstName +" " + account.lastName}</span>
           </div>
         </td>
         <td>${userProfile.birthDate || "None"}</td>
-        <td>${userProfile.phoneNumber || "None"}</td>
+        <td>${userProfile.phoneNumber || account.phone}</td>
         <td>${userProfile.email || "None"}</td>
         <td>
           <button class="btn ${
