@@ -1,16 +1,3 @@
-let allProducts;
-// an toàn: đảm bảo luôn là mảng và dùng cùng key "allProduct" (chuẩn trong project)
-try {
-  allProducts = JSON.parse(localStorage.getItem("allProduct"));
-  if (!Array.isArray(allProducts)) allProducts = [];
-} catch (e) {
-  allProducts = [];
-  console.warn(
-    "Failed to parse allProduct from localStorage, using empty array",
-    e
-  );
-}
-
 export const AdminPrice = {
   html: `
           <div class="main-content">
@@ -107,6 +94,37 @@ export const AdminPrice = {
   css: `../css/adminPrice.css`,
   canDeleteCss: true,
   init: function () {
+    let allProducts;
+    // an toàn: đảm bảo luôn là mảng và dùng cùng key "allProduct" (chuẩn trong project)
+    try {
+      allProducts = JSON.parse(localStorage.getItem("allProduct"));
+      if (!Array.isArray(allProducts)) allProducts = [];
+    } catch (e) {
+      allProducts = [];
+      console.warn(
+        "Failed to parse allProduct from localStorage, using empty array",
+        e
+      );
+    }
+
+    allProducts = allProducts.map((p) => {
+      // 1. Chuẩn hóa thuộc tính price (Giá bán)
+      // Nếu price là undefined, null, hoặc không phải số, đặt giá trị là 0
+      const priceValue =
+        typeof p.price === "number" && !isNaN(p.price) ? p.price : 0;
+
+      // 2. Chuẩn hóa thuộc tính cost (Giá vốn)
+      // Nếu cost là undefined, null, hoặc không phải số, đặt giá trị là 0
+      const costValue =
+        typeof p.cost === "number" && !isNaN(p.cost) ? p.cost : 0;
+
+      // Trả về đối tượng đã được chuẩn hóa
+      return {
+        ...p,
+        price: priceValue,
+        cost: costValue,
+      };
+    });
     // Khai báo mảng tạm thời CỤC BỘ và EXPORT nó
     let productSpecificContainer = null;
     let productSpecificList = null;
@@ -569,7 +587,7 @@ export const AdminPrice = {
     function handleCategoryProfitChange() {
       // Ánh xạ tên hiển thị tiếng Việt sang khóa dữ liệu tiếng Anh
       const categoryMap = {
-        Nam: "men",
+        Nam: "Men",
         Nữ: "Women",
         "Trẻ em": "Kids",
       };

@@ -74,12 +74,16 @@ export const AdminProduct = {
                   </div>
 
                   <div class="form-group">
-                    <label>Size</label>
+                    <label>Size ${ChuThich(
+                      "Thêm Dấu gạch (-) với 2 size trở lên"
+                    )}</label>
                     <input type="text" id="productSize" placeholder="">
                   </div>
 
                   <div class="form-group">
-                    <label>Màu sắc</label>
+                    <label>Màu sắc ${ChuThich(
+                      "Thêm Dấu gạch (-) với 2 color trở lên"
+                    )}</label>
                     <input type="text" id="productColor" placeholder="">
                   </div>
                 </div>
@@ -369,11 +373,14 @@ export const AdminProduct = {
       category: "Men's",
     },
   ],
-
+  categories: [],
   init: function () {
     // Load products from localStorage
-    this.loadProducts();
 
+    this.loadProducts();
+    this.loadCategory();
+    console.log(JSON.parse(localStorage.getItem("allProduct")));
+    console.log(JSON.parse(localStorage.getItem("categoriesDB")));
     // --- NEW: imported items (từ productImport) ---
     console.log(localStorage.getItem("productImport"));
     let importedItems = []; // [{ name, totalQty }]
@@ -455,7 +462,7 @@ export const AdminProduct = {
       if (!sel) return;
       sel.innerHTML =
         '<option value="">Chọn sản phẩm (lấy từ phiếu nhập)</option>';
-      importedItems.forEach((it, idx) => {
+      importedItems.forEach((it) => {
         console.log(it.status);
         if (it.status == "completed") {
           const opt = document.createElement("option");
@@ -576,6 +583,7 @@ export const AdminProduct = {
     };
 
     // ===== IMAGE CONVERSION =====
+    // Convert hình ảnh thành base64
     const fileToBase64 = (file) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -587,13 +595,15 @@ export const AdminProduct = {
 
     // ===== THÊM SẢN PHẨM =====
     const openProductForm = () => {
-      // load imported items each lần mở form để luôn cập nhật
+      // Tải danh sách từ phiếu nhập mỗi lần mở form để luôn cập nhật(Sẩn phẩm nhập từ kho)
       loadImportedItems();
+      // Điền dropdown sản phẩms mỗi lần mở của mỗi category
       populateProductSelect();
-      // render checkboxes each lần mở
-      populateCategoryControls(); // render options each lần mở
 
-      // clear main-type radios & optional checkboxes in add form to avoid remembering previous state
+      // Render radio buttons + checkboxes loại
+      populateCategoryControls();
+
+      // Clear check box cho nó trống lại
       document
         .querySelectorAll('input[name="productMainType"]')
         .forEach((r) => (r.checked = false));
@@ -635,7 +645,7 @@ export const AdminProduct = {
         }
       }
     });
-
+    // đóng form
     const closeProductForm = () => {
       document.getElementById("productFormModal").classList.remove("active");
       currentProductImages = [];
@@ -675,11 +685,18 @@ export const AdminProduct = {
         if (e.target === this) closeProductForm();
       });
 
+    // Xử lý submit dữ liệu lên local storage
     document
       .getElementById("productForm")
       .addEventListener("submit", async (e) => {
         e.preventDefault();
 
+        // check ID đã tồn tại chưa
+        const productID = document.getElementById("productCode").value;
+        if (CheckIDExist(productID)) {
+          alert("ID đã tồn tại");
+          return;
+        }
         // bắt buộc chọn sản phẩm từ productSelect
         const selectedName = document.getElementById("productSelect").value;
         if (!selectedName) {
@@ -703,6 +720,7 @@ export const AdminProduct = {
           )
         ).map((c) => c.value);
 
+        // Gộp 2 mảng và xóa các giá trị falsthy
         const selectedCats = [mainType, ...optionalCats].filter(Boolean);
 
         if (currentProductImages.length === 0) {
@@ -716,21 +734,24 @@ export const AdminProduct = {
             document.getElementById("productCode").value || `IMP-${Date.now()}`,
           name: selectedName,
           // now store category as array (main + optional)
-          category: selectedCats,
+          category: ConvertCategoryToID(selectedCats),
           gender: document.getElementById("productGender").value,
-          size: document.getElementById("productSize").value,
-          color: document.getElementById("productColor").value,
+          size: ConvertInputToIntArr(
+            document.getElementById("productSize").value
+          ),
+          color: ConvertInputToStringArr(
+            document.getElementById("productColor").value
+          ),
           description: document.getElementById("productDesc").value,
           inventory:
             parseInt(document.getElementById("productInventory").value) || 0,
-          img: currentProductImages[0],
-          images: currentProductImages,
           "img-represent": currentProductImages[0],
           "img-link-list": currentProductImages,
           status: "Đang hiển thị",
           createdAt: new Date().toISOString(),
         };
 
+        console.log(newProduct);
         this.allProducts.push(newProduct);
         localStorage.setItem("allProduct", JSON.stringify(this.allProducts));
 
@@ -741,12 +762,33 @@ export const AdminProduct = {
         this.renderProductTable();
         this.renderPagination();
       });
-
+    const CheckIDExist = (id) => {
+      return this.allProducts.find((p) => p.id === id);
+    };
+    const ConvertCategoryToID = (selectedCats) => {
+      let newtemp = [];
+      console.log("generate form edit: selected cats: " + selectedCats);
+      for (let i = 0; i < selectedCats.length; i++) {
+        for (let j = 0; j < this.categories.length; j++) {
+          if (selectedCats[i] === this.categories[j].name) {
+            newtemp.push(Number(this.categories[j].id));
+          }
+        }
+      }
+      return newtemp;
+    };
+    const ConvertIDtoCategory = (id) => {
+      for (let i = 0; i < this.categories.length; i++) {
+        if (this.categories[i].id === id) {
+          return this.categories[i].name;
+        }
+      }
+    };
     // ===== SỬA SẢN PHẨM =====
     const openEditProductForm = (productId) => {
       currentEditProductId = productId;
       const product = this.allProducts.find((p) => p.id === productId);
-
+      console.log(product);
       if (!product) return;
       console.log(product);
       document.getElementById("editProductCode").value = product.id;
@@ -760,17 +802,21 @@ export const AdminProduct = {
       document
         .querySelectorAll('#editCategoryCheckboxes input[type="checkbox"]')
         .forEach((cb) => (cb.checked = false));
-
       // NEW: set edit main type radio + optional checkboxes
-      const values = Array.isArray(product.category)
-        ? product.category
-        : [product.category];
-
+      let values = product.category;
+      let valuename = [];
+      let mainType;
+      console.log(values);
+      for (let i = 0; i < values.length; i++) {
+        if (values[i] <= 3) {
+          mainType = ConvertIDtoCategory(values[i]);
+        }
+        valuename.push(ConvertIDtoCategory(values[i]));
+      }
       // determine main type (prefer Men's/Women's/Unisex)
-      const mainTypes = ["Men's", "Women's", "Unisex"];
-      let mainType =
-        values.find((v) => mainTypes.includes(v)) || values[0] || "";
-
+      console.log("main category: " + mainType);
+      console.log("option category: " + values);
+      console.log("caluename: " + valuename);
       // set radios
       if (mainType) {
         const radio = document.querySelector(
@@ -784,7 +830,7 @@ export const AdminProduct = {
         '#editCategoryCheckboxes input[type="checkbox"]'
       );
       editOpts.forEach((cb) => {
-        cb.checked = values.includes(cb.value) && cb.value !== mainType;
+        cb.checked = valuename.includes(cb.value) && cb.value !== mainType;
       });
 
       // other fields
@@ -807,24 +853,58 @@ export const AdminProduct = {
       // Render images
       const gallery = document.getElementById("editImageGallery");
       console.log(product);
+      let i = 0;
       gallery.innerHTML = product["img-link-list"]
         .map(
-          (img) => `
-          <div class="gallery-item" style="position: relative;">
-            <img src="${img}" alt="">
-            <button type="button" onclick="this.parentElement.remove()" 
-              style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer; padding: 5px;">
-              Xóa
-            </button>
-          </div>
-        `
+          (img) =>
+            `
+              <div class="gallery-item" data-index='${i++}' style="position: relative;">
+                <img src="${img}" alt="">
+                <button type="button" onclick="this.parentElement.remove()" 
+                  style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer; padding: 5px;">
+                  Xóa
+                </button>
+              </div>
+            `
         )
         .join("");
-
       console.log(product["img-link-list"]);
       currentProductImages = [...product["img-link-list"]];
       document.getElementById("editProductFormModal").classList.add("active");
+      addEventRemoveImageInInput();
     };
+
+    // thêm sự kienj khi xóa ảnh
+    function addEventRemoveImageInInput() {
+      document.querySelectorAll(".gallery-item").forEach((item) => {
+        // console.log(item)
+        const index = item.dataset.index;
+        const btnRemove = item.querySelector("button");
+        console.log(btnRemove);
+        btnRemove.addEventListener("click", (e) => {
+          e.preventDefault();
+          currentProductImages.splice(index, 1);
+        });
+        // console.log(id);
+      });
+    }
+
+    // Hàm xóa
+    function deleteImage(button) {
+      const div = button.parentElement;
+      const index = parseInt(div.getAttribute("data-index"));
+      console.log("123");
+      currentProductImages.splice(index, 1); // ← Xóa khỏi array
+      div.remove(); // ← Xóa khỏi DOM
+
+      updateImageIndices(); // ← Cập nhật index
+    }
+
+    function updateImageIndices() {
+      document.querySelectorAll(".gallery-item").forEach((item, index) => {
+        item.setAttribute("data-index", index);
+      });
+    }
 
     const closeEditProductForm = () => {
       document
@@ -844,6 +924,8 @@ export const AdminProduct = {
       if (f) f.reset();
     };
 
+    // thêm sư kiện khi thêm ảnh
+    console.log(document.getElementById("editProductImageInput"));
     document
       .getElementById("editProductImageInput")
       .addEventListener("change", async (e) => {
@@ -856,6 +938,8 @@ export const AdminProduct = {
           const div = document.createElement("div");
           div.className = "gallery-item";
           div.style.position = "relative";
+          div.setAttribute("data-index", currentProductImages.length - 1); // ← Lưu index
+
           div.innerHTML = `
             <img src="${base64}" alt="">
             <button type="button" onclick="this.parentElement.remove()" 
@@ -864,6 +948,7 @@ export const AdminProduct = {
             </button>
           `;
           gallery.appendChild(div);
+          console.log(div);
         }
       });
 
@@ -887,30 +972,35 @@ export const AdminProduct = {
         );
 
         if (idx !== -1) {
-          // NEW: read edit main type + optional checkboxes
+          //  read edit main type + optional checkboxes
           const mainTypeInput = document.querySelector(
             'input[name="editProductMainType"]:checked'
           );
-          const mainType = mainTypeInput ? mainTypeInput.value : null;
-          const optionalCats = Array.from(
+          console.log("main type: ");
+          console.log(mainTypeInput.value);
+          const mainType = ConvertCategoryToID(
+            mainTypeInput ? [mainTypeInput.value] : null
+          );
+          console.log("Main Type: " + mainType.toString());
+          let optionalCats = Array.from(
             document.querySelectorAll(
               '#editCategoryCheckboxes input[type="checkbox"]:checked'
             )
           ).map((c) => c.value);
-          const newCategories = (mainType ? [mainType] : []).concat(
-            optionalCats
-          );
-
+          optionalCats = ConvertCategoryToID(optionalCats);
+          console.log("optional cats: " + optionalCats);
+          const newCategories = mainType.concat(optionalCats);
+          console.log("New categories: " + newCategories.toString());
           this.allProducts[idx] = {
             ...this.allProducts[idx],
             name: document.getElementById("editProductName").value,
 
             category: newCategories,
             gender: document.getElementById("editProductGender").value,
-            size: ConvertInputToInt(
+            size: ConvertInputToIntArr(
               document.getElementById("editProductSize").value
             ),
-            color: ConvertInputToString(
+            color: ConvertInputToStringArr(
               document.getElementById("editProductColor").value
             ),
             description: document.getElementById("editProductDesc").value,
@@ -920,6 +1010,26 @@ export const AdminProduct = {
             "img-link-list": currentProductImages,
             "img-represent": currentProductImages[0],
           };
+
+          let test = {
+            name: document.getElementById("editProductName").value,
+
+            category: newCategories,
+            gender: document.getElementById("editProductGender").value,
+            size: ConvertInputToIntArr(
+              document.getElementById("editProductSize").value
+            ),
+            color: ConvertInputToStringArr(
+              document.getElementById("editProductColor").value
+            ),
+            description: document.getElementById("editProductDesc").value,
+            inventory:
+              parseInt(document.getElementById("editProductInventory").value) ||
+              0,
+            "img-link-list": currentProductImages,
+            "img-represent": currentProductImages[0],
+          };
+          console.log(test);
 
           localStorage.setItem("allProduct", JSON.stringify(this.allProducts));
           console.log("Sản phẩm đã cập nhật");
@@ -1044,7 +1154,12 @@ export const AdminProduct = {
       this.allProducts = JSON.parse(stored);
     }
   },
-
+  loadCategory: function () {
+    const stored = localStorage.getItem("categoriesDB");
+    if (stored) {
+      this.categories = JSON.parse(stored);
+    }
+  },
   // ===== PAGINATION FUNCTIONS =====
   goToPage: function (page) {
     this.currentPage = page;
@@ -1135,9 +1250,20 @@ export const AdminProduct = {
       .join("");
   },
 };
-function ConvertInputToInt(string) {
+function ConvertInputToIntArr(string) {
   return string.split("-").map(Number);
 }
-function ConvertInputToString(string) {
+function ConvertInputToStringArr(string) {
   return string.split("-");
+}
+function ChuThich(str) {
+  return `<p style="color: #666;
+   display: inline;
+   font-size: 14px; 
+   font-style: italic;
+   margin: 8px 0;
+   padding: 8px 12px;
+   ">
+    ${str}
+  </p>`;
 }

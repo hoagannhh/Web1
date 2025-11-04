@@ -187,11 +187,12 @@ export const AdminImportProduct = {
         // Các nút hành động tùy theo trạng thái
         let actionsHTML = `
           <button class="btn" data-action="view" data-idx="${idx}">Xem</button>
-          <button class="btn edit" data-action="edit" data-idx="${idx}">Sửa</button>
+         
         `;
         if (o.status === "pending") {
           actionsHTML += `
             <button class="btn complete" data-action="complete" data-idx="${idx}">Hoàn thành</button>
+             <button class="btn edit" data-action="edit" data-idx="${idx}">Sửa</button>
             <button class="btn delete" data-action="delete" data-idx="${idx}">Xóa</button>
           `;
         }

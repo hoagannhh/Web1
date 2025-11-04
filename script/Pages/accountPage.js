@@ -193,9 +193,10 @@ export const accountComponent = {
         updateSpanContent("tel", userProfile.phoneNumber);
         updateSpanContent("address", userProfile.address);
       }
+      saveProfileData(false);
     };
 
-    const saveProfileData = () => {
+    const saveProfileData = (showAlert = true) => {
       // Đảm bảo mọi input đang mở đều được "commit" giá trị trước khi lưu
       const activeInput = document.querySelector(
         ".edit-input:focus, .email-container input:focus"
@@ -245,7 +246,7 @@ export const accountComponent = {
       }
       console.log(accounts);
       localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
-      alert("Đã lưu thông tin thành công!");
+      if (showAlert) alert("Đã lưu thông tin thành công!");
       // Đã xóa location.reload();
     };
 

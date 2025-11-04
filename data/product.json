@@ -15,32 +15,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s2",
@@ -57,30 +43,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s3",
@@ -92,29 +66,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s4",
@@ -130,32 +94,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s5",
@@ -166,29 +116,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s6",
@@ -206,32 +146,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s7",
@@ -248,30 +174,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s8",
@@ -283,29 +197,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s9",
@@ -321,32 +225,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s10",
@@ -357,29 +247,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s11",
@@ -397,32 +277,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s12",
@@ -439,30 +305,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s13",
@@ -474,29 +328,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s14",
@@ -512,32 +356,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s15",
@@ -548,29 +378,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s16",
@@ -588,32 +408,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s17",
@@ -630,30 +436,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s18",
@@ -665,29 +459,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s19",
@@ -703,32 +487,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s20",
@@ -739,29 +509,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s21",
@@ -779,32 +539,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s22",
@@ -821,30 +567,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s23",
@@ -856,29 +590,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s24",
@@ -894,32 +618,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s25",
@@ -930,29 +640,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s26",
@@ -970,32 +670,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s27",
@@ -1012,30 +698,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s28",
@@ -1047,29 +721,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s29",
@@ -1085,32 +749,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s30",
@@ -1121,29 +771,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s31",
@@ -1161,32 +801,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s32",
@@ -1203,30 +829,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s33",
@@ -1238,29 +852,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s34",
@@ -1276,32 +880,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s35",
@@ -1312,29 +902,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s36",
@@ -1352,32 +932,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s37",
@@ -1394,30 +960,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s38",
@@ -1429,29 +983,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s39",
@@ -1467,32 +1011,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s40",
@@ -1503,29 +1033,19 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s41",
@@ -1543,32 +1063,18 @@
       "../product-img/s1/s1-blue.png",
       "../product-img/s1/s1-yellow.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Nike",
     "price": 4109000,
     "cost": 2739333,
-    "color": [
-      "red",
-      "yellow",
-      "black",
-      "blue"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43,
-      44
-    ],
+    "color": ["red", "yellow", "black", "blue"],
+    "size": [39, 40, 41, 42, 43, 44],
     "rating": {
       "stars": 4.8,
       "votes": 2154
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s42",
@@ -1585,30 +1091,18 @@
       "../product-img/s2/s2-blue.png",
       "../product-img/s2/s2-red.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Adidas",
     "price": 2500000,
     "cost": 1666667,
-    "color": [
-      "green",
-      "blue",
-      "red"
-    ],
-    "size": [
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["green", "blue", "red"],
+    "size": [39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.6,
       "votes": 1720
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s43",
@@ -1620,29 +1114,19 @@
       "../product-img/s3/s3-2.png",
       "../product-img/s3/s3-3.png"
     ],
-    "img-link-color": [
-      "../product-img/s3/s3-pink.png"
-    ],
+    "img-link-color": ["../product-img/s3/s3-pink.png"],
     "gender": "Women",
     "brand": "Converse",
     "price": 2000000,
     "cost": 1333333,
     "color": "pink",
-    "size": [
-      35,
-      36,
-      37,
-      38,
-      39
-    ],
+    "size": [35, 36, 37, 38, 39],
     "rating": {
       "stars": 4.7,
       "votes": 965
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   },
   {
     "id": "s44",
@@ -1658,32 +1142,18 @@
       "../product-img/s4/s4-black.png",
       "../product-img/s4/s4-brown.png"
     ],
-    "gender": "men",
+    "gender": "Men",
     "brand": "Vans",
     "price": 1580000,
     "cost": 1053333,
-    "color": [
-      "blue",
-      "black",
-      "brown",
-      "pink"
-    ],
-    "size": [
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
+    "color": ["blue", "black", "brown", "pink"],
+    "size": [38, 39, 40, 41, 42, 43],
     "rating": {
       "stars": 4.5,
       "votes": 1203
     },
     "inventory": 20,
-    "category": [
-      1
-    ]
+    "category": [1]
   },
   {
     "id": "s45",
@@ -1694,28 +1164,18 @@
       "../product-img/s5/s5-1.png",
       "../product-img/s5/s5-2.png"
     ],
-    "img-link-color": [
-      "../product-img/s5/s5-white.png"
-    ],
+    "img-link-color": ["../product-img/s5/s5-white.png"],
     "gender": "Women",
     "brand": "Puma",
     "price": 2100000,
     "cost": 1400000,
     "color": "pink",
-    "size": [
-      36,
-      37,
-      38,
-      39,
-      40
-    ],
+    "size": [36, 37, 38, 39, 40],
     "rating": {
       "stars": 4.4,
       "votes": 854
     },
     "inventory": 20,
-    "category": [
-      2
-    ]
+    "category": [2]
   }
 ]
