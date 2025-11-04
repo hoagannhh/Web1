@@ -74,12 +74,16 @@ export const AdminProduct = {
                   </div>
 
                   <div class="form-group">
-                    <label>Size ${ChuThich('Thêm Dấu gạch (-) với 2 size trở lên')}</label>
+                    <label>Size ${ChuThich(
+                      "Thêm Dấu gạch (-) với 2 size trở lên"
+                    )}</label>
                     <input type="text" id="productSize" placeholder="">
                   </div>
 
                   <div class="form-group">
-                    <label>Màu sắc ${ChuThich('Thêm Dấu gạch (-) với 2 color trở lên')}</label>
+                    <label>Màu sắc ${ChuThich(
+                      "Thêm Dấu gạch (-) với 2 color trở lên"
+                    )}</label>
                     <input type="text" id="productColor" placeholder="">
                   </div>
                 </div>
@@ -681,16 +685,15 @@ export const AdminProduct = {
         if (e.target === this) closeProductForm();
       });
 
-
     // Xử lý submit dữ liệu lên local storage
     document
       .getElementById("productForm")
       .addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // check ID đã tồn tại chưa 
+        // check ID đã tồn tại chưa
         const productID = document.getElementById("productCode").value;
-        if (CheckIDExist(productID)){
+        if (CheckIDExist(productID)) {
           alert("ID đã tồn tại");
           return;
         }
@@ -733,8 +736,12 @@ export const AdminProduct = {
           // now store category as array (main + optional)
           category: ConvertCategoryToID(selectedCats),
           gender: document.getElementById("productGender").value,
-          size: ConvertInputToIntArr(document.getElementById("productSize").value),
-          color: ConvertInputToStringArr(document.getElementById("productColor").value),
+          size: ConvertInputToIntArr(
+            document.getElementById("productSize").value
+          ),
+          color: ConvertInputToStringArr(
+            document.getElementById("productColor").value
+          ),
           description: document.getElementById("productDesc").value,
           inventory:
             parseInt(document.getElementById("productInventory").value) || 0,
@@ -756,32 +763,32 @@ export const AdminProduct = {
         this.renderPagination();
       });
     const CheckIDExist = (id) => {
-      return this.allProducts.find(p => p.id === id);
-    }
-    const ConvertCategoryToID = (selectedCats) =>{
+      return this.allProducts.find((p) => p.id === id);
+    };
+    const ConvertCategoryToID = (selectedCats) => {
       let newtemp = [];
       console.log("generate form edit: selected cats: " + selectedCats);
-      for (let i = 0; i < selectedCats.length; i++){
-        for (let j = 0; j < this.categories.length; j++){
-          if (selectedCats[i] === this.categories[j].name){
+      for (let i = 0; i < selectedCats.length; i++) {
+        for (let j = 0; j < this.categories.length; j++) {
+          if (selectedCats[i] === this.categories[j].name) {
             newtemp.push(Number(this.categories[j].id));
           }
         }
       }
-      return newtemp
-    }
-    const ConvertIDtoCategory = (id) =>{
-      for (let i = 0; i < this.categories.length; i++){
-        if (this.categories[i].id === id){
+      return newtemp;
+    };
+    const ConvertIDtoCategory = (id) => {
+      for (let i = 0; i < this.categories.length; i++) {
+        if (this.categories[i].id === id) {
           return this.categories[i].name;
         }
       }
-    }
+    };
     // ===== SỬA SẢN PHẨM =====
     const openEditProductForm = (productId) => {
       currentEditProductId = productId;
       const product = this.allProducts.find((p) => p.id === productId);
-      console.log(product)
+      console.log(product);
       if (!product) return;
       console.log(product);
       document.getElementById("editProductCode").value = product.id;
@@ -800,16 +807,16 @@ export const AdminProduct = {
       let valuename = [];
       let mainType;
       console.log(values);
-      for (let i = 0; i < values.length; i++){
+      for (let i = 0; i < values.length; i++) {
         if (values[i] <= 3) {
           mainType = ConvertIDtoCategory(values[i]);
         }
-        valuename.push(ConvertIDtoCategory(values[i]))
+        valuename.push(ConvertIDtoCategory(values[i]));
       }
       // determine main type (prefer Men's/Women's/Unisex)
-      console.log("main category: " + mainType );
-      console.log("option category: " + values)
-      console.log("caluename: " + valuename)
+      console.log("main category: " + mainType);
+      console.log("option category: " + values);
+      console.log("caluename: " + valuename);
       // set radios
       if (mainType) {
         const radio = document.querySelector(
@@ -849,8 +856,8 @@ export const AdminProduct = {
       let i = 0;
       gallery.innerHTML = product["img-link-list"]
         .map(
-          (img) =>        
-          `
+          (img) =>
+            `
               <div class="gallery-item" data-index='${i++}' style="position: relative;">
                 <img src="${img}" alt="">
                 <button type="button" onclick="this.parentElement.remove()" 
@@ -858,47 +865,46 @@ export const AdminProduct = {
                   Xóa
                 </button>
               </div>
-            `         
+            `
         )
         .join("");
-        console.log(product["img-link-list"]);
-        currentProductImages = [...product["img-link-list"]];
-        document.getElementById("editProductFormModal").classList.add("active");
-        addEventRemoveImageInInput();
+      console.log(product["img-link-list"]);
+      currentProductImages = [...product["img-link-list"]];
+      document.getElementById("editProductFormModal").classList.add("active");
+      addEventRemoveImageInInput();
     };
 
-      // thêm sự kienj khi xóa ảnh
-      function addEventRemoveImageInInput(){
-        document.querySelectorAll(".gallery-item").forEach(item => {
-          // console.log(item)
-          const index = item.dataset.index;
-          const btnRemove = item.querySelector("button");
-          console.log(btnRemove);
-          btnRemove.addEventListener("click", (e) => {
-            e.preventDefault();
-            currentProductImages.splice(index, 1);
-          })
-          // console.log(id);
-        })
-      }
-
-      // Hàm xóa
-      function deleteImage(button) {
-        const div = button.parentElement;
-        const index = parseInt(div.getAttribute("data-index"));
-        console.log("123");
-        currentProductImages.splice(index, 1); // ← Xóa khỏi array
-        div.remove(); // ← Xóa khỏi DOM
-        
-        updateImageIndices(); // ← Cập nhật index
-      }
-
-      function updateImageIndices() {
-        document.querySelectorAll(".gallery-item").forEach((item, index) => {
-          item.setAttribute("data-index", index);
+    // thêm sự kienj khi xóa ảnh
+    function addEventRemoveImageInInput() {
+      document.querySelectorAll(".gallery-item").forEach((item) => {
+        // console.log(item)
+        const index = item.dataset.index;
+        const btnRemove = item.querySelector("button");
+        console.log(btnRemove);
+        btnRemove.addEventListener("click", (e) => {
+          e.preventDefault();
+          currentProductImages.splice(index, 1);
         });
-      }
+        // console.log(id);
+      });
+    }
 
+    // Hàm xóa
+    function deleteImage(button) {
+      const div = button.parentElement;
+      const index = parseInt(div.getAttribute("data-index"));
+      console.log("123");
+      currentProductImages.splice(index, 1); // ← Xóa khỏi array
+      div.remove(); // ← Xóa khỏi DOM
+
+      updateImageIndices(); // ← Cập nhật index
+    }
+
+    function updateImageIndices() {
+      document.querySelectorAll(".gallery-item").forEach((item, index) => {
+        item.setAttribute("data-index", index);
+      });
+    }
 
     const closeEditProductForm = () => {
       document
@@ -919,7 +925,7 @@ export const AdminProduct = {
     };
 
     // thêm sư kiện khi thêm ảnh
-    console.log(document.getElementById("editProductImageInput"))
+    console.log(document.getElementById("editProductImageInput"));
     document
       .getElementById("editProductImageInput")
       .addEventListener("change", async (e) => {
@@ -970,20 +976,20 @@ export const AdminProduct = {
           const mainTypeInput = document.querySelector(
             'input[name="editProductMainType"]:checked'
           );
-                    console.log("main type: ");
-                    console.log(mainTypeInput.value);
-          const mainType = ConvertCategoryToID(mainTypeInput ? [mainTypeInput.value] : null);
+          console.log("main type: ");
+          console.log(mainTypeInput.value);
+          const mainType = ConvertCategoryToID(
+            mainTypeInput ? [mainTypeInput.value] : null
+          );
           console.log("Main Type: " + mainType.toString());
           let optionalCats = Array.from(
             document.querySelectorAll(
               '#editCategoryCheckboxes input[type="checkbox"]:checked'
             )
           ).map((c) => c.value);
-          optionalCats = ConvertCategoryToID(optionalCats)
+          optionalCats = ConvertCategoryToID(optionalCats);
           console.log("optional cats: " + optionalCats);
-          const newCategories = mainType.concat(
-            optionalCats
-          );
+          const newCategories = mainType.concat(optionalCats);
           console.log("New categories: " + newCategories.toString());
           this.allProducts[idx] = {
             ...this.allProducts[idx],
@@ -1006,7 +1012,6 @@ export const AdminProduct = {
           };
 
           let test = {
-
             name: document.getElementById("editProductName").value,
 
             category: newCategories,
@@ -1025,7 +1030,6 @@ export const AdminProduct = {
             "img-represent": currentProductImages[0],
           };
           console.log(test);
-
 
           localStorage.setItem("allProduct", JSON.stringify(this.allProducts));
           console.log("Sản phẩm đã cập nhật");
@@ -1252,7 +1256,7 @@ function ConvertInputToIntArr(string) {
 function ConvertInputToStringArr(string) {
   return string.split("-");
 }
-function ChuThich(str){
+function ChuThich(str) {
   return `<p style="color: #666;
    display: inline;
    font-size: 14px; 
