@@ -45,6 +45,7 @@ export function LoadProductPageHaveProduct(products) {
   console.log("complete show product by search3");
 }
 export function LoadAllProductPage() {
+  const validProducts = allProducts.filter((p) => p.inventory > 0);
   let htmlProduct = "";
 
   let currentPage = 1;
@@ -54,7 +55,7 @@ export function LoadAllProductPage() {
   if (allProducts && allProducts.length > 0) {
     renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
     HandleEventProduct(allProducts);
-    renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+    renderPagination(htmlProduct, validProducts, currentPage, productsPerPage);
   } else {
     // Xử lý trường hợp không có dữ liệu (chẳng hạn do lỗi load ban đầu)
     console.error(

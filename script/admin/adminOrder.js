@@ -243,6 +243,30 @@ export const AdminOrder = {
     //   orders = orders.filter((order) => order.username === username);
     // }
     // console.log(orders);
+    // ghi lịch sử
+    function addInventoryHistory(transaction) {
+      const STORAGE_KEY = "inventoryHistory";
+      let history = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw && Array.isArray(JSON.parse(raw))) {
+          history = JSON.parse(raw);
+        }
+      } catch (e) {
+        console.error("Failed to parse inventoryHistory", e);
+        history = [];
+      }
+      const newEntry = {
+        ...transaction,
+        transactionId: `T-${Date.now()}-${Math.random()
+          .toString(36)
+          .substr(2, 9)}`,
+        date: new Date().toISOString(),
+      };
+      history.push(newEntry);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      console.log("Đã thêm vào lịch sử kho:", newEntry);
+    }
     const ordersPerPage = 7;
     let currentPage = 1;
     let allOrders = [];
@@ -498,6 +522,13 @@ export const AdminOrder = {
                         if (allProducts[productIndex].inventory < 0) {
                           allProducts[productIndex].inventory = 0;
                         }
+                        addInventoryHistory({
+                          type: "export",
+                          productId: item.id,
+                          quantity: item.quantity,
+                          referenceId: order.id,
+                          notes: `Xuất kho cho đơn hàng (Trạng thái: ${newStatus})`,
+                        });
                       }
                     });
 
