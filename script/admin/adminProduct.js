@@ -67,8 +67,8 @@ export const AdminProduct = {
                     <label>Giới tính</label>
                     <select id="productGender">
                       <option value="">Chọn giới tính</option>
-                      <option value="Men's">Men's</option>
-                      <option value="Women's">Women's</option>
+                      <option value="Men">Men</option>
+                      <option value="Women">Women</option>
                       <option value="Unisex">Unisex</option> <!-- added -->
                     </select>
                   </div>
@@ -295,7 +295,7 @@ export const AdminProduct = {
             </div>
 
             <div class="inventory-table-container">
-              <table class="inventory-table">
+              <table class="inventory-table"  id ="inventory-history-modal">
                 <thead>
                   <tr>
                     <th>Ngày</th>
@@ -377,6 +377,109 @@ export const AdminProduct = {
   init: function () {
     // Load products from localStorage
 
+    //hàm ghi ls kho
+    function addInventoryHistory(transaction) {
+      const STORAGE_KEY = "inventoryHistory";
+      let history = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        // Đảm bảo dữ liệu đọc ra là một mảng
+        if (raw && Array.isArray(JSON.parse(raw))) {
+          history = JSON.parse(raw);
+        }
+      } catch (e) {
+        console.error("Failed to parse inventoryHistory", e);
+        history = []; // Bắt đầu mảng mới nếu có lỗi
+      }
+
+      // Tạo một mục nhập mới với ID duy nhất và thời gian
+      const newEntry = {
+        ...transaction,
+        transactionId: `T-${Date.now()}-${Math.random()
+          .toString(36)
+          .substr(2, 9)}`,
+        date: new Date().toISOString(),
+      };
+
+      history.push(newEntry);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      console.log("Đã thêm vào lịch sử kho:", newEntry);
+    }
+    // dọc ls kho
+    const getInventoryHistory = (productId) => {
+      const STORAGE_KEY = "inventoryHistory";
+      let history = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          history = JSON.parse(raw);
+        }
+      } catch (e) {
+        console.error("Failed to parse inventoryHistory", e);
+        return [];
+      }
+      // Lọc theo productId và sắp xếp mới nhất lên đầu
+      return history
+        .filter((t) => t.productId === productId)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+    };
+    //hàm lấy giá vốn
+    function getUnitCost(productName) {
+      const STORAGE_KEY = "productImport";
+      const rawData = localStorage.getItem(STORAGE_KEY);
+
+      if (!rawData) return 0;
+
+      try {
+        const importHistory = JSON.parse(rawData);
+
+        for (let i = importHistory.length - 1; i >= 0; i--) {
+          const receipt = importHistory[i];
+
+          if (
+            receipt &&
+            receipt.status === "completed" &&
+            Array.isArray(receipt.items)
+          ) {
+            // Tìm sản phẩm trong danh sách items của phiếu nhập
+            const item = receipt.items.find((it) => it.name === productName);
+
+            if (item) {
+              // 'price' trong item của phiếu nhập chính là giá vốn.
+              // (Sử dụng item.price / item.qty nếu price là tổng tiền,
+              // nhưng dựa vào mẫu của bạn, price là giá đơn vị: 1600000)
+              return item.price || 0;
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Lỗi khi đọc LocalStorage productImport:", e);
+      }
+      return 0; // Trả về 0 nếu không tìm thấy giá vốn
+    }
+
+    const markItemAsUsed = (sourceImportId, itemName) => {
+      // Lưu ý: Key "productImport" được dùng chung trong cả hai file
+      const orders = JSON.parse(localStorage.getItem("productImport") || "[]");
+
+      const orderIndex = orders.findIndex((o) => o.id === sourceImportId);
+
+      if (orderIndex !== -1) {
+        const itemIndex = orders[orderIndex].items.findIndex(
+          (item) => item.name === itemName
+        );
+
+        if (itemIndex !== -1) {
+          // Đánh dấu CHỈ SẢN PHẨM NÀY là đã dùng
+          orders[orderIndex].items[itemIndex].isUsed = true;
+
+          localStorage.setItem("productImport", JSON.stringify(orders));
+          return true;
+        }
+      }
+      return false;
+    };
+
     this.loadProducts();
     this.loadCategory();
     console.log(JSON.parse(localStorage.getItem("allProduct")));
@@ -392,64 +495,60 @@ export const AdminProduct = {
       }
       try {
         const parsed = JSON.parse(raw) || [];
-        // parsed can be array of orders or array of items (legacy)
         let itemsList = [];
-        if (
-          Array.isArray(parsed) &&
-          parsed.length &&
-          (parsed[0].name || parsed[0].qty || parsed[0].price) &&
-          !parsed[0].id
-        ) {
-          // legacy: parsed is items array
-          itemsList = parsed;
-        } else {
-          // parsed is orders array -> flatten items
-          const arr = Array.isArray(parsed) ? parsed : [];
-          arr.forEach((o) => {
-            // if (Array.isArray(o.items)) itemsList = itemsList.concat(o.items);
-            if (Array.isArray(o.items)) {
-              o.items.forEach((it) => {
-                itemsList.push({
-                  ...it,
-                  status:
-                    o.status || (Number(it.qty) > 0 ? "completed" : "pending"),
-                });
+
+        // 1. Giai đoạn 1: Làm phẳng (Flatten) và lấy cờ isUsed từ Item
+        const arr = Array.isArray(parsed) ? parsed : [];
+        arr.forEach((o) => {
+          if (Array.isArray(o.items)) {
+            o.items.forEach((it) => {
+              itemsList.push({
+                ...it,
+                status: o.status,
+                // Lấy cờ isUsed của item (hoặc false nếu không có/legacy data)
+                isUsed: it.isUsed || false,
+                orderId: o.id,
               });
-            }
-          });
-        }
-        // aggregate by name
-        //   const map = {};
-        //   itemsList.forEach((it) => {
-        //     const name = (it.name || "").trim();
-        //     const qty = Number(it.qty) || 0;
-        //     if (!name) return;
-        //     map[name] = (map[name] || 0) + qty;
-        //   });
-        //   importedItems = Object.keys(map).map((name) => ({
-        //     name,
-        //     totalQty: map[name],
-        //     status: map[name] > 0 ? "completed" : "pending",
-        //   }));
-        // }
+            });
+          }
+        });
+
+        // 2. Giai đoạn 2: Tổng hợp (Aggregate)
         const map = {};
         itemsList.forEach((it) => {
           const name = (it.name || "").trim();
           const qty = Number(it.qty) || 0;
           const status = it.status;
+          const itemIsUsed = it.isUsed;
+
           if (!name) return;
 
-          if (!map[name]) map[name] = { totalQty: 0, status: status };
+          if (!map[name]) {
+            map[name] = {
+              totalQty: 0,
+              status: status,
+              isAvailableForProduct: false, // <-- Cờ mới: Có sẵn để dùng không?
+            };
+          }
+
           map[name].totalQty += qty;
 
-          // nếu cùng sản phẩm mà có status khác nhau → mixed
+          // QUY TẮC: Nếu BẤT KỲ item nào CÒN SỐ LƯỢNG VÀ CHƯA được dùng, thì sản phẩm này SẴN SÀNG
+          if (itemIsUsed === false && status === "completed" && qty > 0) {
+            map[name].isAvailableForProduct = true;
+          }
+
+          // Xử lý status 'mixed'
           if (map[name].status !== status) map[name].status = "mixed";
         });
 
+        // 3. Giai đoạn 3: Tạo danh sách cuối cùng
         importedItems = Object.keys(map).map((name) => ({
           name,
           totalQty: map[name].totalQty,
           status: map[name].status,
+          // Đảo ngược logic: isUsedForProduct = TRUE nếu KHÔNG còn sẵn sàng (đã dùng hết), FALSE nếu CÒN SẴN SÀNG
+          isUsedForProduct: !map[name].isAvailableForProduct,
         }));
       } catch (err) {
         console.error("Failed to parse productImport", err);
@@ -459,12 +558,18 @@ export const AdminProduct = {
 
     const populateProductSelect = () => {
       const sel = document.getElementById("productSelect");
+
       if (!sel) return;
+      //thêm
+      // const usedImportNames = this.allProducts
+      //   .map((p) => p.sourceImportName)
+      //   .filter(Boolean);
       sel.innerHTML =
         '<option value="">Chọn sản phẩm (lấy từ phiếu nhập)</option>';
       importedItems.forEach((it) => {
         console.log(it.status);
-        if (it.status == "completed") {
+        console.log(it.isUsedForProduct);
+        if (it.status == "completed" && !it.isUsedForProduct) {
           const opt = document.createElement("option");
           opt.value = it.name;
           opt.textContent = `${it.name} — Sẵn có: ${it.totalQty}`;
@@ -704,6 +809,9 @@ export const AdminProduct = {
           return;
         }
 
+        const unitCost = getUnitCost(selectedName);
+        console.log(`Giá vốn tìm thấy cho ${selectedName}: ${unitCost}`);
+
         // NEW: lấy main type (radio) + optional checkbox categories
         const mainTypeInput = document.querySelector(
           'input[name="productMainType"]:checked'
@@ -733,6 +841,7 @@ export const AdminProduct = {
           id:
             document.getElementById("productCode").value || `IMP-${Date.now()}`,
           name: selectedName,
+          sourceImportName: selectedName, // lưu tên sản phẩm từ phiếu nhập để tránh trùng lặp
           // now store category as array (main + optional)
           category: ConvertCategoryToID(selectedCats),
           gender: document.getElementById("productGender").value,
@@ -748,6 +857,7 @@ export const AdminProduct = {
           "img-represent": currentProductImages[0],
           "img-link-list": currentProductImages,
           status: "Đang hiển thị",
+          cost: unitCost,
           createdAt: new Date().toISOString(),
         };
 
@@ -755,12 +865,86 @@ export const AdminProduct = {
         this.allProducts.push(newProduct);
         localStorage.setItem("allProduct", JSON.stringify(this.allProducts));
 
+        const IMPORT_KEY = "productImport"; //phiếu nhâpj
+        const rawImports = localStorage.getItem(IMPORT_KEY);
+        let importList = [];
+        try {
+          importList = rawImports ? JSON.parse(rawImports) : [];
+        } catch (e) {
+          console.error("Lỗi parse productImport:", e);
+        }
+
+        let foundAndMarked = false;
+
+        // Duyệt qua TẤT CẢ các phiếu nhập (orders)
+        for (const order of importList) {
+          // Chỉ xem xét các phiếu đã hoàn thành
+          if (order.status === "completed") {
+            // Tìm sản phẩm con (item) đầu tiên khớp tên VÀ chưa được sử dụng
+            const itemIndex = order.items.findIndex(
+              (item) => item.name === selectedName && item.isUsed === false
+            );
+
+            if (itemIndex !== -1) {
+              // Đánh dấu item này là đã dùng
+              order.items[itemIndex].isUsed = true;
+              foundAndMarked = true;
+
+              console.log(
+                ` Đã đánh dấu item: "${selectedName}" (Phiếu ID: ${order.id}) là ĐÃ SỬ DỤNG.`
+              );
+
+              // Thoát khỏi vòng lặp sau khi tìm thấy và cập nhật item đầu tiên
+              break;
+            }
+          }
+        }
+
+        // Lưu lại dữ liệu productImport đã cập nhật
+        if (foundAndMarked) {
+          localStorage.setItem(IMPORT_KEY, JSON.stringify(importList));
+        } else {
+          console.warn(
+            `❗ Cảnh báo: Không tìm thấy item "${selectedName}" chưa được sử dụng trong productImport để đánh dấu. Có thể item đã được dùng hết.`
+          );
+        }
+
+        // const importIndex = importList.findIndex(
+        //   // Tìm phiếu nhập có tên sản phẩm khớp VÀ trạng thái là 'completed'
+        //   (p) =>
+        //     p.items.some((item) => item.name === selectedName) &&
+        //     p.status === "completed"
+        // );
+
+        // if (importIndex !== -1) {
+        //   // Thêm cờ đã sử dụng vào phiếu nhập (chúng ta sẽ dùng ID để truy vết)
+        //   importList[importIndex].isUsedForProduct = true;
+        //   importList[importIndex].productID = newProduct.id; // Lưu ID sản phẩm đã tạo
+
+        //   localStorage.setItem(IMPORT_KEY, JSON.stringify(importList));
+        //   console.log(
+        //     `Phiếu nhập của sản phẩm "${selectedName}" đã được đánh dấu là ĐÃ SỬ DỤNG.`
+        //   );
+        //   console.log(importList[importIndex]);
+        // }
+
+        //them cái này để ghi lại lịch sử kho
+        addInventoryHistory({
+          type: "import",
+          productId: newProduct.id,
+          quantity: newProduct.inventory,
+          referenceId: "PRODUCT_INIT",
+          notes: "Khởi tạo sản phẩm từ phiếu nhập",
+        });
+
         console.log("Sản phẩm đã thêm:", newProduct);
         alert("Thêm sản phẩm thành công!");
         closeProductForm();
         this.currentPage = 1;
         this.renderProductTable();
         this.renderPagination();
+
+        //populateProductSelect();
       });
     const CheckIDExist = (id) => {
       return this.allProducts.find((p) => p.id === id);
@@ -1084,6 +1268,22 @@ export const AdminProduct = {
       });
 
     // ===== INVENTORY MODAL =====
+    // const openInventoryModal = (productId, productName, productDesc) => {
+    //   if (productName) {
+    //     document.getElementById("productNameInventory").textContent =
+    //       productName;
+    //   }
+    //   if (productDesc) {
+    //     document.getElementById("productDescInventory").textContent =
+    //       productDesc;
+    //   }
+    //   document.getElementById("inventoryModal").classList.add("active");
+    // };
+    //thay
+    // ... bên trong adminProduct.js ...
+
+    // ===== INVENTORY MODAL =====
+    // THAY THẾ HÀM CŨ BẰNG HÀM MỚI NÀY
     const openInventoryModal = (productId, productName, productDesc) => {
       if (productName) {
         document.getElementById("productNameInventory").textContent =
@@ -1093,21 +1293,141 @@ export const AdminProduct = {
         document.getElementById("productDescInventory").textContent =
           productDesc;
       }
+
+      // === ⬇️ MỚI: Load dữ liệu động ⬇️ ===
+      const history = getInventoryHistory(productId);
+      const tableBody = document.getElementById("inventoryTableBody");
+      tableBody.innerHTML = ""; // Xóa data demo cũ
+
+      let totalInbound = 0;
+      let totalOutbound = 0;
+      let currentStock = 0;
+
+      // Để tính tồn kho chính xác, chúng ta phải duyệt từ cũ đến mới
+      const reversedHistory = [...history].reverse();
+
+      reversedHistory.forEach((t) => {
+        let change = 0;
+        let typeText = "N/A";
+        let referenceCode = t.referenceId ? t.referenceId : "N/A";
+
+        // Làm ngắn mã tham chiếu cho dễ nhìn
+        if (referenceCode.startsWith("order-")) {
+          referenceCode = `DH-${referenceCode.slice(-7)}`;
+        } else if (referenceCode.startsWith("T-")) {
+          referenceCode = `T-${referenceCode.slice(-5)}`;
+        }
+
+        if (t.type === "import") {
+          change = t.quantity;
+          typeText = "Nhập";
+          totalInbound += t.quantity;
+          currentStock += t.quantity;
+        } else if (t.type === "export") {
+          change = -t.quantity;
+          typeText = "Bán";
+          totalOutbound += t.quantity;
+          currentStock -= t.quantity;
+        }
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="transaction-date">${new Date(t.date).toLocaleDateString(
+            "vi-VN"
+          )}</td>
+          <td class="transaction-type">${typeText}</td>
+          <td class="transaction-code">${referenceCode}</td>
+          <td class="transaction-change ${
+            change > 0 ? "positive" : "negative"
+          }">
+            ${change > 0 ? "+" : ""}${change}
+          </td>
+          <td class="transaction-total">${currentStock}</td>
+        `;
+        // Chèn lên đầu để giao dịch mới nhất (cuối vòng lặp) hiển thị trên cùng
+        tableBody.prepend(tr);
+      });
+
+      if (history.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Chưa có lịch sử giao dịch.</td></tr>`;
+      }
+
+      // Cập nhật các ô thống kê
+      document.getElementById("totalInbound").textContent = `+${totalInbound}`;
+      document.getElementById(
+        "totalOutbound"
+      ).textContent = `-${totalOutbound}`;
+      document.getElementById("totalStock").textContent = currentStock;
+      // === ⬆️ HẾT: Load dữ liệu động ⬆️ ===
+
+      // Ẩn các nút không cần thiết
+      document.getElementById("confirmInventoryBtn").style.display = "none";
+
       document.getElementById("inventoryModal").classList.add("active");
     };
+
+    // ... (code còn lại của bạn cho closeInventoryModal, filterInventoryData...)
 
     const closeInventoryModal = () => {
       document.getElementById("inventoryModal").classList.remove("active");
     };
 
+    //tạm thời ch lọc
     const filterInventoryData = () => {
-      const startDate = document.getElementById("filterStartDate").value;
-      const endDate = document.getElementById("filterEndDate").value;
+      const startDateStr = document.getElementById("filterStartDate").value;
+      const endDateStr = document.getElementById("filterEndDate").value;
 
-      if (!startDate || !endDate) {
+      const tableBodyId = "inventoryHistoryTableBody";
+
+      if (!startDateStr || !endDateStr) {
         alert("Vui lòng chọn cả ngày bắt đầu và ngày kết thúc");
         return;
       }
+
+      // 1. Chuyển đổi chuỗi ngày tháng thành đối tượng Date để so sánh
+      // Chúng ta cần thêm thời gian để đảm bảo lọc chính xác,
+      // đặc biệt là endDate phải bao gồm cả ngày đó (đến 23:59:59)
+      const startDate = new Date(startDateStr + "T00:00:00Z");
+      const endDate = new Date(endDateStr + "T23:59:59Z");
+
+      // Kiểm tra tính hợp lệ
+      if (isNaN(startDate) || isNaN(endDate) || startDate > endDate) {
+        alert("Khoảng thời gian không hợp lệ. Vui lòng kiểm tra lại.");
+        return;
+      }
+
+      // Lấy dữ liệu lịch sử tồn kho gốc (tôi giả định bạn có hàm này)
+      const inventoryHistory = JSON.parse(
+        localStorage.getItem("inventoryHistory") || "[]"
+      );
+
+      // Lấy ID sản phẩm hiện tại từ modal (giả sử bạn lưu nó ở đâu đó, ví dụ trong data attribute)
+      // Tôi giả định bạn có một biến global hoặc lấy được productId đang mở modal
+      // Thay thế 'currentProductId' bằng cách bạn lấy ID sản phẩm trong context modal
+      const currentProductId = document.querySelector(
+        ".inventory-history-modal"
+      )?.dataset.productId;
+
+      // Nếu không có ID sản phẩm đang mở, không thể lọc lịch sử riêng của nó
+      if (!currentProductId) {
+        console.error(
+          "Không tìm thấy ID sản phẩm hiện tại để lọc lịch sử tồn kho."
+        );
+        return;
+      }
+
+      // 2. Lọc dữ liệu
+      const filteredHistory = inventoryHistory
+        // Lọc theo ID sản phẩm trước
+        .filter((item) => item.productId === currentProductId)
+        // Lọc theo khoảng thời gian
+        .filter((item) => {
+          const itemDate = new Date(item.date);
+          return itemDate >= startDate && itemDate <= endDate;
+        });
+
+      // 3. Cập nhật giao diện
+      renderInventoryHistoryTable(filteredHistory, tableBodyId);
 
       console.log("Lọc từ:", startDate, "Đến:", endDate);
       alert("Đã lọc dữ liệu từ " + startDate + " đến " + endDate);
@@ -1226,7 +1546,11 @@ export const AdminProduct = {
              </div>
            </td>
 
-          <td>${product.inventory}</td>
+          <td>${
+            product.inventory <= 5
+              ? `<span style="color: red; font-weight: bold;">${product.inventory} (CẢNH BÁO!)</span>`
+              : product.inventory
+          }</td>
           <td>${
             Array.isArray(product.category)
               ? product.category.join(", ")

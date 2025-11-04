@@ -1,0 +1,589 @@
+localStorage.setItem("productImport", JSON.stringify([
+  {
+    "id": "PN001",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN002",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN003",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN004",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN005",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN006",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN007",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN008",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN009",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN010",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN011",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN012",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN013",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN014",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN015",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN016",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN017",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN018",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN019",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN020",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN021",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN022",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN023",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN024",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN025",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN026",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN027",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN028",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN029",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN030",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN031",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN032",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN033",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN034",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN035",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN036",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN037",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN038",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN039",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN040",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN041",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Air Jordan 4 RM",
+        "qty": 20,
+        "price": 2739333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN042",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Handball Spezial",
+        "qty": 20,
+        "price": 1666667,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN043",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Chuck 70",
+        "qty": 20,
+        "price": 1333333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN044",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Classic Slip-On Checkerboard Shoe",
+        "qty": 20,
+        "price": 1053333,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "PN045",
+    "date": "2025-11-04",
+    "items": [
+      {
+        "name": "Bella UT Femme",
+        "qty": 20,
+        "price": 1400000,
+        "isUsed": true
+      }
+    ],
+    "status": "completed"
+  }
+]));
+
+console.log("✅ ĐÃ CẬP NHẬT 45 PHIẾU NHẬP (productImport). isUsedForProduct và productID đã được loại bỏ, và isUsed: true đã được thêm vào từng item, sẵn sàng cho logic tồn kho mới.");

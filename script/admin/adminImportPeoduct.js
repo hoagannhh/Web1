@@ -113,6 +113,7 @@ export const AdminImportProduct = {
               date: new Date().toISOString().slice(0, 10),
               items: parsed,
               status: "pending",
+              // isUsedForProduct: false,
             },
           ];
         } else {
@@ -451,7 +452,13 @@ export const AdminImportProduct = {
           const items = gatherItems();
           if (!id || !date || !items.length)
             return alert("Điền đầy đủ thông tin!");
-          orders.push({ id, date, items, status: "pending" });
+          orders.push({
+            id,
+            date,
+            items,
+            status: "pending",
+            // isUsedForProduct: false,
+          });
           saveOrders();
           renderOrders();
           closeOverlay();
@@ -504,7 +511,7 @@ export const AdminImportProduct = {
           const qty = +r.querySelector(".items__qty")?.value || 0;
           const price = +r.querySelector(".items__price")?.value || 0;
           if (!name) return null;
-          return { name, qty, price };
+          return { name, qty, price, isUsed: false };
         })
         .filter(Boolean);
     }
