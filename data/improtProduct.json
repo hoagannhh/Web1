@@ -1,5 +1,5 @@
-localStorage.setItem("productImport", JSON.stringify([
-  {
+
+  [{
     "id": "PN001",
     "date": "2025-11-04",
     "items": [
@@ -584,6 +584,4 @@ localStorage.setItem("productImport", JSON.stringify([
     ],
     "status": "completed"
   }
-]));
-
-console.log("✅ ĐÃ CẬP NHẬT 45 PHIẾU NHẬP (productImport). isUsedForProduct và productID đã được loại bỏ, và isUsed: true đã được thêm vào từng item, sẵn sàng cho logic tồn kho mới.");
+]
