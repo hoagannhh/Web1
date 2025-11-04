@@ -1,5 +1,5 @@
 localStorage.setItem("inventoryHistory", JSON.stringify([
-  {"transactionId":"T-1730705100001","type":"import","productId":"s1","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
+  {"transactionId":"T-1730705100001","type":"import","productId":"s1","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-10-04T10:00:00Z"},
   {"transactionId":"T-1730705100002","type":"import","productId":"s2","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
   {"transactionId":"T-1730705100003","type":"import","productId":"s3","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
   {"transactionId":"T-1730705100004","type":"import","productId":"s4","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
@@ -43,7 +43,9 @@ localStorage.setItem("inventoryHistory", JSON.stringify([
   {"transactionId":"T-1730705100042","type":"import","productId":"s42","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
   {"transactionId":"T-1730705100043","type":"import","productId":"s43","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
   {"transactionId":"T-1730705100044","type":"import","productId":"s44","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
-  {"transactionId":"T-1730705100045","type":"import","productId":"s45","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"}
+  {"transactionId":"T-1730705100045","type":"import","productId":"s45","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-11-04T10:00:00Z"},
+  {"transactionId":"T-1730705100046","type":"import","productId":"s1","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-10-04T10:00:00Z"},
+  {"transactionId":"T-1730705100047","type":"import","productId":"s1","quantity":20,"referenceId":"PRODUCT_INIT","date":"2025-09-04T10:00:00Z"}
 ]));
 
 console.log("ĐÃ CẬP NHẬT 45 GIAO DỊCH NHẬP KHO (inventoryHistory)");

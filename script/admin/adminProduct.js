@@ -680,9 +680,7 @@ export const AdminProduct = {
     // ===== HELPER FUNCTIONS =====
     const closeAllModals = () => {
       document.getElementById("productFormModal").classList.remove("active");
-      document
-        .getElementById("editProductFormModal")
-        .classList.remove("active");
+      document.getElementById("editProductFormModal").classList.remove("active");
       document.getElementById("deleteModal").classList.remove("active");
       document.getElementById("inventoryModal").classList.remove("active");
     };
@@ -1288,6 +1286,7 @@ export const AdminProduct = {
     // ===== INVENTORY MODAL =====
     // THAY THẾ HÀM CŨ BẰNG HÀM MỚI NÀY
     const openInventoryModal = (productId, productName, productDesc) => {
+      console.log(productId);
       if (productName) {
         document.getElementById("productNameInventory").textContent =
           productName;
@@ -1296,8 +1295,10 @@ export const AdminProduct = {
         document.getElementById("productDescInventory").textContent =
           productDesc;
       }
-
-      // === ⬇️ MỚI: Load dữ liệu động ⬇️ ===
+      if (productId){
+        document.getElementById("inventoryModal").setAttribute("data-product-id", productId)
+      }
+      // ===  Load dữ liệu động  ===
       const history = getInventoryHistory(productId);
       const tableBody = document.getElementById("inventoryTableBody");
       tableBody.innerHTML = ""; // Xóa data demo cũ
@@ -1361,7 +1362,7 @@ export const AdminProduct = {
         "totalOutbound"
       ).textContent = `-${totalOutbound}`;
       document.getElementById("totalStock").textContent = currentStock;
-      // === ⬆️ HẾT: Load dữ liệu động ⬆️ ===
+      // === HẾT: Load dữ liệu động  ===
 
       // Ẩn các nút không cần thiết
       document.getElementById("confirmInventoryBtn").style.display = "none";
@@ -1373,14 +1374,18 @@ export const AdminProduct = {
 
     const closeInventoryModal = () => {
       document.getElementById("inventoryModal").classList.remove("active");
+
+            document.getElementById("filterEndDate").value = null;
+      document.getElementById("filterStartDate").value = null;
     };
 
     //tạm thời ch lọc
     const filterInventoryData = () => {
+      document.getAnimations()
       const startDateStr = document.getElementById("filterStartDate").value;
       const endDateStr = document.getElementById("filterEndDate").value;
 
-      const tableBodyId = "inventoryHistoryTableBody";
+      const tableBodyId = "inventoryTableBody";
 
       if (!startDateStr || !endDateStr) {
         alert("Vui lòng chọn cả ngày bắt đầu và ngày kết thúc");
@@ -1403,13 +1408,14 @@ export const AdminProduct = {
       const inventoryHistory = JSON.parse(
         localStorage.getItem("inventoryHistory") || "[]"
       );
-
+      console.log(inventoryHistory);
       // Lấy ID sản phẩm hiện tại từ modal (giả sử bạn lưu nó ở đâu đó, ví dụ trong data attribute)
       // Tôi giả định bạn có một biến global hoặc lấy được productId đang mở modal
       // Thay thế 'currentProductId' bằng cách bạn lấy ID sản phẩm trong context modal
-      const currentProductId = document.querySelector(
-        ".inventory-history-modal"
+      const currentProductId = document.getElementById(
+        "inventoryModal"
       )?.dataset.productId;
+      console.log(currentProductId);
 
       // Nếu không có ID sản phẩm đang mở, không thể lọc lịch sử riêng của nó
       if (!currentProductId) {
@@ -1428,12 +1434,15 @@ export const AdminProduct = {
           const itemDate = new Date(item.date);
           return itemDate >= startDate && itemDate <= endDate;
         });
-
+      
+        console.log("San pham sau khi filter theo thoi gian");
+        console.log(filteredHistory);
       // 3. Cập nhật giao diện
       renderInventoryHistoryTable(filteredHistory, tableBodyId);
 
       console.log("Lọc từ:", startDate, "Đến:", endDate);
       alert("Đã lọc dữ liệu từ " + startDate + " đến " + endDate);
+
     };
 
     const addInventoryRecord = () => {
@@ -1593,4 +1602,77 @@ function ChuThich(str) {
    ">
     ${str}
   </p>`;
+}
+function renderInventoryHistoryTable(filteredHistory, tableBodyId){
+  console.log(filteredHistory);
+  console.log(tableBodyId);
+  
+
+  const reversedHistory = [...filteredHistory];
+
+      const tableBody = document.getElementById("inventoryTableBody");
+      tableBody.innerHTML = ""; // Xóa data demo cũ
+
+      let totalInbound = 0;
+      let totalOutbound = 0;
+      let currentStock = 0;
+
+
+  reversedHistory.forEach((t) => {
+    let change = 0;
+    let typeText = "N/A";
+    let referenceCode = t.referenceId ? t.referenceId : "N/A";
+    // Làm ngắn mã tham chiếu cho dễ nhìn
+    if (referenceCode.startsWith("order-")) {
+      referenceCode = `DH-${referenceCode.slice(-7)}`;
+    } else if (referenceCode.startsWith("T-")) {
+      referenceCode = `T-${referenceCode.slice(-5)}`;
+    }
+
+    if (t.type === "import") {
+      change = t.quantity;
+      typeText = "Nhập";
+      totalInbound += t.quantity;
+      currentStock += t.quantity;
+    } else if (t.type === "export") {
+      change = -t.quantity;
+      typeText = "Bán";
+      totalOutbound += t.quantity;
+      currentStock -= t.quantity;
+    }
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="transaction-date">${new Date(t.date).toLocaleDateString(
+        "vi-VN"
+      )}</td>
+      <td class="transaction-type">${typeText}</td>
+      <td class="transaction-code">${referenceCode}</td>
+      <td class="transaction-change ${
+        change > 0 ? "positive" : "negative"
+      }">
+        ${change > 0 ? "+" : ""}${change}
+      </td>
+      <td class="transaction-total">${currentStock}</td>
+    `;
+    // Chèn lên đầu để giao dịch mới nhất (cuối vòng lặp) hiển thị trên cùng
+    tableBody.prepend(tr);
+  });
+
+  if (reversedHistory.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Chưa có lịch sử giao dịch.</td></tr>`;
+  }
+
+
+        document.getElementById("totalInbound").textContent = `+${totalInbound}`;
+      document.getElementById(
+        "totalOutbound"
+      ).textContent = `-${totalOutbound}`;
+      document.getElementById("totalStock").textContent = currentStock;
+      // === HẾT: Load dữ liệu động  ===
+
+//       // Ẩn các nút không cần thiết
+//       document.getElementById("confirmInventoryBtn").style.display = "none";
+
+//       document.getElementById("inventoryModal").classList.add("active");
 }

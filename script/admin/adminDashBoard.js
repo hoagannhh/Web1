@@ -188,13 +188,12 @@ export const AdminDashBoard = {
         if (Array.isArray(parsed) && parsed.length > 0) {
           categories = parsed;
           console.log(`Đã có dữ liệu ôk`);
-          return; // đã có dữ liệu, không cần fetch
         }
       } catch (e) {
         console.warn("Corrupted localStorage data, will reload from JSON", e);
         localStorage.removeItem(CATEGORY_KEY);
       }
-    }
+    } 
     // nếu chưa có dữ liệu thì fetch từ file JSON và lưu vào localStorage
     const JSON_FILE_PATH_2 = "../data/category.json";
     try {
