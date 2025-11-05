@@ -752,6 +752,8 @@ export const AdminProduct = {
 
     // khi chọn sản phẩm từ select -> tự set tên, mã và tồn kho
     document.addEventListener("change", function (e) {
+      console.log("Change event on:", e.target);
+
       if (e.target && e.target.id === "productSelect") {
         const selVal = e.target.value;
         const item = importedItems.find((it) => it.name === selVal);
@@ -827,6 +829,30 @@ export const AdminProduct = {
 
         const unitCost = getUnitCost(selectedName);
         console.log(`Giá vốn tìm thấy cho ${selectedName}: ${unitCost}`);
+        const RULES_KEY = "priceProfitRules";
+        let profitRules;
+
+        const raw = localStorage.getItem(RULES_KEY);
+        profitRules = raw
+          ? JSON.parse(raw)
+          : {
+              defaultCategoryProfit: 0,
+              category: { Men: 0, Women: 0, Kids: 0 },
+              productSpecific: {},
+            };
+
+        const gender = document.getElementById("productGender").value;
+        let profitPercentage = profitRules.defaultCategoryProfit;
+
+        // Kiểm tra có rule theo category không
+        if (profitRules.category[gender]) {
+          profitPercentage = profitRules.category[gender];
+        }
+
+        // Tính giá bán
+        const cost = unitCost;
+        const profitRate = profitPercentage / 100;
+        const price = cost * (1 + profitRate);
 
         // NEW: lấy main type (radio) + optional checkbox categories
         const mainTypeInput = document.querySelector(
@@ -875,6 +901,7 @@ export const AdminProduct = {
           status: "Đang hiển thị",
 
           cost: unitCost,
+          price: price,
 
           createdAt: new Date().toISOString(),
         };
@@ -893,6 +920,21 @@ export const AdminProduct = {
         }
 
         let foundAndMarked = false;
+        let importId = "PRODUCT_INIT"; // default value
+        console.log(importList);
+        for (const order of importList) {
+          if (order.status === "completed") {
+            console.log("vào if 1");
+            const item = order.items.find(
+              (item) => item.name === selectedName && item.isUsed === false
+            );
+            if (item) {
+              console.log("Tìm thấy phiếu nhập phù hợp:", order);
+              importId = order.id; // Lấy ID của phiếu nhập
+              break;
+            }
+          }
+        }
 
         // Duyệt qua TẤT CẢ các phiếu nhập (orders)
         for (const order of importList) {
@@ -946,12 +988,16 @@ export const AdminProduct = {
         //   console.log(importList[importIndex]);
         // }
 
+        //         // Tìm ID phiếu nhập đầu tiên chứa sản phẩm này và chưa được sử dụng
+        // const IMPORT_KEY = "productImport";
+        // const importList = JSON.parse(localStorage.getItem(IMPORT_KEY) || '[]');
+
         //them cái này để ghi lại lịch sử kho
         addInventoryHistory({
           type: "import",
           productId: newProduct.id,
           quantity: newProduct.inventory,
-          referenceId: "PRODUCT_INIT",
+          referenceId: importId,
           notes: "Khởi tạo sản phẩm từ phiếu nhập",
         });
 
