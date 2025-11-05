@@ -1,7 +1,7 @@
 import { ButtonLogin } from "./ButtonLogin.js";
 import { ButtonRegister } from "./ButtonRegister.js";
 import { LoadCss, LoadPage } from "../LoadPage.js";
-
+import { createEmptyUserProfile, initializeUserProfileByUsername } from "./accountPage.js";
 export let username;
 export let IsAuthenticated = false;
 export const ButtonVerification = {
@@ -73,6 +73,7 @@ function HandleDataRegister() {
       username: document.getElementById("username-input").value.trim(),
       password: document.getElementById("password-input").value,
       confirmPassword: document.getElementById("confirm-password-input").value,
+      userProfile: createEmptyUserProfile(),
       phone: document.getElementById("phone-input").value.trim(),
       address: document.getElementById("address-input").value.trim(),
       isFirstTimeAccess: false,

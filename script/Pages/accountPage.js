@@ -2,6 +2,39 @@ import { InsertPage, LoadPage } from "../LoadPage.js";
 import { username } from "./ButtonVerification .js";
 
 let isFirstTimeAccess = true;
+
+// Hàm tạo cấu trúc userProfile mặc định (export để dùng ở đăng ký)
+export const createEmptyUserProfile = () => {
+  return {
+    fullName: "",
+    gender: "",
+    birthDate: "",
+    email: "",
+    phoneNumber: "",
+    address: ""
+  };
+};
+
+// Hàm khởi tạo userProfile cho account thông qua username
+export const initializeUserProfileByUsername = (targetUsername) => {
+  const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
+  if (!accounts) return;
+  
+  const userIndex = accounts.findIndex(acc => acc.username === targetUsername);
+  if (userIndex === -1) return;
+  
+  // Tạo userProfile rỗng nếu chưa có
+  if (!accounts[userIndex].userProfile) {
+    accounts[userIndex].userProfile = createEmptyUserProfile();
+  }
+  
+  // Đánh dấu đã khởi tạo
+  accounts[userIndex].isFirstTimeAccess = true;
+  
+  localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
+  return accounts[userIndex];
+};
+
 export const accountComponent = {
   // 1. Cập nhật HTML để bao gồm cả trường "Địa chỉ"
   html: `
@@ -122,6 +155,37 @@ export const accountComponent = {
       }
     };
 
+    // Hàm tạo cấu trúc userProfile mặc định (local)
+    const createDefaultUserProfile = () => {
+      return createEmptyUserProfile();
+    };
+
+    // Hàm khởi tạo userProfile cho account
+    const initializeUserProfile = (userPro) => {
+      const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
+      
+      // Tạo userProfile mặc định nếu chưa có
+      if (!userPro.userProfile) {
+        userPro.userProfile = createDefaultUserProfile();
+      }
+      
+      // Gán userProfile vào account
+      let account = {
+        ...userPro,
+        userProfile: userPro.userProfile,
+        isFirstTimeAccess: true
+      };
+      
+      // Cập nhật vào accounts array
+      for (let i = 0; i < accounts.length; i++) {
+        if (accounts[i].username === username) {
+          accounts[i] = account;
+        }
+      }
+      
+      localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
+    };
+
     const loadProfileData = () => {
       const savedData = JSON.parse(localStorage.getItem("ACCOUNTS"));
       if (savedData) {
@@ -132,53 +196,16 @@ export const accountComponent = {
         document.querySelector(
           ".username-mini"
         ).innerHTML = `${userPro.username}`;
-        // document.getElementById(
-        //   "full-name"
-        // ).value = `${userPro.firstName} + ${userPro.lastName}`;
-        // if (!userPro.userProfile) return;
+        
         if (!userPro.isFirstTimeAccess) {
           updateSpanContent("tel", userPro.phone);
           updateSpanContent("address", userPro.address);
-
-          const userProfile = {
-            fullName: document.getElementById("full-name").value,
-            gender:
-              document.querySelector('input[name="gender"]:checked')?.value ||
-              "",
-            birthDate:
-              document.querySelector('[data-type="date"]')
-                .previousElementSibling.textContent,
-            email: document.querySelector('[data-type="email"]')
-              .previousElementSibling.textContent,
-            phoneNumber:
-              document.querySelector('[data-type="tel"]').previousElementSibling
-                .textContent,
-            address: document.querySelector('[data-type="address"]')
-              .previousElementSibling.textContent,
-          };
-          console.log(123);
-
-          userPro.isFirstTimeAccess = true;
-
-          const accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
-          console.log(accounts);
-          let account = {
-            ...userPro,
-            userProfile,
-          };
-          console.log(account);
-          for (let i = 0; i < accounts.length; i++) {
-            if (accounts[i].username === username) {
-              console.log(accounts[i].username);
-              console.log(account);
-
-              accounts[i] = account;
-            }
-          }
-          console.log(accounts);
-          localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
+          
+          // Gọi hàm khởi tạo userProfile
+          initializeUserProfile(userPro);
           return;
         }
+        
         const userProfile = userPro.userProfile;
         userProfile.fullName = userPro.firstName + " " + userPro.lastName;
         console.log(userProfile);
@@ -247,7 +274,6 @@ export const accountComponent = {
       console.log(accounts);
       localStorage.setItem("ACCOUNTS", JSON.stringify(accounts));
       if (showAlert) alert("Đã lưu thông tin thành công!");
-      // Đã xóa location.reload();
     };
 
     // --- CÁC HÀM XỬ LÝ SỰ KIỆN ---
@@ -335,7 +361,7 @@ export const accountComponent = {
       }
     };
 
-    // --- GÁN SỰ KIỆN (ATTACH EVENT LISTENERS) ---
+    // --- GẮN SỰ KIỆN (ATTACH EVENT LISTENERS) ---
     document.querySelectorAll(".action-link").forEach((link) => {
       link.addEventListener("click", handleActionLinkClick);
     });
