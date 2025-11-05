@@ -1159,3 +1159,15 @@ input[type="checkbox"]:focus {
   /* box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08); */
   outline: none;
 }
+
+/* Thêm style cho nút import */
+.btn-import {
+  background-color: black;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hiện nút khi hover vào tr */
+tr:hover .btn-import {
+  opacity: 1;
+}

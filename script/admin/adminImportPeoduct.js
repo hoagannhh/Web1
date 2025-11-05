@@ -95,6 +95,7 @@ export const AdminImportProduct = {
     let allOrders = []; // lưu trữ toàn bộ đơn hàng để hỗ trợ tìm kiếm
     const STORAGE_KEY = "productImport"; // main storage key for orders
     // load from either new key or legacy key if present
+    const importDraft = localStorage.getItem("importDraft");
     function loadOrders() {
       const raw =
         localStorage.getItem(STORAGE_KEY) ||
@@ -277,8 +278,17 @@ export const AdminImportProduct = {
       const id = data?.id || `PN${String(orders.length + 1).padStart(3, "0")}`;
       const date = data?.date || new Date().toISOString().slice(0, 10);
       const items = (data?.items || []).map((it) => ({ ...it }));
+
+      const draft = importDraft ? JSON.parse(importDraft) : null;
+
+      // Thêm hidden input để lưu productId nếu có
+      const hiddenField = draft
+        ? `<input type="hidden" id="from-product-id" value="${draft.productId}">`
+        : "";
+
       //TRả về HTML của modal
       return `
+        ${hiddenField}
         <h3>${
           mode === "add"
             ? "Thêm phiếu nhập"
@@ -517,10 +527,71 @@ export const AdminImportProduct = {
         };
       }
 
+      // Thêm vào adminImportProduct.js
+      // Thêm vào adminImportProduct.js
       if (confirmComplete) {
         confirmComplete.onclick = () => {
           if (currentEditIndex !== null) {
-            orders[currentEditIndex].status = "completed";
+            const order = orders[currentEditIndex];
+            // const importDraft = localStorage.getItem('importDraft');
+            console.log("Import Draft:", importDraft);
+            // Chỉ xử lý nếu phiếu được tạo từ Product
+            if (importDraft) {
+              try {
+                const draft = JSON.parse(importDraft);
+
+                // 1. Cập nhật số lượng trong allProduct
+                const allProducts = JSON.parse(
+                  localStorage.getItem("allProduct") || "[]"
+                );
+                const product = allProducts.find(
+                  (p) => p.id === draft.productId
+                );
+
+                if (product) {
+                  // Lấy số lượng từ phiếu nhập
+                  const importQty = order.items[0].qty;
+
+                  // Cập nhật số lượng tồn kho
+                  product.inventory =
+                    (product.inventory || 0) + Number(importQty);
+                  localStorage.setItem(
+                    "allProduct",
+                    JSON.stringify(allProducts)
+                  );
+
+                  // 2. Thêm vào inventoryHistory
+                  const historyEntry = {
+                    transactionId: `T-${Date.now()}${Math.random()
+                      .toString(36)
+                      .substr(2, 5)}`,
+                    type: "import",
+                    productId: draft.productId,
+                    quantity: Number(importQty),
+                    referenceId: order.id,
+                    date: new Date().toISOString(),
+                    notes: `Nhập hàng từ phiếu ${order.id}`,
+                  };
+
+                  const inventoryHistory = JSON.parse(
+                    localStorage.getItem("inventoryHistory") || "[]"
+                  );
+                  inventoryHistory.push(historyEntry);
+                  localStorage.setItem(
+                    "inventoryHistory",
+                    JSON.stringify(inventoryHistory)
+                  );
+
+                  // 3. Đánh dấu item trong phiếu nhập là đã sử dụng
+                  order.items[0].isUsed = true;
+                }
+              } catch (e) {
+                console.error("Error processing import draft:", e);
+              }
+            }
+
+            // Cập nhật trạng thái phiếu nhập
+            order.status = "completed";
             saveOrders();
             renderOrders();
             closeOverlay();
@@ -594,6 +665,50 @@ export const AdminImportProduct = {
         filterAndRenderOrders(e.target.value);
       });
     }
+
+    // Thêm đoạn này vào đầu hàm init
+
+    if (localStorage.getItem("importDraft")) {
+      try {
+        const draft = JSON.parse(localStorage.getItem("importDraft"));
+        // Tự động mở form thêm mới
+        openOverlay(buildOrderForm({ mode: "add" }));
+
+        // Đợi một chút để DOM được tạo
+        setTimeout(() => {
+          // Tự động điền thông tin sản phẩm
+          const tbody = document.getElementById("items-tbody");
+          if (tbody) {
+            tbody.innerHTML = `
+              <tr>
+                <td><input class="items__name" value="${
+                  draft.productName
+                }" readonly></td>
+                <td><input class="items__qty" type="number" value="1" min="1"></td>
+                <td><input class="items__price" type="number" value="${
+                  draft.cost
+                }" readonly></td>
+                <td class="items__line">${formatMoney(draft.cost)}</td>
+                <td></td>
+              </tr>
+            `;
+          }
+
+          // Bind events cho dòng sản phẩm
+          // Array.from(tbody.querySelectorAll("tr")).forEach((tr) =>
+          //   bindItemRow(tr)
+          // );
+
+          // Xóa draft sau khi đã sử dụng
+          localStorage.removeItem("importDraft");
+        }, 100);
+
+        bindModalEvents("add");
+      } catch (e) {
+        console.error("Error parsing import draft:", e);
+      }
+    }
+    localStorage.removeItem("importDraft");
     // end init
     // end init
   },
