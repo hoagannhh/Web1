@@ -789,7 +789,8 @@ export const PaymentComponent = {
     // Confirm Payment
     confirmButton?.addEventListener("click", async () => {
       if (!selectedMethod) {
-        alert("Vui lòng chọn một phương thức thanh toán trước.");
+        selectMethod(cashMethod, "cash");
+        // alert("Vui lòng chọn một phương thức thanh toán trước.");
         return;
       }
 
