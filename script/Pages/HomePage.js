@@ -22,41 +22,6 @@ export const HomeComponent = {
           <p class="price">$205.00</p>
         </div>
       </div>
-
-      <div class="prod-demo">
-        <div class="prod">
-          <div class="new-in-prod"><p class="new-text">New</p></div>
-          <img class="img-prod" src="../img/product-demo.png" />
-        </div>
-        <div class="info-prod">
-          <p class="name-prod">Jordan Retro 12</p>
-          <p class="atribute-prod">Men's Jordan</p>
-          <p class="price">$205.00</p>
-        </div>
-      </div>
-
-      <div class="prod-demo">
-        <div class="prod">
-          <div class="new-in-prod"><p class="new-text">New</p></div>
-          <img class="img-prod" src="../img/product-demo.png" />
-        </div>
-        <div class="info-prod">
-          <p class="name-prod">Jordan Retro 12</p>
-          <p class="atribute-prod">Men's Jordan</p>
-          <p class="price">$205.00</p>
-        </div>
-      </div>
-      <div class="prod-demo">
-        <div class="prod">
-          <div class="new-in-prod"><p class="new-text">New</p></div>
-          <img class="img-prod" src="../img/product-demo.png" />
-        </div>
-        <div class="info-prod">
-          <p class="name-prod">Jordan Retro 12</p>
-          <p class="atribute-prod">Men's Jordan</p>
-          <p class="price">$205.00</p>
-        </div>
-      </div>
     </div>
 
     <div class="image-demo">
@@ -80,52 +45,7 @@ export const HomeComponent = {
     </div>
 
     <div class="product-grid">
-      <div class="prod-demo">
-        <div class="prod">
-          <div class="sale-in-prod"><p class="sale-text">Sale</p></div>
-          <img class="img-prod" src="../img/product-demo.png" />
-        </div>
-        <div class="info-prod">
-          <p class="name-prod">Jordan Retro 12</p>
-          <p class="atribute-prod">Men's Jordan</p>
-          <p class="price">$205.00</p>
-        </div>
-      </div>
-
-      <div class="prod-demo">
-        <div class="prod">
-          <div class="sale-in-prod"><p class="sale-text">Sale</p></div>
-          <img class="img-prod" src="../img/product-demo.png" />
-        </div>
-        <div class="info-prod">
-          <p class="name-prod">Jordan Retro 12</p>
-          <p class="atribute-prod">Men's Jordan</p>
-          <p class="price">$205.00</p>
-        </div>
-      </div>
-
-      <div class="prod-demo">
-        <div class="prod">
-          <div class="sale-in-prod"><p class="sale-text">Sale</p></div>
-          <img class="img-prod" src="../img/product-demo.png" />
-        </div>
-        <div class="info-prod">
-          <p class="name-prod">Jordan Retro 12</p>
-          <p class="atribute-prod">Men's Jordan</p>
-          <p class="price">$205.00</p>
-        </div>
-      </div>
-      <div class="prod-demo">
-        <div class="prod">
-          <div class="sale-in-prod"><p class="sale-text">Sale</p></div>
-          <img class="img-prod" src="../img/product-demo.png" />
-        </div>
-        <div class="info-prod">
-          <p class="name-prod">Jordan Retro 12</p>
-          <p class="atribute-prod">Men's Jordan</p>
-          <p class="price">$205.00</p>
-        </div>
-      </div>
+      
     </div>`,
   canDeleteCss: true,
   css: `../css/home.css`,
@@ -139,4 +59,28 @@ function AddEventForOverlayButtonMore() {
   btnMore.addEventListener("click", () => {
     LoadPage("product", container);
   });
+  LoadProduct();
+}
+function LoadProduct(){
+    const allProduct = JSON.parse(localStorage.getItem("allProduct"));
+  document.querySelectorAll(".product-grid").forEach((cnt) => {
+    let html = "";
+    for (let i =0; i < 4; i++){
+    html += 
+      `
+        <div class="prod-demo">
+          <div class="prod">
+            <div class="sale-in-prod"><p class="sale-text">Sale</p></div>
+            <img class="img-prod" src="${allProduct[i]["img-represent"]}" />
+          </div>
+          <div class="info-prod">
+            <p class="name-prod">${allProduct[i].name}</p>
+            <p class="atribute-prod">${allProduct[i].gender}'s</p>
+            <p class="price">${allProduct[i].price} vnd</p>
+          </div>
+        </div>
+      `
+    }
+    cnt.innerHTML = html;
+  })
 }

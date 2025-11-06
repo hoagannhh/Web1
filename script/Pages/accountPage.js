@@ -149,6 +149,7 @@ export const accountComponent = {
     };
 
     const updateSpanContent = (dataType, value) => {
+      console.log("Update value: " + value);
       const link = document.querySelector(`[data-type="${dataType}"]`);
       if (link && link.previousElementSibling) {
         link.previousElementSibling.textContent = value || "Chưa cập nhật";
@@ -197,14 +198,15 @@ export const accountComponent = {
           ".username-mini"
         ).innerHTML = `${userPro.username}`;
         
-        if (!userPro.isFirstTimeAccess) {
-          updateSpanContent("tel", userPro.phone);
-          updateSpanContent("address", userPro.address);
+        // if (!userPro.isFirstTimeAccess) {
+          updateSpanContent("tel", userPro.userProfile.phoneNumber === "" ? userPro.phone : userPro.userProfile.phoneNumber );
+          updateSpanContent("address", userPro.userProfile.address === "" ? userPro.address :  userPro.userProfile.address );
+        //   document.getElementById("full-name").value = userPro.firstName + " " + userPro.lastName;
           
-          // Gọi hàm khởi tạo userProfile
-          initializeUserProfile(userPro);
-          return;
-        }
+        //   // Gọi hàm khởi tạo userProfile
+        //   initializeUserProfile(userPro);
+        //   return;
+        // }
         
         const userProfile = userPro.userProfile;
         userProfile.fullName = userPro.firstName + " " + userPro.lastName;
@@ -217,8 +219,6 @@ export const accountComponent = {
         }
         updateSpanContent("date", userProfile.birthDate);
         updateSpanContent("email", userProfile.email);
-        updateSpanContent("tel", userProfile.phoneNumber);
-        updateSpanContent("address", userProfile.address);
       }
       saveProfileData(false);
     };

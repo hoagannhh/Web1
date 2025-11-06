@@ -46,26 +46,13 @@ export const ProductDetail = {
         </div>
         <p class="des-p"></p>
 
-        <div class="horizontal-bar"></div>
-        <div class="review-detail">
-          <h2>REVIEWS</h2>
-          <button class="morethan">
-            <img class="icon" src="../img/More Than.png" alt="" />
-          </button>
-        </div>
+       
       </div>
     </div>
     <div class="container-other-products">
       <div class="navigation">
         <p class="actor-descipt"><strong>You might also like</strong></p>
-        <div class="left-right">
-          <button class="left">
-            <img src="../img/More Than (1).png" alt="" />
-          </button>
-          <button class="right">
-            <img src="../img/More Than (2).png" alt="" />
-          </button>
-        </div>
+       
       </div>
       <div class="container-other">
           ${ShowMoreProduct()}
@@ -214,7 +201,7 @@ function AddEventbuttonSubmit() {
     if (isChooseSize && isChooseColor) {
       alert("Thêm vào giỏ hàng");
       // Logic thêm vào giỏ hàng bình thường
-      console.log(profileProduct)
+      console.log(profileProduct);
       Cart.HandleEventInCart(profileProduct);
     } else {
       alert("Vui lòng chọn size và color!");
@@ -280,9 +267,8 @@ function EditNameProduct(proInfor) {
 function AddImageColor(proInfor) {
   const colors = document.querySelector(".container-infor .color");
   let htmlImage = ``;
-  if (proInfor.hasOwnProperty("img-link-color")){    
+  if (proInfor.hasOwnProperty("img-link-color")) {
     proInfor["img-link-color"].forEach((link) => {
-      
       htmlImage += `
               <img
                 class="color-img"
@@ -291,7 +277,7 @@ function AddImageColor(proInfor) {
               />
       `;
     });
-  }else {
+  } else {
     proInfor.color.forEach((link) => {
       link = link.trim();
       htmlImage += `
@@ -312,38 +298,37 @@ function AddImageRepresent(proInfor) {
   represent.src = ` ${proInfor["img-represent"]} `;
 }
 // InsertPage("productDetail");
-function ShowMoreProduct(){
-  const allProduct = JSON.parse(localStorage.getItem("allProduct"))
+function ShowMoreProduct() {
+  const allProduct = JSON.parse(localStorage.getItem("allProduct"));
   let i = 0;
   let html = ``;
-  allProduct.forEach(p => {
-    if (i > 5) return;
-    html += 
-    `
+  allProduct.forEach((p) => {
+    if (i > 4) return;
+    html += `
         <div class="product">
           <img class="product-img" src="${p["img-represent"]}" alt="" />
           <p class="name">${p.name}</p>
           <p class="kind-of-shoe">${ConvertIDToCategoryOpt(p.category)}</p>
           <p class="price">${ConvertINTtoVND(Number(p.price))}</p>
         </div>
-    `
+    `;
     i++;
-  })
+  });
   return html;
 }
 function ConvertINTtoVND(number) {
   return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
 }
 
-function ConvertIDToCategoryOpt(proCate){
-    // console.log(proCate);
+function ConvertIDToCategoryOpt(proCate) {
+  // console.log(proCate);
   const categories = JSON.parse(localStorage.getItem("categoriesDB"));
-  let temp = []
+  let temp = [];
   // console.log(categories);
   if (categories.length <= 3) return temp;
-  for (let i = 3; i < categories.length; i++){
-    for (let j = 0; j < proCate.length; j++){
-      if (categories[i].id === proCate[j]){
+  for (let i = 3; i < categories.length; i++) {
+    for (let j = 0; j < proCate.length; j++) {
+      if (categories[i].id === proCate[j]) {
         temp.push(categories[i].name);
       }
     }
@@ -351,18 +336,18 @@ function ConvertIDToCategoryOpt(proCate){
   // console.log(temp)
   return temp;
 }
-function ConvertIDToCategoryMain(proCate){
+function ConvertIDToCategoryMain(proCate) {
   // console.log(proCate);
   const categories = JSON.parse(localStorage.getItem("categoriesDB"));
   // console.log(categories);
-  let temp = []
-  for (let i = 0; i < categories.length; i++){
-    for (let j = 0; j < proCate.length; j++){
-      if (categories[i].id === proCate[j] && i < 3){
+  let temp = [];
+  for (let i = 0; i < categories.length; i++) {
+    for (let j = 0; j < proCate.length; j++) {
+      if (categories[i].id === proCate[j] && i < 3) {
         temp.push(categories[i].name);
       }
     }
   }
-    // console.log(temp)
+  // console.log(temp)
   return temp;
 }
