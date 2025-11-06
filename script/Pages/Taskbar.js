@@ -8,14 +8,16 @@ export const TaskBar = {
   html: `<div class="task-bar">
       <div class="Header">
         <div class="Name-Shop">
+          <img class="logo" src="../img/Logo.png" />
           <p class="name">ĐẾ VƯƠNG</p>
         </div>
         <div class="Search-taskbar">
           <input class="Search" type="text" placeholder="Search" />
           <img class="Search-icon" src="../icon/Search.png" />
         </div>
-        ${ButtonVerification.html}
-        
+        <div class="taskbar-right-section">${ButtonVerification.html}
+                <div class="bag"><img class="bag-icon" src="../icon/cart.png" /></div>
+        </div>
       </div>
 
       <div class="menu">
@@ -245,7 +247,6 @@ export const TaskBar = {
         <button class="test">New Arrivals</button>
         <span class="split-menu">&#124;</span>
         <button class="test">36 SNEAKERS</button>
-        <div class="bag"><img class="bag-icon" src="../icon/bag.png" /></div>
       </div>
     </div>`,
   css: `../css/taskbar.css`,
@@ -306,74 +307,69 @@ function headerScroll() {
  * Gắn sự kiện click cho tất cả các nút lọc trong taskbar
  */
 function AddFilterEvents() {
-  // --- 1. LỌC THEO GIỚI TÍNH (MEN'S, WOMEN'S) ---
-  // (Ta không lọc Kid's vì nó có cấu trúc size phức tạp)
-  const menuButtons = document.querySelectorAll(".menu > .test");
-  menuButtons.forEach(btn => {
-    const buttonText = btn.textContent.trim().toLowerCase();
-    
-    if (buttonText === "men's") {
-      btn.addEventListener("click", () => handleFilter("gender", "men"));
-    } else if (buttonText === "women's") {
+  // --- 1. LỌC THEO GIỚI TÍNH (MEN'S, WOMEN'S) ---
+  // (Ta không lọc Kid's vì nó có cấu trúc size phức tạp)
+  const menuButtons = document.querySelectorAll(".menu > .test");
+  menuButtons.forEach((btn) => {
+    const buttonText = btn.textContent.trim().toLowerCase();
+    if (buttonText === "men's") {
+      btn.addEventListener("click", () => handleFilter("gender", "men"));
+    } else if (buttonText === "women's") {
       // Dữ liệu sản phẩm của bạn dùng "Women" (viết hoa)
-      btn.addEventListener("click", () => handleFilter("gender", "Women"));
-    }
+      btn.addEventListener("click", () => handleFilter("gender", "Women"));
+    }
     // Bạn có thể thêm 'else if' cho "Sale", "New Arrivals" nếu dữ liệu sản phẩm có hỗ trợ
-  });
+  }); // --- 2. LỌC THEO THƯƠNG HIỆU (BRAND) --- // Ánh xạ tên tệp icon sang tên thương hiệu trong dữ liệu
 
-  // --- 2. LỌC THEO THƯƠNG HIỆU (BRAND) ---
-  // Ánh xạ tên tệp icon sang tên thương hiệu trong dữ liệu
-  const brandMap = {
-    "nike.png": "Nike",
-    "vans.png": "Vans",
-    "nb.png": "New Balance", // Giả sử 'nb' là New Balance
-    "converse.png": "Converse",
-    "adidas.png": "Adidas",
-    "onitsuka.png": "Onitsuka Tiger", // Giả sử
-    "skechers.png": "Skechers",
-    "puma.png": "Puma"
-  };
+  const brandMap = {
+    "nike.png": "Nike",
+    "vans.png": "Vans",
+    "nb.png": "New Balance", // Giả sử 'nb' là New Balance
+    "converse.png": "Converse",
+    "adidas.png": "Adidas",
+    "onitsuka.png": "Onitsuka Tiger", // Giả sử
+    "skechers.png": "Skechers",
+    "puma.png": "Puma",
+  };
 
-  const brandImages = document.querySelectorAll(".company, .company-brands-menu");
-  brandImages.forEach(img => {
-    const src = img.src;
-    const fileName = src.split("/").pop(); // Lấy ra "nike.png"
-    const brandName = brandMap[fileName];
-    
-    if (brandName) {
-      img.addEventListener("click", (e) => {
-        e.stopPropagation(); // Ngăn không cho sự kiện click vào "Men's" chạy
-        handleFilter("brand", brandName);
-      });
-    }
-  });
+  const brandImages = document.querySelectorAll(
+    ".company, .company-brands-menu"
+  );
+  brandImages.forEach((img) => {
+    const src = img.src;
+    const fileName = src.split("/").pop(); // Lấy ra "nike.png"
+    const brandName = brandMap[fileName];
+    if (brandName) {
+      img.addEventListener("click", (e) => {
+        e.stopPropagation(); // Ngăn không cho sự kiện click vào "Men's" chạy
+        handleFilter("brand", brandName);
+      });
+    }
+  }); // --- 3. LỌC THEO KÍCH CỠ (SIZE) ---
 
-  // --- 3. LỌC THEO KÍCH CỠ (SIZE) ---
-  const sizeButtons = document.querySelectorAll(".dropdown-content .size-btn");
-  sizeButtons.forEach(btn => {
-    const sizeValue = btn.textContent.trim();
-    if (sizeValue) {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Ngăn không cho sự kiện click vào "Men's" chạy
-        handleFilter("size", sizeValue);
-      });
-    }
-  });
-const bestSellerProducts = document.querySelectorAll(".sellers .product");
-  
-  bestSellerProducts.forEach(productEl => {
+  const sizeButtons = document.querySelectorAll(".dropdown-content .size-btn");
+  sizeButtons.forEach((btn) => {
+    const sizeValue = btn.textContent.trim();
+    if (sizeValue) {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Ngăn không cho sự kiện click vào "Men's" chạy
+        handleFilter("size", sizeValue);
+      });
+    }
+  });
+  const bestSellerProducts = document.querySelectorAll(".sellers .product");
+  bestSellerProducts.forEach((productEl) => {
     // Tìm thẻ <p> chứa tên sản phẩm
-    const productName = productEl.querySelector(".name-product")?.textContent.trim();
-    
-    if (productName) {
-      productEl.addEventListener("click", (e) => {
-        e.stopPropagation(); // Rất quan trọng: không kích hoạt bộ lọc "Men's"
-        
-        // Gọi hàm filterByName với tên sản phẩm cụ thể
-        filterByName(productName); 
-      });
-    }
-  });
+    const productName = productEl
+      .querySelector(".name-product")
+      ?.textContent.trim();
+    if (productName) {
+      productEl.addEventListener("click", (e) => {
+        e.stopPropagation(); // Rất quan trọng: không kích hoạt bộ lọc "Men's" // Gọi hàm filterByName với tên sản phẩm cụ thể
+        filterByName(productName);
+      });
+    }
+  });
 }
 
 /**
@@ -383,34 +379,31 @@ const bestSellerProducts = document.querySelectorAll(".sellers .product");
  * @param {string|number} filterValue - Giá trị cần lọc (ví dụ: "men", "Nike", 40)
  */
 function handleFilter(filterType, filterValue) {
-  console.log(`Filtering by ${filterType}: ${filterValue}`);
-  
+  console.log(`Filtering by ${filterType}: ${filterValue}`);
   // 1. Chuyển đến trang sản phẩm
-  LoadPage("product", document.getElementById("container"));
+  LoadPage("product", document.getElementById("container"));
 
   // 2. Lọc danh sách sản phẩm
-  const products = allProducts.filter((pro) => {
-    switch (filterType) {
-      case "gender":
-        return pro.gender.toLowerCase() === filterValue.toLowerCase();
-      case "brand":
-        return pro.brand.toLowerCase() === filterValue.toLowerCase();
-      case "size":
+  const products = allProducts.filter((pro) => {
+    switch (filterType) {
+      case "gender":
+        return pro.gender.toLowerCase() === filterValue.toLowerCase();
+      case "brand":
+        return pro.brand.toLowerCase() === filterValue.toLowerCase();
+      case "size":
         // Dữ liệu 'size' của bạn là một mảng, nên ta dùng .includes()
-        return pro.size.includes(Number(filterValue));
-      // Bạn có thể thêm các trường hợp khác như "sale", "new" ở đây
-      default:
-        return false;
-    }
-  });
+        return pro.size.includes(Number(filterValue)); // Bạn có thể thêm các trường hợp khác như "sale", "new" ở đây
+      default:
+        return false;
+    }
+  });
 
-  console.log("Filtered products:", products);
+  console.log("Filtered products:", products);
 
   // 3. Render lại trang sản phẩm với danh sách đã lọc
-  LoadProductPageHaveProduct(products);
-  
+  LoadProductPageHaveProduct(products);
   // 4. Đồng bộ hóa bộ lọc sidebar (quan trọng)
-  DevideFlowFilter(null, products, true);
+  DevideFlowFilter(null, products, true);
 }
 /**
  * Hàm chung để lọc sản phẩm THEO TÊN và tải lại trang
@@ -418,23 +411,18 @@ function handleFilter(filterType, filterValue) {
  * @param {string} nameToFilter - Tên sản phẩm cần tìm
  */
 function filterByName(nameToFilter) {
-  console.log(`Filtering by name: ${nameToFilter}`);
-  
+  console.log(`Filtering by name: ${nameToFilter}`);
   // 1. Chuyển đến trang sản phẩm
-  LoadPage("product", document.getElementById("container"));
-  
+  LoadPage("product", document.getElementById("container"));
   // 2. Lọc sản phẩm
-  const products = allProducts.filter((pro) => {
-    const temp = pro.name.toLowerCase();
-    // Dùng includes để tìm tên
-    return temp.includes(nameToFilter.toLowerCase()); 
-  });
-  
-  console.log("Filtered products:", products);
+  const products = allProducts.filter((pro) => {
+    const temp = pro.name.toLowerCase(); // Dùng includes để tìm tên
+    return temp.includes(nameToFilter.toLowerCase());
+  });
+  console.log("Filtered products:", products);
 
   // 3. Render lại trang
-  LoadProductPageHaveProduct(products);
-  
+  LoadProductPageHaveProduct(products);
   // 4. Đồng bộ hóa sidebar
-   DevideFlowFilter(null, products, true);
+  DevideFlowFilter(null, products, true);
 }

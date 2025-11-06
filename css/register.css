@@ -1,5 +1,5 @@
 html {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* * {
@@ -15,20 +15,20 @@ html {
 } */
 
 p {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* body {
@@ -39,147 +39,150 @@ p {
 } */
 
 .register {
-    width: 90%;
-    max-width: 500px;
-    height: auto;
-    max-height: 90vh;
-    background-color: rgb(255, 255, 255);
-    border-radius: 8px;
-    padding: 40px 30px;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow-y: auto;
+  width: 90%;
+  max-width: 500px;
+  height: auto;
+  max-height: 90vh;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  padding: 40px 30px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto;
 }
 
 .register .font-register {
-    font-size: clamp(18px, 2vw, 24px);
-    text-align: center;
-    margin: 0 0 30px 0;
+  font-size: clamp(18px, 2vw, 24px);
+  text-align: center;
+  margin: 0 0 30px 0;
 }
 
 #register-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
 
 /* Input wrapper để chứa input + error message */
 .input-wrapper {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .register input {
-    width: 100%;
-    height: 45px;
-    padding: 0 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 45px;
+  padding: 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 .register input:focus {
-    outline: none;
-    border-color: #333;
+  outline: none;
+  border-color: #333;
 }
 
 .register input.error {
-    border-color: #ff4444;
+  border-color: #ff4444;
 }
 
 .register .first-and-last-name {
-    display: flex;
-    gap: 15px;
-    width: 100%;
+  display: flex;
+  gap: 15px;
+  width: 100%;
 }
 
 .register .first-and-last-name .input-wrapper {
-    flex: 1;
+  flex: 1;
 }
 
 /* Error message styling */
 .error-message {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 100%;
-    margin-top: 4px;
-    font-size: 12px;
-    color: #ff4444;
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #ff4444;
 }
 
 .error-message.show {
-    display: block;
+  display: block;
 }
 
 .have-an-account {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 100%;
-    margin: -5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  margin: -5px 0;
 }
 
 .have-an-account p {
-    margin: 0;
-    color: gray;
-    font-size: 14px;
+  margin: 0;
+  color: gray;
+  font-size: 14px;
 }
 
 .have-an-account button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    color: #1a73e8;
-    font-size: 14px;
-    padding: 0;
-    text-decoration: underline;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #1a73e8;
+  font-size: 14px;
+  padding: 0;
+  text-decoration: underline;
 }
 
 .have-an-account button:hover {
-    color: #0d47a1;
+  color: #0d47a1;
 }
 
 .register .btn.continue {
-    width: 100%;
-    height: 50px;
-    background-color: black;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .register .btn.continue:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 .button-close-register {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-    background-color: white;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 1;
-    transition: background-color 0.3s;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  transition: background-color 0.3s;
 }
 
 .button-close-register:hover {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }

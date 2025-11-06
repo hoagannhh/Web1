@@ -3,7 +3,7 @@
   margin-right: 0px;
   padding-left: 0px;
   padding-right: 0px;
-  margin-top: 96px;
+  margin-top: 85px;
   width: 100%;
   text-align: center;
   position: relative;
@@ -170,6 +170,6 @@ body {
   width: 100%;
   margin-top: 59px;
 }
-.Header .name{
+.Header .name {
   cursor: pointer;
 }

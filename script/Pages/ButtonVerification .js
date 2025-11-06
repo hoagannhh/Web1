@@ -1,21 +1,24 @@
 import { ButtonLogin } from "./ButtonLogin.js";
 import { ButtonRegister } from "./ButtonRegister.js";
 import { LoadCss, LoadPage } from "../LoadPage.js";
-import { createEmptyUserProfile, initializeUserProfileByUsername } from "./accountPage.js";
+import {
+  createEmptyUserProfile,
+  initializeUserProfileByUsername,
+} from "./accountPage.js";
 export let username;
 export let IsAuthenticated = false;
 export const ButtonVerification = {
   html: `        
               <div class="login">
-                <button class="sign in">
+                <button class="sign-in in">
                   <img class="icon-sign-in" src="../icon/Sign-in.png" />
-                  Sign In
+                  <span>Sign In</span>
                 </button>
-                <span>&#124;</span>
-                <button class="sign up">Sign Up</button>
+                
+                <button class="sign-up up"><span>Sign Up</span></button>
               </div>
               <div class="user-authenticated">
-                  <img class="user-represent" src="../img/User-represent.png" alt="">
+                  <img class="user-represent" src="../icon/User.png" alt="">
                   <p id="name-user">user3636</p>
                   <div class = "routing">
                       <button class = "profile">Thông tin cá nhân</button>
