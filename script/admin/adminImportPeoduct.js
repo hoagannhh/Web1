@@ -43,12 +43,12 @@ export const AdminImportProduct = {
             <table>
               <thead>
                 <tr>
-                  <th style="width: 180px">ID</th>
-                  <th style="width: 180px">Date</th>
-                  <th style="width: 180px">Total quantity</th>
-                  <th style="width: 180px">Total value</th>
-                  <th style="width: 180px">Status</th>
-                  <th style="width: 180px">Action</th>
+                  <th style="width: 180px; border-radius: 0%; border-top-left-radius: 15px;">ID</th>
+                  <th style="width: 180px; border-radius: 0%;">Date</th>
+                  <th style="width: 180px; border-radius: 0%;">Total quantity</th>
+                  <th style="width: 180px; border-radius: 0%;">Total value</th>
+                  <th style="width: 180px; border-radius: 0%;">Status</th>
+                  <th style="width: 180px; border-radius: 0%; border-top-right-radius: 15px;">Action</th>
                 </tr>
               </thead>
               <tbody id="orders-body">

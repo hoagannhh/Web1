@@ -1,157 +1,391 @@
-    const openProductForm = () => {
-      // load imported items each lần mở form để luôn cập nhật(Sẩn phẩm nhập từ kho)
-      loadImportedItems();
-      // render checkboxes each lần mở của mỗi category
-      populateProductSelect();
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Import Products</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+   <link rel="stylesheet" href="../css/adminsidebar.css" />
+    <link rel="stylesheet" href="../css/adminImportProduct.css" />
+</head>
+<body>
+        <!--Sidebar-->
+       <div class="admin-importproduct-container">
+      <div class="sidebar">
+        <div><p class="shop-name">Đế Vương</p></div>
+        <div class="admin-account">
+          <button class="admin-account-btn">
+            <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+            <p class="admin-name">Trần Chính Thành</p>
+          </button>
+        </div>
+        <div class="sidebar-list">
+          <ul>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admindashboardwhite.png"
+                  alt=""
+                  class="admin-icon"
+                />Dashboard
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminuser.png"
+                  alt=""
+                  class="admin-icon"
+                />User/Customer
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/admincategory.png"
+                  alt=""
+                  class="admin-icon"
+                  
+                />Category
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminproduct.png"
+                  alt=""
+                  class="admin-icon"
+                />Products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminimport.png"
+                  alt=""
+                  class="admin-icon"
+                />Import products
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminprice.png"
+                  alt=""
+                  class="admin-icon"
+                />Price
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-button">
+                <img
+                  src="../icon/adminorder.png"
+                  alt=""
+                  class="admin-icon"
+                />Order
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <!--Main-->
+  <main class="main">
+    <div class="topbar">
+      <h2 style="margin:0">Import products</h2>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="search">
+          <input id="q" placeholder="Search..." />
+        </div>
+        <div style="width:40px;height:40px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;color:#fff">SG</div>
+          <div>
+        <div style="font-weight:700">Son Goku</div>
+      </div>
+    </div>
+    </div>
 
-      // render options each lần mở(Chọn loại)
-      populateCategoryControls();
+    <section class="panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+        <div style="color:var(--muted)">Danh sách phiếu nhập</div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <button class="btn add" id="btn-add-order">+ Thêm phiếu nhập</button>
+        </div>
+      </div>
 
-      // Clear check box cho nó trống lại
-      document
-        .querySelectorAll('input[name="productMainType"]')
-        .forEach((r) => (r.checked = false));
-      const addChk = document.querySelectorAll(
-        '#categoryCheckboxes input[type="checkbox"]'
-      );
-      addChk.forEach((cb) => (cb.checked = false));
+      <div style="overflow:auto">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:180px; border-radius:0%">ID</th>
+              <th style="width:180px; border-radius:0%">Date</th>
+              <th style="width:180px; border-radius:0%">Total quantity</th>
+              <th style="width:180px; border-radius:0%">Total value</th>
+              <th style="width:180px; border-radius:0%">Status</th>
+              <th style="min-width:180px;border-radius:0%;text-align:right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="orders-body">
+            <!-- thêm dòng -->
+          </tbody>
+        </table>
+      </div>
 
-      if (!importedItems.length) {
-        alert(
-          "Không có sản phẩm trong phiếu nhập (productImport). Vui lòng thêm phiếu nhập trước khi thêm sản phẩm."
-        );
-        return;
-      }
+      <div class="pagination" id="pagination"></div>
 
-      currentProductImages = [];
-      document.getElementById("productForm").reset(); // reset form
-      document.getElementById("imagePreview").innerHTML = "";
-      // đảm bảo input readonly được xóa giá trị cũ
-      document.getElementById("productCode").value = "";
-      document.getElementById("productName").value = "";
-      document.getElementById("productInventory").value = 0;
-      document.getElementById("productFormModal").classList.add("active");
+    </section>
+  </main>
+
+  <!--Modal: Thêm / Sửa / Xem / Hoàn thành -->
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal">
+    </div>
+  </div>
+
+  <!-- Xác nhận xóa -->
+  <div class="overlay" id="overlay-delete">
+    <div class="modal confirm" id="modal-delete">
+      <h3 style="color:var(--danger); margin-bottom:6px">Xóa phiếu nhập</h3>
+      <p>Bạn có chắc chắn muốn xóa vĩnh viễn phiếu nhập này? Hành động này không thể hoàn tác.</p>
+      <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end">
+        <button class="btn" id="del-cancel">Hủy</button>
+        <button class="btn delete" id="del-confirm">Xác nhận Xóa</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/*Demo data*/
+
+/* Hàm tiện ích */
+
+
+/
+renderOrders();
+
+
+
+function openOverlay(html){ modal.innerHTML = html; overlay.style.display='flex'; }
+function closeOverlay(){ overlay.style.display='none'; modal.innerHTML=''; currentEditIndex=null; }
+
+function openDelete(i){ currentDeleteIndex=i; overlayDelete.style.display='flex'; }
+function closeDelete(){ overlayDelete.style.display='none'; currentDeleteIndex=null; }
+
+/*  Form nhập liệu  */
+function buildOrderForm({mode='add', data=null, readOnly=false}){
+  const id = data?.id || `PN${String(importProduct.length+1).padStart(3,'0')}`;
+  const date = data?.date || new Date().toISOString().slice(0,10);
+  const items = (data?.items||[]).map(it=>({...it}));
+  //TRả về HTML của modal
+  return `
+    <h3>${mode==='add'?'Thêm phiếu nhập': mode==='edit'?'Sửa phiếu nhập': mode==='view'?'Xem chi tiết phiếu nhập':'Hoàn thành phiếu nhập'}</h3>
+    <div class="row">
+      <div class="field" style="flex:0 0 220px">
+        <label>Mã phiếu nhập</label>
+        <input id="order-id" value="${id}" ${readOnly?'disabled':''}/>
+      </div>
+      <div class="field" style="flex:0 0 160px">
+        <label>Ngày nhập</label>
+        <input id="order-date" type="date" value="${date}" ${readOnly?'disabled':''}/>
+      </div>
+    </div>
+
+    <div>
+      <label style="font-weight:700;display:block;margin-bottom:6px">Danh sách sản phẩm nhập</label>
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th style = "border-radius: 0%">Sản phẩm</th>
+            <th style = "border-radius: 0%">Số lượng</th>
+            <th style = "border-radius: 0%">Giá nhập</th>
+            <th style = "border-radius: 0%">Thành tiền</th>
+            <th style = "border-radius: 0%"></th>
+            </tr>
+          </thead>
+        <tbody id="items-tbody">
+          ${items.map(it=>`
+            <tr>
+              <td><input class="items__name" value="${it.name}" ${readOnly?'disabled':''}></td>
+              <td><input class="items__qty" type="number" value="${it.qty}" ${readOnly?'disabled':''}></td>
+              <td><input class="items__price" type="number" value="${it.price}" ${readOnly?'disabled':''}></td>
+              <td class="items__line">${formatMoney(it.qty*it.price)}</td>
+              <td>${readOnly? '': '<button data-remove class="btn" style="background:#f8f8f8">🗑️</button>'}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      ${readOnly? '': '<div><span class="link" id="add-product">+ Thêm sản phẩm</span></div>'}
+    </div>
+
+    <div class="controls">
+      <div style="font-weight:700">Tổng tiền: <span id="order-total">${formatMoney(calcTotal(items))}</span></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="btn-cancel">Hủy</button>
+        ${
+          mode==='add'
+            ? '<button class="btn add" id="btn-confirm-add">Xác nhận thêm</button>'
+            : mode==='edit'
+            ? '<button class="btn edit" id="btn-confirm-edit">Xác nhận sửa</button>'
+            : mode==='complete'
+            ? '<button class="btn complete" id="btn-confirm-complete">Hoàn thành</button>'
+            : ''
+        }
+      </div>
+    </div>
+  `;
+}
+
+/*  Sự kiện chính trên bảng  */
+document.getElementById('orders-body').addEventListener('click', e=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  const action = btn.dataset.action;
+  const idx = +btn.dataset.idx;
+
+  if(action==='edit'){
+    currentEditIndex=idx;
+    openOverlay(buildOrderForm({mode:'edit',data:importProduct[idx]}));
+    bindModalEvents('edit');
+  }
+  else if(action==='view'){
+    openOverlay(buildOrderForm({mode:'view',data:importProduct[idx],readOnly:true}));
+    bindModalEvents('view');
+  }
+  else if(action==='delete'){ openDelete(idx); }
+  else if(action==='complete'){
+    currentEditIndex=idx;
+    openOverlay(buildOrderForm({mode:'complete',data:importProduct[idx],readOnly:true}));
+    bindModalEvents('complete');
+  }
+});
+
+/*  Nút thêm mới  */
+document.getElementById('btn-add-order').addEventListener('click', ()=>{
+  openOverlay(buildOrderForm({mode:'add'}));
+  bindModalEvents('add');
+});
+
+/*  Xác nhận xóa  */
+document.getElementById('del-cancel').addEventListener('click', closeDelete);
+document.getElementById('del-confirm').addEventListener('click', ()=>{
+  if(currentDeleteIndex!==null){ importProduct.splice(currentDeleteIndex,1); renderOrders(); }
+  closeDelete();
+});
+
+/* Modal logic (sử dụng selector query cho BEM classes)  */
+function bindModalEvents(mode){
+  const btnCancel = document.getElementById('btn-cancel');
+  const confirmAdd = document.getElementById('btn-confirm-add');
+  const confirmEdit = document.getElementById('btn-confirm-edit');
+  const confirmComplete = document.getElementById('btn-confirm-complete');
+  const addProduct = document.getElementById('add-product');
+  const tbody = document.getElementById('items-tbody');
+
+  if (btnCancel) btnCancel.onclick = closeOverlay;
+
+  // thêm sản phẩm mới trong modal
+  if (addProduct) {
+    addProduct.onclick = () => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input class="items__name" placeholder="Tên sản phẩm"></td>
+        <td><input class="items__qty" type="number" min="0" value="0"></td>
+        <td><input class="items__price" type="number" min="0" value="0"></td>
+        <td class="items__line">0₫</td>
+        <td><button data-remove class="btn" style="background:#f8f8f8">🗑️</button></td>
+      `;
+      tbody.appendChild(tr);
+      bindItemRow(tr);
+      recalcTotal();
+    };
+  }
+
+  // gắn sự kiện cho 1 dòng sản phẩm
+  function bindItemRow(row){
+    const qty = row.querySelector('.items__qty');
+    const price = row.querySelector('.items__price');
+    const line = row.querySelector('.items__line');
+    const rm = row.querySelector('[data-remove]');
+
+    const upd = () => {
+      const val = (+qty.value||0)*(+price.value||0);
+      line.textContent = formatMoney(val);
+      recalcTotal();
     };
 
-    // khi chọn sản phẩm từ select -> tự set tên, mã và tồn kho
-    document.addEventListener("change", function (e) {
-      if (e.target && e.target.id === "productSelect") {
-        const selVal = e.target.value;
-        const item = importedItems.find((it) => it.name === selVal);
-        if (item) {
-          // chỉ tự điền tên và tồn kho — không ghi đè mã (người dùng có thể nhập thủ công)
-          document.getElementById("productName").value = selVal;
-          document.getElementById("productInventory").value =
-            item.totalQty || 0;
-        } else {
-          document.getElementById("productName").value = "";
-          document.getElementById("productInventory").value = 0;
-        }
-      }
-    });
+    if (qty) qty.oninput = upd;
+    if (price) price.oninput = upd;
+    if (rm) rm.onclick = ()=>{ row.remove(); recalcTotal(); };
+  }
 
-    const closeProductForm = () => {
-      document.getElementById("productFormModal").classList.remove("active");
-      currentProductImages = [];
+  function recalcTotal(){
+    const items = gatherItems();
+    const totalEl = document.getElementById('order-total');
+    if (totalEl) totalEl.textContent = formatMoney(calcTotal(items));
+  }
+
+  if (confirmAdd) {
+    confirmAdd.onclick = () => {
+      const id = document.getElementById('order-id').value.trim();
+      const date = document.getElementById('order-date').value;
+      const items = gatherItems();
+      if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
+      importProduct.push({id,date,items,status:'pending'});
+      renderOrders(); closeOverlay();
     };
+  }
 
-    document.getElementById("imageBox").addEventListener("click", () => {
-      document.getElementById("productImageInput").click();
-    });
+  if (confirmEdit) {
+    confirmEdit.onclick = () => {
+      const id = document.getElementById('order-id').value.trim();
+      const date = document.getElementById('order-date').value;
+      const items = gatherItems();
+      if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
+      if (currentEditIndex !== null) {
+        importProduct[currentEditIndex] = { id, date, items, status: importProduct[currentEditIndex].status };
+        renderOrders(); closeOverlay();
+      }
+    };
+  }
 
-    document
-      .getElementById("productImageInput")
-      .addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const base64 = await fileToBase64(file);
-          currentProductImages.push(base64);
+  if (confirmComplete) {
+    confirmComplete.onclick = () => {
+      if (currentEditIndex !== null){
+        importProduct[currentEditIndex].status = 'completed';
+        renderOrders(); closeOverlay();
+      }
+    };
+  }
 
-          const img = document.createElement("img");
-          img.src = base64;
-          img.style.maxWidth = "100px";
-          img.style.marginRight = "10px";
-          img.style.marginBottom = "10px";
-          document.getElementById("imagePreview").appendChild(img);
-        }
-      });
+  // gắn sự kiện cho các dòng có sẵn (khi modal được mở với items đã có)
+  // tìm tất cả các dòng hiện tại trong tbody và bind lại
+  Array.from(tbody.querySelectorAll('tr')).forEach(tr => bindItemRow(tr));
+}
 
-    document
-      .getElementById("addProductBtn")
-      .addEventListener("click", openProductForm);
-    document
-      .getElementById("cancelProductBtn")
-      .addEventListener("click", closeProductForm);
+/*  Hỗ trợ  */
+function gatherItems(){
+  return Array.from(document.querySelectorAll('#items-tbody tr'))
+    .map(r=>{
+      const name = r.querySelector('.items__name')?.value.trim();
+      const qty = +r.querySelector('.items__qty')?.value || 0;
+      const price = +r.querySelector('.items__price')?.value || 0;
+      if (!name) return null;
+      return { name, qty, price };
+    })
+    .filter(Boolean);
+}
 
-    document
-      .getElementById("productFormModal")
-      .addEventListener("click", function (e) {
-        if (e.target === this) closeProductForm();
-      });
+/* Phần < 1 2 3 4 5 .. > */
+const pagination=document.getElementById('pagination');
+pagination.innerHTML=`
+  <span>&lt;</span>
+  <span class="active">1</span>
+  <span>2</span>
+  <span>3</span>
+  <span>4</span>
+  <span>5</span>
+  <span>&gt;</span>
+`;
+</script>
 
-    document
-      .getElementById("productForm")
-      .addEventListener("submit", async (e) => {
-        e.preventDefault();
+</body>
+</html>
 
-        // bắt buộc chọn sản phẩm từ productSelect
-        const selectedName = document.getElementById("productSelect").value;
-        if (!selectedName) {
-          alert("Vui lòng chọn 1 sản phẩm từ phiếu nhập (productImport).");
-          return;
-        }
 
-        // NEW: lấy main type (radio) + optional checkbox categories
-        const mainTypeInput = document.querySelector(
-          'input[name="productMainType"]:checked'
-        );
-        if (!mainTypeInput) {
-          alert("Vui lòng chọn Loại chính (Men's / Women's / Unisex).");
-          return;
-        }
-        const mainType = mainTypeInput.value;
 
-        const optionalCats = Array.from(
-          document.querySelectorAll(
-            '#categoryCheckboxes input[type="checkbox"]:checked'
-          )
-        ).map((c) => c.value);
-
-        const selectedCats = [mainType, ...optionalCats].filter(Boolean);
-
-        if (currentProductImages.length === 0) {
-          alert("Vui lòng chọn hình ảnh sản phẩm");
-          return;
-        }
-
-        // sử dụng tên đã chọn; mã và tồn kho đã tự điền (mã có thể do user nhập)
-        const newProduct = {
-          id:
-            document.getElementById("productCode").value || `IMP-${Date.now()}`,
-          name: selectedName,
-          // now store category as array (main + optional)
-          category: selectedCats,
-          gender: document.getElementById("productGender").value,
-          size: document.getElementById("productSize").value,
-          color: document.getElementById("productColor").value,
-          description: document.getElementById("productDesc").value,
-          inventory:
-            parseInt(document.getElementById("productInventory").value) || 0,
-          img: currentProductImages[0],
-          images: currentProductImages,
-          "img-represent": currentProductImages[0],
-          "img-link-list": currentProductImages,
-          status: "Đang hiển thị",
-          createdAt: new Date().toISOString(),
-        };
-
-        this.allProducts.push(newProduct);
-        localStorage.setItem("allProduct", JSON.stringify(this.allProducts));
-
-        console.log("Sản phẩm đã thêm:", newProduct);
-        alert("Thêm sản phẩm thành công!");
-        closeProductForm();
-        this.currentPage = 1;
-        this.renderProductTable();
-        this.renderPagination();
-      });

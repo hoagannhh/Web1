@@ -151,11 +151,11 @@ body {
 }
 
 /* table */
-table {
+/* table {
   width: 100%;
   border-collapse: collapse;
   font-size: 15px;
-}
+} */
 thead th {
   text-align: left;
   padding: 12px;
@@ -334,3 +334,13 @@ tbody td {
     padding: 0;
   }
 } */
+table{
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-collapse: collapse;
+    overflow: hidden;
+    padding: 5px;
+    box-sizing: border-box;
+  }

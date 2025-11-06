@@ -4,7 +4,7 @@ import { AdminCategory } from "./adminCategory.js";
 import { AdminProduct } from "./adminProduct.js";
 import { AdminPrice } from "./adminPrice.js";
 import { AdminOrder } from "./adminOrder.js";
-import { AdminImportProduct } from "./adminImportPeoduct.js";
+import { AdminImportProduct } from "./adminImportProduct.js";
 import { AdminLogin } from "./adminLogin.js";
 
 import { AdminSideBar } from "./adminSideBar.js";
@@ -19,7 +19,7 @@ const routes = {
   "/login": AdminLogin,
 };
 // Khởi tạo khi DOM ready
-navigateTo("/");
+navigateTo("/importProduct");
 export function navigateTo(path) {
   handleRouteChange(path);
 }
