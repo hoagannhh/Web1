@@ -17,6 +17,7 @@ export const AdminPrice = {
             <div class="filter-container">
               <div class="with-category">
                 <div class="title-filter">Theo loại sản phẩm</div>
+                <div class="scroll-bar">
                 <div class="filter-selection">
                   <div>Nam</div>
                   <div class="profit-container">
@@ -28,10 +29,12 @@ export const AdminPrice = {
                     <input type="text" class="profit" value="0%""></div>
                 </div>
                 <div class="filter-selection">
-                  <div>Trẻ em</div>
+                  <div>Unisex</div>
                   <div class="profit-container">
                     <input type="text" class="profit" value="0%""></div>
                 </div>
+                </div>
+                
                 <div>
                   <button class="filter-save-btn">Lưu</button>
                 </div>
@@ -95,6 +98,8 @@ export const AdminPrice = {
   canDeleteCss: true,
   init: function () {
     let allProducts;
+    let allCategories = [];
+    let categoriesMap = new Map();
     // an toàn: đảm bảo luôn là mảng và dùng cùng key "allProduct" (chuẩn trong project)
     try {
       allProducts = JSON.parse(localStorage.getItem("allProduct"));
@@ -151,43 +156,130 @@ export const AdminPrice = {
     //   // Ví dụ: "s38": 60 (Lợi nhuận riêng 60% cho sản phẩm s38)
     //   productSpecific: {},
     // };
+
+    /**
+     * Tải categoriesDB từ localStorage và tạo Map để tra cứu nhanh
+     */
+    function loadAndMapCategories() {
+      try {
+        const raw = localStorage.getItem("categoriesDB");
+        if (raw) {
+          allCategories = JSON.parse(raw);
+          // Tạo một Map để tra cứu nhanh từ ID -> Category Object
+          categoriesMap.clear();
+          allCategories.forEach((cat) => {
+            // Dùng cat.id làm khóa
+            categoriesMap.set(cat.id, cat);
+          });
+          console.log("Đã tải và map CategoriesDB:", categoriesMap);
+        } else {
+          console.warn("Không tìm thấy 'categoriesDB' trong localStorage.");
+        }
+      } catch (e) {
+        console.error("Không thể tải 'categoriesDB'", e);
+        allCategories = [];
+        categoriesMap.clear();
+      }
+    }
     const RULES_KEY = "priceProfitRules";
     function loadProfitRules() {
+      // 1. Tải danh sách categories đang hoạt động
+      let activeCategories = [];
       try {
-        const raw = localStorage.getItem(RULES_KEY);
-        if (!raw) {
-          // đầu tiên lợi nhuận là 0
-          return {
+        const rawCategories = localStorage.getItem("categoriesDB");
+        if (rawCategories) {
+          const allCategories = JSON.parse(rawCategories);
+          // Chỉ lấy các category đang được hiển thị VÀ CÓ ID
+          activeCategories = allCategories.filter(
+            (cat) => cat.isShown === true && cat.id
+          );
+        } else {
+          console.warn(
+            "Không tìm thấy 'categoriesDB', sử dụng danh sách mặc định."
+          );
+        }
+      } catch (e) {
+        console.error("Lỗi khi đọc 'categoriesDB'", e);
+        activeCategories = []; // Trả về rỗng nếu lỗi
+      }
+
+      if (activeCategories.length === 0) {
+        console.warn("Không có category nào hoạt động (hoặc thiếu 'id').");
+      }
+
+      // 2. Tải profit rules hiện có
+      let rules;
+      try {
+        const rawRules = localStorage.getItem(RULES_KEY);
+        if (!rawRules) {
+          rules = {
             defaultCategoryProfit: 0,
-            category: { Men: 0, Women: 0, Kids: 0 },
+            category: {},
             productSpecific: {},
           };
+        } else {
+          const parsed = JSON.parse(rawRules);
+          rules = {
+            defaultCategoryProfit:
+              typeof parsed.defaultCategoryProfit === "number"
+                ? parsed.defaultCategoryProfit
+                : 0,
+            category: parsed.category || {},
+            productSpecific: parsed.productSpecific || {},
+          };
         }
-        const parsed = JSON.parse(raw);
-
-        return {
-          defaultCategoryProfit:
-            typeof parsed.defaultCategoryProfit === "number"
-              ? parsed.defaultCategoryProfit
-              : 0,
-          category: Object.assign(
-            { Men: 0, Women: 0, Kids: 0 },
-            parsed.category || {}
-          ),
-          productSpecific: parsed.productSpecific || {},
-        };
       } catch (e) {
-        console.warn("kh load đc quy tắc lợi nhuận", e);
-        return {
+        console.warn("Không load được quy tắc lợi nhuận, dùng quy tắc rỗng", e);
+        rules = {
           defaultCategoryProfit: 0,
-          category: { Men: 0, Women: 0, Kids: 0 },
+          category: {},
           productSpecific: {},
         };
       }
+
+      // 3. Đồng bộ hóa rules.category với activeCategories
+      const syncedCategoryRules = {};
+      let rulesChanged = false; // Cờ để kiểm tra xem có cần lưu lại không
+
+      // Thêm/Cập nhật rules dựa trên categories đang hoạt động
+      activeCategories.forEach((cat) => {
+        const catId = cat.id; // <--- SỬA 1: DÙNG 'id'
+        if (!catId) return; // Bỏ qua nếu không có id
+
+        if (rules.category.hasOwnProperty(catId)) {
+          // <--- SỬA 2: KIỂM TRA BẰNG 'id'
+          // Category đã có, giữ nguyên % lợi nhuận
+          syncedCategoryRules[catId] = rules.category[catId]; // <--- SỬA 3: LƯU BẰNG 'id'
+        } else {
+          // Category mới, thêm với 0%
+          syncedCategoryRules[catId] = 0; // <--- SỬA 4: LƯU BẰNG 'id'
+          rulesChanged = true; // Đánh dấu là có thay đổi
+        }
+      });
+
+      // Kiểm tra xem có rule cũ nào cần xóa không
+      if (
+        Object.keys(rules.category).length !==
+        Object.keys(syncedCategoryRules).length
+      ) {
+        rulesChanged = true;
+      }
+
+      // 4. Gán lại rule đã đồng bộ
+      rules.category = syncedCategoryRules;
+
+      // 5. Nếu có thay đổi (thêm mới hoặc xóa cũ), lưu lại
+      if (rulesChanged) {
+        console.log("Đã đồng bộ hóa profit rules với categoriesDB.");
+        saveProfitRules(rules);
+      }
+
+      return rules;
     }
-    function saveProfitRules() {
+    function saveProfitRules(rulesToSave) {
       try {
-        localStorage.setItem(RULES_KEY, JSON.stringify(profitRules));
+        // Sử dụng tham số 'rulesToSave' thay vì biến 'profitRules' bên ngoài
+        localStorage.setItem(RULES_KEY, JSON.stringify(rulesToSave));
       } catch (e) {
         console.error("kh lưu đc", e);
       }
@@ -209,22 +301,63 @@ export const AdminPrice = {
     }
 
     //Tính toán giá bán dựa trên giá vốn và quy tắc lợi nhuận.
+    //Tính toán giá bán dựa trên giá vốn và quy tắc lợi nhuận.
+
     function calculatePrice(product) {
-      // Giá vốn (costPrice) luôn lấy từ thuộc tính 'cost' để tránh cộng dồn lợi nhuận.
-      // Nếu 'cost' không tồn tại, mặc định là 0. (Đã sửa đổi để chỉ dùng 'cost')
       const costPrice = product.cost || 0;
       let profitPercentage = profitRules.defaultCategoryProfit;
       let source = "Mặc định";
 
-      // Kiểm tra quy tắc riêng theo sản phẩm
+      // 1. Kiểm tra quy tắc riêng theo sản phẩm (Ưu tiên cao nhất)
       if (profitRules.productSpecific[product.id]) {
         profitPercentage = profitRules.productSpecific[product.id];
         source = "Theo sản phẩm";
       }
-      // Kiểm tra quy tắc theo loại sản phẩm (Gender)
-      else if (profitRules.category[product.gender]) {
-        profitPercentage = profitRules.category[product.gender];
-        source = `Theo loại sản phẩm (${product.gender})`;
+      // 2. Kiểm tra quy tắc theo loại
+      else if (product.category && product.category.length > 0) {
+        let mainCategoryProfit = null;
+        let mainCategorySource = "";
+        let subCategoryProfit = null; // Giá trị này có thể là 0
+        let subCategorySource = "";
+
+        // Duyệt qua TẤT CẢ category ID của sản phẩm
+        for (const catId of product.category) {
+          const category = categoriesMap.get(catId);
+
+          // Lấy quy tắc lợi nhuận từ profitRules
+          if (category && profitRules.category.hasOwnProperty(category.id)) {
+            // Lợi nhuận được lấy ra là number (ví dụ: 70, 0, 15)
+            const ruleProfit = profitRules.category[category.id];
+            const ruleSource = `Theo loại (${category.name})`;
+
+            if (category.manageable === true) {
+              // Đây là loại PHỤ (Sub-category)
+              // Chỉ lấy rule loại phụ ĐẦU TIÊN tìm thấy
+              if (subCategoryProfit === null) {
+                subCategoryProfit = ruleProfit;
+                subCategorySource = ruleSource;
+              }
+            } else if (category.manageable === false) {
+              // Đây là loại CHÍNH (Main-category)
+              mainCategoryProfit = ruleProfit;
+              mainCategorySource = ruleSource;
+            }
+          }
+        }
+
+        // Áp dụng ưu tiên với ràng buộc mới
+        // RÀNG BUỘC CỦA BẠN NẰM Ở ĐÂY:
+        // Nếu tìm thấy lợi nhuận loại phụ VÀ lợi nhuận đó KHÁC 0
+        if (subCategoryProfit !== null && subCategoryProfit !== 0) {
+          // Ưu tiên 1: Lấy theo loại phụ (Lợi nhuận > 0)
+          profitPercentage = subCategoryProfit;
+          source = subCategorySource;
+        } else if (mainCategoryProfit !== null) {
+          // Ưu tiên 2: Lấy theo loại chính (Nếu loại phụ là 0 hoặc không có)
+          profitPercentage = mainCategoryProfit;
+          source = mainCategorySource;
+        }
+        // Nếu cả hai đều null/0, 'profitPercentage' sẽ giữ nguyên giá trị 'defaultCategoryProfit'
       }
 
       const profitRate = profitPercentage / 100;
@@ -249,19 +382,82 @@ export const AdminPrice = {
     //   productSpecificContainer.querySelector(".filter-selection")?.parentElement; // Lấy div chứa các filter-selection
 
     //hiển thị ds sp cần set lơi nhuận riêng
-    function renderProductSpecificProfits() {
-      if (!productSpecificList) return;
+    // function renderProductSpecificProfits() {
+    //   if (!productSpecificList) return;
 
-      // Xóa tất cả các mục cũ trước khi render lại (trừ tiêu đề và nút Thêm)
-      const existingSelections =
-        productSpecificList.querySelectorAll(".filter-selection");
-      existingSelections.forEach((selection) => selection.remove());
+    //   // Xóa tất cả các mục cũ trước khi render lại (trừ tiêu đề và nút Thêm)
+    //   const existingSelections =
+    //     productSpecificList.querySelectorAll(".filter-selection");
+    //   existingSelections.forEach((selection) => selection.remove());
+
+    //   const productSpecificKeys = Object.keys(profitRules.productSpecific);
+
+    //   if (productSpecificKeys.length === 0) {
+    //     // Không có sản phẩm nào có lợi nhuận riêng
+    //     // Có thể thêm một dòng thông báo tại đây nếu muốn
+    //   }
+
+    //   productSpecificKeys.forEach((productId) => {
+    //     const product = findProductById(productId);
+    //     const profit = profitRules.productSpecific[productId];
+
+    //     if (!product) return; // Bỏ qua nếu không tìm thấy sản phẩm
+
+    //     const newSelection = document.createElement("div");
+    //     newSelection.className = "filter-selection";
+    //     newSelection.dataset.productId = productId;
+
+    //     newSelection.innerHTML = `
+    //     <div class="name-product-update-profit">${product.name}</div>
+    //     <div class="profit-with-product">
+    //       <div class="profit-container">
+    //         <input type="text" class="profit product-specific-profit-input" value="${profit}%" data-product-id="${productId}">
+    //       </div>
+    //       <div>
+    //         <img
+    //           class="with-product-delete-img"
+    //           src="../icon/adminDelete.png"
+    //           data-product-id="${productId}"
+    //           alt="Delete"
+    //         />
+    //       </div>
+    //     </div>
+    //   `;
+
+    //     // Chèn mục mới vào trước nút "Thêm lợi nhuận riêng"
+    //     const addButton =
+    //       productSpecificContainer.querySelector(".filter-add-btn");
+    //     if (addButton) {
+    //       productSpecificList.insertBefore(
+    //         newSelection,
+    //         addButton.parentElement
+    //       );
+    //     } else {
+    //       // Trường hợp không tìm thấy nút Thêm
+    //       productSpecificList.appendChild(newSelection);
+    //     }
+    //   });
+
+    //   // Gắn sự kiện cho input và nút xóa sau khi render
+    //   setupProductSpecificEventListeners();
+    // }
+    //hiển thị ds sp cần set lơi nhuận riêng
+    // THAY THẾ HÀM CŨ
+    function renderProductSpecificProfits() {
+      // SỬA 8: Dùng 'productSpecificList'
+      if (!productSpecificList) {
+        console.error("Lỗi: productSpecificList chưa được khởi tạo.");
+        return;
+      }
+
+      // Xóa tất cả các mục cũ bên trong scroll-bar
+      productSpecificList.innerHTML = ""; // <--- SỬA 9
 
       const productSpecificKeys = Object.keys(profitRules.productSpecific);
 
       if (productSpecificKeys.length === 0) {
-        // Không có sản phẩm nào có lợi nhuận riêng
-        // Có thể thêm một dòng thông báo tại đây nếu muốn
+        // (Tùy chọn) Thêm thông báo nếu rỗng
+        // productSpecificList.innerHTML = '<div>Chưa có sản phẩm nào.</div>';
       }
 
       productSpecificKeys.forEach((productId) => {
@@ -291,18 +487,8 @@ export const AdminPrice = {
         </div>
       `;
 
-        // Chèn mục mới vào trước nút "Thêm lợi nhuận riêng"
-        const addButton =
-          productSpecificContainer.querySelector(".filter-add-btn");
-        if (addButton) {
-          productSpecificList.insertBefore(
-            newSelection,
-            addButton.parentElement
-          );
-        } else {
-          // Trường hợp không tìm thấy nút Thêm
-          productSpecificList.appendChild(newSelection);
-        }
+        // Chèn mục mới VÀO TRONG div scroll-bar
+        productSpecificList.appendChild(newSelection); // <--- SỬA 10
       });
 
       // Gắn sự kiện cho input và nút xóa sau khi render
@@ -342,6 +528,7 @@ export const AdminPrice = {
     }
 
     // btn xóa
+    // THAY THẾ HÀM CŨ
     function setupProductSpecificEventListeners() {
       const deleteButtons = document.querySelectorAll(
         ".with-product-delete-img"
@@ -357,7 +544,7 @@ export const AdminPrice = {
             if (!confirm("Xác nhận xóa lợi nhuận riêng cho sản phẩm này?"))
               return;
             delete profitRules.productSpecific[productId];
-            saveProfitRules();
+            saveProfitRules(profitRules); // <--- SỬA 6: PHẢI TRUYỀN 'profitRules'
             renderProductSpecificProfits();
             renderProductsTable(); // Cập nhật bảng chính
             console.log(`xáo lợi nhuận riêng cho sản phẩm ID ${productId}`);
@@ -378,7 +565,7 @@ export const AdminPrice = {
             profitRules.productSpecific[productId] = newProfit;
             e.target.value = `${newProfit}%`;
             renderProductsTable(); // Cập nhật bảng chính
-            saveProfitRules();
+            saveProfitRules(profitRules); // <--- SỬA 7: PHẢI TRUYỀN 'profitRules'
             console.log(
               `Cập nhật lợi nhuận riêng cho sản phẩm ID ${productId}: ${newProfit}%`
             );
@@ -521,6 +708,40 @@ export const AdminPrice = {
     }
 
     //render bảng data
+    /**
+     * Lấy tên của Category chính từ sản phẩm
+     */
+
+    function getMainCategoryName(product) {
+      if (!product.category || product.category.length === 0) {
+        // LỖI CỦA BẠN NẰM Ở ĐÂY:
+        // Nếu không có category, nó lấy product.gender, có thể là "Men"
+        return product.gender || "N/A";
+      }
+
+      // 1. Ưu tiên tìm category CHÍNH (manageable: false)
+      for (const catId of product.category) {
+        const category = categoriesMap.get(catId);
+
+        // Kiểm tra xem category có tồn tại VÀ nó là category CHÍNH không
+        if (category && category.manageable === false) {
+          return category.name; // Sẽ trả về "UniSex", "Men's", hoặc "Women's"
+        }
+      }
+
+      // 2. Nếu không tìm thấy loại chính (ví dụ: sản phẩm chỉ có loại phụ)
+      // thì trả về tên của loại phụ ĐẦU TIÊN
+      for (const catId of product.category) {
+        const category = categoriesMap.get(catId);
+        if (category) {
+          return category.name; // Trả về tên loại phụ, ví dụ "christmas"
+        }
+      }
+
+      return "N/A"; // Không tìm thấy gì
+    }
+
+    //render bảng data
     function renderProductsTable() {
       const tableBody = document.querySelector(".view-content tbody");
       if (!tableBody) return;
@@ -557,8 +778,9 @@ export const AdminPrice = {
         htmlRows += `
         <tr class="product-row" data-product-id="${product.id}">
           <td>${product.name}</td>
-          <td>${product.gender}</td>
-          <td>${ConvertINTtoVND(priceInfo.costPrice)}</td>
+          <td>${getMainCategoryName(product)}</td> <td>${ConvertINTtoVND(
+          priceInfo.costPrice
+        )}</td>
           <td class="profit-input-cell">
             <span class="profit-tag">${priceInfo.profitPercentage}% ${
           priceInfo.source
@@ -585,132 +807,152 @@ export const AdminPrice = {
 
     //khi thay đổi % trong ô input
     function handleCategoryProfitChange() {
-      // Ánh xạ tên hiển thị tiếng Việt sang khóa dữ liệu tiếng Anh
-      const categoryMap = {
-        Nam: "Men",
-        Nữ: "Women",
-        "Trẻ em": "Kids",
-      };
+      const container = document.querySelector(".with-category .scroll-bar");
+      if (!container) {
+        console.error("Không tìm thấy container '.with-category .scroll-bar'");
+        return;
+      }
+      container.innerHTML = "";
 
-      const filterSelections = document.querySelectorAll(
-        ".with-category .filter-selection"
-      );
-
-      filterSelections.forEach((selection) => {
-        const categoryDiv = selection.querySelector("div:first-child");
-        const profitInput = selection.querySelector(".profit");
-
-        if (categoryDiv && profitInput) {
-          const displayName = categoryDiv.textContent.trim();
-          const categoryName = categoryMap[displayName]; // Khóa tiếng Anh
-
-          // Nếu không tìm thấy khóa ánh xạ, bỏ qua.
-          if (!categoryName) return;
-
-          // Khởi tạo giá trị ban đầu từ profitRules (sử dụng khóa tiếng Anh)
-          if (profitRules.category[categoryName]) {
-            profitInput.value = `${profitRules.category[categoryName]}%`;
-          } else {
-            // Thiết lập giá trị mặc định nếu rule chưa được định nghĩa
-            profitInput.value = `${profitRules.defaultCategoryProfit}%`;
-          }
-
-          // Gắn sự kiện thay đổi
-          //Gắn sự kiện thay đổi (sử dụng 'blur' hoặc 'change' thay vì 'input')
-          profitInput.addEventListener("change", (event) => {
-            const inputValue = event.target.value.replace("%", "").trim();
-            const newProfit = parseInt(inputValue, 10);
-
-            // Cập nhật Rule và Re-render
-            if (!isNaN(newProfit) && newProfit >= 0) {
-              profitRules.category[categoryName] = newProfit;
-              event.target.value = `${newProfit}%`;
-              renderProductsTable();
-              saveProfitRules();
-              console.log(
-                `Cập nhật lợi nhuận cho ${displayName} (${categoryName}): ${newProfit}%`
-              );
-            }
-          });
-        }
-      });
-
-      // Sự kiện cho nút LƯU
-      document
-        .querySelector(".filter-save-btn")
-        ?.addEventListener("click", () => {
-          // Hiển thị thuộc tính 'price' đã được cập nhật
-          renderProductsTable();
-          localStorage.setItem("allProduct", JSON.stringify(allProducts));
-
-          let allProductss = localStorage.getItem("allProduct");
-
-          console.log(JSON.parse(allProductss));
-          console.log("Quy tắc lợi nhuận đã được lưu:", profitRules.category);
-          console.log(
-            "Dữ liệu sản phẩm với giá bán cập nhật:",
-            allProducts.map((p) => ({
-              id: p.id,
-              name: p.name,
-              cost: p.cost,
-              price: p.price, // Giá bán mới nhất
-            }))
+      // Tải categoriesDB để lấy cả ID và NAME
+      let activeCategories = [];
+      try {
+        const rawCategories = localStorage.getItem("categoriesDB");
+        if (rawCategories) {
+          activeCategories = JSON.parse(rawCategories).filter(
+            (cat) => cat.isShown === true && cat.id // <--- SỬA: Lọc theo cat.id
           );
+        }
+      } catch (e) {
+        console.error(
+          "Lỗi đọc 'categoriesDB' trong handleCategoryProfitChange",
+          e
+        );
+      }
 
-          //
-          // Thay thế alert() bằng một thông báo trên giao diện
-          const saveBtn = document.querySelector(".filter-save-btn");
-          if (saveBtn) {
-            saveBtn.dataset.originalText =
-              saveBtn.dataset.originalText || saveBtn.textContent;
+      if (activeCategories.length === 0) {
+        container.innerHTML =
+          "<div style='padding: 10px; color: #555;'>Không có loại sản phẩm nào đang hoạt động. Vui lòng kiểm tra trang Category.</div>";
+        return; // Dừng lại nếu không có category
+      }
 
-            if (saveBtn._restoreTimeoutId)
-              clearTimeout(saveBtn._restoreTimeoutId);
+      // Dùng activeCategories
+      activeCategories.forEach((category) => {
+        const displayName = category.name; // ví dụ: "Men's"
+        const categoryId = category.id; // ví dụ: 1
 
-            saveBtn.textContent = "Đã Lưu!";
+        // Lấy profitValue bằng ID
+        const profitValue = profitRules.category[categoryId] || 0;
 
-            saveBtn._restoreTimeoutId = setTimeout(() => {
-              const current = document.querySelector(".filter-save-btn");
-              if (current) {
-                current.textContent = current.dataset.originalText || "Lưu";
+        // Tạo phần tử mới
+        const selectionDiv = document.createElement("div");
+        selectionDiv.className = "filter-selection";
+        selectionDiv.innerHTML = `
+            <div>${displayName}</div> 
+            <div class="profit-container">
+                <input type="text" class="profit" value="${profitValue}%" data-category-id="${categoryId}"> 
+            </div>
+        `; // <--- SỬA: Dùng data-category-id
+        container.appendChild(selectionDiv);
 
-                delete current._restoreTimeoutId;
-              }
-            }, 1500);
+        // Gắn sự kiện ngay lập tức
+        const profitInput = selectionDiv.querySelector(".profit");
+        profitInput.addEventListener("change", (event) => {
+          const inputValue = event.target.value.replace("%", "").trim();
+          const newProfit = parseInt(inputValue, 10);
+
+          // Lấy 'id' từ data-attribute
+          const catId = event.target.dataset.categoryId; // <--- SỬA: Dùng categoryId
+
+          if (!isNaN(newProfit) && newProfit >= 0 && catId) {
+            profitRules.category[catId] = newProfit; // Cập nhật bằng 'id'
+            event.target.value = `${newProfit}%`;
+            renderProductsTable();
+            saveProfitRules(profitRules);
+            console.log(
+              `Cập nhật lợi nhuận cho (ID: ${catId}): ${newProfit}%` // <--- SỬA: Log bằng ID
+            );
+            const saveBtn = document.querySelector(".filter-save-btn");
+            if (saveBtn) {
+              saveBtn.dataset.originalText =
+                saveBtn.dataset.originalText || saveBtn.textContent;
+
+              if (saveBtn._restoreTimeoutId)
+                clearTimeout(saveBtn._restoreTimeoutId);
+
+              saveBtn.textContent = "Đã Lưu!";
+
+              saveBtn._restoreTimeoutId = setTimeout(() => {
+                const current = document.querySelector(".filter-save-btn");
+                if (current) {
+                  current.textContent = current.dataset.originalText || "Lưu";
+                  delete current._restoreTimeoutId;
+                }
+              }, 1500);
+            }
           }
         });
+
+        //Thêm sự kiện blur để định dạng lại giá trị hiển thị
+        profitInput.addEventListener("blur", (e) => {
+          const inputValue = e.target.value.replace("%", "").trim();
+          const newProfit = parseInt(inputValue, 10);
+          const catId = e.target.dataset.categoryId; //  Lấy 'id'
+
+          if (!isNaN(newProfit) && newProfit >= 0) {
+            e.target.value = `${newProfit}%`;
+          } else {
+            // Nếu nhập bậy, trả về giá trị cũ
+            e.target.value = `${profitRules.category[catId] || 0}%`; // Lấy bằng 'id'
+          }
+        });
+      });
     }
 
+    // let productSpecificScrollList = null;
+
+    //hàm run chính
     //hàm run chính
     async function startApplication() {
       console.log("Khởi động ứng dụng AdminPrice: Bắt đầu tải dữ liệu...");
 
-      // 1. Gán giá trị cho các biến DOM ở đây
+      // Tải categories TRƯỚC
+      loadAndMapCategories();
+
+      // Gán giá trị cho các biến DOM
       productSpecificContainer = document.querySelector(".with-product");
-      // Kiểm tra nếu phần tử tồn tại (chỉ tồn tại trên adminPrice.html)
+
       if (!productSpecificContainer) {
         console.log("Đây không phải trang AdminPrice. Bỏ qua logic DOM.");
-        // Vẫn tiếp tục load dữ liệu nếu cần, nhưng bỏ qua DOM cụ thể của trang này.
       } else {
-        productSpecificList =
-          productSpecificContainer.querySelector(
-            ".filter-selection"
-          )?.parentElement;
+        productSpecificList = productSpecificContainer.querySelector(
+          ".scroll-bar" // Đảm bảo bạn đã có scroll-bar như yêu cầu trước
+        );
         if (!productSpecificList) {
-          console.error("Không tìm thấy Container 'Theo sản phẩm' con.");
+          // Logic tạo scroll-bar động (nếu bạn dùng cách 2)
+          productSpecificList = document.createElement("div");
+          productSpecificList.className = "scroll-bar";
+          const addButton =
+            productSpecificContainer.querySelector(".filter-add-btn");
+          if (addButton) {
+            productSpecificContainer.insertBefore(
+              productSpecificList,
+              addButton.parentElement
+            );
+          } else {
+            productSpecificContainer.appendChild(productSpecificList);
+          }
         }
 
-        // 2. Gọi các hàm khởi tạo DOM chỉ khi các phần tử tồn tại
+        // Gọi các hàm khởi tạo DOM
         handleCategoryProfitChange();
         renderProductSpecificProfits();
         setupSearchFeature();
       }
-      //
 
-      //
-      handleCategoryProfitChange();
-
-      setupSearchFeature();
+      // (Bỏ các lần gọi hàm dư thừa nếu có)
+      // handleCategoryProfitChange();
+      // setupSearchFeature();
 
       //Hiển thị bảng lần đầu
       renderProductsTable();
@@ -719,12 +961,12 @@ export const AdminPrice = {
         .querySelector(".filter-add-btn")
         ?.addEventListener("click", () => {
           localStorage.setItem("allProduct", JSON.stringify(allProducts));
-
           let allProductss = localStorage.getItem("allProduct");
-
           console.log(JSON.parse(allProductss));
         });
-      renderProductsTable();
+
+      // (Đã gọi renderProductsTable() ở trên rồi, bỏ dòng này)
+      // renderProductsTable();
       console.log("Dữ liệu sản phẩm đã sẵn sàng:", allProducts);
 
       localStorage.setItem("allProduct", JSON.stringify(allProducts));

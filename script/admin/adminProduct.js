@@ -1383,7 +1383,7 @@ export const AdminProduct = {
 
         // Làm ngắn mã tham chiếu cho dễ nhìn
         if (referenceCode.startsWith("order-")) {
-          referenceCode = `DH-${referenceCode.slice(-7)}`;
+          referenceCode = `DH-${referenceCode.slice(-5)}`;
         } else if (referenceCode.startsWith("T-")) {
           referenceCode = `T-${referenceCode.slice(-5)}`;
         }
