@@ -114,14 +114,14 @@ export function HandleEventProduct(allProducts) {
     });
   });
   // Chọn size
-  document.querySelectorAll(".size-btn").forEach((btn) => {
+  document.querySelectorAll(".size-btn-product").forEach((btn) => {
     btn.addEventListener("click", function (event) {
       // Bỏ selected khỏi tất cả size cùng card
       event.stopPropagation();
       const card = this.closest(".prod-demo");
       console.log(btn);
       card
-        .querySelectorAll(".size-btn")
+        .querySelectorAll(".size-btn-product")
         .forEach((b) => b.classList.remove("selected"));
       // Thêm selected vào size được chọn
       this.classList.add("selected");
@@ -163,7 +163,7 @@ export function HandleEventProduct(allProducts) {
       if (IsAuthenticated) {
         const card = this.closest(".prod-demo");
         const productId = card.dataset.id;
-        const selectedSizeElement = card.querySelector(".size-btn.selected");
+        const selectedSizeElement = card.querySelector(".size-btn-product.selected");
         const selectedColorElement = card.querySelector(".img-color.selected");
 
         if (selectedSizeElement && selectedColorElement) {
@@ -316,7 +316,7 @@ function LinkSize(product) {
   // console.log(product);
   product["size"].forEach((size) => {
     html += `
-          <button class="size-btn" data-size="${size}">${size}</button>
+          <button class="size-btn-product" data-size="${size}">${size}</button>
     `;
   });
   return html;

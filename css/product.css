@@ -16,18 +16,20 @@
   transition: transform 0.2s ease, background-color 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative;
+  backface-visibility: hidden;
 }
 
 .prod-demo:hover {
-  background-color: #f8f8f8;
-  transform: scale(1.03);
+  
+  box-shadow: 0 4px 36px rgba(0, 0, 0, 0.25);
+
 }
 
 .prod {
   width: 100%;
-  aspect-ratio: 1 / 1; /* Giữ tỉ lệ vuông thay vì height 480px */
+  aspect-ratio: 1 / 1;
   position: relative;
-  background: linear-gradient(to bottom, #a7a7a7, #d8d8d8);
+  background: white;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -196,28 +198,28 @@
 
 /* Mặt trước */
 .card-front {
-  transition: background-color 0.2s ease;
+  transition: transform 0.3s ease;
+  background-color: white;
 }
 
-.prod-demo:hover .card-front {
-  background-color: #f8f8f8;
+.img-color {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.img-color{
-    width: 50px;
-    height: 50px;
-      background-color: #504f4f;
-    border-radius: 15px;
 
+.img-color.selected {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px #000;
 }
-.img-color.selected{
-         box-sizing: border-box;
-    padding: 5px; 
+
+.img-color:hover {
+  transform: scale(1.05);
 }
-.img-color:hover{
-        box-sizing: border-box;
-    padding: 5px;
-    transition: 0.2s;
-}
+
 /* Mặt sau - xoay 180 độ */
 .card-back {
   transform: rotateY(180deg);
@@ -226,8 +228,9 @@
   justify-content: center;
   align-items: center;
   padding: 30px;
-  background: #8A8383;
+  background: linear-gradient(135deg, #2c3e50, #3498db);
   color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .prod {
@@ -345,60 +348,75 @@
   justify-content: flex-start;
 }
 
-.size-btn {
-  padding: 10px 15px;
-  background-color: white;
-  color: #667eea;
-  border: 2px solid white;
-  border-radius: 5px;
+.size-btn-product {
+  padding: 12px 18px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  margin: 4px;
 }
 
-.size-btn:hover,
-.size-btn.selected {
-  background-color: #764ba2;
-  color: white;
-  transform: scale(1.1);
+.size-btn-product:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.size-btn-product.selected {
+  background-color: white;
+  color: #2c3e50;
+  border-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .back-buttons {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 15px;
+  margin-top: 30px;
+  width: 100%;
 }
 
 .checkout-btn,
 .back-btn {
-  padding: 12px 24px;
+  padding: 14px 28px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   font-size: 1rem;
-  transition: 0.2s;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .checkout-btn {
-  background-color: #000;
-  color: white;
+  background-color: white;
+  color: #2c3e50;
   flex: 1;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .checkout-btn:hover {
-  background-color: #333;
+  background-color: #ecf0f1;
   transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .back-btn {
-  background-color: white;
-  color: #667eea;
-  padding: 12px 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 24px;
 }
 
 .back-btn:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 /* Responsive */
