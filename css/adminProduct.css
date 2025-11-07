@@ -123,11 +123,19 @@ tbody tr:last-child {
 
 .action {
   display: flex;
+  margin-top: 10px;
   justify-content: center;
   align-items: center;
   gap: 8px;
 }
-
+.delete-img-btn{
+  position: absolute;
+  top: 0;
+  right: 0;;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
 .btn {
   border: none;
   border-radius: 6px;

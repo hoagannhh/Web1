@@ -3,6 +3,7 @@ let importProduct = JSON.parse(localStorage.getItem("productImport"));
 let currentEditIndex = null;
 let currentDeleteIndex = null;
 let currentPage = 1;
+let allCategories = [];
 export const AdminImportProduct = {
   html: `
       <main class="admin-container">
@@ -98,7 +99,7 @@ export const AdminImportProduct = {
   canDeleteCss: true,
   init: function(){
     const ordersBody = document.getElementById('orders-body');
-
+    
     //render các sản phẩm ra màn hình
     renderOrders(importProduct);
     // thêm sự kiện cho phần phân trang
@@ -237,19 +238,96 @@ function bindModalEvents(mode, ordersBody){
   // tìm tất cả các dòng hiện tại trong tbody và bind lại
   Array.from(tbody.querySelectorAll('tr')).forEach(tr => bindItemRow(tr, ordersBody));
 }
-function SaveCostProduct(){
-  let  allproduct = JSON.parse(localStorage.getItem("allProduct"));
+
+function getProfitRules() {
+  const raw = localStorage.getItem("priceProfitRules");
+  return raw
+    ? JSON.parse(raw)
+    : {
+        defaultCategoryProfit: 0,
+        category: { Men: 0, Women: 0, Kids: 0 },
+        productSpecific: {},
+      };
+}
+function SaveCostProduct() {
+  let allproduct = JSON.parse(localStorage.getItem("allProduct"));
   const cost = document.querySelector(".items__price").value;
   const productId = document.querySelector(".items__name").value.split(":")[0];
-
   allproduct.forEach(p => {
-    if (p.id === productId){
-      console.log(12);
-      p.cost = cost;
+    if (p.id === productId) {
+      console.log("Tìm thấy sản phẩm, đang cập nhật cost và price...");
+      p.cost = Number(cost);
+      p.price = ConvertToPrice(p);
     }
   });
-  console.log(allproduct);
+
+  // 3. Lưu lại mảng đã cập nhật
+  console.log("Đã cập nhật:", allproduct.find(p => p.id === productId));
   localStorage.setItem("allProduct", JSON.stringify(allproduct));
+}
+function ConvertToPrice(product) {
+  const profitRules = JSON.parse(localStorage.getItem("priceProfitRules"))
+  const categoriesDB = JSON.parse(localStorage.getItem("categoriesDB"))
+  // 1. Tạo một "bản đồ" để tra cứu category nhanh
+  const categoriesMap = new Map();
+  categoriesDB.forEach(cat => categoriesMap.set(cat.id, cat));
+
+  // 2. Lấy thông tin cơ bản
+  const costPrice = product.cost || 0;
+  let profitPercentage = profitRules.defaultCategoryProfit; // Mặc định là 0%
+
+  // 3. Logic xác định lợi nhuận (Ưu tiên)
+  
+  // Ưu tiên 1: Kiểm tra quy tắc lợi nhuận riêng theo ID sản phẩm
+  if (profitRules.productSpecific[product.id]) {
+    profitPercentage = profitRules.productSpecific[product.id];
+  } 
+  
+  // Ưu tiên 2: Kiểm tra quy tắc theo category (nếu không có quy tắc riêng)
+  else if (product.category && product.category.length > 0) {
+    
+    let mainCategoryProfit = null; // Lợi nhuận loại chính (Men's, Women's...)
+    let subCategoryProfit = null;  // Lợi nhuận loại phụ (Mua Thu, Mua Xuan...)
+    
+    // Duyệt qua tất cả các ID category của sản phẩm
+    for (const catId of product.category) {
+      const category = categoriesMap.get(catId); // Lấy thông tin category
+      
+      // Kiểm tra xem category này có tồn tại và có quy tắc trong profitRules không
+      if (category && profitRules.category.hasOwnProperty(category.id)) {
+        
+        const ruleProfit = profitRules.category[category.id];
+        
+        if (category.manageable === true) {
+          // Đây là loại PHỤ (manageable: true)
+          // Chỉ lấy quy tắc của loại phụ ĐẦU TIÊN tìm thấy
+          if (subCategoryProfit === null) {
+            subCategoryProfit = ruleProfit;
+          }
+        } else if (category.manageable === false) {
+          // Đây là loại CHÍNH (manageable: false)
+          mainCategoryProfit = ruleProfit;
+        }
+      }
+    }
+    
+    // Áp dụng quy tắc ưu tiên:
+    // 1. Lấy lợi nhuận loại PHỤ, NẾU nó khác 0.
+    // 2. Nếu không, lấy lợi nhuận loại CHÍNH.
+    // 3. Nếu cả hai đều là 0 hoặc null, giữ nguyên % mặc định.
+    if (subCategoryProfit !== null && subCategoryProfit !== 0) {
+      profitPercentage = subCategoryProfit;
+    } else if (mainCategoryProfit !== null) {
+      profitPercentage = mainCategoryProfit;
+    }
+  }
+  
+  // 4. Tính toán giá bán cuối cùng
+  const profitRate = profitPercentage / 100;
+  const sellingPrice = costPrice * (1 + profitRate);
+  
+  // Trả về giá bán đã làm tròn
+  return Math.round(sellingPrice);
 }
 function SaveInventoryHistory(){
   const inventoryHistory = JSON.parse(
@@ -276,7 +354,7 @@ function SaveInventoryHistory(){
   })
 
     console.log(inventoryHistory);
-
+  localStorage.setItem("inventoryHistory", JSON.stringify(inventoryHistory));
 }
 
 // hàm xử lý khi mở đóng bảng
