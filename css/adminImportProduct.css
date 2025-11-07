@@ -171,8 +171,9 @@ tbody td {
 }
 .actions {
   display: flex;
+
   gap: 8px;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .btn {
   padding: 8px 12px;
@@ -208,7 +209,9 @@ tbody td {
 .status.deleted {
   color: #d9534f;
 }
-
+.success{
+  color: #28a745;
+}
 /* Phần Trang */
 .pagination {
   display: flex;
@@ -344,3 +347,18 @@ table{
     padding: 5px;
     box-sizing: border-box;
   }
+    .options-container {
+      position: absolute;
+      width: 205px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 10px;
+      background: white;
+      display: none;
+    }
+
+    .options-container.show {
+      display: block;
+    }

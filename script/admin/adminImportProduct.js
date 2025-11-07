@@ -1,24 +1,5 @@
 /*Demo data*/
-let importProduct = [
-  { id: 'PN001', date:'2025-10-18', items: [
-      {name:'Air Jordan 4 RM', qty:300, price:1600000}
-    ], status:'completed' },
-  { id: 'PN002', date:'2025-10-19', items: [
-      {name:'Jordan Retro 12', qty:100, price:3500000}
-    ], status:'pending' },
-  { id: 'PN003', date:'2025-10-20', items: [
-      {name:'Jordan Gamma 10', qty:50, price:1900000}
-    ], status:'pending' },
-      { id: 'PN004', date:'2025-10-20', items: [
-      {name:'Jordan Gamma 10', qty:50, price:1900000}
-    ], status:'pending' },
-      { id: 'PN005', date:'2025-10-20', items: [
-      {name:'Jordan Gamma 10', qty:50, price:1900000}
-    ], status:'pending' },
-      { id: 'PN006', date:'2025-10-20', items: [
-      {name:'Jordan Gamma 10', qty:50, price:1900000}
-    ], status:'pending' },
-];
+let importProduct = JSON.parse(localStorage.getItem("productImport"));
 let currentEditIndex = null;
 let currentDeleteIndex = null;
 let currentPage = 1;
@@ -50,6 +31,7 @@ export const AdminImportProduct = {
           >
             <div style="color: var(--muted)">Danh sách phiếu nhập</div>
             <div style="display: flex; gap: 12px; align-items: center">
+            
             <input
             type="text"
             id="search-input"
@@ -71,7 +53,7 @@ export const AdminImportProduct = {
                   <th style="width: 180px; border-radius: 0%;">Total quantity</th>
                   <th style="width: 180px; border-radius: 0%;">Total value</th>
                   <th style="width: 180px; border-radius: 0%;">Status</th>
-                  <th style="width: 180px; border-radius: 0%; border-top-right-radius: 15px;">Action</th>
+                  <th style="width: 180px; text-align:center; border-radius: 0%; border-top-right-radius: 15px;">Action</th>
                 </tr>
               </thead>
               <tbody id="orders-body">
@@ -83,6 +65,7 @@ export const AdminImportProduct = {
           <div class="pagination" id="pagination"></div>
         </section>
       </main>
+      
     </div>
 
     <!--Modal: Thêm / Sửa / Xem / Hoàn thành -->
@@ -114,39 +97,26 @@ export const AdminImportProduct = {
   css: `../css/adminImportProduct.css`,
   canDeleteCss: true,
   init: function(){
-
-
     const ordersBody = document.getElementById('orders-body');
 
     //render các sản phẩm ra màn hình
-    renderOrders();
+    renderOrders(importProduct);
+    // thêm sự kiện cho phần phân trang
     HandleEventPagenation();
  
 
 
     handleEventInTable(ordersBody);
+    // Thêm các sự kiên cancel confirm 1 form
+    handleEventButton();
 
-    document.getElementById('btn-add-order').addEventListener('click', ()=>{
-      openOverlay(buildOrderForm({mode:'add'}));
-      bindModalEvents('add');
-    });
 
-    document.getElementById('del-cancel').addEventListener('click', closeDelete);
-
-    document.getElementById('del-confirm').addEventListener('click', ()=>{
-      if(currentDeleteIndex!==null){ importProduct.splice(currentDeleteIndex,1); renderOrders(ordersBody); }
-      closeDelete();
-    });
-    // const pagination=document.getElementById('pagination');
-    // pagination.innerHTML=`
-    //   <span>&lt;</span>
-    //   <span class="active">1</span>
-    //   <span>2</span>
-    //   <span>3</span>
-    //   <span>4</span>
-    //   <span>5</span>
-    //   <span>&gt;</span>
-    // `;
+    const searchInput = document.getElementById("search-input");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        filterAndRenderOrders(e.target.value);
+      });
+    }
   }
 };
 
@@ -154,11 +124,14 @@ export const AdminImportProduct = {
 function gatherItems(){
   return Array.from(document.querySelectorAll('#items-tbody tr'))
     .map(r=>{
-      const name = r.querySelector('.items__name')?.value.trim();
+      const item_name = r.querySelector('.items__name');
+      const productId = item_name?.value.split(":")[0];
+      let name = item_name?.value.split(":")[1];
+      if (name != null) {name = name.trim();console.log(name)}
       const qty = +r.querySelector('.items__qty')?.value || 0;
       const price = +r.querySelector('.items__price')?.value || 0;
       if (!name) return null;
-      return { name, qty, price };
+      return { productId, name, qty, price };
     })
     .filter(Boolean);
 }
@@ -178,7 +151,9 @@ function bindModalEvents(mode, ordersBody){
     addProduct.onclick = () => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><input class="items__name" placeholder="Tên sản phẩm"></td>
+        <td><input class="items__name" id ="searchInput" placeholder="Tên sản phẩm">
+        <div class="options-container" id="optionsContainer"></div>
+        </td>
         <td><input class="items__qty" type="number" min="0" value="0"></td>
         <td><input class="items__price" type="number" min="0" value="0"></td>
         <td class="items__line">0₫</td>
@@ -187,6 +162,7 @@ function bindModalEvents(mode, ordersBody){
       tbody.appendChild(tr);
       bindItemRow(tr, ordersBody);
       recalcTotal();
+      AddDataToProduct();
     };
   }
 
@@ -222,7 +198,8 @@ function bindModalEvents(mode, ordersBody){
       const items = gatherItems();
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
       importProduct.push({id,date,items,status:'pending'});
-      renderOrders(); closeOverlay();
+      renderOrders(importProduct); 
+      closeOverlay();
     };
   }
     
@@ -244,6 +221,7 @@ function bindModalEvents(mode, ordersBody){
     confirmComplete.onclick = () => {
       if (currentEditIndex !== null){
         importProduct[currentEditIndex].status = 'completed';
+        SaveImportProduct();
         renderOrders(ordersBody); closeOverlay();
       }
     };
@@ -263,10 +241,13 @@ function openDelete(i ){ currentDeleteIndex=i; document.getElementById('overlay-
 function closeDelete(){ document.getElementById('overlay-delete').style.display='none'; currentDeleteIndex=null; }
 
 
-
+//save
+function SaveImportProduct(){
+  localStorage.setItem("productImport", JSON.stringify(importProduct));
+}
 /* ======== Hiển thị danh sách phiếu nhập lên bảng chính  ========*/
 
-function renderOrders(){
+function renderOrders(importProduct){
   const PAGE_SIZE = 5;
   const maxPage = Math.ceil(importProduct.length / PAGE_SIZE);
   if (currentPage > maxPage) currentPage = maxPage;
@@ -285,10 +266,10 @@ function renderOrders(){
       // Các nút hành động tùy theo trạng thái
     let actionsHTML = `
       <button class="btn" data-action="view" data-idx="${idx}">Xem</button>
-      <button class="btn edit" data-action="edit" data-idx="${idx}">Sửa</button>
     `;
     if(o.status==='pending'){
       actionsHTML += `
+        <button class="btn edit" data-action="edit" data-idx="${idx}">Sửa</button>
         <button class="btn complete" data-action="complete" data-idx="${idx}">Hoàn thành</button>
         <button class="btn delete" data-action="delete" data-idx="${idx}">Xóa</button>
       `;
@@ -344,7 +325,7 @@ function HandleEventPagenation(){
         } else {
           currentPage = +p;
         }
-        renderOrders();
+        renderOrders(importProduct);
       });
     }
 }
@@ -450,4 +431,110 @@ function calcQty (items) {
   return items.reduce((s,it)=>s + (Number(it.qty)||0), 0);
 }
 
-  /*  biến quản lý modal  */
+function handleEventButton(ordersBody){
+    document.getElementById('btn-add-order').addEventListener('click', ()=>{
+      openOverlay(buildOrderForm({mode:'add'}));
+      bindModalEvents('add');
+    });
+
+    document.getElementById('del-cancel').addEventListener('click', closeDelete);
+
+    document.getElementById('del-confirm').addEventListener('click', ()=>{
+      if(currentDeleteIndex!==null){ 
+        importProduct.splice(currentDeleteIndex,1); 
+        SaveImportProduct();
+        renderOrders(importProduct); 
+      }
+
+      closeDelete();
+    });
+}
+// filter id hoặc tên theo sản phẩm
+function AddDataToProduct(){
+    let data = JSON.parse(localStorage.getItem("allProduct"));
+    data = data.map(pro => pro.id + ": " +pro.name);
+    console.log(data);
+
+    const searchInput = document.getElementById('searchInput');
+    const optionsContainer = document.getElementById('optionsContainer');
+    
+    let selectedItem = '';
+
+    // Render danh sách options
+    function renderOptions(filterText = '') {
+      const filtered = data.filter(item => 
+        item.toLowerCase().includes(filterText.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        return;
+      }
+
+      optionsContainer.innerHTML = filtered.map((item, index) => `
+        <div class="option-item">
+          <input 
+            type="radio" 
+            id="option-${index}" 
+            name="product"
+            value="${item}"
+            ${selectedItem === item ? 'checked' : ''}
+          >
+          <label for="option-${index}">${item}</label>
+        </div>
+      `).join('');
+
+      // Thêm sự kiện click cho radio button
+      optionsContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', handleRadioChange);
+      });
+    }
+
+    // Xử lý khi radio button thay đổi
+    function handleRadioChange(e) {
+      selectedItem = e.target.value;
+      searchInput.value = selectedItem;
+      optionsContainer.classList.remove('show');
+    }
+
+
+    // Xử lý tìm kiếm
+    searchInput.addEventListener('input', (e) => {
+      renderOptions(e.target.value);
+      optionsContainer.classList.add('show');
+    });
+
+    // Hiện dropdown khi click vào input
+    searchInput.addEventListener('click', () => {
+      optionsContainer.classList.add('show');
+    });
+
+    // Đóng dropdown khi click ra ngoài
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.input-wrapper') && !e.target.closest('.options-container')) {
+        optionsContainer.classList.remove('show');
+      }
+    });
+}
+function filterAndRenderOrders(searchTerm) {
+  let orders;
+  console.log("Tìm kiếm đang chạy với từ khóa:", searchTerm); // <-- THÊM LOG NÀY
+  console.log(importProduct);
+  
+  if (!searchTerm || !searchTerm.trim()) {
+    orders = importProduct; // Nếu rỗng thì hiển thị tất cả
+  } else {
+    console.log(orders);
+    const term = searchTerm.toLowerCase().trim();
+    // Lọc theo ID, Date, hoặc Status
+    orders = importProduct.filter(
+      (o) =>
+        o.id.toLowerCase().includes(term) ||
+        
+        o.date.includes(term) ||
+        (o.status === "completed" ? "hoàn thành" : "nhập").includes(term)
+    );
+  }
+  currentPage = 1; // Luôn về trang 1 sau khi tìm kiếm
+  renderOrders(orders); // Render lại bảng
+  console.log("Số lượng đơn hàng sau khi lọc:", orders.length); // <-- THÊM LOG NÀY
+}

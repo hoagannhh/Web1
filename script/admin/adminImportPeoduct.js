@@ -177,7 +177,7 @@ export const AdminImportProduct = {
     // Hàm tìm kiếm
     function filterAndRenderOrders(searchTerm) {
       console.log("Tìm kiếm đang chạy với từ khóa:", searchTerm); // <-- THÊM LOG NÀY
-      console.log(allOrders);
+      console.log();
       console.log(orders);
 
       if (!searchTerm || !searchTerm.trim()) {
@@ -192,7 +192,7 @@ export const AdminImportProduct = {
             (o.status === "completed" ? "hoàn thành" : "nhập").includes(term)
         );
       }
-      renderOrders.currentPage = 1; // Luôn về trang 1 sau khi tìm kiếm
+      currentPage = 1; // Luôn về trang 1 sau khi tìm kiếm
       renderOrders(); // Render lại bảng
       console.log("Số lượng đơn hàng sau khi lọc:", orders.length); // <-- THÊM LOG NÀY
     }
@@ -639,25 +639,7 @@ export const AdminImportProduct = {
     }
 
     // xử lý click trên pagination (delegation) — gắn event sau khi DOM sẵn sàng
-    const paginationEl = document.getElementById("pagination");
-    if (paginationEl) {
-      paginationEl.addEventListener("click", (e) => {
-        const sp = e.target.closest("span");
-        if (!sp) return;
-        const p = sp.dataset.page;
-        if (!p) return;
-        const PAGE_SIZE = 10;
-        const pageCount = Math.max(1, Math.ceil(orders.length / PAGE_SIZE));
-        if (p === "prev") {
-          if (renderOrders.currentPage > 1) renderOrders.currentPage--;
-        } else if (p === "next") {
-          if (renderOrders.currentPage < pageCount) renderOrders.currentPage++;
-        } else {
-          renderOrders.currentPage = +p;
-        }
-        renderOrders();
-      });
-    }
+
     // ...
     const searchInput = document.getElementById("search-input");
     if (searchInput) {
