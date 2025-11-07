@@ -20,16 +20,7 @@ export const ProductDetail = {
         <h1 class="name-of-product">Sabrina 3Bule print</h1>
         <p class="kind-of-shoe">Basketball Shoes</p>
         <div class="color">
-          <img
-            class="color-img"
-            src="../img/products/shoe1/product1.PNG"
-            alt=""
-          />
-          <img
-            class="color-img"
-            src="../img/products/shoe1/product1.PNG"
-            alt=""
-          />
+          
         </div>
         <p><i class="select-size">SELECT YOUR SIZE</i></p>
         <ul class="list-button-choose-size">
@@ -104,26 +95,32 @@ function AddEventButtonChooseSize() {
 }
 function AddEventImgColor() {
   const imgs = document.querySelectorAll(".color .color-img");
-  console.log(imgs.length);
-  if (imgs.length === 1) {
-    imgs[0].classList.add("selected-img");
+  console.log("imgleng"+imgs.length);
+
+  // Tự động chọn màu đầu tiên làm màu mặc định
+  if (imgs.length > 0) {
+    const defaultImg = imgs[0];
+    defaultImg.classList.add("selected-img");
+    // Set màu mặc định cho sản phẩm
+    const path = defaultImg.src;
+    const indexHyphen = path.lastIndexOf("-");
+    const indexDot = path.lastIndexOf(".");
+    const defaultColor = path.slice(indexHyphen + 1, indexDot);
+    profileProduct.color = defaultColor;
   }
+
   imgs.forEach((img) => {
     img.addEventListener("click", () => {
       imgs.forEach((imgEach) => {
         imgEach.classList.remove("selected-img");
       });
-      if (img.classList.contains("selected-img")) {
-        img.classList.remove("selected-img");
-      } else {
-        img.classList.add("selected-img");
-        const path = img.src;
-        const indexHyphen = path.lastIndexOf("-");
-        const indexDot = path.lastIndexOf(".");
-        const color = path.slice(indexHyphen + 1, indexDot);
-        console.log(color);
-        profileProduct.color = color;
-      }
+      img.classList.add("selected-img");
+      const path = img.src;
+      const indexHyphen = path.lastIndexOf("-");
+      const indexDot = path.lastIndexOf(".");
+      const color = path.slice(indexHyphen + 1, indexDot);
+      console.log(color);
+      profileProduct.color = color;
     });
   });
 }
@@ -159,9 +156,9 @@ function AddEventbuttonSubmit() {
     }
 
     const isChooseSize = !!document.querySelector(".size.size-selected");
-    const isChooseColor = !!document.querySelector(".color-img.selected-img");
-
-    if (isChooseSize && isChooseColor) {
+    // Không cần kiểm tra màu vì đã có màu mặc định
+    
+    if (isChooseSize) {
       // Chuẩn bị sản phẩm cho Checkout
       const productToCheckout = {
         ...profileProduct,
@@ -196,9 +193,9 @@ function AddEventbuttonSubmit() {
       return;
     }
     const isChooseSize = !!document.querySelector(".size.size-selected");
-    const isChooseColor = !!document.querySelector(".color-img.selected-img");
-
-    if (isChooseSize && isChooseColor) {
+    // Không cần kiểm tra màu vì đã có màu mặc định
+    
+    if (isChooseSize) {
       alert("Thêm vào giỏ hàng");
       // Logic thêm vào giỏ hàng bình thường
       console.log(profileProduct);
@@ -290,7 +287,7 @@ function AddImageColor(proInfor) {
     });
   }
   colors.insertAdjacentHTML("beforeend", htmlImage);
-  colors.innerHTML = htmlImage;
+  
   // colors.innerHTML += ;
 }
 function AddImageRepresent(proInfor) {
@@ -302,6 +299,9 @@ function ShowMoreProduct() {
   const allProduct = JSON.parse(localStorage.getItem("allProduct"));
   let i = 0;
   let html = ``;
+  if (!allProduct || !Array.isArray(allProduct) || allProduct.length === 0) {
+    return ""; // Trả về HTML rỗng, không làm gì cả
+  }
   allProduct.forEach((p) => {
     if (i > 4) return;
     html += `

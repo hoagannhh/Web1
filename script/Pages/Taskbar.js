@@ -55,14 +55,14 @@ export const TaskBar = {
               <div class="column">
                 <h4>BEST SELLERS</h4>
                 <div class="sellers">
-                  <div class="product">
+                  <div class="product-best-seller">
                     <img
                       class="product-image"
                       src="../img/nike-air-force.png"
                     />
                     <p class="name-product">NIKE AIR FORCE</p>
                   </div>
-                  <div class="product">
+                  <div class="product-best-seller">
                     <img
                       class="product-image"
                       src="../img/ADIDAS-ULTRABOOST.png"
@@ -309,16 +309,28 @@ function headerScroll() {
 function AddFilterEvents() {
   // --- 1. LỌC THEO GIỚI TÍNH (MEN'S, WOMEN'S) ---
   // (Ta không lọc Kid's vì nó có cấu trúc size phức tạp)
+  // Lưu trữ gender context hiện tại
+  let currentGenderContext = null;
+
   const menuButtons = document.querySelectorAll(".menu > .test");
   menuButtons.forEach((btn) => {
     const buttonText = btn.textContent.trim().toLowerCase();
     if (buttonText === "men's") {
-      btn.addEventListener("click", () => handleFilter("gender", "men"));
+      btn.addEventListener("click", () => {
+        currentGenderContext = "men";
+        handleFilter("gender", "men");
+      });
     } else if (buttonText === "women's") {
-      // Dữ liệu sản phẩm của bạn dùng "Women" (viết hoa)
-      btn.addEventListener("click", () => handleFilter("gender", "Women"));
+      btn.addEventListener("click", () => {
+        currentGenderContext = "Women";
+        handleFilter("gender", "Women");
+      });
+    } else if (buttonText === "kid's") {
+      btn.addEventListener("click", () => {
+        currentGenderContext = "kid";
+        handleFilter("gender", "kid");
+      });
     }
-    // Bạn có thể thêm 'else if' cho "Sale", "New Arrivals" nếu dữ liệu sản phẩm có hỗ trợ
   }); // --- 2. LỌC THEO THƯƠNG HIỆU (BRAND) --- // Ánh xạ tên tệp icon sang tên thương hiệu trong dữ liệu
 
   const brandMap = {
@@ -342,7 +354,26 @@ function AddFilterEvents() {
     if (brandName) {
       img.addEventListener("click", (e) => {
         e.stopPropagation(); // Ngăn không cho sự kiện click vào "Men's" chạy
-        handleFilter("brand", brandName);
+        // Tìm parent menu button để xác định context
+        const menuButton = e.target.closest('.test');
+        let genderContext = null;
+        
+        if (menuButton) {
+          // Lấy text của button cha (men's, women's, kid's)
+          const buttonText = menuButton.textContent.trim().toLowerCase();
+          if (buttonText === "men's") {
+            genderContext = "men";
+          } else if (buttonText === "women's") {
+            genderContext = "Women";
+          } else if (buttonText === "kid's") {
+            genderContext = "kid";
+          }
+          // Chỉ lọc brand trong context của gender tương ứng
+          handleFilter("brand", brandName, genderContext);
+        } else {
+          // Nếu click từ menu Brands riêng biệt, không áp dụng context gender
+          handleFilter("brand", brandName);
+        }
       });
     }
   }); // --- 3. LỌC THEO KÍCH CỠ (SIZE) ---
@@ -353,7 +384,26 @@ function AddFilterEvents() {
     if (sizeValue) {
       btn.addEventListener("click", (e) => {
         e.stopPropagation(); // Ngăn không cho sự kiện click vào "Men's" chạy
-        handleFilter("size", sizeValue);
+        // Tìm parent menu button để xác định context
+        const menuButton = e.target.closest('.test');
+        let genderContext = null;
+        
+        if (menuButton) {
+          // Lấy text của button cha (men's, women's, kid's)
+          const buttonText = menuButton.textContent.trim().toLowerCase();
+          if (buttonText === "men's") {
+            genderContext = "men";
+          } else if (buttonText === "women's") {
+            genderContext = "Women";
+          } else if (buttonText === "kid's") {
+            genderContext = "kid";
+          }
+          // Chỉ lọc size trong context của gender tương ứng
+          handleFilter("size", sizeValue, genderContext);
+        } else {
+          // Nếu click từ menu size riêng biệt, không áp dụng context gender
+          handleFilter("size", sizeValue);
+        }
       });
     }
   });
@@ -378,21 +428,28 @@ function AddFilterEvents() {
  * @param {string} filterType - Loại bộ lọc (ví dụ: "gender", "brand", "size")
  * @param {string|number} filterValue - Giá trị cần lọc (ví dụ: "men", "Nike", 40)
  */
-function handleFilter(filterType, filterValue) {
-  console.log(`Filtering by ${filterType}: ${filterValue}`);
+function handleFilter(filterType, filterValue, contextGender = null) {
+  console.log(`Filtering by ${filterType}: ${filterValue}, Context Gender: ${contextGender}`);
   // 1. Chuyển đến trang sản phẩm
   LoadPage("product", document.getElementById("container"));
 
   // 2. Lọc danh sách sản phẩm
   const products = allProducts.filter((pro) => {
+    // Nếu có contextGender, kiểm tra gender trước
+    if (contextGender) {
+      if (pro.gender.toLowerCase() !== contextGender.toLowerCase()) {
+        return false;
+      }
+    }
+
+    // Sau đó kiểm tra điều kiện lọc chính
     switch (filterType) {
       case "gender":
         return pro.gender.toLowerCase() === filterValue.toLowerCase();
       case "brand":
         return pro.brand.toLowerCase() === filterValue.toLowerCase();
       case "size":
-        // Dữ liệu 'size' của bạn là một mảng, nên ta dùng .includes()
-        return pro.size.includes(Number(filterValue)); // Bạn có thể thêm các trường hợp khác như "sale", "new" ở đây
+        return pro.size.includes(Number(filterValue));
       default:
         return false;
     }

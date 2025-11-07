@@ -428,90 +428,124 @@ function sideBar() {
 }
 function LoadProductPage(filterState) {
   let htmlProduct = "";
-  let temp = [];
   let currentPage = 1;
-  const productsPerPage = 9; // số sản phẩm trên 1 trang
+  const productsPerPage = 9;
 
-  temp = Filter(filterState, allProducts);
-  if (temp.length === 0) {
-    alert("ko tim thay san pham nao");
+  try {
+    // Kiểm tra xem có dữ liệu sản phẩm không
+    if (!allProducts || !Array.isArray(allProducts)) {
+      console.error("Dữ liệu sản phẩm không hợp lệ");
+      document.querySelector(".product-grid").innerHTML = 
+        '<div class="error-message">Không thể tải dữ liệu sản phẩm. Vui lòng thử lại sau.</div>';
+      return;
+    }
 
-    // đặt lại filter
-    ResetAllFilters(filterState);
-    // load lại trang web
-    console.log("sau khi resset calue: ")
-    console.log(filterState)
-    LoadAllProductPage();
-    return;
+    // Lọc sản phẩm
+    const filteredProducts = Filter(filterState, allProducts);
+    console.log("Số sản phẩm sau khi lọc:", filteredProducts.length);
+
+    if (filteredProducts.length === 0) {
+      // Hiển thị thông báo thân thiện hơn
+      document.querySelector(".product-grid").innerHTML = `
+        <div class="no-products-message">
+          <p>Không tìm thấy sản phẩm nào phù hợp với bộ lọc đã chọn.</p>
+          <button onclick="ResetAllFilters(${JSON.stringify(filterState)}); LoadAllProductPage();" class="reset-filters-btn">
+            Đặt lại bộ lọc
+          </button>
+        </div>
+      `;
+      document.querySelector(".pagination").innerHTML = "";
+      return;
+    }
+
+    // Render sản phẩm và phân trang
+    renderProduct(htmlProduct, filteredProducts, currentPage, productsPerPage);
+    renderPagination(htmlProduct, filteredProducts, currentPage, productsPerPage);
+    HandleEventProduct(filteredProducts);
+  } catch (error) {
+    console.error("Lỗi khi tải sản phẩm:", error);
+    document.querySelector(".product-grid").innerHTML = 
+      '<div class="error-message">Đã xảy ra lỗi khi tải sản phẩm. Vui lòng thử lại sau.</div>';
   }
-  renderProduct(htmlProduct, temp, currentPage, productsPerPage);
-  renderPagination(htmlProduct, temp, currentPage, productsPerPage);
-  HandleEventProduct(temp);
 
 }
 function Filter(filterState, data) {
-  // console.log("-------------------");
-  console.log("danh muc filter:" );
-  console.log(filterState);
-  // console.log(data);
-  let products = [];
+  console.log("Bắt đầu lọc với filterState:", filterState);
+  console.log("Số lượng sản phẩm ban đầu:", data.length);
 
-  products = data.filter((product) =>
-    product.gender.includes(filterState.gender)
-  );
-  if (filterState.gender.length > 0) {
-    console.log("gender");
-    products = data.filter((product) =>
-      filterState.gender.includes(product.gender)
+  // Bắt đầu với tất cả sản phẩm
+  let products = [...data];
+
+  // Lọc theo giới tính
+  if (filterState.gender && filterState.gender.length > 0) {
+    console.log("Lọc theo giới tính:", filterState.gender);
+    products = products.filter(product => 
+      filterState.gender.some(gender => 
+        product.gender.toLowerCase() === gender.toLowerCase()
+      )
     );
+    console.log("Số sản phẩm sau khi lọc giới tính:", products.length);
   }
 
-  if (filterState.price !== null) {
-    console.log("price");
-    products = products.filter((product) => filterState.price <= product.price);
+  // Lọc theo giá
+  if (filterState.price !== null && filterState.price !== undefined) {
+    console.log("Lọc theo giá:", filterState.price);
+    products = products.filter(product => product.price >= filterState.price);
+    console.log("Số sản phẩm sau khi lọc giá:", products.length);
   }
 
-  if (filterState.onSale !== false) {
-    console.log("on sale");
-
-    products = products.filter((product) => product.onSale === "true");
-  }
-
-  if (filterState.size !== null) {
-    console.log("size");
-    products = products.filter((product) =>
-      product.size.includes(Number(filterState.size))
+  // Lọc sản phẩm đang sale
+  if (filterState.onSale) {
+    console.log("Lọc sản phẩm sale");
+    products = products.filter(product => 
+      product.onSale === "true" || product.onSale === true
     );
+    console.log("Số sản phẩm sau khi lọc sale:", products.length);
   }
 
-  if (filterState.colors.length > 0) {
-    console.log("color");
-    products = products.filter((product) => {
-      return filterState.colors.some((selectedColor) =>
-        product.color.includes(selectedColor)
-      );
-    });
+  // Lọc theo size
+  if (filterState.size) {
+    console.log("Lọc theo size:", filterState.size);
+    products = products.filter(product => 
+      product.size && product.size.includes(Number(filterState.size))
+    );
+    console.log("Số sản phẩm sau khi lọc size:", products.length);
   }
-  console.log(filterState.categories);
-  if (filterState.categories.length > 0){
-    console.log("filter: categories");
-    products = products.filter(p => {
-      // kiểm tra xem có ít nhất 1 cate gory có được chọn hay ko => true
-      return filterState.categories.some((selector) => {
-        return p.category.includes(Number(selector));
-      })
-    })
+
+  // Lọc theo màu sắc
+  if (filterState.colors && filterState.colors.length > 0) {
+    console.log("Lọc theo màu:", filterState.colors);
+    products = products.filter(product => 
+      filterState.colors.some(color => 
+        product.color && product.color.map(c => c.toLowerCase()).includes(color.toLowerCase())
+      )
+    );
+    console.log("Số sản phẩm sau khi lọc màu:", products.length);
   }
+
+  // Lọc theo danh mục
+  if (filterState.categories && filterState.categories.length > 0) {
+    console.log("Lọc theo danh mục:", filterState.categories);
+    products = products.filter(product => 
+      filterState.categories.some(categoryId => 
+        product.category && product.category.includes(Number(categoryId))
+      )
+    );
+    console.log("Số sản phẩm sau khi lọc danh mục:", products.length);
+  }
+  // Sắp xếp sản phẩm
   if (filterState.sortBy !== "Featured") {
+    console.log("Sắp xếp theo:", filterState.sortBy);
     if (filterState.sortBy === "High to Low") {
-      products = products.sort((a, b) => b.price - a.price);
+      products.sort((a, b) => b.price - a.price);
     } else if (filterState.sortBy === "Low to High") {
-      products = products.sort((a, b) => a.price - b.price);
+      products.sort((a, b) => a.price - b.price);
+    } else if (filterState.sortBy === "Newest") {
+      products.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
     }
   }
 
-  console.log(products);
-
+  console.log("Số lượng sản phẩm cuối cùng:", products.length);
   return products;
 }
 

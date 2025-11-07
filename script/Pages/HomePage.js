@@ -1,5 +1,28 @@
 import { LoadPage } from "../LoadPage.js";
 
+async function loadProductData() {
+    try {
+        // Kiểm tra trong localStorage trước
+        let allProduct = JSON.parse(localStorage.getItem("allProduct"));
+        
+        // Nếu không có trong localStorage, tải từ file
+        if (!allProduct) {
+            const response = await fetch('../data/product.json');
+            if (!response.ok) {
+                throw new Error('Không thể tải dữ liệu sản phẩm');
+            }
+            allProduct = await response.json();
+            // Lưu vào localStorage để lần sau sử dụng
+            localStorage.setItem("allProduct", JSON.stringify(allProduct));
+        }
+        
+        return allProduct;
+    } catch (error) {
+        console.error("Lỗi khi tải dữ liệu sản phẩm:", error);
+        return null;
+    }
+}
+
 export const HomeComponent = {
   html: `    <div class="image-demo">
       <img class="image-demo-d" src="../img/demo.png" />
@@ -55,32 +78,58 @@ export const HomeComponent = {
 };
 function AddEventForOverlayButtonMore() {
   const btnMore = document.querySelector(".overlay-btn");
-  const container = document.getElementById("container");
-  btnMore.addEventListener("click", () => {
-    LoadPage("product", container);
+  if (btnMore) {
+    const container = document.getElementById("container");
+    btnMore.addEventListener("click", () => {
+      LoadPage("product", container);
+    });
+  }
+  // Gọi LoadProduct và xử lý lỗi nếu có
+  LoadProduct().catch(error => {
+    console.error("Lỗi khi tải sản phẩm:", error);
   });
-  LoadProduct();
 }
-function LoadProduct(){
-    const allProduct = JSON.parse(localStorage.getItem("allProduct"));
-  document.querySelectorAll(".product-grid").forEach((cnt) => {
-    let html = "";
-    for (let i =0; i < 4; i++){
-    html += 
-      `
-        <div class="prod-demo">
-          <div class="prod">
-            <div class="sale-in-prod"><p class="sale-text">Sale</p></div>
-            <img class="img-prod" src="${allProduct[i]["img-represent"]}" />
-          </div>
-          <div class="info-prod">
-            <p class="name-prod">${allProduct[i].name}</p>
-            <p class="atribute-prod">${allProduct[i].gender}'s</p>
-            <p class="price">${allProduct[i].price} vnd</p>
-          </div>
-        </div>
-      `
+async function LoadProduct() {
+    try {
+        const allProduct = await loadProductData();
+        
+        if (!allProduct || !Array.isArray(allProduct)) {
+            throw new Error("Không thể tải dữ liệu sản phẩm");
+        }
+
+        document.querySelectorAll(".product-grid").forEach((cnt) => {
+            let html = "";
+            const numProducts = Math.min(allProduct.length, 4);
+            
+            for (let i = 0; i < numProducts; i++) {
+                const product = allProduct[i];
+                if (product && product["img-represent"]) {
+                    html += `
+                        <div class="prod-demo">
+                            <div class="prod">
+                                <div class="sale-in-prod"><p class="sale-text">Sale</p></div>
+                                <img class="img-prod" src="${product["img-represent"]}" alt="${product.name || 'Product image'}" />
+                            </div>
+                            <div class="info-prod">
+                                <p class="name-prod">${product.name || 'Chưa có tên'}</p>
+                                <p class="atribute-prod">${product.gender ? product.gender + "'s" : 'Không xác định'}</p>
+                                <p class="price">${product.price ? product.price.toLocaleString('vi-VN') + ' VND' : 'Liên hệ'}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            if (!html) {
+                html = '<div class="no-products">Không có sản phẩm nào</div>';
+            }
+            
+            cnt.innerHTML = html;
+        });
+    } catch (error) {
+        console.error("Lỗi khi hiển thị sản phẩm:", error);
+        document.querySelectorAll(".product-grid").forEach(cnt => {
+            cnt.innerHTML = '<div class="error-message">Không thể tải dữ liệu sản phẩm. Vui lòng thử lại sau.</div>';
+        });
     }
-    cnt.innerHTML = html;
-  })
 }
