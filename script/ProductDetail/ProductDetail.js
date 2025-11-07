@@ -111,16 +111,39 @@ function AddEventImgColor() {
 
   imgs.forEach((img) => {
     img.addEventListener("click", () => {
+      // Bỏ selected khỏi tất cả các hình
       imgs.forEach((imgEach) => {
         imgEach.classList.remove("selected-img");
       });
+      // Thêm selected vào hình được click
       img.classList.add("selected-img");
+
+      // Cập nhật màu sắc cho sản phẩm
       const path = img.src;
       const indexHyphen = path.lastIndexOf("-");
       const indexDot = path.lastIndexOf(".");
       const color = path.slice(indexHyphen + 1, indexDot);
-      console.log(color);
       profileProduct.color = color;
+
+      // Cập nhật hình ảnh đại diện
+      const representImg = document.querySelector(".represent");
+      if (representImg) {
+        // Nếu là hình màu từ thư mục color
+        if (img.src.includes("/color/")) {
+          // Tìm hình ảnh tương ứng trong img-link-color của sản phẩm
+          const matchingColorImg = profileProduct["img-link-color"]?.find(link => 
+            link.toLowerCase().includes(`-${color.toLowerCase()}`)
+          );
+          if (matchingColorImg) {
+            representImg.src = matchingColorImg;
+          }
+        }
+        else {
+          // Nếu là hình ảnh sản phẩm trực tiếp
+          representImg.src = img.src;
+        }
+      }
+      
     });
   });
 }
@@ -210,36 +233,82 @@ function AddEventbuttonSubmit() {
   if (btnBuyNow) btnBuyNow.addEventListener("click", handleBuyNow);
 }
 function AddImage(proInfor) {
-  AddListImage(proInfor);
   AddImageRepresent(proInfor);
   AddImageColor(proInfor);
+  AddListImage(proInfor); // Di chuyển xuống sau AddImageColor để đảm bảo các elements đã tồn tại
   EditNameProduct(proInfor);
   EditKindOfProduct(proInfor);
   AddButtonToChooseSize(proInfor);
+  
+  // Thêm sự kiện cho hình đại diện
+  const representImg = document.querySelector(".represent");
+  if (representImg) {
+    representImg.addEventListener("click", () => {
+      const verticalImages = document.querySelectorAll(".vertical-image-bar .img-detail");
+      const matchingImage = Array.from(verticalImages).find(img => img.src === representImg.src);
+      if (matchingImage) {
+        verticalImages.forEach(img => img.classList.remove("selected-vertical"));
+        matchingImage.classList.add("selected-vertical");
+      }
+    });
+  }
 }
 function AddListImage(proInfor) {
   const contain = document.querySelector(".vertical-image-bar");
   let htmlImage = ``;
-  // console.log("-----------------------------------------");
-  // console.log(contain);
-  // console.log(proInfor);
+  
+  // Thêm hình ảnh chính
+  htmlImage += `
+    <img
+      class="img-detail selected-vertical"
+      src=${proInfor["img-represent"]}
+      alt=""
+    />
+  `;
+  
+  // Thêm các hình ảnh khác từ danh sách
   proInfor["img-link-list"].forEach((link) => {
     htmlImage += `
-                  <img
-                  class="img-detail"
-                  src=${link}
-                  alt=""
-                />
-                `;
+      <img
+        class="img-detail"
+        src=${link}
+        alt=""
+      />
+    `;
   });
-  htmlImage += `
-                  <img
-                  class="img-detail"
-                  src=${proInfor["img-represent"]}
-                  alt=""
-                />
-  `;
+  
+  
   contain.innerHTML = htmlImage;
+
+  // Thêm sự kiện click cho các hình ảnh trong vertical-image-bar
+  const verticalImages = contain.querySelectorAll(".img-detail");
+  verticalImages.forEach(img => {
+    img.addEventListener("click", () => {
+      // Cập nhật selected cho vertical-image-bar
+      verticalImages.forEach(i => i.classList.remove("selected-vertical"));
+      img.classList.add("selected-vertical");
+      
+      // Cập nhật hình ảnh đại diện
+      const representImg = document.querySelector(".represent");
+      if (representImg) {
+        representImg.src = img.src;
+      }
+      
+      // Nếu hình được click là hình màu, cập nhật chọn màu tương ứng
+      if (proInfor["img-link-color"]?.includes(img.src)) {
+        const colorImgs = document.querySelectorAll(".color .color-img");
+        const indexHyphen = img.src.lastIndexOf("-");
+        const indexDot = img.src.lastIndexOf(".");
+        const color = img.src.slice(indexHyphen + 1, indexDot);
+        
+        colorImgs.forEach(colorImg => {
+          if (colorImg.src.includes(`-${color}`)) {
+            colorImg.click(); // Trigger sự kiện click trên màu tương ứng
+          }
+        });
+      }
+    });
+  });
 }
 function AddButtonToChooseSize(proInfor) {
   const container = document.querySelector(
