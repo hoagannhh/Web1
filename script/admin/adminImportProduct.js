@@ -198,6 +198,7 @@ function bindModalEvents(mode, ordersBody){
       const items = gatherItems();
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
       importProduct.push({id,date,items,status:'pending'});
+      SaveImportProduct();
       renderOrders(importProduct); 
       closeOverlay();
     };
@@ -209,10 +210,12 @@ function bindModalEvents(mode, ordersBody){
       const id = document.getElementById('order-id').value.trim();
       const date = document.getElementById('order-date').value;
       const items = gatherItems();
+      console.log(id + " : " + date + " " + items.length)
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
       if (currentEditIndex !== null) {
         importProduct[currentEditIndex] = { id, date, items, status: importProduct[currentEditIndex].status };
-        renderOrders(ordersBody); closeOverlay();
+        SaveImportProduct();
+        renderOrders(); closeOverlay();
       }
     };
   }
@@ -222,7 +225,10 @@ function bindModalEvents(mode, ordersBody){
       if (currentEditIndex !== null){
         importProduct[currentEditIndex].status = 'completed';
         SaveImportProduct();
-        renderOrders(ordersBody); closeOverlay();
+        SaveCostProduct()
+        SaveInventoryHistory();
+        renderOrders();
+        closeOverlay();
       }
     };
   }
@@ -231,7 +237,47 @@ function bindModalEvents(mode, ordersBody){
   // tìm tất cả các dòng hiện tại trong tbody và bind lại
   Array.from(tbody.querySelectorAll('tr')).forEach(tr => bindItemRow(tr, ordersBody));
 }
+function SaveCostProduct(){
+  let  allproduct = JSON.parse(localStorage.getItem("allProduct"));
+  const cost = document.querySelector(".items__price").value;
+  const productId = document.querySelector(".items__name").value.split(":")[0];
 
+  allproduct.forEach(p => {
+    if (p.id === productId){
+      console.log(12);
+      p.cost = cost;
+    }
+  });
+  console.log(allproduct);
+  localStorage.setItem("allProduct", JSON.stringify(allproduct));
+}
+function SaveInventoryHistory(){
+  const inventoryHistory = JSON.parse(
+    localStorage.getItem("inventoryHistory") || "[]"
+  );
+  const itemSelected = gatherItems();
+  const orderId = document.getElementById("order-id").value;
+  // { productId, name, qty, price };
+  console.log(itemSelected);
+  console.log(orderId);
+  itemSelected.forEach(i => {
+    const historyEntry = {
+      transactionId: `T-${Date.now()}${Math.random()
+        .toString(36)
+        .substr(2, 5)}`,
+      type: "import",
+      productId: i.productId,
+      quantity: Number(i.qty),
+      referenceId: orderId,
+      date: new Date().toISOString(),
+      notes: `Nhập hàng từ phiếu ${orderId}`,
+    };
+    inventoryHistory.push(historyEntry);
+  })
+
+    console.log(inventoryHistory);
+
+}
 
 // hàm xử lý khi mở đóng bảng
 function openOverlay(html){ document.getElementById('modal').innerHTML = html; document.getElementById('overlay').style.display='flex'; }
@@ -247,14 +293,15 @@ function SaveImportProduct(){
 }
 /* ======== Hiển thị danh sách phiếu nhập lên bảng chính  ========*/
 
-function renderOrders(importProduct){
+function renderOrders(arr = importProduct){
   const PAGE_SIZE = 5;
-  const maxPage = Math.ceil(importProduct.length / PAGE_SIZE);
+  console.log(arr)
+  const maxPage = Math.ceil(arr.length / PAGE_SIZE);
   if (currentPage > maxPage) currentPage = maxPage;
 
 
   const start = (currentPage - 1) * PAGE_SIZE;
-  const pageItems = importProduct.slice(start, start + PAGE_SIZE);
+  const pageItems = arr.slice(start, start + PAGE_SIZE);
 
   const ordersBody = document.getElementById("orders-body");
   ordersBody.innerHTML = '';
@@ -335,6 +382,7 @@ function buildOrderForm({mode='add', data=null, readOnly=false}){
   const id = data?.id || `PN${String(importProduct.length+1).padStart(3,'0')}`;
   const date = data?.date || new Date().toISOString().slice(0,10);
   const items = (data?.items||[]).map(it=>({...it}));
+  console.log(items);
   //TRả về HTML của modal
   return `
     <h3>${mode==='add'?'Thêm phiếu nhập': mode==='edit'?'Sửa phiếu nhập': mode==='view'?'Xem chi tiết phiếu nhập':'Hoàn thành phiếu nhập'}</h3>
@@ -364,7 +412,7 @@ function buildOrderForm({mode='add', data=null, readOnly=false}){
         <tbody id="items-tbody">
           ${items.map(it=>`
             <tr>
-              <td><input class="items__name" value="${it.name}" ${readOnly?'disabled':''}></td>
+              <td><input class="items__name" value="${it.productId + ": " + it.name}" ${readOnly?'disabled':''}></td>
               <td><input class="items__qty" type="number" value="${it.qty}" ${readOnly?'disabled':''}></td>
               <td><input class="items__price" type="number" value="${it.price}" ${readOnly?'disabled':''}></td>
               <td class="items__line">${formatMoney(it.qty*it.price)}</td>
