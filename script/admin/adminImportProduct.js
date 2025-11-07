@@ -150,10 +150,12 @@ function bindModalEvents(mode, ordersBody){
   // thêm sản phẩm mới trong modal
   if (addProduct) {
     addProduct.onclick = () => {
+      const uniqueRowId = `row-${Date.now()}-${Math.random().toString(36)}`;
       const tr = document.createElement('tr');
+      tr.id = uniqueRowId;
       tr.innerHTML = `
-        <td><input class="items__name" id ="searchInput" placeholder="Tên sản phẩm">
-        <div class="options-container" id="optionsContainer"></div>
+        <td><input class="items__name" id ="searchInput-${uniqueRowId}" placeholder="Tên sản phẩm">
+        <div class="options-container" id="optionsContainer-${uniqueRowId}"></div>
         </td>
         <td><input class="items__qty" type="number" min="0" value="0"></td>
         <td><input class="items__price" type="number" min="0" value="0"></td>
@@ -163,7 +165,7 @@ function bindModalEvents(mode, ordersBody){
       tbody.appendChild(tr);
       bindItemRow(tr, ordersBody);
       recalcTotal();
-      AddDataToProduct();
+      AddDataToProduct(uniqueRowId);
     };
   }
 
@@ -333,12 +335,18 @@ function SaveInventoryHistory(){
   const inventoryHistory = JSON.parse(
     localStorage.getItem("inventoryHistory") || "[]"
   );
+  const allproduct = JSON.parse(localStorage.getItem("allProduct"));
+
+
   const itemSelected = gatherItems();
   const orderId = document.getElementById("order-id").value;
   // { productId, name, qty, price };
   console.log(itemSelected);
   console.log(orderId);
   itemSelected.forEach(i => {
+    let index = allproduct.findIndex(p => p.id === i.productId);
+    allproduct[index].inventory += Number(i.qty);
+    console.log(allproduct);
     const historyEntry = {
       transactionId: `T-${Date.now()}${Math.random()
         .toString(36)
@@ -353,8 +361,11 @@ function SaveInventoryHistory(){
     inventoryHistory.push(historyEntry);
   })
 
-    console.log(inventoryHistory);
+  console.log(inventoryHistory);
+  console.log(allproduct);
   localStorage.setItem("inventoryHistory", JSON.stringify(inventoryHistory));
+  localStorage.setItem("allProduct", JSON.stringify(allproduct));
+
 }
 
 // hàm xử lý khi mở đóng bảng
@@ -576,14 +587,15 @@ function handleEventButton(ordersBody){
     });
 }
 // filter id hoặc tên theo sản phẩm
-function AddDataToProduct(){
+function AddDataToProduct(rowId){
     let data = JSON.parse(localStorage.getItem("allProduct"));
     data = data.map(pro => pro.id + ": " +pro.name);
     console.log(data);
 
-    const searchInput = document.getElementById('searchInput');
-    const optionsContainer = document.getElementById('optionsContainer');
+    const searchInput = document.getElementById(`searchInput-${rowId}`);
+    const optionsContainer = document.getElementById(`optionsContainer-${rowId}`);  
     
+    const radioGroupName = `product_group_${rowId}`;
     let selectedItem = '';
 
     // Render danh sách options
@@ -597,16 +609,16 @@ function AddDataToProduct(){
       }
 
       optionsContainer.innerHTML = filtered.map((item, index) => `
-        <div class="option-item">
-          <input 
-            type="radio" 
-            id="option-${index}" 
-            name="product"
-            value="${item}"
-            ${selectedItem === item ? 'checked' : ''}
-          >
-          <label for="option-${index}">${item}</label>
-        </div>
+          <div class="option-item">
+            <input 
+              type="radio" 
+              id="option-${rowId}-${index}" 
+              name="${radioGroupName}"  
+              value="${item}"
+              ${selectedItem === item ? 'checked' : ''}
+            >
+            <label for="option-${rowId}-${index}">${item}</label>
+          </div>
       `).join('');
 
       // Thêm sự kiện click cho radio button
@@ -618,7 +630,8 @@ function AddDataToProduct(){
     // Xử lý khi radio button thay đổi
     function handleRadioChange(e) {
       selectedItem = e.target.value;
-      searchInput.value = selectedItem;
+      // Gán giá trị vào đúng input
+      searchInput.value = selectedItem; 
       optionsContainer.classList.remove('show');
     }
 
@@ -630,15 +643,18 @@ function AddDataToProduct(){
     });
 
     // Hiện dropdown khi click vào input
-    searchInput.addEventListener('click', () => {
-      optionsContainer.classList.add('show');
+    searchInput.addEventListener('click', (e) => {
+        // Tải lại các option khi click
+        renderOptions(e.target.value); 
+        optionsContainer.classList.add('show');
     });
+
 
     // Đóng dropdown khi click ra ngoài
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.input-wrapper') && !e.target.closest('.options-container')) {
+      // Đảm bảo không đóng khi click vào chính input này
+      if (optionsContainer != e.target)
         optionsContainer.classList.remove('show');
-      }
     });
 }
 function filterAndRenderOrders(searchTerm) {

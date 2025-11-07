@@ -45,6 +45,7 @@ export function LoadProductPageHaveProduct(products) {
   console.log("complete show product by search3");
 }
 export function LoadAllProductPage() {
+  
   const validProducts = allProducts.filter((p) => p.inventory > 0);
   let htmlProduct = "";
 
