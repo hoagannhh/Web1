@@ -95,7 +95,7 @@ function AddEventButtonChooseSize() {
 }
 function AddEventImgColor() {
   const imgs = document.querySelectorAll(".color .color-img");
-  console.log("imgleng"+imgs.length);
+  console.log("imgleng" + imgs.length);
 
   // Tự động chọn màu đầu tiên làm màu mặc định
   if (imgs.length > 0) {
@@ -131,19 +131,17 @@ function AddEventImgColor() {
         // Nếu là hình màu từ thư mục color
         if (img.src.includes("/color/")) {
           // Tìm hình ảnh tương ứng trong img-link-color của sản phẩm
-          const matchingColorImg = profileProduct["img-link-color"]?.find(link => 
-            link.toLowerCase().includes(`-${color.toLowerCase()}`)
+          const matchingColorImg = profileProduct["img-link-color"]?.find(
+            (link) => link.toLowerCase().includes(`-${color.toLowerCase()}`)
           );
           if (matchingColorImg) {
             representImg.src = matchingColorImg;
           }
-        }
-        else {
+        } else {
           // Nếu là hình ảnh sản phẩm trực tiếp
           representImg.src = img.src;
         }
       }
-      
     });
   });
 }
@@ -180,7 +178,7 @@ function AddEventbuttonSubmit() {
 
     const isChooseSize = !!document.querySelector(".size.size-selected");
     // Không cần kiểm tra màu vì đã có màu mặc định
-    
+
     if (isChooseSize) {
       // Chuẩn bị sản phẩm cho Checkout
       const productToCheckout = {
@@ -217,7 +215,7 @@ function AddEventbuttonSubmit() {
     }
     const isChooseSize = !!document.querySelector(".size.size-selected");
     // Không cần kiểm tra màu vì đã có màu mặc định
-    
+
     if (isChooseSize) {
       alert("Thêm vào giỏ hàng");
       // Logic thêm vào giỏ hàng bình thường
@@ -239,15 +237,21 @@ function AddImage(proInfor) {
   EditNameProduct(proInfor);
   EditKindOfProduct(proInfor);
   AddButtonToChooseSize(proInfor);
-  
+
   // Thêm sự kiện cho hình đại diện
   const representImg = document.querySelector(".represent");
   if (representImg) {
     representImg.addEventListener("click", () => {
-      const verticalImages = document.querySelectorAll(".vertical-image-bar .img-detail");
-      const matchingImage = Array.from(verticalImages).find(img => img.src === representImg.src);
+      const verticalImages = document.querySelectorAll(
+        ".vertical-image-bar .img-detail"
+      );
+      const matchingImage = Array.from(verticalImages).find(
+        (img) => img.src === representImg.src
+      );
       if (matchingImage) {
-        verticalImages.forEach(img => img.classList.remove("selected-vertical"));
+        verticalImages.forEach((img) =>
+          img.classList.remove("selected-vertical")
+        );
         matchingImage.classList.add("selected-vertical");
       }
     });
@@ -256,7 +260,7 @@ function AddImage(proInfor) {
 function AddListImage(proInfor) {
   const contain = document.querySelector(".vertical-image-bar");
   let htmlImage = ``;
-  
+
   // Thêm hình ảnh chính
   htmlImage += `
     <img
@@ -265,7 +269,7 @@ function AddListImage(proInfor) {
       alt=""
     />
   `;
-  
+
   // Thêm các hình ảnh khác từ danh sách
   proInfor["img-link-list"].forEach((link) => {
     htmlImage += `
@@ -276,32 +280,31 @@ function AddListImage(proInfor) {
       />
     `;
   });
-  
-  
+
   contain.innerHTML = htmlImage;
 
   // Thêm sự kiện click cho các hình ảnh trong vertical-image-bar
   const verticalImages = contain.querySelectorAll(".img-detail");
-  verticalImages.forEach(img => {
+  verticalImages.forEach((img) => {
     img.addEventListener("click", () => {
       // Cập nhật selected cho vertical-image-bar
-      verticalImages.forEach(i => i.classList.remove("selected-vertical"));
+      verticalImages.forEach((i) => i.classList.remove("selected-vertical"));
       img.classList.add("selected-vertical");
-      
+
       // Cập nhật hình ảnh đại diện
       const representImg = document.querySelector(".represent");
       if (representImg) {
         representImg.src = img.src;
       }
-      
+
       // Nếu hình được click là hình màu, cập nhật chọn màu tương ứng
       if (proInfor["img-link-color"]?.includes(img.src)) {
         const colorImgs = document.querySelectorAll(".color .color-img");
         const indexHyphen = img.src.lastIndexOf("-");
         const indexDot = img.src.lastIndexOf(".");
         const color = img.src.slice(indexHyphen + 1, indexDot);
-        
-        colorImgs.forEach(colorImg => {
+
+        colorImgs.forEach((colorImg) => {
           if (colorImg.src.includes(`-${color}`)) {
             colorImg.click(); // Trigger sự kiện click trên màu tương ứng
           }
@@ -356,7 +359,7 @@ function AddImageColor(proInfor) {
     });
   }
   colors.insertAdjacentHTML("beforeend", htmlImage);
-  
+
   // colors.innerHTML += ;
 }
 function AddImageRepresent(proInfor) {

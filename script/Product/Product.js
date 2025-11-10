@@ -45,7 +45,6 @@ export function LoadProductPageHaveProduct(products) {
   console.log("complete show product by search3");
 }
 export function LoadAllProductPage() {
-  
   const validProducts = allProducts.filter((p) => p.inventory > 0);
   let htmlProduct = "";
 
@@ -164,7 +163,9 @@ export function HandleEventProduct(allProducts) {
       if (IsAuthenticated) {
         const card = this.closest(".prod-demo");
         const productId = card.dataset.id;
-        const selectedSizeElement = card.querySelector(".size-btn-product.selected");
+        const selectedSizeElement = card.querySelector(
+          ".size-btn-product.selected"
+        );
         const selectedColorElement = card.querySelector(".img-color.selected");
 
         if (selectedSizeElement && selectedColorElement) {
@@ -270,8 +271,12 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
         </div>
         <div class="info-prod">
           <p class="name-prod">${product.name}</p>
-          <p class="atribute-prod">${ConvertIDToCategoryMain(product.category).toString()}</p>
-          <p style="display:block;" class="atribute-prod">${ConvertIDToCategoryOpt(product.category).toString()}</p>
+          <p class="atribute-prod">${ConvertIDToCategoryMain(
+            product.category
+          ).toString()}</p>
+          <p style="display:block;" class="atribute-prod">${ConvertIDToCategoryOpt(
+            product.category
+          ).toString()}</p>
           <p class="price">${ConvertINTtoVND(product.price)}</p>
           <div class="buy-now">
             <button class="buy-now-btn">Buy Now</button>
@@ -324,7 +329,7 @@ function LinkSize(product) {
 }
 function LinkImg(product) {
   let html = "";
-  if (product.hasOwnProperty("img-link-color")){
+  if (product.hasOwnProperty("img-link-color")) {
     product["img-link-color"].forEach((imgLink) => {
       html += `
             <img class="img-color" data-color="${splitString(
@@ -332,12 +337,12 @@ function LinkImg(product) {
             )}" src="${imgLink}" alt="">
           `;
     });
-  }else {
-    product.color.forEach(c =>{
-      html +=  `
+  } else {
+    product.color.forEach((c) => {
+      html += `
             <img class="img-color" data-color="${c}" src="../img/color/${c}.png" alt="">
           `;
-    })
+    });
   }
 
   return html;
@@ -384,15 +389,15 @@ function renderPagination(
 function ConvertINTtoVND(number) {
   return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
 }
-function ConvertIDToCategoryOpt(proCate){
-    // console.log(proCate);
+function ConvertIDToCategoryOpt(proCate) {
+  // console.log(proCate);
   const categories = JSON.parse(localStorage.getItem("categoriesDB"));
-  let temp = []
+  let temp = [];
   // console.log(categories);
   if (categories.length <= 3) return temp;
-  for (let i = 3; i < categories.length; i++){
-    for (let j = 0; j < proCate.length; j++){
-      if (categories[i].id === proCate[j]){
+  for (let i = 3; i < categories.length; i++) {
+    for (let j = 0; j < proCate.length; j++) {
+      if (categories[i].id === proCate[j]) {
         temp.push(categories[i].name);
       }
     }
@@ -400,18 +405,18 @@ function ConvertIDToCategoryOpt(proCate){
   // console.log(temp)
   return temp;
 }
-function ConvertIDToCategoryMain(proCate){
+function ConvertIDToCategoryMain(proCate) {
   // console.log(proCate);
   const categories = JSON.parse(localStorage.getItem("categoriesDB"));
   // console.log(categories);
-  let temp = []
-  for (let i = 0; i < categories.length; i++){
-    for (let j = 0; j < proCate.length; j++){
-      if (categories[i].id === proCate[j] && i < 3){
+  let temp = [];
+  for (let i = 0; i < categories.length; i++) {
+    for (let j = 0; j < proCate.length; j++) {
+      if (categories[i].id === proCate[j] && i < 3) {
         temp.push(categories[i].name);
       }
     }
   }
-    // console.log(temp)
+  // console.log(temp)
   return temp;
 }
