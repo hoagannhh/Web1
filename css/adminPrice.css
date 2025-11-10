@@ -64,7 +64,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 130px;
+  max-height: 170px;
   overflow-y: auto;
 }
 .scro .title-filter {
@@ -96,7 +96,7 @@
   border-radius: 5px;
   padding: 9px 18px;
   cursor: pointer;
-  margin-top: 10%;
+  /* margin-top: 10%; */
 }
 .profit-with-product {
   display: flex;
