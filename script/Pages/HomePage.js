@@ -29,6 +29,8 @@ export const HomeComponent = {
   html: `    <div class="image-demo" id="hero-slideshow">
       <img class="image-demo-d" src="../img/demo/demo.png" />
       <button class="overlay-btn">More</button>
+      <button class="slide-nav-btn prev" data-direction="prev">&lt;</button>
+      <button class="slide-nav-btn next" data-direction="next">&gt;</button>
     </div>
 
     <div class="introduct">
@@ -168,64 +170,76 @@ function LoadProductDetail() {
     });
   });
 }
+
 function setupHeroSlideshow() {
   const container = document.getElementById("hero-slideshow");
-  // Kiểm tra xem element có tồn tại không
-  if (!container) {
-    console.warn("Không tìm thấy #hero-slideshow");
-    return;
-  }
+  if (!container) return;
 
   const imgElement = container.querySelector(".image-demo-d");
-  if (!imgElement) return;
+  const navButtons = container.querySelectorAll(".slide-nav-btn");
+  if (!imgElement || navButtons.length === 0) return;
 
-  // 1. DANH SÁCH ẢNH ĐỂ ĐỔI
-  // (Hãy thay bằng đường dẫn ảnh thật của bạn)
-  const images = [
-    "../img/demo/demo.png", // Ảnh đầu tiên (có sẵn trong HTML)
-    "../img/demo/demo-home2.png", // Ảnh thứ hai (lấy từ demo khác của bạn)
-    "../img/demo/demo-home1.png", // Ảnh thứ ba (lấy từ demo khác của bạn)
+  const slides = [
+    { img: "../img/demo/demo.png", className: "slide-bg-1" },
+    { img: "../img/demo/demo-home2.png", className: "slide-bg-2" },
+    { img: "../img/demo/demo-home1.png", className: "slide-bg-3" },
   ];
 
   let currentIndex = 0;
-  let slideTimer; // Biến để lưu trữ bộ đếm thời gian
+  let slideTimer;
 
-  // 2. HÀM ĐỂ HIỂN THỊ ẢNH TIẾP THEO
-  function showNextImage() {
-    // Tăng chỉ số, quay về 0 nếu hết mảng
-    currentIndex = (currentIndex + 1) % images.length;
+  // 1. TẠO HÀM ĐIỀU KHIỂN CHUNG
+  function showSlide(direction) {
+    // Xóa class nền cũ
+    container.classList.remove(slides[currentIndex].className);
 
-    // Hiệu ứng mờ đi
+    // Tính toán index mới
+    if (direction === "next") {
+      currentIndex = (currentIndex + 1) % slides.length;
+    } else if (direction === "prev") {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    }
+    // (Nếu direction không phải 'next' hay 'prev' thì index không đổi)
+
+    const currentSlide = slides[currentIndex];
+
+    // Hiệu ứng mờ
     imgElement.style.opacity = 0;
 
-    // Đợi 0.5s (bằng thời gian transition) rồi mới đổi ảnh và hiện lên
+    // Đợi hiệu ứng chạy xong
     setTimeout(() => {
-      imgElement.src = images[currentIndex];
-      // Hiệu ứng hiện ra
+      imgElement.src = currentSlide.img;
       imgElement.style.opacity = 1;
-    }, 500); // 500ms = 0.5s (phải khớp với CSS)
+      // Thêm class nền mới
+      container.classList.add(currentSlide.className);
+    }, 500); // 500ms (phải khớp với CSS transition)
   }
 
-  //HÀM ĐỂ BẮT ĐẦU VÀ RESET TIMER
+  // 2. CẬP NHẬT HÀM START TIMER
   function startTimer() {
-    // Xóa timer cũ
     clearInterval(slideTimer);
-    // Đặt timer mới, đổi ảnh sau 5 giây
-    slideTimer = setInterval(showNextImage, 5000); // 5000ms = 5 giây
+    // Timer sẽ tự động gọi "next"
+    slideTimer = setInterval(() => showSlide("next"), 5000); // 5 giây
   }
 
-  // 4. THÊM SỰ KIỆN CLICK
-  container.addEventListener("click", (e) => {
-    //Nếu click vào nút "More", thì không đổi ảnh
-    if (e.target.classList.contains("overlay-btn")) {
-      return;
-    }
+  // 3. THÊM SỰ KIỆN CLICK CHO 2 NÚT MỚI
+  navButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      // Ngăn sự kiện click lan ra ngoài (nếu có)
+      e.stopPropagation();
 
-    // click
-    showNextImage();
-    // Khởi động lại timer
-    startTimer();
+      const direction = button.getAttribute("data-direction"); // "prev" hoặc "next"
+      showSlide(direction); // Gọi hàm
+      startTimer(); // Reset lại timer mỗi khi click
+    });
   });
 
-  startTimer();
+  // 4. XÓA SỰ KIỆN CLICK CŨ
+  // HOÀN TOÀN XÓA `container.addEventListener("click", ...)` CŨ ĐI
+  // Chúng ta không cần nó nữa vì đã có 2 nút chuyên dụng.
+  // Sự kiện click của nút "More" đã được hàm `AddEventForOverlayButtonMore` xử lý riêng.
+
+  // 5. KHỞI CHẠY
+  container.classList.add(slides[currentIndex].className); // Thêm class cho ảnh đầu
+  startTimer(); // Bắt đầu tự động chạy
 }
