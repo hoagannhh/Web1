@@ -26,8 +26,8 @@ async function loadProductData() {
 }
 
 export const HomeComponent = {
-  html: `    <div class="image-demo">
-      <img class="image-demo-d" src="../img/demo.png" />
+  html: `    <div class="image-demo" id="hero-slideshow">
+      <img class="image-demo-d" src="../img/demo/demo.png" />
       <button class="overlay-btn">More</button>
     </div>
 
@@ -76,6 +76,7 @@ export const HomeComponent = {
   css: `../css/home.css`,
   init: function () {
     AddEventForOverlayButtonMore();
+    setupHeroSlideshow();
   },
 };
 function AddEventForOverlayButtonMore() {
@@ -166,4 +167,65 @@ function LoadProductDetail() {
       ProductDetail.HandleEvent(product);
     });
   });
+}
+function setupHeroSlideshow() {
+  const container = document.getElementById("hero-slideshow");
+  // Kiểm tra xem element có tồn tại không
+  if (!container) {
+    console.warn("Không tìm thấy #hero-slideshow");
+    return;
+  }
+
+  const imgElement = container.querySelector(".image-demo-d");
+  if (!imgElement) return;
+
+  // 1. DANH SÁCH ẢNH ĐỂ ĐỔI
+  // (Hãy thay bằng đường dẫn ảnh thật của bạn)
+  const images = [
+    "../img/demo/demo.png", // Ảnh đầu tiên (có sẵn trong HTML)
+    "../img/demo/demo-home2.png", // Ảnh thứ hai (lấy từ demo khác của bạn)
+    "../img/demo/demo-home1.png", // Ảnh thứ ba (lấy từ demo khác của bạn)
+  ];
+
+  let currentIndex = 0;
+  let slideTimer; // Biến để lưu trữ bộ đếm thời gian
+
+  // 2. HÀM ĐỂ HIỂN THỊ ẢNH TIẾP THEO
+  function showNextImage() {
+    // Tăng chỉ số, quay về 0 nếu hết mảng
+    currentIndex = (currentIndex + 1) % images.length;
+
+    // Hiệu ứng mờ đi
+    imgElement.style.opacity = 0;
+
+    // Đợi 0.5s (bằng thời gian transition) rồi mới đổi ảnh và hiện lên
+    setTimeout(() => {
+      imgElement.src = images[currentIndex];
+      // Hiệu ứng hiện ra
+      imgElement.style.opacity = 1;
+    }, 500); // 500ms = 0.5s (phải khớp với CSS)
+  }
+
+  //HÀM ĐỂ BẮT ĐẦU VÀ RESET TIMER
+  function startTimer() {
+    // Xóa timer cũ
+    clearInterval(slideTimer);
+    // Đặt timer mới, đổi ảnh sau 5 giây
+    slideTimer = setInterval(showNextImage, 5000); // 5000ms = 5 giây
+  }
+
+  // 4. THÊM SỰ KIỆN CLICK
+  container.addEventListener("click", (e) => {
+    //Nếu click vào nút "More", thì không đổi ảnh
+    if (e.target.classList.contains("overlay-btn")) {
+      return;
+    }
+
+    // click
+    showNextImage();
+    // Khởi động lại timer
+    startTimer();
+  });
+
+  startTimer();
 }
