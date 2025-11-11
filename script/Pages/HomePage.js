@@ -26,7 +26,7 @@ async function loadProductData() {
 }
 
 export const HomeComponent = {
-  html: `    <div class="image-demo" id="hero-slideshow">
+  html: `   <div class="image-demo" id="hero-slideshow">
       <img class="image-demo-d" src="../img/demo/demo.png" />
       <button class="overlay-btn">More</button>
       <button class="slide-nav-btn prev" data-direction="prev">&lt;</button>
@@ -51,19 +51,20 @@ export const HomeComponent = {
       </div>
     </div>
 
-    <div class="image-demo">
-      <img class="image-demo-d" src="../img/demo2.png" />
+    <div class="image-demo-2">
+      <img class="image-demo-d-2" src="../img/demo2.png" />
       <button class="overlay-btn">Kid</button>
     </div>
 
-    <div class="image-demo in-3-4">
-      <div class="image-demo in-3">
+    <div class="image-demo-2 in-3-4">
+      <div class="image-demo-2 in-3">
         <img class="image-demo-d3" src="../img/demo3.png" />
         <button class="overlay-btn btn-in-3">Men's</button>
       </div>
-      <div class="image-demo in-4">
+      <div class="image-demo-2 in-4">
         <img class="image-demo-d4" src="../img/demo4.png" />
-        <button class="overlay-btn bnt-in-4">Women's</button>
+        <!-- Đã sửa bnt-in-4 thành btn-in-4 -->
+        <button class="overlay-btn btn-in-4">Women's</button>
       </div>
     </div>
 

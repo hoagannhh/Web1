@@ -57,6 +57,56 @@
   background-color: white;
   transform: translateY(-50%) scale(1.1);
 }
+.image-demo-2 {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  /* Thêm margin-top để tách biệt với phần tử bên trên */
+  margin-top: 48px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 2. Style cho ảnh "Kid" (.image-demo-d-2) (dựa trên .image-demo-d cũ) */
+.image-demo-d-2 {
+  width: 100%;
+  object-fit: cover; /* Thêm cái này để ảnh lấp đầy khung */
+}
+
+/* 3. Style cho các nút .overlay-btn bên trong .image-demo-2 */
+/* (Dựa trên .image-demo .overlay-btn cũ) */
+.image-demo-2 .overlay-btn {
+  display: none;
+  position: absolute;
+  top: 80%;
+  left: 45%;
+  z-index: 1;
+  padding: 8px 35.2px;
+  background-color: rgba(255, 255, 255, 0.6);
+  color: rgb(0, 0, 0);
+  border-style: solid;
+  border-color: #000000;
+  border-width: 1.6px;
+  border-radius: 3.2px;
+  box-shadow: 0px 3.2px 4.8px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: transform 0.2s ease;
+}
+
+/* 4. Hiển thị nút khi hover vào .image-demo-2 */
+.image-demo-2:hover .overlay-btn {
+  display: block;
+  z-index: 1;
+}
 
 .slide-nav-btn.prev {
   left: 20px;
