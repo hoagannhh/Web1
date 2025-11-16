@@ -66,6 +66,10 @@ export const AdminImportProduct = {
             />
           </div>
           
+          <button class="btn" id="btn-reset-filter" style="background: #f0f0f0; color: #333;">
+            ↻ Reset
+          </button>
+          
           <button class="btn add" id="btn-add-order">
             + Thêm phiếu nhập
           </button>
@@ -133,11 +137,9 @@ export const AdminImportProduct = {
     HandleEventPagenation();
  
 
-
     handleEventInTable(ordersBody);
     // Thêm các sự kiên cancel confirm 1 form
     handleEventButton();
-
 
     const searchInput = document.getElementById("search-input");
     if (searchInput) {
@@ -163,6 +165,12 @@ export const AdminImportProduct = {
         filterState.maxPrice = e.target.value ? Number(e.target.value) : null;
         applyFilters();
       });
+    }
+
+    // Thêm event cho nút reset filter
+    const resetBtn = document.getElementById("btn-reset-filter");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", resetFilters);
     }
   }
 };
@@ -248,7 +256,7 @@ function bindModalEvents(mode, ordersBody){
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
       importProduct.push({id,date,items,status:'pending'});
       SaveImportProduct();
-      renderOrders(importProduct); 
+      applyFilters(); 
       closeOverlay();
     };
   }
@@ -264,7 +272,8 @@ function bindModalEvents(mode, ordersBody){
       if (currentEditIndex !== null) {
         importProduct[currentEditIndex] = { id, date, items, status: importProduct[currentEditIndex].status };
         SaveImportProduct();
-        renderOrders(); closeOverlay();
+        applyFilters();
+        closeOverlay();
       }
     };
   }
@@ -276,7 +285,7 @@ function bindModalEvents(mode, ordersBody){
         SaveImportProduct();
         SaveCostProduct()
         SaveInventoryHistory();
-        renderOrders();
+        applyFilters();
         closeOverlay();
       }
     };
@@ -497,9 +506,41 @@ function HandleEventPagenation(){
         if (!sp) return;
         const p = sp.dataset.page;
         if (!p) return;
+        
+        // Lấy dữ liệu hiện tại đang được hiển thị (đã lọc)
+        let filteredOrders = importProduct;
+        
+        // Áp dụng lại các bộ lọc tìm kiếm
+        if (filterState.searchTerm && filterState.searchTerm.trim()) {
+          const term = filterState.searchTerm.toLowerCase().trim();
+          filteredOrders = filteredOrders.filter(
+            (o) =>
+              o.id.toLowerCase().includes(term) ||
+              o.date.includes(term) ||
+              (o.status === "completed" ? "hoàn thành" : "nhập").includes(term)
+          );
+        }
+
+        // Áp dụng lại bộ lọc giá
+        if (filterState.minPrice !== null || filterState.maxPrice !== null) {
+          filteredOrders = filteredOrders.filter((order) => {
+            const totalValue = getTotalValue(order);
+            
+            if (filterState.minPrice !== null && totalValue < filterState.minPrice) {
+              return false;
+            }
+            
+            if (filterState.maxPrice !== null && totalValue > filterState.maxPrice) {
+              return false;
+            }
+            
+            return true;
+          });
+        }
+        
         const PAGE_SIZE = 5;
-        const pageCount = Math.max(1, Math.ceil(importProduct.length / PAGE_SIZE));
-        console.log(p);
+        const pageCount = Math.max(1, Math.ceil(filteredOrders.length / PAGE_SIZE));
+        
         if (p === "prev") {
           if (currentPage > 1) currentPage--;
         } else if (p === "next") {
@@ -507,7 +548,9 @@ function HandleEventPagenation(){
         } else {
           currentPage = +p;
         }
-        renderOrders(importProduct);
+        
+        // Render bảng với dữ liệu đã lọc
+        renderOrders(filteredOrders);
       });
     }
 }
@@ -626,7 +669,7 @@ function handleEventButton(ordersBody){
       if(currentDeleteIndex!==null){ 
         importProduct.splice(currentDeleteIndex,1); 
         SaveImportProduct();
-        renderOrders(importProduct); 
+        applyFilters(); 
       }
 
       closeDelete();
@@ -743,7 +786,23 @@ function applyFilters() {
   renderOrders(filteredOrders);
 }
 
-// Sửa lại hàm filterAndRenderOrders cũ (có thể xóa vì đã thay thế bằng applyFilters)
-// function filterAndRenderOrders(searchTerm) {
-//   ... (có thể xóa)
-// }
+/* ======= Hàm reset tất cả các bộ lọc ======= */
+function resetFilters() {
+  // Reset state
+  filterState.searchTerm = '';
+  filterState.minPrice = null;
+  filterState.maxPrice = null;
+  currentPage = 1;
+
+  // Reset các input
+  const searchInput = document.getElementById("search-input");
+  const minPriceInput = document.getElementById("min-price-filter");
+  const maxPriceInput = document.getElementById("max-price-filter");
+
+  if (searchInput) searchInput.value = '';
+  if (minPriceInput) minPriceInput.value = '';
+  if (maxPriceInput) maxPriceInput.value = '';
+
+  // Render lại toàn bộ bảng
+  renderOrders(importProduct);
+}
