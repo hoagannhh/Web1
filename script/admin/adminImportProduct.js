@@ -1,9 +1,9 @@
 /*Demo data*/
-let importProduct = JSON.parse(localStorage.getItem("productImport"));
 let currentEditIndex = null;
 let currentDeleteIndex = null;
 let currentPage = 1;
 let allCategories = [];
+let importProduct = null; // Khai báo biến global để lưu reference
 
 // Thêm state để lưu các bộ lọc
 let filterState = {
@@ -39,7 +39,7 @@ export const AdminImportProduct = {
             "
           >
             <div style="color: var(--muted)">Danh sách phiếu nhập</div>
-            <div style="display: flex; gap: 12px; align-items: center">
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
             
             <input
             type="text"
@@ -47,6 +47,29 @@ export const AdminImportProduct = {
             placeholder="Tìm theo ID, Ngày hoặc Trạng thái..."
             style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;"
         />
+        
+        <div style="display: flex; gap: 8px; align-items: center">
+          <input
+            type="number"
+            id="min-price-filter"
+            placeholder="Giá tối thiểu"
+            min="0"
+            style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 120px;"
+          />
+          <span>-</span>
+          <input
+            type="number"
+            id="max-price-filter"
+            placeholder="Giá tối đa"
+            min="0"
+            style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 120px;"
+          />
+        </div>
+        
+        <button class="btn" id="btn-reset-filter" style="background: #f0f0f0; color: #333;">
+          ↻ Reset
+        </button>
+              
               <button class="btn add" id="btn-add-order">
                 + Thêm phiếu nhập
               </button>
@@ -106,6 +129,9 @@ export const AdminImportProduct = {
   css: `../css/adminImportProduct.css`,
   canDeleteCss: true,
   init: function(){
+    // Khởi tạo importProduct từ localStorage
+    importProduct = JSON.parse(localStorage.getItem("productImport"));
+    
     const ordersBody = document.getElementById('orders-body');
     
     //render các sản phẩm ra màn hình
@@ -114,11 +140,9 @@ export const AdminImportProduct = {
     HandleEventPagenation();
  
 
-
     handleEventInTable(ordersBody);
     // Thêm các sự kiên cancel confirm 1 form
     handleEventButton();
-
 
     const searchInput = document.getElementById("search-input");
     if (searchInput) {
@@ -144,6 +168,12 @@ export const AdminImportProduct = {
         filterState.maxPrice = e.target.value ? Number(e.target.value) : null;
         applyFilters();
       });
+    }
+
+    // Thêm event cho nút reset filter
+    const resetBtn = document.getElementById("btn-reset-filter");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", resetFilters);
     }
   }
 };
@@ -229,7 +259,7 @@ function bindModalEvents(mode, ordersBody){
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
       importProduct.push({id,date,items,status:'pending'});
       SaveImportProduct();
-      renderOrders(importProduct); 
+      applyFilters(); 
       closeOverlay();
     };
   }
@@ -245,7 +275,8 @@ function bindModalEvents(mode, ordersBody){
       if (currentEditIndex !== null) {
         importProduct[currentEditIndex] = { id, date, items, status: importProduct[currentEditIndex].status };
         SaveImportProduct();
-        renderOrders(); closeOverlay();
+        applyFilters();
+        closeOverlay();
       }
     };
   }
@@ -257,7 +288,7 @@ function bindModalEvents(mode, ordersBody){
         SaveImportProduct();
         SaveCostProduct()
         SaveInventoryHistory();
-        renderOrders();
+        applyFilters();
         closeOverlay();
       }
     };
@@ -303,51 +334,57 @@ function ConvertToPrice(product) {
 
   // 2. Lấy thông tin cơ bản
   const costPrice = product.cost || 0;
-  let profitPercentage = profitRules.defaultCategoryProfit || 0; // Mặc định là 0%
+  let profitPercentage;
+  if (profitRules) {
+    profitPercentage = profitRules.defaultCategoryProfit || 0; // Mặc định là 0%}
+  } else {
+    profitPercentage = 0;
+  }
+
+  console.log(profitPercentage);
 
   // 3. Logic xác định lợi nhuận (Ưu tiên)
-  
+
   // Ưu tiên 1: Kiểm tra quy tắc lợi nhuận riêng theo ID sản phẩm
-  if (profitRules.productSpecific[product.id]) {
-    profitPercentage = profitRules.productSpecific[product.id];
-  } 
-  
-  // Ưu tiên 2: Kiểm tra quy tắc theo category (nếu không có quy tắc riêng)
-  else if (product.category && product.category.length > 0) {
-    
-    let mainCategoryProfit = null; // Lợi nhuận loại chính (Men's, Women's...)
-    let subCategoryProfit = null;  // Lợi nhuận loại phụ (Mua Thu, Mua Xuan...)
-    
-    // Duyệt qua tất cả các ID category của sản phẩm
-    for (const catId of product.category) {
-      const category = categoriesMap.get(catId); // Lấy thông tin category
-      
-      // Kiểm tra xem category này có tồn tại và có quy tắc trong profitRules không
-      if (category && profitRules.category.hasOwnProperty(category.id)) {
-        
-        const ruleProfit = profitRules.category[category.id];
-        
-        if (category.manageable === true) {
-          // Đây là loại PHỤ (manageable: true)
-          // Chỉ lấy quy tắc của loại phụ ĐẦU TIÊN tìm thấy
-          if (subCategoryProfit === null) {
-            subCategoryProfit = ruleProfit;
+  if (profitRules) {
+    if (profitRules.productSpecific[product.id]) {
+      profitPercentage = profitRules.productSpecific[product.id];
+    }
+    // Ưu tiên 2: Kiểm tra quy tắc theo category (nếu không có quy tắc riêng)
+    else if (product.category && product.category.length > 0) {
+      let mainCategoryProfit = null; // Lợi nhuận loại chính (Men's, Women's...)
+      let subCategoryProfit = null; // Lợi nhuận loại phụ (Mua Thu, Mua Xuan...)
+
+      // Duyệt qua tất cả các ID category của sản phẩm
+      for (const catId of product.category) {
+        const category = categoriesMap.get(catId); // Lấy thông tin category
+
+        // Kiểm tra xem category này có tồn tại và có quy tắc trong profitRules không
+        if (category && profitRules.category.hasOwnProperty(category.id)) {
+          const ruleProfit = profitRules.category[category.id];
+
+          if (category.manageable === true) {
+            // Đây là loại PHỤ (manageable: true)
+            // Chỉ lấy quy tắc của loại phụ ĐẦU TIÊN tìm thấy
+            if (subCategoryProfit === null) {
+              subCategoryProfit = ruleProfit;
+            }
+          } else if (category.manageable === false) {
+            // Đây là loại CHÍNH (manageable: false)
+            mainCategoryProfit = ruleProfit;
           }
-        } else if (category.manageable === false) {
-          // Đây là loại CHÍNH (manageable: false)
-          mainCategoryProfit = ruleProfit;
         }
       }
-    }
-    
-    // Áp dụng quy tắc ưu tiên:
-    // 1. Lấy lợi nhuận loại PHỤ, NẾU nó khác 0.
-    // 2. Nếu không, lấy lợi nhuận loại CHÍNH.
-    // 3. Nếu cả hai đều là 0 hoặc null, giữ nguyên % mặc định.
-    if (subCategoryProfit !== null && subCategoryProfit !== 0) {
-      profitPercentage = subCategoryProfit;
-    } else if (mainCategoryProfit !== null) {
-      profitPercentage = mainCategoryProfit;
+
+      // Áp dụng quy tắc ưu tiên:
+      // 1. Lấy lợi nhuận loại PHỤ, NẾU nó khác 0.
+      // 2. Nếu không, lấy lợi nhuận loại CHÍNH.
+      // 3. Nếu cả hai đều là 0 hoặc null, giữ nguyên % mặc định.
+      if (subCategoryProfit !== null && subCategoryProfit !== 0) {
+        profitPercentage = subCategoryProfit;
+      } else if (mainCategoryProfit !== null) {
+        profitPercentage = mainCategoryProfit;
+      }
     }
   }
   
@@ -363,7 +400,6 @@ function SaveInventoryHistory(){
     localStorage.getItem("inventoryHistory") || "[]"
   );
   const allproduct = JSON.parse(localStorage.getItem("allProduct"));
-
 
   const itemSelected = gatherItems();
   const orderId = document.getElementById("order-id").value;
@@ -402,19 +438,17 @@ function closeOverlay(){ document.getElementById('overlay').style.display='none'
 function openDelete(i ){ currentDeleteIndex=i; document.getElementById('overlay-delete').style.display='flex'; }
 function closeDelete(){ document.getElementById('overlay-delete').style.display='none'; currentDeleteIndex=null; }
 
-
 //save
 function SaveImportProduct(){
   localStorage.setItem("productImport", JSON.stringify(importProduct));
 }
-/* ======== Hiển thị danh sách phiếu nhập lên bảng chính  ========*/
 
+/* ======== Hiển thị danh sách phiếu nhập lên bảng chính  ========*/
 function renderOrders(arr = importProduct){
   const PAGE_SIZE = 5;
   console.log(arr)
   const maxPage = Math.ceil(arr.length / PAGE_SIZE);
   if (currentPage > maxPage) currentPage = maxPage;
-
 
   const start = (currentPage - 1) * PAGE_SIZE;
   const pageItems = arr.slice(start, start + PAGE_SIZE);
@@ -451,16 +485,17 @@ function renderOrders(arr = importProduct){
 
   renderPagination(maxPage);
 }
+
 // =================== HÀM phân trang =======================
 function renderPagination(maxPage) {
-    // lấy element khi cần để tránh lỗi TDZ (pagination có thể được truy cập trước khi biến được khởi tạo)
     const pagination = document.getElementById("pagination");
     if (!pagination) return;
-    // nếu chỉ 1 trang thì ẩn phân trang
+    
     if (maxPage <= 1) {
       pagination.innerHTML = "";
       return;
     }
+    
     let html = `<span data-page="prev">&lt;</span>`;
     for (let i = 1; i <= maxPage; i++) {
       html += `<span data-page="${i}" class="${
@@ -470,6 +505,7 @@ function renderPagination(maxPage) {
     html += `<span data-page="next">&gt;</span>`;
     pagination.innerHTML = html;
 }
+
 function HandleEventPagenation(){
     const paginationEl = document.getElementById("pagination");
     if (paginationEl) {
@@ -478,9 +514,41 @@ function HandleEventPagenation(){
         if (!sp) return;
         const p = sp.dataset.page;
         if (!p) return;
+        
+        // Lấy dữ liệu hiện tại đang được hiển thị (đã lọc)
+        let filteredOrders = importProduct;
+        
+        // Áp dụng lại các bộ lọc tìm kiếm
+        if (filterState.searchTerm && filterState.searchTerm.trim()) {
+          const term = filterState.searchTerm.toLowerCase().trim();
+          filteredOrders = filteredOrders.filter(
+            (o) =>
+              o.id.toLowerCase().includes(term) ||
+              o.date.includes(term) ||
+              (o.status === "completed" ? "hoàn thành" : "nhập").includes(term)
+          );
+        }
+
+        // Áp dụng lại bộ lọc giá
+        if (filterState.minPrice !== null || filterState.maxPrice !== null) {
+          filteredOrders = filteredOrders.filter((order) => {
+            const totalValue = getTotalValue(order);
+            
+            if (filterState.minPrice !== null && totalValue < filterState.minPrice) {
+              return false;
+            }
+            
+            if (filterState.maxPrice !== null && totalValue > filterState.maxPrice) {
+              return false;
+            }
+            
+            return true;
+          });
+        }
+        
         const PAGE_SIZE = 5;
-        const pageCount = Math.max(1, Math.ceil(importProduct.length / PAGE_SIZE));
-        console.log(p);
+        const pageCount = Math.max(1, Math.ceil(filteredOrders.length / PAGE_SIZE));
+        
         if (p === "prev") {
           if (currentPage > 1) currentPage--;
         } else if (p === "next") {
@@ -488,7 +556,8 @@ function HandleEventPagenation(){
         } else {
           currentPage = +p;
         }
-        renderOrders(importProduct);
+        
+        renderOrders(filteredOrders);
       });
     }
 }
@@ -607,12 +676,13 @@ function handleEventButton(ordersBody){
       if(currentDeleteIndex!==null){ 
         importProduct.splice(currentDeleteIndex,1); 
         SaveImportProduct();
-        renderOrders(importProduct); 
+        applyFilters(); 
       }
 
       closeDelete();
     });
 }
+
 // filter id hoặc tên theo sản phẩm
 function AddDataToProduct(rowId){
     let data = JSON.parse(localStorage.getItem("allProduct"));
@@ -662,7 +732,6 @@ function AddDataToProduct(rowId){
       optionsContainer.classList.remove('show');
     }
 
-
     // Xử lý tìm kiếm
     searchInput.addEventListener('input', (e) => {
       renderOptions(e.target.value);
@@ -676,7 +745,6 @@ function AddDataToProduct(rowId){
         optionsContainer.classList.add('show');
     });
 
-
     // Đóng dropdown khi click ra ngoài
     document.addEventListener('click', (e) => {
       // Đảm bảo không đóng khi click vào chính input này
@@ -684,6 +752,7 @@ function AddDataToProduct(rowId){
         optionsContainer.classList.remove('show');
     });
 }
+
 function getTotalValue(order) {
   return order.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
 }
@@ -724,7 +793,24 @@ function applyFilters() {
   renderOrders(filteredOrders);
 }
 
-// Sửa lại hàm filterAndRenderOrders cũ (có thể xóa vì đã thay thế bằng applyFilters)
-// function filterAndRenderOrders(searchTerm) {
-//   ... (có thể xóa)
-// }
+/* ======= Hàm reset tất cả các bộ lọc ======= */
+function resetFilters() {
+  // Reset state
+  filterState.searchTerm = '';
+  filterState.minPrice = null;
+  filterState.maxPrice = null;
+  currentPage = 1;
+
+  // Reset các input
+  const searchInput = document.getElementById("search-input");
+  const minPriceInput = document.getElementById("min-price-filter");
+  const maxPriceInput = document.getElementById("max-price-filter");
+
+  if (searchInput) searchInput.value = '';
+  if (minPriceInput) minPriceInput.value = '';
+  if (maxPriceInput) maxPriceInput.value = '';
+
+  // Render lại toàn bộ bảng
+  renderOrders(importProduct);
+}
+
