@@ -4,97 +4,124 @@ let currentEditIndex = null;
 let currentDeleteIndex = null;
 let currentPage = 1;
 let allCategories = [];
+
+// Thêm state để lưu các bộ lọc
+let filterState = {
+  searchTerm: '',
+  minPrice: null,
+  maxPrice: null
+};
+
 export const AdminImportProduct = {
   html: `
-      <main class="admin-container">
-        <div class="header">
-          <div class="left-header">
-            <div><p>ImportProduct</p></div>
-          </div>
-          <div class="right-header">
-            <div class="admin-account">
-              <button class="admin-account-btn">
-                <img src="../img/goku.jpg" alt="" class="admin-avatar" />
-                <p style="color: black">Trần Chính Thành</p>
-              </button>
-            </div>
-          </div>
+  <main class="admin-container">
+    <div class="header">
+      <div class="left-header">
+        <div><p>ImportProduct</p></div>
+      </div>
+      <div class="right-header">
+        <div class="admin-account">
+          <button class="admin-account-btn">
+            <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+            <p style="color: black">Trần Chính Thành</p>
+          </button>
         </div>
+      </div>
+    </div>
 
-        <section class="panel">
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 12px;
-            "
-          >
-            <div style="color: var(--muted)">Danh sách phiếu nhập</div>
-            <div style="display: flex; gap: 12px; align-items: center">
-            
-            <input
+    <section class="panel">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 12px;
+        "
+      >
+        <div style="color: var(--muted)">Danh sách phiếu nhập</div>
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
+        
+          <input
             type="text"
             id="search-input"
             placeholder="Tìm theo ID, Ngày hoặc Trạng thái..."
             style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;"
-        />
-              <button class="btn add" id="btn-add-order">
-                + Thêm phiếu nhập
-              </button>
-            </div>
+          />
+          
+          <div style="display: flex; gap: 8px; align-items: center">
+            <input
+              type="number"
+              id="min-price-filter"
+              placeholder="Giá tối thiểu"
+              min="0"
+              style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 120px;"
+            />
+            <span>-</span>
+            <input
+              type="number"
+              id="max-price-filter"
+              placeholder="Giá tối đa"
+              min="0"
+              style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 120px;"
+            />
           </div>
-
-          <div style="overflow: auto">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 180px; border-radius: 0%; border-top-left-radius: 15px;">ID</th>
-                  <th style="width: 180px; border-radius: 0%;">Date</th>
-                  <th style="width: 180px; border-radius: 0%;">Total quantity</th>
-                  <th style="width: 180px; border-radius: 0%;">Total value</th>
-                  <th style="width: 180px; border-radius: 0%;">Status</th>
-                  <th style="width: 180px; text-align:center; border-radius: 0%; border-top-right-radius: 15px;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="orders-body">
-                <!-- thêm dòng -->
-              </tbody>
-            </table>
-          </div>
-
-          <div class="pagination" id="pagination"></div>
-        </section>
-      </main>
-      
-    </div>
-
-    <!--Modal: Thêm / Sửa / Xem / Hoàn thành -->
-    <div class="overlay" id="overlay">
-      <div class="modal" id="modal"></div>
-    </div>
-
-    <!-- Xác nhận xóa -->
-    <div class="overlay" id="overlay-delete">
-      <div class="modal confirm" id="modal-delete">
-        <h3 style="color: var(--danger); margin-bottom: 6px">Xóa phiếu nhập</h3>
-        <p>
-          Bạn có chắc chắn muốn xóa vĩnh viễn phiếu nhập này? Hành động này
-          không thể hoàn tác.
-        </p>
-        <div
-          style="
-            margin-top: 12px;
-            display: flex;
-            gap: 8px;
-            justify-content: flex-end;
-          "
-        >
-          <button class="btn" id="del-cancel">Hủy</button>
-          <button class="btn delete" id="del-confirm">Xác nhận Xóa</button>
+          
+          <button class="btn add" id="btn-add-order">
+            + Thêm phiếu nhập
+          </button>
         </div>
       </div>
-  `,
+
+      <div style="overflow: auto">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 180px; border-radius: 0%; border-top-left-radius: 15px;">ID</th>
+              <th style="width: 180px; border-radius: 0%;">Date</th>
+              <th style="width: 180px; border-radius: 0%;">Total quantity</th>
+              <th style="width: 180px; border-radius: 0%;">Total value</th>
+              <th style="width: 180px; border-radius: 0%;">Status</th>
+              <th style="width: 180px; text-align:center; border-radius: 0%; border-top-right-radius: 15px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="orders-body">
+            <!-- thêm dòng -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    </section>
+  </main>
+  
+</div>
+
+<!--Modal: Thêm / Sửa / Xem / Hoàn thành -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- Xác nhận xóa -->
+<div class="overlay" id="overlay-delete">
+  <div class="modal confirm" id="modal-delete">
+    <h3 style="color: var(--danger); margin-bottom: 6px">Xóa phiếu nhập</h3>
+    <p>
+      Bạn có chắc chắn muốn xóa vĩnh viễn phiếu nhập này? Hành động này
+      không thể hoàn tác.
+    </p>
+    <div
+      style="
+        margin-top: 12px;
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+      "
+    >
+      <button class="btn" id="del-cancel">Hủy</button>
+      <button class="btn delete" id="del-confirm">Xác nhận Xóa</button>
+    </div>
+  </div>
+`,
   css: `../css/adminImportProduct.css`,
   canDeleteCss: true,
   init: function(){
@@ -115,7 +142,26 @@ export const AdminImportProduct = {
     const searchInput = document.getElementById("search-input");
     if (searchInput) {
       searchInput.addEventListener("input", (e) => {
-        filterAndRenderOrders(e.target.value);
+        filterState.searchTerm = e.target.value;
+        applyFilters();
+      });
+    }
+
+    // Thêm event cho các input giá
+    const minPriceInput = document.getElementById("min-price-filter");
+    const maxPriceInput = document.getElementById("max-price-filter");
+    
+    if (minPriceInput) {
+      minPriceInput.addEventListener("input", (e) => {
+        filterState.minPrice = e.target.value ? Number(e.target.value) : null;
+        applyFilters();
+      });
+    }
+    
+    if (maxPriceInput) {
+      maxPriceInput.addEventListener("input", (e) => {
+        filterState.maxPrice = e.target.value ? Number(e.target.value) : null;
+        applyFilters();
       });
     }
   }
@@ -657,26 +703,47 @@ function AddDataToProduct(rowId){
         optionsContainer.classList.remove('show');
     });
 }
-function filterAndRenderOrders(searchTerm) {
-  let orders;
-  console.log("Tìm kiếm đang chạy với từ khóa:", searchTerm); // <-- THÊM LOG NÀY
-  console.log(importProduct);
-  
-  if (!searchTerm || !searchTerm.trim()) {
-    orders = importProduct; // Nếu rỗng thì hiển thị tất cả
-  } else {
-    console.log(orders);
-    const term = searchTerm.toLowerCase().trim();
-    // Lọc theo ID, Date, hoặc Status
-    orders = importProduct.filter(
+function getTotalValue(order) {
+  return order.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
+}
+
+// Hàm áp dụng tất cả các bộ lọc
+function applyFilters() {
+  let filteredOrders = importProduct;
+
+  // Lọc theo tìm kiếm (ID, Date, Status)
+  if (filterState.searchTerm && filterState.searchTerm.trim()) {
+    const term = filterState.searchTerm.toLowerCase().trim();
+    filteredOrders = filteredOrders.filter(
       (o) =>
         o.id.toLowerCase().includes(term) ||
-        
         o.date.includes(term) ||
         (o.status === "completed" ? "hoàn thành" : "nhập").includes(term)
     );
   }
-  currentPage = 1; // Luôn về trang 1 sau khi tìm kiếm
-  renderOrders(orders); // Render lại bảng
-  console.log("Số lượng đơn hàng sau khi lọc:", orders.length); // <-- THÊM LOG NÀY
+
+  // Lọc theo khoảng giá
+  if (filterState.minPrice !== null || filterState.maxPrice !== null) {
+    filteredOrders = filteredOrders.filter((order) => {
+      const totalValue = getTotalValue(order);
+      
+      if (filterState.minPrice !== null && totalValue < filterState.minPrice) {
+        return false;
+      }
+      
+      if (filterState.maxPrice !== null && totalValue > filterState.maxPrice) {
+        return false;
+      }
+      
+      return true;
+    });
+  }
+
+  currentPage = 1;
+  renderOrders(filteredOrders);
 }
+
+// Sửa lại hàm filterAndRenderOrders cũ (có thể xóa vì đã thay thế bằng applyFilters)
+// function filterAndRenderOrders(searchTerm) {
+//   ... (có thể xóa)
+// }
