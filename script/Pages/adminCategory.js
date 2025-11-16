@@ -110,21 +110,17 @@
 
 
     // --- 4. HÀM "VẼ BẢNG" (RENDER) ---
-    // <-- SỬA: Hàm này giờ nhận tham số "page"
     function renderTable(page = 1) {
       currentPage = page; // Cập nhật trang hiện tại
 
       // Tính toán các mục cho trang này
       const startIndex = (currentPage - 1) * rowsPerPage;
       const endIndex = startIndex + rowsPerPage;
-      
-      // <-- SỬA: Chỉ lấy dữ liệu cho trang hiện tại
       const paginatedData = categoriesData.slice(startIndex, endIndex);
 
       // 1. Tạo các hàng <tr> từ mảng dữ liệu đã lọc
       const tableBodyHTML = paginatedData
         .map((category) => {
-          // ... (Toàn bộ logic .map() của bạn giữ nguyên) ...
           const statusIcon = category.isShown ? "show.png" : "hide.png";
           const statusText = category.isShown ? "Đang hiển thị" : "Ẩn";
           const statusClass = category.isShown ? "show-text" : "hide-text";
@@ -179,7 +175,6 @@
       // 3. Chèn bảng vào DOM
       tableContainer.innerHTML = fullTableHTML;
       
-      // <-- PHẦN PHÂN TRANG: Gọi hàm "vẽ" các nút
       renderPagination();
     }
     
@@ -277,8 +272,6 @@
         const target = event.target;
         const row = target.closest("tr");
         if (!row) return;
-
-        // <-- SỬA: Tính toán rowIndex dựa trên trang hiện tại
         const allVisibleRows = Array.from(tableContainer.querySelectorAll("tbody tr"));
         const visibleRowIndex = allVisibleRows.indexOf(row);
         // Tính index thật trong mảng categoriesData
@@ -333,7 +326,7 @@
           renderTable(currentPage + 1);
         }
       });
-      // (Xóa hàm click của paginationContainer vì đã gán sự kiện trực tiếp)
+
 
       // GÁN SỰ KIỆN CHO POPUP (EVENT DELEGATION)
       popup.addEventListener("click", (event) => {
@@ -352,7 +345,7 @@
           const newNameInput = popup.querySelector("#category-name-input");
           const newName = newNameInput ? newNameInput.value : null;
 
-          // Biến tạm để quyết định render lại trang nào
+          // Biến tạm để quyết định render lại trang 
           let pageToRender = currentPage;
 
           // THAY ĐỔI DỮ LIỆU TRONG MẢNG
@@ -398,8 +391,7 @@
         }
       });
 
-      // LOGIC SIDEBAR
-      // (Bạn có thể đặt code sidebar của bạn ở đây)
+
     }
 
     // --- 9. HÀM CHẠY CHÍNH (MAIN) ---
@@ -417,17 +409,3 @@
     // --- 10. KHỞI CHẠY ỨNG DỤNG ---
     initializeApp();
 
-    // --- 11. LOGIC SIDEBAR ---
-    // (Bạn nên đặt code này bên ngoài hàm attachEventListeners
-    //  để nó chạy ngay khi DOM tải xong)
-    document.addEventListener("DOMContentLoaded", function () {
-      const allButtons = document.querySelectorAll(".sidebar-button");
-      allButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-          allButtons.forEach(function (btn) {
-            btn.classList.remove("active");
-          });
-          this.classList.add("active");
-        });
-      });
-    });
