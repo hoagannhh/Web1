@@ -39,7 +39,7 @@ body {
   margin: 0;
 }
 .user-table-container {
-  width: 100%;
+  width: 70vw;
   max-width: 1200px;
   background-color: #ffffff;
   border-radius: 12px;

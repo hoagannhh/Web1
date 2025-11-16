@@ -276,7 +276,7 @@ function ConvertToPrice(product) {
 
   // 2. Lấy thông tin cơ bản
   const costPrice = product.cost || 0;
-  let profitPercentage = profitRules.defaultCategoryProfit; // Mặc định là 0%
+  let profitPercentage = profitRules.defaultCategoryProfit || 0; // Mặc định là 0%
 
   // 3. Logic xác định lợi nhuận (Ưu tiên)
   
