@@ -311,18 +311,33 @@ function getProfitRules() {
 }
 function SaveCostProduct() {
   let allproduct = JSON.parse(localStorage.getItem("allProduct"));
-  const cost = document.querySelector(".items__price").value;
-  const productId = document.querySelector(".items__name").value.split(":")[0];
-  allproduct.forEach(p => {
-    if (p.id === productId) {
-      console.log("Tìm thấy sản phẩm, đang cập nhật cost và price...");
-      p.cost = Number(cost);
-      p.price = ConvertToPrice(p);
+  
+  // Lấy tất cả các rows trong tbody
+  const rows = document.querySelectorAll('#items-tbody tr');
+  
+  // Duyệt qua từng row và lưu cost + price
+  rows.forEach(row => {
+    const costElement = row.querySelector(".items__price");
+    const productElement = row.querySelector(".items__name");
+    
+    if (costElement && productElement) {
+      const cost = costElement.value;
+      const productId = productElement.value.split(":")[0].trim();
+      
+      // Tìm và cập nhật sản phẩm
+      allproduct.forEach(p => {
+        if (p.id === productId) {
+          console.log(`Tìm thấy sản phẩm ${productId}, đang cập nhật cost và price...`);
+          p.cost = Number(cost);
+          p.price = ConvertToPrice(p);
+          console.log(`Đã cập nhật: ID=${p.id}, Cost=${p.cost}, Price=${p.price}`);
+        }
+      });
     }
   });
 
-  // 3. Lưu lại mảng đã cập nhật
-  console.log("Đã cập nhật:", allproduct.find(p => p.id === productId));
+  // Lưu lại mảng đã cập nhật
+  console.log("Tất cả sản phẩm đã cập nhật:", allproduct);
   localStorage.setItem("allProduct", JSON.stringify(allproduct));
 }
 function ConvertToPrice(product) {
