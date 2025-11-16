@@ -4,9 +4,6 @@
  * ======================================================================================
  */
 export const AdminProduct = {
-  // ------------------------------------------------------------------------------------
-  // § 1. ĐỊNH NGHĨA GIAO DIỆN (HTML, CSS, MODALS)
-  // ------------------------------------------------------------------------------------
 
   html: `
     <div class="main-content">
@@ -546,10 +543,20 @@ export const AdminProduct = {
 
     tbody.innerHTML = products
       .map((product) => {
-        // Chuyển đổi ID category sang tên
         const categoryNames = Array.isArray(product.category)
-          ? product.category.map((id) => this._helper_ConvertIDtoCategory(id))
-          : [this._helper_ConvertIDtoCategory(product.category)];
+          ? product.category
+              .map((id) => {
+                const category = this.categories.find((c) => c.id == id);
+                // Chỉ trả về tên nếu category tồn tại AND isShown === true
+                if (category && category.isShown === true) {
+                  return category.name;
+                }
+                return null; // Trả về null nếu không thỏa điều kiện
+              })
+              .filter(Boolean) // Lọc bỏ các null
+          : [];
+
+        const displayCategories = categoryNames.length > 0 ? categoryNames.join(", ") : "N/A";
 
         // Cảnh báo tồn kho
         const inventoryWarning = product.inventory <= 5;
@@ -577,7 +584,7 @@ export const AdminProduct = {
               </span>
             </div>
           </td>
-          <td>${categoryNames.join(", ")}</td>
+          <td>${displayCategories}</td>
            <td class="action">
              <img src="../icon/Time Machine.png" alt="Lịch sử kho" style="cursor: pointer;"
                   data-action="inventory"
@@ -642,6 +649,7 @@ export const AdminProduct = {
    */
   populateCategoryControls: function () {
     const categories = this.loadCategoriesDB();
+    console.log(categories);
     const mainTypesLower = ["men's", "women's", "unisex"];
 
     // Lọc ra các loại phụ (không phải loại chính và được hiển thị)
@@ -649,7 +657,6 @@ export const AdminProduct = {
       (c) => !mainTypesLower.includes(c.name.toLowerCase()) && c.isShown
     );
 
-    // Sử dụng hàm trợ giúp để tránh lặp code
     this._helper_renderCheckboxes(
       "categoryCheckboxes",
       optionalItems,
@@ -1265,6 +1272,12 @@ export const AdminProduct = {
       const category = this.categories.find(c => c.name === catName);
       return category ? Number(category.id) : null;
     }).filter(id => id !== null); // Lọc bỏ các giá trị null
+  },
+
+  /** (Helper) Sửa hàm này để trả về boolean rõ ràng */
+  _helper_CheckIsShownCategory: function (id) {
+    const category = this.categories.find((c) => c.id == id);
+    return category ? category.isShown === true : false; // Rõ ràng trả về boolean
   },
 
   /** (Helper) Chuyển ID category thành Tên */

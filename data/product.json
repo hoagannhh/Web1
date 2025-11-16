@@ -267,7 +267,7 @@
   {
     "id": "s11",
    "name": "Air Max 90",
-    "img-represent": "../product-img/s1/ms1-1.png",
+    "img-represent": ["../product-img/s1/ms1-1.png",
       "../product-img/s1/s1-0.png",
       "../product-img/s1/s1-1.png",
       "../product-img/s1/s1-2.png",

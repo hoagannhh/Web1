@@ -276,6 +276,15 @@ export const AdminPrice = {
 
       return rules;
     }
+    function saveAllProducts() {
+      try {
+        // Lưu biến 'allProducts' toàn cục (trong phạm vi init)
+        localStorage.setItem("allProduct", JSON.stringify(allProducts));
+        console.log("Đã lưu allProduct với giá bán được cập nhật.");
+      } catch (e) {
+        console.error("Không thể lưu allProduct vào localStorage", e);
+      }
+    }
     function saveProfitRules(rulesToSave) {
       try {
         // Sử dụng tham số 'rulesToSave' thay vì biến 'profitRules' bên ngoài
@@ -319,9 +328,10 @@ export const AdminPrice = {
         let mainCategorySource = "";
         let subCategoryProfit = null; // Giá trị này có thể là 0
         let subCategorySource = "";
-
+        // const reversedCategories = [...product.category].reverse();
         // Duyệt qua TẤT CẢ category ID của sản phẩm
         for (const catId of product.category) {
+          // for (const catId of reversedCategories) {
           const category = categoriesMap.get(catId);
 
           // Lấy quy tắc lợi nhuận từ profitRules
@@ -333,9 +343,14 @@ export const AdminPrice = {
             if (category.manageable === true) {
               // Đây là loại PHỤ (Sub-category)
               // Chỉ lấy rule loại phụ ĐẦU TIÊN tìm thấy
-              if (subCategoryProfit === null) {
-                subCategoryProfit = ruleProfit;
-                subCategorySource = ruleSource;
+              if (ruleProfit !== 0) {
+                if (
+                  subCategoryProfit === null ||
+                  ruleProfit > subCategoryProfit
+                ) {
+                  subCategoryProfit = ruleProfit;
+                  subCategorySource = ruleSource; // Gán nguồn tương ứng
+                }
               }
             } else if (category.manageable === false) {
               // Đây là loại CHÍNH (Main-category)
@@ -869,6 +884,7 @@ export const AdminPrice = {
             event.target.value = `${newProfit}%`;
             renderProductsTable();
             saveProfitRules(profitRules);
+            saveAllProducts();
             console.log(
               `Cập nhật lợi nhuận cho (ID: ${catId}): ${newProfit}%` // <--- SỬA: Log bằng ID
             );

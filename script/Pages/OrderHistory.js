@@ -101,15 +101,15 @@ function LoadHtmlProduct(listProducts) {
                               product.gender + " shoe's"
                             }</div>
                             <div class="product__infor__brand">Brand: ${
-                              product.brand
-                            }}</div>
+                              product.brand || "Nike"
+                            }</div>
                             <div class="product__infor__color">Color: ${
-                              product.color
+                              extractLastSegment(product.color)
                             }</div>
                             <div class="product__infor__size">Size: ${
-                              product.color
+                               product.size
                             }</div>
-                            <div class="product__infor__quantity">${
+                            <div class="product__infor__quantity">Quantity: ${
                               product.quantity
                             }</div>
                         </div>
@@ -122,6 +122,13 @@ function LoadHtmlProduct(listProducts) {
         `;
   });
   return html;
+}
+function extractLastSegment(url) {
+  const parts = url.split('/');
+
+  const lastSegment = parts[parts.length - 1];
+
+  return lastSegment;
 }
 function AddEvent() {
   document
