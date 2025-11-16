@@ -1,4 +1,5 @@
 /*Demo data*/
+let importProduct = JSON.parse(localStorage.getItem("productImport"));
 let currentEditIndex = null;
 let currentDeleteIndex = null;
 let currentPage = 1;
@@ -12,136 +13,112 @@ let filterState = {
 };
 
 export const AdminImportProduct = {
-  // Thêm importProduct như một property của object
-  importProduct: JSON.parse(localStorage.getItem("productImport")),
-
   html: `
-  <main class="admin-container">
-    <div class="header">
-      <div class="left-header">
-        <div><p>ImportProduct</p></div>
-      </div>
-      <div class="right-header">
-        <div class="admin-account">
-          <button class="admin-account-btn">
-            <img src="../img/goku.jpg" alt="" class="admin-avatar" />
-            <p style="color: black">Trần Chính Thành</p>
-          </button>
+      <main class="admin-container">
+        <div class="header">
+          <div class="left-header">
+            <div><p>ImportProduct</p></div>
+          </div>
+          <div class="right-header">
+            <div class="admin-account">
+              <button class="admin-account-btn">
+                <img src="../img/goku.jpg" alt="" class="admin-avatar" />
+                <p style="color: black">Trần Chính Thành</p>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <section class="panel">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 12px;
-        "
-      >
-        <div style="color: var(--muted)">Danh sách phiếu nhập</div>
-        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
-        
-          <input
+        <section class="panel">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 12px;
+            "
+          >
+            <div style="color: var(--muted)">Danh sách phiếu nhập</div>
+            <div style="display: flex; gap: 12px; align-items: center">
+            
+            <input
             type="text"
             id="search-input"
             placeholder="Tìm theo ID, Ngày hoặc Trạng thái..."
             style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;"
-          />
-          
-          <div style="display: flex; gap: 8px; align-items: center">
-            <input
-              type="number"
-              id="min-price-filter"
-              placeholder="Giá tối thiểu"
-              min="0"
-              style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 120px;"
-            />
-            <span>-</span>
-            <input
-              type="number"
-              id="max-price-filter"
-              placeholder="Giá tối đa"
-              min="0"
-              style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 120px;"
-            />
+        />
+              <button class="btn add" id="btn-add-order">
+                + Thêm phiếu nhập
+              </button>
+            </div>
           </div>
-          
-          <button class="btn" id="btn-reset-filter" style="background: #f0f0f0; color: #333;">
-            ↻ Reset
-          </button>
-          
-          <button class="btn add" id="btn-add-order">
-            + Thêm phiếu nhập
-          </button>
+
+          <div style="overflow: auto">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 180px; border-radius: 0%; border-top-left-radius: 15px;">ID</th>
+                  <th style="width: 180px; border-radius: 0%;">Date</th>
+                  <th style="width: 180px; border-radius: 0%;">Total quantity</th>
+                  <th style="width: 180px; border-radius: 0%;">Total value</th>
+                  <th style="width: 180px; border-radius: 0%;">Status</th>
+                  <th style="width: 180px; text-align:center; border-radius: 0%; border-top-right-radius: 15px;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="orders-body">
+                <!-- thêm dòng -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination" id="pagination"></div>
+        </section>
+      </main>
+      
+    </div>
+
+    <!--Modal: Thêm / Sửa / Xem / Hoàn thành -->
+    <div class="overlay" id="overlay">
+      <div class="modal" id="modal"></div>
+    </div>
+
+    <!-- Xác nhận xóa -->
+    <div class="overlay" id="overlay-delete">
+      <div class="modal confirm" id="modal-delete">
+        <h3 style="color: var(--danger); margin-bottom: 6px">Xóa phiếu nhập</h3>
+        <p>
+          Bạn có chắc chắn muốn xóa vĩnh viễn phiếu nhập này? Hành động này
+          không thể hoàn tác.
+        </p>
+        <div
+          style="
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+          "
+        >
+          <button class="btn" id="del-cancel">Hủy</button>
+          <button class="btn delete" id="del-confirm">Xác nhận Xóa</button>
         </div>
       </div>
-
-      <div style="overflow: auto">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 180px; border-radius: 0%; border-top-left-radius: 15px;">ID</th>
-              <th style="width: 180px; border-radius: 0%;">Date</th>
-              <th style="width: 180px; border-radius: 0%;">Total quantity</th>
-              <th style="width: 180px; border-radius: 0%;">Total value</th>
-              <th style="width: 180px; border-radius: 0%;">Status</th>
-              <th style="width: 180px; text-align:center; border-radius: 0%; border-top-right-radius: 15px;">Action</th>
-            </tr>
-          </thead>
-          <tbody id="orders-body">
-            <!-- thêm dòng -->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="pagination" id="pagination"></div>
-    </section>
-  </main>
-  
-</div>
-
-<!--Modal: Thêm / Sửa / Xem / Hoàn thành -->
-<div class="overlay" id="overlay">
-  <div class="modal" id="modal"></div>
-</div>
-
-<!-- Xác nhận xóa -->
-<div class="overlay" id="overlay-delete">
-  <div class="modal confirm" id="modal-delete">
-    <h3 style="color: var(--danger); margin-bottom: 6px">Xóa phiếu nhập</h3>
-    <p>
-      Bạn có chắc chắn muốn xóa vĩnh viễn phiếu nhập này? Hành động này
-      không thể hoàn tác.
-    </p>
-    <div
-      style="
-        margin-top: 12px;
-        display: flex;
-        gap: 8px;
-        justify-content: flex-end;
-      "
-    >
-      <button class="btn" id="del-cancel">Hủy</button>
-      <button class="btn delete" id="del-confirm">Xác nhận Xóa</button>
-    </div>
-  </div>
-`,
+  `,
   css: `../css/adminImportProduct.css`,
   canDeleteCss: true,
   init: function(){
     const ordersBody = document.getElementById('orders-body');
     
     //render các sản phẩm ra màn hình
-    renderOrders(this.importProduct);
+    renderOrders(importProduct);
     // thêm sự kiện cho phần phân trang
     HandleEventPagenation();
  
 
+
     handleEventInTable(ordersBody);
     // Thêm các sự kiên cancel confirm 1 form
     handleEventButton();
+
 
     const searchInput = document.getElementById("search-input");
     if (searchInput) {
@@ -168,12 +145,6 @@ export const AdminImportProduct = {
         applyFilters();
       });
     }
-
-    // Thêm event cho nút reset filter
-    const resetBtn = document.getElementById("btn-reset-filter");
-    if (resetBtn) {
-      resetBtn.addEventListener("click", resetFilters);
-    }
   }
 };
 
@@ -192,8 +163,7 @@ function gatherItems(){
     })
     .filter(Boolean);
 }
-
-// ================== Hàm xử lý sự kiện cho 1 form nhập, sửa, xóa =========================
+  // ================== Hàm xử lý sự kiện cho 1 form nhập, sửa, xóa =========================
 function bindModalEvents(mode, ordersBody){
   const btnCancel = document.getElementById('btn-cancel');
   const confirmAdd = document.getElementById('btn-confirm-add');
@@ -257,9 +227,9 @@ function bindModalEvents(mode, ordersBody){
       const date = document.getElementById('order-date').value;
       const items = gatherItems();
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
-      AdminImportProduct.importProduct.push({id,date,items,status:'pending'});
+      importProduct.push({id,date,items,status:'pending'});
       SaveImportProduct();
-      applyFilters(); 
+      renderOrders(importProduct); 
       closeOverlay();
     };
   }
@@ -273,10 +243,9 @@ function bindModalEvents(mode, ordersBody){
       console.log(id + " : " + date + " " + items.length)
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
       if (currentEditIndex !== null) {
-        AdminImportProduct.importProduct[currentEditIndex] = { id, date, items, status: AdminImportProduct.importProduct[currentEditIndex].status };
+        importProduct[currentEditIndex] = { id, date, items, status: importProduct[currentEditIndex].status };
         SaveImportProduct();
-        applyFilters();
-        closeOverlay();
+        renderOrders(); closeOverlay();
       }
     };
   }
@@ -284,11 +253,11 @@ function bindModalEvents(mode, ordersBody){
   if (confirmComplete) {
     confirmComplete.onclick = () => {
       if (currentEditIndex !== null){
-        AdminImportProduct.importProduct[currentEditIndex].status = 'completed';
+        importProduct[currentEditIndex].status = 'completed';
         SaveImportProduct();
         SaveCostProduct()
         SaveInventoryHistory();
-        applyFilters();
+        renderOrders();
         closeOverlay();
       }
     };
@@ -309,7 +278,6 @@ function getProfitRules() {
         productSpecific: {},
       };
 }
-
 function SaveCostProduct() {
   let allproduct = JSON.parse(localStorage.getItem("allProduct"));
   const cost = document.querySelector(".items__price").value;
@@ -326,7 +294,6 @@ function SaveCostProduct() {
   console.log("Đã cập nhật:", allproduct.find(p => p.id === productId));
   localStorage.setItem("allProduct", JSON.stringify(allproduct));
 }
-
 function ConvertToPrice(product) {
   const profitRules = JSON.parse(localStorage.getItem("priceProfitRules"))
   const categoriesDB = JSON.parse(localStorage.getItem("categoriesDB"))
@@ -391,12 +358,12 @@ function ConvertToPrice(product) {
   // Trả về giá bán đã làm tròn
   return Math.round(sellingPrice);
 }
-
 function SaveInventoryHistory(){
   const inventoryHistory = JSON.parse(
     localStorage.getItem("inventoryHistory") || "[]"
   );
   const allproduct = JSON.parse(localStorage.getItem("allProduct"));
+
 
   const itemSelected = gatherItems();
   const orderId = document.getElementById("order-id").value;
@@ -425,6 +392,7 @@ function SaveInventoryHistory(){
   console.log(allproduct);
   localStorage.setItem("inventoryHistory", JSON.stringify(inventoryHistory));
   localStorage.setItem("allProduct", JSON.stringify(allproduct));
+
 }
 
 // hàm xử lý khi mở đóng bảng
@@ -434,17 +402,19 @@ function closeOverlay(){ document.getElementById('overlay').style.display='none'
 function openDelete(i ){ currentDeleteIndex=i; document.getElementById('overlay-delete').style.display='flex'; }
 function closeDelete(){ document.getElementById('overlay-delete').style.display='none'; currentDeleteIndex=null; }
 
+
 //save
 function SaveImportProduct(){
-  localStorage.setItem("productImport", JSON.stringify(AdminImportProduct.importProduct));
+  localStorage.setItem("productImport", JSON.stringify(importProduct));
 }
-
 /* ======== Hiển thị danh sách phiếu nhập lên bảng chính  ========*/
-function renderOrders(arr = AdminImportProduct.importProduct){
+
+function renderOrders(arr = importProduct){
   const PAGE_SIZE = 5;
   console.log(arr)
   const maxPage = Math.ceil(arr.length / PAGE_SIZE);
   if (currentPage > maxPage) currentPage = maxPage;
+
 
   const start = (currentPage - 1) * PAGE_SIZE;
   const pageItems = arr.slice(start, start + PAGE_SIZE);
@@ -481,7 +451,6 @@ function renderOrders(arr = AdminImportProduct.importProduct){
 
   renderPagination(maxPage);
 }
-
 // =================== HÀM phân trang =======================
 function renderPagination(maxPage) {
     // lấy element khi cần để tránh lỗi TDZ (pagination có thể được truy cập trước khi biến được khởi tạo)
@@ -501,7 +470,6 @@ function renderPagination(maxPage) {
     html += `<span data-page="next">&gt;</span>`;
     pagination.innerHTML = html;
 }
-
 function HandleEventPagenation(){
     const paginationEl = document.getElementById("pagination");
     if (paginationEl) {
@@ -510,41 +478,9 @@ function HandleEventPagenation(){
         if (!sp) return;
         const p = sp.dataset.page;
         if (!p) return;
-        
-        // Lấy dữ liệu hiện tại đang được hiển thị (đã lọc)
-        let filteredOrders = AdminImportProduct.importProduct;
-        
-        // Áp dụng lại các bộ lọc tìm kiếm
-        if (filterState.searchTerm && filterState.searchTerm.trim()) {
-          const term = filterState.searchTerm.toLowerCase().trim();
-          filteredOrders = filteredOrders.filter(
-            (o) =>
-              o.id.toLowerCase().includes(term) ||
-              o.date.includes(term) ||
-              (o.status === "completed" ? "hoàn thành" : "nhập").includes(term)
-          );
-        }
-
-        // Áp dụng lại bộ lọc giá
-        if (filterState.minPrice !== null || filterState.maxPrice !== null) {
-          filteredOrders = filteredOrders.filter((order) => {
-            const totalValue = getTotalValue(order);
-            
-            if (filterState.minPrice !== null && totalValue < filterState.minPrice) {
-              return false;
-            }
-            
-            if (filterState.maxPrice !== null && totalValue > filterState.maxPrice) {
-              return false;
-            }
-            
-            return true;
-          });
-        }
-        
         const PAGE_SIZE = 5;
-        const pageCount = Math.max(1, Math.ceil(filteredOrders.length / PAGE_SIZE));
-        
+        const pageCount = Math.max(1, Math.ceil(importProduct.length / PAGE_SIZE));
+        console.log(p);
         if (p === "prev") {
           if (currentPage > 1) currentPage--;
         } else if (p === "next") {
@@ -552,16 +488,14 @@ function HandleEventPagenation(){
         } else {
           currentPage = +p;
         }
-        
-        // Render bảng với dữ liệu đã lọc
-        renderOrders(filteredOrders);
+        renderOrders(importProduct);
       });
     }
 }
 
 /* ======= Form nhập, sửa, xem, hoàn thành chi tiết sản phẩm ===== */
 function buildOrderForm({mode='add', data=null, readOnly=false}){
-  const id = data?.id || `PN${String(AdminImportProduct.importProduct.length+1).padStart(3,'0')}`;
+  const id = data?.id || `PN${String(importProduct.length+1).padStart(3,'0')}`;
   const date = data?.date || new Date().toISOString().slice(0,10);
   const items = (data?.items||[]).map(it=>({...it}));
   console.log(items);
@@ -633,17 +567,17 @@ function handleEventInTable(ordersBody){
   
     if(action==='edit'){
       currentEditIndex=idx;
-      openOverlay(buildOrderForm({mode:'edit',data:AdminImportProduct.importProduct[idx]}));
+      openOverlay(buildOrderForm({mode:'edit',data:importProduct[idx]}));
       bindModalEvents('edit', ordersBody);
     }
     else if(action==='view'){
-      openOverlay(buildOrderForm({mode:'view',data:AdminImportProduct.importProduct[idx],readOnly:true}));
+      openOverlay(buildOrderForm({mode:'view',data:importProduct[idx],readOnly:true}));
       bindModalEvents('view', ordersBody);
     }
     else if(action==='delete'){ openDelete(idx); }
     else if(action==='complete'){
       currentEditIndex=idx;
-      openOverlay(buildOrderForm({mode:'complete',data:AdminImportProduct.importProduct[idx],readOnly:true}));
+      openOverlay(buildOrderForm({mode:'complete',data:importProduct[idx],readOnly:true}));
       bindModalEvents('complete', ordersBody);
     }
   });
@@ -671,15 +605,14 @@ function handleEventButton(ordersBody){
 
     document.getElementById('del-confirm').addEventListener('click', ()=>{
       if(currentDeleteIndex!==null){ 
-        AdminImportProduct.importProduct.splice(currentDeleteIndex,1); 
+        importProduct.splice(currentDeleteIndex,1); 
         SaveImportProduct();
-        applyFilters(); 
+        renderOrders(importProduct); 
       }
 
       closeDelete();
     });
 }
-
 // filter id hoặc tên theo sản phẩm
 function AddDataToProduct(rowId){
     let data = JSON.parse(localStorage.getItem("allProduct"));
@@ -729,6 +662,7 @@ function AddDataToProduct(rowId){
       optionsContainer.classList.remove('show');
     }
 
+
     // Xử lý tìm kiếm
     searchInput.addEventListener('input', (e) => {
       renderOptions(e.target.value);
@@ -742,6 +676,7 @@ function AddDataToProduct(rowId){
         optionsContainer.classList.add('show');
     });
 
+
     // Đóng dropdown khi click ra ngoài
     document.addEventListener('click', (e) => {
       // Đảm bảo không đóng khi click vào chính input này
@@ -749,14 +684,13 @@ function AddDataToProduct(rowId){
         optionsContainer.classList.remove('show');
     });
 }
-
 function getTotalValue(order) {
   return order.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
 }
 
 // Hàm áp dụng tất cả các bộ lọc
 function applyFilters() {
-  let filteredOrders = AdminImportProduct.importProduct;
+  let filteredOrders = importProduct;
 
   // Lọc theo tìm kiếm (ID, Date, Status)
   if (filterState.searchTerm && filterState.searchTerm.trim()) {
@@ -790,23 +724,7 @@ function applyFilters() {
   renderOrders(filteredOrders);
 }
 
-/* ======= Hàm reset tất cả các bộ lọc ======= */
-function resetFilters() {
-  // Reset state
-  filterState.searchTerm = '';
-  filterState.minPrice = null;
-  filterState.maxPrice = null;
-  currentPage = 1;
-
-  // Reset các input
-  const searchInput = document.getElementById("search-input");
-  const minPriceInput = document.getElementById("min-price-filter");
-  const maxPriceInput = document.getElementById("max-price-filter");
-
-  if (searchInput) searchInput.value = '';
-  if (minPriceInput) minPriceInput.value = '';
-  if (maxPriceInput) maxPriceInput.value = '';
-
-  // Render lại toàn bộ bảng
-  renderOrders(AdminImportProduct.importProduct);
-}
+// Sửa lại hàm filterAndRenderOrders cũ (có thể xóa vì đã thay thế bằng applyFilters)
+// function filterAndRenderOrders(searchTerm) {
+//   ... (có thể xóa)
+// }
