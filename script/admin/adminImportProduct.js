@@ -1,5 +1,4 @@
 /*Demo data*/
-let importProduct = JSON.parse(localStorage.getItem("productImport"));
 let currentEditIndex = null;
 let currentDeleteIndex = null;
 let currentPage = 1;
@@ -13,6 +12,9 @@ let filterState = {
 };
 
 export const AdminImportProduct = {
+  // Thêm importProduct như một property của object
+  importProduct: JSON.parse(localStorage.getItem("productImport")),
+
   html: `
   <main class="admin-container">
     <div class="header">
@@ -132,7 +134,7 @@ export const AdminImportProduct = {
     const ordersBody = document.getElementById('orders-body');
     
     //render các sản phẩm ra màn hình
-    renderOrders(importProduct);
+    renderOrders(this.importProduct);
     // thêm sự kiện cho phần phân trang
     HandleEventPagenation();
  
@@ -190,7 +192,8 @@ function gatherItems(){
     })
     .filter(Boolean);
 }
-  // ================== Hàm xử lý sự kiện cho 1 form nhập, sửa, xóa =========================
+
+// ================== Hàm xử lý sự kiện cho 1 form nhập, sửa, xóa =========================
 function bindModalEvents(mode, ordersBody){
   const btnCancel = document.getElementById('btn-cancel');
   const confirmAdd = document.getElementById('btn-confirm-add');
@@ -254,7 +257,7 @@ function bindModalEvents(mode, ordersBody){
       const date = document.getElementById('order-date').value;
       const items = gatherItems();
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
-      importProduct.push({id,date,items,status:'pending'});
+      AdminImportProduct.importProduct.push({id,date,items,status:'pending'});
       SaveImportProduct();
       applyFilters(); 
       closeOverlay();
@@ -270,7 +273,7 @@ function bindModalEvents(mode, ordersBody){
       console.log(id + " : " + date + " " + items.length)
       if (!id || !date || !items.length) return alert('Điền đầy đủ thông tin!');
       if (currentEditIndex !== null) {
-        importProduct[currentEditIndex] = { id, date, items, status: importProduct[currentEditIndex].status };
+        AdminImportProduct.importProduct[currentEditIndex] = { id, date, items, status: AdminImportProduct.importProduct[currentEditIndex].status };
         SaveImportProduct();
         applyFilters();
         closeOverlay();
@@ -281,7 +284,7 @@ function bindModalEvents(mode, ordersBody){
   if (confirmComplete) {
     confirmComplete.onclick = () => {
       if (currentEditIndex !== null){
-        importProduct[currentEditIndex].status = 'completed';
+        AdminImportProduct.importProduct[currentEditIndex].status = 'completed';
         SaveImportProduct();
         SaveCostProduct()
         SaveInventoryHistory();
@@ -306,6 +309,7 @@ function getProfitRules() {
         productSpecific: {},
       };
 }
+
 function SaveCostProduct() {
   let allproduct = JSON.parse(localStorage.getItem("allProduct"));
   const cost = document.querySelector(".items__price").value;
@@ -322,6 +326,7 @@ function SaveCostProduct() {
   console.log("Đã cập nhật:", allproduct.find(p => p.id === productId));
   localStorage.setItem("allProduct", JSON.stringify(allproduct));
 }
+
 function ConvertToPrice(product) {
   const profitRules = JSON.parse(localStorage.getItem("priceProfitRules"))
   const categoriesDB = JSON.parse(localStorage.getItem("categoriesDB"))
@@ -386,12 +391,12 @@ function ConvertToPrice(product) {
   // Trả về giá bán đã làm tròn
   return Math.round(sellingPrice);
 }
+
 function SaveInventoryHistory(){
   const inventoryHistory = JSON.parse(
     localStorage.getItem("inventoryHistory") || "[]"
   );
   const allproduct = JSON.parse(localStorage.getItem("allProduct"));
-
 
   const itemSelected = gatherItems();
   const orderId = document.getElementById("order-id").value;
@@ -420,7 +425,6 @@ function SaveInventoryHistory(){
   console.log(allproduct);
   localStorage.setItem("inventoryHistory", JSON.stringify(inventoryHistory));
   localStorage.setItem("allProduct", JSON.stringify(allproduct));
-
 }
 
 // hàm xử lý khi mở đóng bảng
@@ -430,19 +434,17 @@ function closeOverlay(){ document.getElementById('overlay').style.display='none'
 function openDelete(i ){ currentDeleteIndex=i; document.getElementById('overlay-delete').style.display='flex'; }
 function closeDelete(){ document.getElementById('overlay-delete').style.display='none'; currentDeleteIndex=null; }
 
-
 //save
 function SaveImportProduct(){
-  localStorage.setItem("productImport", JSON.stringify(importProduct));
+  localStorage.setItem("productImport", JSON.stringify(AdminImportProduct.importProduct));
 }
-/* ======== Hiển thị danh sách phiếu nhập lên bảng chính  ========*/
 
-function renderOrders(arr = importProduct){
+/* ======== Hiển thị danh sách phiếu nhập lên bảng chính  ========*/
+function renderOrders(arr = AdminImportProduct.importProduct){
   const PAGE_SIZE = 5;
   console.log(arr)
   const maxPage = Math.ceil(arr.length / PAGE_SIZE);
   if (currentPage > maxPage) currentPage = maxPage;
-
 
   const start = (currentPage - 1) * PAGE_SIZE;
   const pageItems = arr.slice(start, start + PAGE_SIZE);
@@ -479,6 +481,7 @@ function renderOrders(arr = importProduct){
 
   renderPagination(maxPage);
 }
+
 // =================== HÀM phân trang =======================
 function renderPagination(maxPage) {
     // lấy element khi cần để tránh lỗi TDZ (pagination có thể được truy cập trước khi biến được khởi tạo)
@@ -498,6 +501,7 @@ function renderPagination(maxPage) {
     html += `<span data-page="next">&gt;</span>`;
     pagination.innerHTML = html;
 }
+
 function HandleEventPagenation(){
     const paginationEl = document.getElementById("pagination");
     if (paginationEl) {
@@ -508,7 +512,7 @@ function HandleEventPagenation(){
         if (!p) return;
         
         // Lấy dữ liệu hiện tại đang được hiển thị (đã lọc)
-        let filteredOrders = importProduct;
+        let filteredOrders = AdminImportProduct.importProduct;
         
         // Áp dụng lại các bộ lọc tìm kiếm
         if (filterState.searchTerm && filterState.searchTerm.trim()) {
@@ -557,7 +561,7 @@ function HandleEventPagenation(){
 
 /* ======= Form nhập, sửa, xem, hoàn thành chi tiết sản phẩm ===== */
 function buildOrderForm({mode='add', data=null, readOnly=false}){
-  const id = data?.id || `PN${String(importProduct.length+1).padStart(3,'0')}`;
+  const id = data?.id || `PN${String(AdminImportProduct.importProduct.length+1).padStart(3,'0')}`;
   const date = data?.date || new Date().toISOString().slice(0,10);
   const items = (data?.items||[]).map(it=>({...it}));
   console.log(items);
@@ -629,17 +633,17 @@ function handleEventInTable(ordersBody){
   
     if(action==='edit'){
       currentEditIndex=idx;
-      openOverlay(buildOrderForm({mode:'edit',data:importProduct[idx]}));
+      openOverlay(buildOrderForm({mode:'edit',data:AdminImportProduct.importProduct[idx]}));
       bindModalEvents('edit', ordersBody);
     }
     else if(action==='view'){
-      openOverlay(buildOrderForm({mode:'view',data:importProduct[idx],readOnly:true}));
+      openOverlay(buildOrderForm({mode:'view',data:AdminImportProduct.importProduct[idx],readOnly:true}));
       bindModalEvents('view', ordersBody);
     }
     else if(action==='delete'){ openDelete(idx); }
     else if(action==='complete'){
       currentEditIndex=idx;
-      openOverlay(buildOrderForm({mode:'complete',data:importProduct[idx],readOnly:true}));
+      openOverlay(buildOrderForm({mode:'complete',data:AdminImportProduct.importProduct[idx],readOnly:true}));
       bindModalEvents('complete', ordersBody);
     }
   });
@@ -667,7 +671,7 @@ function handleEventButton(ordersBody){
 
     document.getElementById('del-confirm').addEventListener('click', ()=>{
       if(currentDeleteIndex!==null){ 
-        importProduct.splice(currentDeleteIndex,1); 
+        AdminImportProduct.importProduct.splice(currentDeleteIndex,1); 
         SaveImportProduct();
         applyFilters(); 
       }
@@ -675,6 +679,7 @@ function handleEventButton(ordersBody){
       closeDelete();
     });
 }
+
 // filter id hoặc tên theo sản phẩm
 function AddDataToProduct(rowId){
     let data = JSON.parse(localStorage.getItem("allProduct"));
@@ -724,7 +729,6 @@ function AddDataToProduct(rowId){
       optionsContainer.classList.remove('show');
     }
 
-
     // Xử lý tìm kiếm
     searchInput.addEventListener('input', (e) => {
       renderOptions(e.target.value);
@@ -738,7 +742,6 @@ function AddDataToProduct(rowId){
         optionsContainer.classList.add('show');
     });
 
-
     // Đóng dropdown khi click ra ngoài
     document.addEventListener('click', (e) => {
       // Đảm bảo không đóng khi click vào chính input này
@@ -746,13 +749,14 @@ function AddDataToProduct(rowId){
         optionsContainer.classList.remove('show');
     });
 }
+
 function getTotalValue(order) {
   return order.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
 }
 
 // Hàm áp dụng tất cả các bộ lọc
 function applyFilters() {
-  let filteredOrders = importProduct;
+  let filteredOrders = AdminImportProduct.importProduct;
 
   // Lọc theo tìm kiếm (ID, Date, Status)
   if (filterState.searchTerm && filterState.searchTerm.trim()) {
@@ -804,5 +808,5 @@ function resetFilters() {
   if (maxPriceInput) maxPriceInput.value = '';
 
   // Render lại toàn bộ bảng
-  renderOrders(importProduct);
+  renderOrders(AdminImportProduct.importProduct);
 }
