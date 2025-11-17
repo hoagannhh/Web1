@@ -279,7 +279,6 @@ function FilterVip(filterState, isFilterBySeach, products) {
   ChooseProductSale(filterState, isFilterBySeach, products);
   FilterByMoney(filterState, isFilterBySeach, products);
   FilterByColor(filterState, isFilterBySeach, products);
-
 }
 function AfterFilter(filterState, isFilterBySeach, products) {
   // console.log(filterState);
@@ -295,13 +294,12 @@ function AfterFilter(filterState, isFilterBySeach, products) {
 function FilterByColor(filterState, isFilterBySeach, products) {
   const colors = document.querySelectorAll(".color-input");
   colors.forEach((color) => {
-    color.addEventListener("click", (event) => {
-      if (filterState.colors.includes(event.target.value)) {
-        filterState.colors = filterState.colors.filter(
-          (g) => g !== event.target.value
-        );
+    color.addEventListener("change", (event) => {
+      const val = event.target.value;
+      if (event.target.checked) {
+        if (!filterState.colors.includes(val)) filterState.colors.push(val);
       } else {
-        filterState.colors.push(event.target.value);
+        filterState.colors = filterState.colors.filter((g) => g !== val);
       }
       AfterFilter(filterState, isFilterBySeach, products);
     });
@@ -351,39 +349,40 @@ function ChooseGender(filterState, isFilterBySeach, products) {
   });
 }
 // hàm chọn theo category
-function AddEventBtnCategories(filterState, isFilterBySeach, products){
+function AddEventBtnCategories(filterState, isFilterBySeach, products) {
   console.log("filter theo category");
   const submenu = document.querySelectorAll(".black-check-category");
   console.log(submenu);
 
   const categories = JSON.parse(localStorage.getItem("categoriesDB"));
   let categoryID = [];
-  for(let i = 3; i < categories.length; i++){
+  for (let i = 3; i < categories.length; i++) {
     categoryID.push(categories[i].id);
   }
   console.log(categoryID);
   submenu.forEach((checkbox) => {
-    checkbox.addEventListener("change", ()=>{
+    checkbox.addEventListener("change", () => {
       console.log(checkbox.id);
       console.log(checkbox.checked);
-      console.log(categoryID)
-      console.log(categoryID.includes(Number(checkbox.id)))
-      if (categoryID.includes(Number(checkbox.id))){
-        if (checkbox.checked){
-          console.log(typeof(checkbox.id))
-          console.log(checkbox.id)
-        console.log("Trước push:", filterState.categories);
-        filterState.categories.push(Number(checkbox.id));
-        console.log("Sau push:", filterState.categories);
-        }else{
-          filterState.categories = filterState.categories.filter(c => c !== Number(checkbox.id))
-                    console.log(filterState.categories);
-
+      console.log(categoryID);
+      console.log(categoryID.includes(Number(checkbox.id)));
+      if (categoryID.includes(Number(checkbox.id))) {
+        if (checkbox.checked) {
+          console.log(typeof checkbox.id);
+          console.log(checkbox.id);
+          console.log("Trước push:", filterState.categories);
+          filterState.categories.push(Number(checkbox.id));
+          console.log("Sau push:", filterState.categories);
+        } else {
+          filterState.categories = filterState.categories.filter(
+            (c) => c !== Number(checkbox.id)
+          );
+          console.log(filterState.categories);
         }
         AfterFilter(filterState, isFilterBySeach, products);
       }
-    })
-  })
+    });
+  });
 }
 // ||-- Ham Check --||Hàm để in trạng thái ra console mỗi khi có thay đổi
 function AddEventButtonChooseSize(filterState, isFilterBySeach, products) {
@@ -435,7 +434,7 @@ function LoadProductPage(filterState) {
     // Kiểm tra xem có dữ liệu sản phẩm không
     if (!allProducts || !Array.isArray(allProducts)) {
       console.error("Dữ liệu sản phẩm không hợp lệ");
-      document.querySelector(".product-grid").innerHTML = 
+      document.querySelector(".product-grid").innerHTML =
         '<div class="error-message">Không thể tải dữ liệu sản phẩm. Vui lòng thử lại sau.</div>';
       return;
     }
@@ -449,25 +448,35 @@ function LoadProductPage(filterState) {
       document.querySelector(".product-grid").innerHTML = `
         <div class="no-products-message">
           <p>Không tìm thấy sản phẩm nào phù hợp với bộ lọc đã chọn.</p>
-          <button onclick="ResetAllFilters(${JSON.stringify(filterState)}); LoadAllProductPage();" class="reset-filters-btn">
+          <button class="reset-filters-btn">
             Đặt lại bộ lọc
           </button>
         </div>
       `;
       document.querySelector(".pagination").innerHTML = "";
+      document
+        .querySelector(".reset-filters-btn")
+        .addEventListener("click", () => {
+          ResetAllFilters(filterState);
+          LoadAllProductPage();
+        });
       return;
     }
 
     // Render sản phẩm và phân trang
     renderProduct(htmlProduct, filteredProducts, currentPage, productsPerPage);
-    renderPagination(htmlProduct, filteredProducts, currentPage, productsPerPage);
+    renderPagination(
+      htmlProduct,
+      filteredProducts,
+      currentPage,
+      productsPerPage
+    );
     HandleEventProduct(filteredProducts);
   } catch (error) {
     console.error("Lỗi khi tải sản phẩm:", error);
-    document.querySelector(".product-grid").innerHTML = 
+    document.querySelector(".product-grid").innerHTML =
       '<div class="error-message">Đã xảy ra lỗi khi tải sản phẩm. Vui lòng thử lại sau.</div>';
   }
-
 }
 function Filter(filterState, data) {
   console.log("Bắt đầu lọc với filterState:", filterState);
@@ -479,9 +488,9 @@ function Filter(filterState, data) {
   // Lọc theo giới tính
   if (filterState.gender && filterState.gender.length > 0) {
     console.log("Lọc theo giới tính:", filterState.gender);
-    products = products.filter(product => 
-      filterState.gender.some(gender => 
-        product.gender.toLowerCase() === gender.toLowerCase()
+    products = products.filter((product) =>
+      filterState.gender.some(
+        (gender) => product.gender.toLowerCase() === gender.toLowerCase()
       )
     );
     console.log("Số sản phẩm sau khi lọc giới tính:", products.length);
@@ -490,15 +499,15 @@ function Filter(filterState, data) {
   // Lọc theo giá
   if (filterState.price !== null && filterState.price !== undefined) {
     console.log("Lọc theo giá:", filterState.price);
-    products = products.filter(product => product.price >= filterState.price);
+    products = products.filter((product) => product.price >= filterState.price);
     console.log("Số sản phẩm sau khi lọc giá:", products.length);
   }
 
   // Lọc sản phẩm đang sale
   if (filterState.onSale) {
     console.log("Lọc sản phẩm sale");
-    products = products.filter(product => 
-      product.onSale === "true" || product.onSale === true
+    products = products.filter(
+      (product) => product.onSale === "true" || product.onSale === true
     );
     console.log("Số sản phẩm sau khi lọc sale:", products.length);
   }
@@ -506,8 +515,9 @@ function Filter(filterState, data) {
   // Lọc theo size
   if (filterState.size) {
     console.log("Lọc theo size:", filterState.size);
-    products = products.filter(product => 
-      product.size && product.size.includes(Number(filterState.size))
+    products = products.filter(
+      (product) =>
+        product.size && product.size.includes(Number(filterState.size))
     );
     console.log("Số sản phẩm sau khi lọc size:", products.length);
   }
@@ -515,20 +525,27 @@ function Filter(filterState, data) {
   // Lọc theo màu sắc
   if (filterState.colors && filterState.colors.length > 0) {
     console.log("Lọc theo màu:", filterState.colors);
-    products = products.filter(product => 
-      filterState.colors.some(color => 
-        product.color && product.color.map(c => c.toLowerCase()).includes(color.toLowerCase())
-      )
-    );
+    products = products.filter((product) => {
+      if (!product.color) return false;
+      const prodColors = Array.isArray(product.color)
+        ? product.color
+        : [product.color];
+      const prodColorsLower = prodColors.map((c) => String(c).toLowerCase());
+      return filterState.colors.some((color) =>
+        prodColorsLower.includes(String(color).toLowerCase())
+      );
+    });
+
     console.log("Số sản phẩm sau khi lọc màu:", products.length);
   }
 
   // Lọc theo danh mục
   if (filterState.categories && filterState.categories.length > 0) {
     console.log("Lọc theo danh mục:", filterState.categories);
-    products = products.filter(product => 
-      filterState.categories.some(categoryId => 
-        product.category && product.category.includes(Number(categoryId))
+    products = products.filter((product) =>
+      filterState.categories.some(
+        (categoryId) =>
+          product.category && product.category.includes(Number(categoryId))
       )
     );
     console.log("Số sản phẩm sau khi lọc danh mục:", products.length);
@@ -541,7 +558,9 @@ function Filter(filterState, data) {
     } else if (filterState.sortBy === "Low to High") {
       products.sort((a, b) => a.price - b.price);
     } else if (filterState.sortBy === "Newest") {
-      products.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+      products.sort(
+        (a, b) => new Date(b.created_date) - new Date(a.created_date)
+      );
     }
   }
 
@@ -605,6 +624,7 @@ function renderPagination(
       currentPage = Number(e.target.dataset.page);
       renderProduct(htmlProduct, allProducts, currentPage, productsPerPage);
       renderPagination(htmlProduct, allProducts, currentPage, productsPerPage);
+      HandleEventProduct(allProducts);
     });
   });
 }
@@ -614,27 +634,29 @@ function ConvertINTtoVND(number) {
 }
 function ResetAllFilters(filterState) {
   // Reset checkboxes (Gender, Sale, Colors, categories)
-  const allCheckboxes = document.querySelectorAll('.black-check, .color-input, .black-check-category');
-  allCheckboxes.forEach(checkbox => {
+  const allCheckboxes = document.querySelectorAll(
+    ".black-check, .color-input, .black-check-category"
+  );
+  allCheckboxes.forEach((checkbox) => {
     checkbox.checked = false;
   });
-  
+
   // Reset price input
   const priceInput = document.querySelector('.sub-menu input[type="number"]');
   if (priceInput) {
-    priceInput.value = '';
+    priceInput.value = "";
   }
-  
+
   // Reset size buttons
-  const sizeButtons = document.querySelectorAll('.sidebar-size-btn');
-  sizeButtons.forEach(btn => {
-    btn.classList.remove('selected');
+  const sizeButtons = document.querySelectorAll(".sidebar-size-btn");
+  sizeButtons.forEach((btn) => {
+    btn.classList.remove("selected");
   });
-  
+
   // Reset sort buttons
-  const sortButtons = document.querySelectorAll('.dropdown-option');
-  sortButtons.forEach(btn => {
-    btn.classList.remove('selected');
+  const sortButtons = document.querySelectorAll(".dropdown-option");
+  sortButtons.forEach((btn) => {
+    btn.classList.remove("selected");
   });
   filterState.gender = [];
   filterState.price = null;
@@ -652,32 +674,31 @@ function ResetAllFilters(filterState) {
   //   sortBy: "Featured", // Giá trị mặc định
   //   categories: [],
   // };
-
 }
 
-function GetCategoryFromDatabase(){
+function GetCategoryFromDatabase() {
   const categories = JSON.parse(localStorage.getItem("categoriesDB"));
-  let html = 
-  `
+  let html = `
   `;
-  if (!categories){
+  if (!categories) {
     console.debug("Khong the load category tu local storage");
     console.log(categories);
     return;
   }
 
-  console.log("----------------------------------------------------------------------------");
+  console.log(
+    "----------------------------------------------------------------------------"
+  );
   console.log(categories);
   if (categories.length <= 3) return html;
-  for (let i = 3; i < categories.length; i++){
-    if (categories[i].isShown){
-      html += 
-          `
+  for (let i = 3; i < categories.length; i++) {
+    if (categories[i].isShown) {
+      html += `
               <li>
                 <input type="checkbox" id="${categories[i].id}" class="black-check-category" />
                 <label for="${categories[i].id}">${categories[i].name}</label>
               </li>
-          `
+          `;
     }
   }
   return html;

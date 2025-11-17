@@ -19,7 +19,7 @@ const routes = {
   "/login": AdminLogin,
 };
 // Khởi tạo khi DOM ready
-navigateTo("/product");
+navigateTo("/login");
 export function navigateTo(path) {
   handleRouteChange(path);
 }

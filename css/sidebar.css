@@ -115,16 +115,15 @@ body {
 .sidebar-size-btn:hover {
   background-color: #f0f0f0;
 }
-.dropdown-option.selected{
-    background-color: #000; 
-  color: #fff;             
-  border-color: #000;     
-
+.dropdown-option.selected {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
 }
 .sidebar-size-btn.selected {
-  background-color: #000; 
-  color: #fff;             
-  border-color: #000;     
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
 }
 /* hover */
 .size-btn:hover {
@@ -286,4 +285,12 @@ body {
 }
 .dropdown-option:hover {
   background-color: rgb(209, 209, 209);
+}
+.reset-filters-btn {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+  padding: 5px 5px;
+  border-radius: 5px;
+  border: none;
 }

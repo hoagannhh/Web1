@@ -287,7 +287,7 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
       <!-- MẶT SAU -->
       <div class="card-back">
         <div class="back-content">
-          <h2>JONHSIDE</h2>
+          <h2>${product.name}</h2>
           <div class="size-selector">
             <h3>SELECT YOUR COLOR</h3>
             <div class="color-option">
