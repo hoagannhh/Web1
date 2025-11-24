@@ -24,7 +24,45 @@ async function loadProductData() {
     return null;
   }
 }
+async function loadAllDataToLocalStorage() {
+  const files = [
+    {
+      key: "inventoryHistory",
+      path: "../data/inventory.json",
+    },
+    {
+      key: "productImport",
+      path: "../data/improtProduct.json",
+    },
+    {
+      key: "categoriesDB",
+      path: "../data/category.json",
+      isObject: true, // category.json là object, cần lấy .categories
+    },
+    {
+      key: "allProduct",
+      path: "../data/product.json",
+    },
+  ];
 
+  for (const file of files) {
+    if (!localStorage.getItem(file.key)) {
+      try {
+        const response = await fetch(file.path);
+        if (!response.ok) throw new Error(`Lỗi tải ${file.path}`);
+        const data = await response.json();
+        // Nếu là category.json thì lấy thuộc tính categories
+        const value = file.isObject ? data.categories || [] : data;
+        localStorage.setItem(file.key, JSON.stringify(value));
+        console.log(`Đã load ${file.key} từ ${file.path}`);
+      } catch (e) {
+        console.error(`Không thể load ${file.key}:`, e);
+      }
+    } else {
+      console.log(`Đã có ${file.key} trong localStorage, bỏ qua.`);
+    }
+  }
+}
 export const HomeComponent = {
   html: `   <div class="image-demo" id="hero-slideshow">
       <img class="image-demo-d" src="../img/demo/demo.png" />
@@ -97,6 +135,7 @@ function AddEventForOverlayButtonMore() {
 }
 async function LoadProduct() {
   try {
+    await loadAllDataToLocalStorage();
     const allProduct = await loadProductData();
 
     if (!allProduct || !Array.isArray(allProduct)) {

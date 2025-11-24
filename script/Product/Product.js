@@ -45,6 +45,10 @@ export function LoadProductPageHaveProduct(products) {
   console.log("complete show product by search3");
 }
 export function LoadAllProductPage() {
+  console.log(allProducts);
+  if (allProducts === null){
+    allProducts = JSON.parse(localStorage.getItem("allProduct"));
+  }
   const validProducts = allProducts.filter((p) => p.inventory > 0);
   let htmlProduct = "";
 
@@ -273,7 +277,7 @@ function renderProduct(htmlProduct, allProducts, currentPage, productsPerPage) {
           <p class="name-prod">${product.name}</p>
           <p class="atribute-prod">${ConvertIDToCategoryMain(
             product.category
-          ).toString()}</p>
+          )}</p>
           <p style="display:block;" class="atribute-prod">${ConvertIDToCategoryOpt(
             product.category
           ).toString()}</p>
@@ -410,6 +414,7 @@ function ConvertIDToCategoryMain(proCate) {
   const categories = JSON.parse(localStorage.getItem("categoriesDB"));
   // console.log(categories);
   let temp = [];
+  if (categories === null) return;
   for (let i = 0; i < categories.length; i++) {
     for (let j = 0; j < proCate.length; j++) {
       if (categories[i].id === proCate[j] && i < 3) {

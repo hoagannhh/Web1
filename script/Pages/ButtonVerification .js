@@ -138,21 +138,12 @@ function HandleLogin(login, container) {
 function HandleDataLogin(modelOverlay, container) {
   // -------------load data ---------------------
   // let accounts = JSON.parse(localStorage.getItem("ACCOUNTS"));
-  let accounts;
-  fetch("../data/account.json")
-    .then((response) => response.json())
-    .then((data) => {
-      accounts = data.accounts;
-      // console.log(accounts);
-    });
 
   // ------------------Xử lý login -------------------------
   const loginForm = document.getElementById("form-user-pass");
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (Verification(modelOverlay, accounts)) {
-      console.log("Đăng nhập bằng tài khoản user ở file account.js");
-    } else {
+
       // console.log("Đăng nhập bằng tài khoản user ở local");
       const userIndividual = JSON.parse(localStorage.getItem("ACCOUNTS"));
       console.log(userIndividual);
@@ -195,7 +186,7 @@ function HandleDataLogin(modelOverlay, container) {
       }
 
       alert("Tên đăng nhập hoặc mật khẩu không đúng!");
-    }
+    
   });
 }
 function Verification(modelOverlay, accounts, container) {
